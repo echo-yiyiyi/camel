@@ -86,7 +86,7 @@ def read_file_tool(file_path: str) -> str:
 
 # Set agent
 # Increase step_timeout to 600 seconds (10 minutes) to handle complex tasks
-camel_agent = ChatAgent(
+code_agent = ChatAgent(
     system_message=sys_msg,
     model=model,
     tools=[FunctionTool(read_file_tool)] + tools,
@@ -94,68 +94,114 @@ camel_agent = ChatAgent(
 )
 
 
+GLOB_TOOL_NAME = "TerminalToolkit and the `glob` command"
+GREP_TOOL_NAME = "TerminalToolkit and the `grep` command"
+READ_TOOL_NAME = "`read_file_tool`"
+BASH_TOOL_NAME = "TerminalToolkit's `shell_exec` tool"
+
+explore_sys_prompt = """
+<!--
+name: 'Agent Prompt: Explore'
+description: System prompt for the Explore subagent
+ccVersion: 2.0.56
+variables:
+  - GLOB_TOOL_NAME
+  - GREP_TOOL_NAME
+  - READ_TOOL_NAME
+  - BASH_TOOL_NAME
+-->
+You are a file search specialist for Claude Code, Anthropic's official CLI for Claude. You excel at thoroughly navigating and exploring codebases.
+
+=== CRITICAL: READ-ONLY MODE - NO FILE MODIFICATIONS ===
+This is a READ-ONLY exploration task. You are STRICTLY PROHIBITED from:
+- Creating new files (no Write, touch, or file creation of any kind)
+- Modifying existing files (no Edit operations)
+- Deleting files (no rm or deletion)
+- Moving or copying files (no mv or cp)
+- Creating temporary files anywhere, including /tmp
+- Using redirect operators (>, >>, |) or heredocs to write to files
+- Running ANY commands that change system state
+
+Your role is EXCLUSIVELY to search and analyze existing code. You do NOT have access to file editing tools - attempting to edit files will fail.
+
+Your strengths:
+- Rapidly finding files using glob patterns
+- Searching code and text with powerful regex patterns
+- Reading and analyzing file contents
+
+Guidelines:
+- Use ${GLOB_TOOL_NAME} for broad file pattern matching
+- Use ${GREP_TOOL_NAME} for searching file contents with regex
+- Use ${READ_TOOL_NAME} when you know the specific file path you need to read
+- Use ${BASH_TOOL_NAME} ONLY for read-only operations (ls, git status, git log, git diff, find, cat, head, tail)
+- NEVER use ${BASH_TOOL_NAME} for: mkdir, touch, rm, cp, mv, git add, git commit, npm install, pip install, or any file creation/modification
+- Adapt your search approach based on the thoroughness level specified by the caller
+- Return file paths as absolute paths in your final response
+- For clear communication, avoid using emojis
+- Communicate your final report directly as a regular message - do NOT attempt to create files
+
+NOTE: You are meant to be a fast agent that returns output as quickly as possible. In order to achieve this you must:
+- Make efficient use of the tools that you have at your disposal: be smart about how you search for files and implementations
+- Wherever possible you should try to spawn multiple parallel tool calls for grepping and reading files
+
+Complete the user's search request efficiently and report your findings clearly.
+
+"""
+
+explore_agent = ChatAgent(
+    system_message=explore_sys_prompt,
+    model=model,
+    tools=[FunctionTool(read_file_tool)] + tools,
+)
+
 with open("code-agent/task_list.json", "r") as f:
     task_list = json.load(f)
+    cnt = 0
     for task_name, task_description in task_list.items():
-        print(f"Processing task: {task_name}")
-        camel_agent.reset()
+        print(f"Processing code task: {task_name}")
+        code_agent.reset()
         # Record start time
         start_time = time.time()
         start_datetime = datetime.now()
 
-        cot_1_prompt = f"""
-        1. List Python files in the current directory using find command (exclude node_modules, .venv, .initial_env, __pycache__, code-agent):
-        Use: `find . -name "*.py" -not -path "*/node_modules/*" -not -path "*/.venv/*" -not -path "*/.initial_env/*" -not -path "*/__pycache__/*" -not -path "*/code-agent/*" -not -path "*/task-script-v0/*"`
-        and `find ./docs -type f \( -name "*.md" -o -name "*.rst" -o -name "*.mdx" -o -name "*.py" -o -name "*.ipynb" \)`
-        """
-
-        cot_2_prompt = f"""
-        Your task is  {task_description}. Extract the keywords of the task.
-        According to the keywords, read the relevant example, documentation and source code according to the listed paths using the read_file_tool.
-        Note: do not generate path which is not in the list of Python files.
-        Note: There may be no the same task's script, you need to write different scripts with different keywords.
-        """
-
-        cot_3_prompt = f"""
+        explore_prompt = f"""
         Your task is  {task_description}.
-        Write the script according to the task using the `shell_write_content_to_file` tool.
+        Return the possible relevent path for the task.
         """
 
-        cot_4_prompt = f"""
-        Your task is  {task_description}.
-        Note that all the package and environment variable has been deployed correctly.
+        explore_response = explore_agent.step(explore_prompt)
+
+        code_prompt = f"""
+        Your task is  {task_description}. The possible relevent path for the task are: {explore_response.msgs[0].content}.
+        Read the files and write the script according to the task using the `shell_write_content_to_file` tool.
         Execute the script and debug the script until it has no error. If the script need to be modified, modify the script using the `shell_write_content_to_file` tool.
         If an error occurs, automatically fix it and re-run until successful.
         If you need to read more files for debugging, use the `read_file_tool` to read the files.
         Note that if you encouter an environment variable error or api error, it is more likely to be a problem in the script, since the environment and api are correctly deployed.
         """
+        code_response = code_agent.step(code_prompt)
 
-        # Collect all responses, tool calls, and reasoning from all steps
-        all_responses = []
+        # Collect all responses, tool calls, and reasoning from both steps
+        all_responses = [
+            ("explore", explore_response),
+            ("code", code_response),
+        ]
         all_tool_calls = []
         all_reasoning_contents = []
-        
-        cot_steps = [
-            ("Step 1: List Python files", cot_1_prompt),
-            ("Step 2: Extract the keywords of the task", cot_2_prompt),
-            ("Step 3: Write the script", cot_3_prompt),
-            ("Step 4: Execute and debug", cot_4_prompt),
-        ]
-        
-        for step_name, cot_prompt in cot_steps:
-            print(f"\n{step_name}")
-            response = camel_agent.step(cot_prompt)
-            all_responses.append((step_name, response))
-            print(response.msgs[0].content if response.msgs else "")
-            
+
+        # 从每一步里收集 tool_calls 和 reasoning_content
+        for step_name, response in all_responses:
+            if response is None:
+                continue
+
             # Collect tool calls from this step
-            step_tool_calls = response.info.get("tool_calls", [])
+            step_tool_calls = response.info.get("tool_calls", []) if hasattr(response, "info") else []
             if step_tool_calls:
                 all_tool_calls.extend(step_tool_calls)
-            
+
             # Collect reasoning content from this step
             for msg in response.msgs:
-                if hasattr(msg, 'reasoning_content') and msg.reasoning_content:
+                if hasattr(msg, "reasoning_content") and msg.reasoning_content:
                     all_reasoning_contents.append((step_name, msg.reasoning_content))
         
         # Record end time and calculate duration
@@ -166,11 +212,15 @@ with open("code-agent/task_list.json", "r") as f:
         
         # Get the final response (last step)
         final_response = all_responses[-1][1] if all_responses else None
-        task_output = final_response.msgs[0].content if final_response and final_response.msgs else ""
-        
-        # Get full conversation history
-        chat_history = camel_agent.chat_history
-        
+        task_output = (
+            final_response.msgs[0].content
+            if final_response and final_response.msgs
+            else ""
+        )
+
+        # Get full conversation history（从 code_agent 视角）
+        chat_history = code_agent.chat_history
+
         # Use collected tool calls and reasoning from all steps
         tool_calls = all_tool_calls
         reasoning_contents = [reasoning for _, reasoning in all_reasoning_contents]
@@ -247,4 +297,6 @@ with open("code-agent/task_list.json", "r") as f:
             log_file.write("\n")
         
         print(f"Task output saved to: {log_filepath}")
-        break
+        cnt += 1
+        if cnt >= 1:
+            break
