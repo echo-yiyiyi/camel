@@ -105,9 +105,9 @@ Scope (same as terminal_toolkit_read_file.py):
 - Ignore anything outside these results.
 
 Steps:
-1) Extract keywords: toolkits (e.g., weather/search/browser/memory), models (e.g., qwen/qwen2.5/gemini/gpt-4.1-mini), agent types (ChatAgent/Workforce/repo), target folders (task-script, examples, docs).
-2) Use glob/grep within the allowed scope to find candidates; read promising files if needed.
-3) If you see parameters/configs you’re unsure about, grep them to find examples/tests/docs.
+1) Extract keywords: toolkits (e.g., weather/search/browser/memory), models (e.g., qwen/qwen2.5/gemini/gpt-4.1-mini), agent types (ChatAgent/Workforce/repo), target folders (task-script, examples, docs). Consider abbreviations and variations (e.g., "ddg" for "duckduckgo", "wb" for "web browser").
+2) Use glob/grep within the allowed scope to find candidates; search for all scripts/files that start with keyword prefixes (e.g., "qwen*", "weather*", "search*"); read promising files if needed.
+3) If you see parameters/configs you're unsure about, grep them to find examples/tests/docs.
 
 Output:
 - Absolute paths, grouped by category (toolkit impl, agent example, model config, tests, docs).
@@ -180,6 +180,48 @@ NOTE: You are meant to be a fast agent that returns output as quickly as possibl
 Complete the user's search request efficiently and report your findings clearly.
 """
 
+camel_description = """
+## Architecture
+
+### Core Modules
+
+- **`camel/agents/`**: Agent implementations. `ChatAgent` is the foundation; others inherit from it.
+- **`camel/models/`**: 50+ LLM provider integrations. Use `ModelFactory.create()` to instantiate.
+- **`camel/configs/`**: Model configuration classes (e.g., `ChatGPTConfig`, `AnthropicConfig`).
+- **`camel/toolkits/`**: 50+ tool integrations. Wrap functions with `FunctionTool`.
+- **`camel/messages/`**: Message types (`BaseMessage`, `FunctionCallingMessage`).
+- **`camel/types/`**: Enums (`ModelPlatformType`, `ModelType`, `RoleType`).
+- **`camel/memories/`**: Memory systems for agent state.
+- **`camel/runtimes/`**: Execution environments (Docker, HTTP, Daytona).
+- **`camel/societies/`**: Multi-agent coordination (role-playing, workforce).
+- **`camel/datagen/`**: Synthetic data generation (CoT, self-instruct).
+
+### Key Patterns
+
+**Creating an agent:**
+```python
+from camel.agents import ChatAgent
+from camel.models import ModelFactory
+from camel.types import ModelPlatformType, ModelType
+
+model = ModelFactory.create(
+    model_platform=ModelPlatformType.OPENAI,
+    model_type=ModelType.GPT_4O_MINI,
+)
+agent = ChatAgent(system_message="You are helpful.", model=model)
+response = agent.step("Hello")  # or await agent.astep("Hello")
+```
+
+**Adding tools to an agent:**
+```python
+from camel.agents import ChatAgent
+from camel.toolkits import FunctionTool
+
+tool = FunctionTool(func=my_function, description="What it does")
+agent = ChatAgent(model=model, tools=[tool])
+```
+"""
+
 explore_agent = ChatAgent(
     system_message=explore_short_sys_prompt,
     model=model,
@@ -198,6 +240,8 @@ with open("code-agent/task_list.json", "r") as f:
 
         explore_prompt = f"""
         Your task is  {task_description}.
+        The camel repository is as follows:
+        {camel_description}
         Return the possible relevent path for the task.
         """
 
@@ -328,5 +372,5 @@ with open("code-agent/task_list.json", "r") as f:
         
         print(f"Task output saved to: {log_filepath}")
         cnt += 1
-        if cnt >= 2:
+        if cnt >= 20:
             break
