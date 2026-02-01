@@ -1,44 +1,63 @@
+import os
+
 from camel.agents import ChatAgent
+from camel.configs.openai_config import ChatGPTConfig
 from camel.models import ModelFactory
-from camel.toolkits import TerminalToolkit
 from camel.toolkits.code_execution import CodeExecutionToolkit
+from camel.toolkits.terminal_toolkit.terminal_toolkit import TerminalToolkit
 from camel.types import ModelPlatformType, ModelType
 
-# Create toolkits
-terminal_toolkit = TerminalToolkit()
-code_exec_toolkit = CodeExecutionToolkit()
+# Define workspace directory
+workspace_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "workspace")
 
-# Get tools from both toolkits
+# Initialize terminal toolkit
+terminal_toolkit = TerminalToolkit(working_directory=workspace_dir)
 terminal_tools = terminal_toolkit.get_tools()
+
+# Initialize code execution toolkit with internal python interpreter
+code_exec_toolkit = CodeExecutionToolkit(sandbox="internal_python")
 code_exec_tools = code_exec_toolkit.get_tools()
 
 # Combine tools
-all_tools = terminal_tools + code_exec_tools
+tools = terminal_tools + code_exec_tools
 
-# Create model
+# System message for the agent
+system_message = (
+    "You are an assistant with access to terminal tools and code execution tools. "
+    "Retrieve system information using terminal tools and then print it using the Python interpreter."
+)
+
+# Model config
+model_config = ChatGPTConfig(temperature=0.0).as_dict()
+
+# Create model with DEFAULT (fallback)
 model = ModelFactory.create(
     model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
+    model_config_dict=model_config,
 )
 
-# Create agent with combined tools
+# Create agent
 agent = ChatAgent(
-    system_message="You are an assistant with terminal and code execution tools.",
+    system_message=system_message,
     model=model,
-    tools=all_tools,
+    tools=tools,
 )
 
-# Reset agent
 agent.reset()
 
-# Prompt to retrieve system info and print it in Python interpreter
-prompt = (
-    "Retrieve system information using terminal commands and "
-    "print the information in a Python interpreter."
+# User message to retrieve system info and print it in python interpreter
+user_message = (
+    "Retrieve system information using terminal commands like 'uname -a' or 'cat /etc/os-release'. "
+    "Then print the retrieved system information in the Python interpreter."
 )
 
-# Run agent
-response = agent.step(prompt)
+response = agent.step(user_message)
 
-# Print response
+print("Agent response:")
 print(response.msg.content)
+
+# Print tool calls for debugging
+print("Tool calls:")
+for call in response.info.get('tool_calls', []):
+    print(call)

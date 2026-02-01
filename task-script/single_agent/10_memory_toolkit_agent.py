@@ -1,73 +1,54 @@
 from camel.agents import ChatAgent
-from camel.models import ModelFactory
+from camel.memories.agent_memories import ChatHistoryMemory
+from camel.memories.context_creators.score_based import ScoreBasedContextCreator
 from camel.toolkits.memory_toolkit import MemoryToolkit
+from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
+from camel.utils import OpenAITokenCounter
 
 
-def run_memory_toolkit_agent():
-    """
-    Create a ChatAgent with MemoryToolkit tools to manage memory
-    and run example queries demonstrating save, load, clear memory.
-    """
-
-    # Create a Model
+def main():
+    # Use a known available model for testing
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
-        model_type=ModelType.DEFAULT,
+        model_platform=ModelPlatformType.OPENAI,
+        model_type=ModelType.GPT_4O_MINI
     )
 
-    # Create a ChatAgent
+    # Create a context creator with token counter and token limit
+    context_creator = ScoreBasedContextCreator(
+        token_counter=OpenAITokenCounter(ModelType.GPT_4O_MINI),
+        token_limit=1024,
+    )
+
+    # Create a chat history memory with context creator
+    memory = ChatHistoryMemory(context_creator=context_creator)
+
+    # Create a ChatAgent with memory
     agent = ChatAgent(
-        system_message="""You are an assistant that can manage
-        conversation memory using tools.""",
         model=model,
+        system_message="You are a helpful assistant with memory.",
+        memory=memory
     )
 
-    # Add MemoryToolkit to the Agent
-    memory_toolkit = MemoryToolkit(agent=agent)
-    for tool in memory_toolkit.get_tools():
-        agent.add_tool(tool)
+    # Create a MemoryToolkit for the agent
+    memory_toolkit = MemoryToolkit(agent)
 
-    # Have a conversation to populate memory
-    print("\n--- Starting a Conversation ---")
-    user_msg_1 = "Tell me about the moon."
-    print(f"[User] {user_msg_1}")
-    response_1 = agent.step(user_msg_1)
-    print(f"[Agent] {response_1.msgs[0].content}")
+    # Add memory tools to the agent
+    agent.add_tools(memory_toolkit.get_tools())
 
-    # Save the memory to a file via function calling
-    print("\n--- Saving Memory ---")
-    save_msg = "Please save the current memory to 'conversation_memory.json'."
-    response_save = agent.step(save_msg)
-    print(f"[Agent] {response_save.msgs[0].content}")
-    print(f"[Tool Call Info] {response_save.info['tool_calls']}")
+    # Example queries
+    queries = [
+        "Remember that my favorite color is blue.",
+        "What is my favorite color?",
+        "Clear the memory.",
+        "What is my favorite color now?"
+    ]
 
-    # Clear the memory via function calling
-    print("\n--- Clearing Memory ---")
-    clear_msg = "Please clear the memory."
-    response_clear = agent.step(clear_msg)
-    print(f"[Agent] {response_clear.msgs[0].content}")
-    print(f"[Tool Call Info] {response_clear.info['tool_calls']}")
-
-    # Verify memory is cleared
-    print("\n--- Checking Memory After Clear ---")
-    check_msg = "What do you remember about the moon?"
-    response_check = agent.step(check_msg)
-    print(f"[Agent] {response_check.msgs[0].content}")
-
-    # Load memory from the saved file via function calling
-    print("\n--- Loading Memory from File ---")
-    load_msg = "Please load the memory from 'conversation_memory.json'."
-    response_load = agent.step(load_msg)
-    print(f"[Agent] {response_load.msgs[0].content}")
-    print(f"[Tool Call Info] {response_load.info['tool_calls']}")
-
-    # Verify memory is restored
-    print("\n--- Checking Memory After Load ---")
-    check_msg = "What do you remember about the moon?"
-    response_restored = agent.step(check_msg)
-    print(f"[Agent] {response_restored.msgs[0].content}")
+    for query in queries:
+        print(f"User: {query}")
+        response = agent.step(query)
+        print(f"Agent: {response}")
 
 
 if __name__ == "__main__":
-    run_memory_toolkit_agent()
+    main()

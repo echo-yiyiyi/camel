@@ -31,13 +31,13 @@ from camel.agents import ChatAgent
 from camel.configs import ChatGPTConfig
 from camel.logger import set_log_level
 from camel.models import ModelFactory
-from camel.toolkits import TerminalToolkit, FunctionTool
+from camel.toolkits import TerminalToolkit, FunctionTool, Crawl4AIToolkit
 from camel.types import ModelPlatformType, ModelType
 
 # Import the optimized code search toolkit
 from code_search_toolkit import CodeSearchToolkit
 
-exp_id = "_code_optimized"
+exp_id = "_code_optimized_read_file_all"
 
 set_log_level('INFO')
 
@@ -72,7 +72,7 @@ explore_toolkit = CodeSearchToolkit(
     exclude_dirs={
         'node_modules', '.venv', '.git', '__pycache__', '.tox',
         '.mypy_cache', '.pytest_cache', 'dist', 'build',
-        '.initial_env', 'code-agent', 'task-script-v0', 'task-script_v0'
+        '.initial_env', 'code-agent', 'task-script*'
     },
     max_results=50,
 )
@@ -85,7 +85,7 @@ EXPLORE_SYSTEM_PROMPT = """You are a code exploration specialist. Find relevant 
 
 1. **glob_search(pattern, path?, max_results?)** - Find files by name pattern
 2. **grep_search(pattern, path?, glob_filter?, ignore_case?, output_mode?)** - Search file contents
-3. **read_file(file_path, start_line?, end_line?)** - Read file contents
+3. **read_file(file_path)** - Read file contents (auto-limits to 2000 lines for large files)
 4. **list_directory(path?)** - List directory contents
 5. **find_definition(name, definition_type?)** - Find class/function definitions
 6. **find_imports(module_name, ignore_case?)** - Find files that import a module
@@ -128,32 +128,86 @@ glob_search("**/test_*qwen*.py")
 glob_search("**/*example*.py")
 ```
 
+### Technique 6: Find EXACT enum values for models/tools
+When task specifies a model like "Qwen2.5-14B-Instruct", search for the exact ModelType enum:
+```python
+# Search with partial match (enum names use underscores, not hyphens)
+grep_search("QWEN_2_5.*14B", path="camel/types/enums.py")
+grep_search("QWEN_2_5", path="camel/types/enums.py")
+```
+CAMEL ModelType naming convention:
+- No "_INSTRUCT" suffix usually (e.g., QWEN_2_5_14B not QWEN_2_5_14B_INSTRUCT)
+- Use underscores not hyphens (e.g., QWEN_2_5 not QWEN-2.5)
+
+### Technique 7: Find SPECIFIC tool methods
+When task specifies a tool like "duckduckgo search", find the exact method:
+```python
+grep_search("search_duckduckgo", path="camel/toolkits")
+grep_search("def search_duckduckgo")
+```
+Don't use get_tools() if task asks for a specific tool - use the specific method directly.
+
+### Technique 8: When file name search fails, read __init__.py
+Class names often don't match file names. When glob_search by name fails:
+```python
+# Task asks for "longterm memory" but glob_search("**/*longterm*.py") finds nothing
+# Solution: Read __init__.py to see all exported classes
+read_file("camel/memories/__init__.py")
+# This reveals: LongtermAgentMemory is in agent_memories.py!
+
+# Or search for the class name directly
+grep_search("class.*Longterm", ignore_case=True)
+```
+Always read the module's `__init__.py` to discover all available classes.
+
 ## Project Structure
 
 - `examples/models/` - Model usage examples
 - `examples/toolkits/` - Toolkit examples
+- `examples/memories/` - Memory usage examples
 - `camel/models/` - Model implementations
 - `camel/toolkits/` - Toolkit implementations
+- `camel/memories/` - Memory implementations (ChatHistoryMemory, LongtermAgentMemory, VectorDBMemory)
 - `camel/configs/` - Configuration classes
+- `camel/types/enums.py` - ModelType, ModelPlatformType enums
 - `test/` - Test files
 
 ## Output Format
 
+For each file, **list the core classes/functions inside**:
+
 ```
 ## Examples (MOST IMPORTANT)
-- examples/models/qwen_model_example.py - complete usage example
+- examples/models/qwen_model_example.py
+  - Shows: ModelFactory.create() with QWEN model
+  - Key usage: model_platform=ModelPlatformType.QWEN, model_type=ModelType.QWEN_2_5_14B
 
 ## Implementation
-- camel/models/qwen_model.py - QwenModel class
+- camel/memories/agent_memories.py
+  - Classes: AgentMemory, ChatHistoryMemory, VectorDBMemory, **LongtermAgentMemory**
+  - Note: LongtermAgentMemory is for persistent memory across sessions
+
+- camel/models/qwen_model.py
+  - Classes: QwenModel
+  - Config: QwenConfig
+
+## Enums (for exact values)
+- camel/types/enums.py:317 - QWEN_2_5_14B = "qwen2.5-14b-instruct"
 
 ## Tests
-- test/models/test_qwen_model.py - test cases
+- test/models/test_qwen_model.py - test cases showing parameter usage
 ```
+
+**CRITICAL**: Always read `__init__.py` to discover all exported classes. Class names often don't match file names (e.g., `LongtermAgentMemory` is in `agent_memories.py`, not `longterm_memory.py`).
 
 ## Rules
 - READ-ONLY mode
 - Search WHOLE repo first (no path restriction)
 - Use parallel searches
+- Find EXACT enum values for specified models
+- Find SPECIFIC tool methods for specified tools
+- **Read __init__.py to discover all available classes**
+- **List core classes/functions for each file you find**
 - No emojis
 """
 
@@ -174,19 +228,20 @@ terminal_toolkit = TerminalToolkit(
 
 terminal_tools = terminal_toolkit.get_tools()
 
-# Create read_file tool using CodeSearchToolkit (better than shell cat)
-def read_file_tool(file_path: str, start_line: int = None, end_line: int = None) -> str:
-    r"""Read the content of a file with optional line range.
+# Create read_file tool using CodeSearchToolkit (shell-based for consistency)
+def read_file_tool(file_path: str) -> str:
+    r"""Read the content of a file.
+
+    If the file is less than 200 lines, reads the whole file.
+    Otherwise, reads the first 2000 lines.
 
     Args:
         file_path (str): The path of the file to read.
-        start_line (int, optional): Starting line number (1-indexed).
-        end_line (int, optional): Ending line number (inclusive).
 
     Returns:
         str: The content of the file.
     """
-    return explore_toolkit.read_file(file_path, start_line, end_line)
+    return explore_toolkit.read_file(file_path)
 
 
 CODE_SYSTEM_PROMPT = """You are a Code Agent that writes and executes Python scripts.
@@ -205,6 +260,33 @@ You have access to terminal tools for:
 3. **Execute the script** using `shell_exec`
 4. **Debug if needed**: If errors occur, read the error, fix the script, and re-run
 
+## CRITICAL: Strict Instruction Following
+
+**Use EXACTLY what the task specifies. Do NOT substitute "similar" or "better" alternatives.**
+
+### Model Selection
+- Task says "Qwen2.5-14B-Instruct" -> Use `ModelType.QWEN_2_5_14B` EXACTLY
+- Do NOT use QWEN_3_CODER_PLUS as "closest alternative"
+- Do NOT guess enum names - verify from enums.py or examples
+
+### Tool Selection
+- Task says "duckduckgo search" -> Use `search_toolkit.search_duckduckgo` EXACTLY
+- Do NOT use `get_tools()` which returns ALL tools
+- Do NOT substitute with other search engines
+
+### URL Handling
+- If task provides a URL (e.g., "https://mcpservers.org/servers/devin/deepwiki"):
+  - Prioritize DIRECT HTTP access using `requests` library
+  - Create a simple FunctionTool that calls the URL
+  - Do NOT assume it requires complex registry (ACI, etc.)
+  - Example:
+    ```python
+    def query_server(query: str) -> str:
+        response = requests.post(url, json={"query": query})
+        return response.text
+    tool = FunctionTool(func=query_server)
+    ```
+
 ## Important Rules
 
 1. **Use the provided file paths** - The explore agent has found relevant examples and implementations
@@ -212,25 +294,30 @@ You have access to terminal tools for:
 3. **Handle errors gracefully** - If execution fails, analyze the error and fix it
 4. **Environment is ready** - All API keys and dependencies are configured
 5. **Save to correct location** - Follow the task's specified output path
+6. **Use EXACT values** - Copy enum values, method names exactly from explored files
 
 ## Script Writing Tips
 
 - Import from camel package: `from camel.agents import ChatAgent`
 - Use ModelFactory for models: `ModelFactory.create(model_platform=..., model_type=...)`
-- Check examples for correct enum values and parameter names
+- Copy exact enum values from enums.py (e.g., `ModelType.QWEN_2_5_14B`)
+- Use specific tool methods, not get_tools() (e.g., `toolkit.search_duckduckgo`)
 - Add proper error handling in your scripts
 
 ## Debugging Tips
 
 - If you see import errors, check the correct module path in __init__.py
+- If you see AttributeError for enum, verify the exact enum name in enums.py
 - If you see API errors, it's likely a script issue, not environment
 - Read more files if you need to understand the API better
 """
 
+crawl4ai_toolkit = Crawl4AIToolkit()
+
 code_agent = ChatAgent(
     system_message=CODE_SYSTEM_PROMPT,
     model=model,
-    tools=[FunctionTool(read_file_tool)] + terminal_tools,
+    tools=[FunctionTool(read_file_tool)] + terminal_tools + crawl4ai_toolkit.get_tools(),
 )
 
 # =============================================================================
@@ -242,6 +329,7 @@ CAMEL_ARCHITECTURE = """
 ### Core Modules
 - `camel/agents/` - Agent implementations (ChatAgent is the base)
 - `camel/models/` - LLM provider integrations (50+)
+- `camel/memories/` - Memory systems (ChatHistoryMemory, LongtermAgentMemory, VectorDBMemory)
 - `camel/configs/` - Model configuration classes
 - `camel/toolkits/` - Tool integrations (50+)
 - `camel/types/` - Enums (ModelPlatformType, ModelType, RoleType)
@@ -517,14 +605,14 @@ if __name__ == "__main__":
     cnt = 0
     for task_name, task_description in task_list.items():
         cnt += 1
-        if cnt <= 10:
+        if cnt <= 8:
             continue
         result = run_task(task_name, task_description)
 
         print(f"\n--- Result Preview ---")
         print(f"Code output: {result['code_output'][:500]}...")
 
-        if cnt >= 11:  # Limit for testing
+        if cnt >= 8:  # Limit for testing
             break
 
     print(f"\n{'='*60}")

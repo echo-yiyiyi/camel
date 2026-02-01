@@ -1,55 +1,40 @@
 from camel.agents import ChatAgent
-from camel.memories import ChatHistoryMemory
-from camel.memories.context_creators.score_based import ScoreBasedContextCreator
-from camel.models.model_factory import ModelFactory
-from camel.types import ModelPlatformType, ModelType
-from camel.toolkits.memory_toolkit import MemoryToolkit
+from camel.memories.agent_memories import LongtermAgentMemory
 from camel.toolkits.human_toolkit import HumanToolkit
-from camel.utils import OpenAITokenCounter
+from camel.models import ModelFactory
+from camel.types.enums import ModelType
+from camel.memories.context_creators.score_based import ScoreBasedContextCreator
 
 
 def main():
-    # Create a context creator for memory
+    # Create the model
+    model = ModelFactory.create(model_platform="tongyi-qianwen", model_type=ModelType.QWEN_2_5_14B)
+
+    # Create a ScoreBasedContextCreator with the model's token_counter
     context_creator = ScoreBasedContextCreator(
-        token_counter=OpenAITokenCounter(ModelType.GPT_4O_MINI),
-        token_limit=1024,
+        token_counter=model.token_counter,
+        token_limit=2048,
     )
 
-    # Create a model instance
-    model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
-        model_type=ModelType.GPT_4O_MINI,
-    )
+    # Create longterm memory with context creator
+    memory = LongtermAgentMemory(context_creator=context_creator, agent_id="longterm_agent")
 
-    # Create a memory instance for longterm memory
-    memory = ChatHistoryMemory(context_creator=context_creator)
-
-    # Create the agent with memory
-    agent = ChatAgent(
-        model=model,
-        memory=memory,
-        system_message="You are a helpful assistant with longterm memory and human interaction capabilities.",
-        agent_id="longterm_memory_agent",
-    )
-
-    # Add toolkits for memory management and human interaction
-    memory_toolkit = MemoryToolkit(agent)
+    # Create human interaction tools
     human_toolkit = HumanToolkit()
 
-    # Add individual function tools from the toolkits
-    for tool in memory_toolkit.get_tools():
-        agent.add_tool(tool)
-    for tool in human_toolkit.get_tools():
-        agent.add_tool(tool)
+    # Create the agent with longterm memory and human interaction tools
+    agent = ChatAgent(
+        system_message="You are a helpful assistant with longterm memory and human interaction capabilities.",
+        model=model,
+        memory=memory,
+        tools=human_toolkit.get_tools(),
+    )
 
     # Example query to test the agent
-    query = "Remember my favorite color is blue. What is my favorite color?"
+    query = "Hello! Can you remember this conversation for the long term?"
     response = agent.step(query)
     print(f"User: {query}")
-    if response.msgs:
-        print(f"Agent: {response.msgs[0].content}")
-    else:
-        print("Agent: No response")
+    print(f"Agent: {response.msgs[0].content}")
 
 
 if __name__ == "__main__":

@@ -1,67 +1,62 @@
-import os
 from dotenv import load_dotenv
+
 from camel.agents import KnowledgeGraphAgent
-from camel.storages import Neo4jGraph
 from camel.toolkits.search_toolkit import SearchToolkit
-from camel.loaders import UnstructuredIO
+from camel.storages import Neo4jGraph
+from unstructured.documents.elements import Text
 
 load_dotenv()
 
-# Load Neo4j credentials from environment variables
-NEO4J_URL = os.getenv("NEO4J_URL", "bolt://localhost:7687")
-NEO4J_USERNAME = os.getenv("NEO4J_USERNAME", "neo4j")
-NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "password")
 
-neo4j_graph = None
-try:
+def main():
+    # Initialize the LinkUp search toolkit
+    search_toolkit = SearchToolkit()
+
+    # Query for LLM-based social simulation research
+    query = "LLM-based social simulation research"
+
+    # Use LinkUp search to retrieve webpages
+    search_results = search_toolkit.search_linkup(query=query, depth="standard", output_type="searchResults")
+
+    if "error" in search_results:
+        print(f"Error in LinkUp search: {search_results['error']}")
+        return
+
+    results = search_results.get("results", [])
+
+    # Initialize the knowledge graph agent
+    kg_agent = KnowledgeGraphAgent()
+
+    # Initialize Neo4j graph storage
     neo4j_graph = Neo4jGraph(
-        url=NEO4J_URL,
-        username=NEO4J_USERNAME,
-        password=NEO4J_PASSWORD
+        url="bolt://localhost:7687",  # Adjust if needed
+        username="neo4j",  # Adjust if needed
+        password="password"  # Adjust if needed
     )
-    print("Connected to Neo4j successfully.")
-except Exception as e:
-    print(f"Failed to connect to Neo4j: {e}")
 
-# Initialize SearchToolkit for LinkUp web search
-search_toolkit = SearchToolkit()
+    # Process each search result
+    graph_elements = []
+    for result in results:
+        title = result.get("title", "")
+        snippet = result.get("description", "")
+        url = result.get("url", "")
 
-# Initialize KnowledgeGraphAgent with Neo4j storage if connected
-kg_agent = KnowledgeGraphAgent(storage=neo4j_graph) if neo4j_graph else KnowledgeGraphAgent()
+        # Combine title and snippet as content for extraction
+        content = f"Title: {title}\nSnippet: {snippet}\nURL: {url}"
 
-# Initialize UnstructuredIO for creating elements from text
-uio = UnstructuredIO()
+        # Create a Text element from content
+        element = Text(text=content)
 
-# Define the search query
-query = "LLM-based social simulation research"
+        # Extract nodes and relationships from content
+        graph_element = kg_agent.run(element, parse_graph_elements=True)
 
-# Use DuckDuckGo search to retrieve webpages related to the query
-search_results = search_toolkit.search_duckduckgo(query=query, number_of_result_pages=2)
+        graph_elements.append(graph_element)
 
-if search_results:
-    print(f"Retrieved {len(search_results)} search results from DuckDuckGo.")
-else:
-    print(f"Search failed or returned no results: {search_results}")
+    # Add extracted graph elements to Neo4j
+    neo4j_graph.add_graph_elements(graph_elements)
 
-# Process each search result
-for result in search_results:
-    title = result.get('title', 'No Title')
-    snippet = result.get('body', '')
-    url = result.get('url', '')
-    print(f"Processing: {title} - {url}")
+    print("Knowledge graph has been updated with LinkUp search results.")
 
-    # Create a text element combining title and snippet
-    text_content = f"Title: {title}\nURL: {url}\nDescription: {snippet}"
-    element = uio.create_element_from_text(text=text_content)
 
-    # Run the knowledge graph agent to extract and store knowledge
-    kg_agent.run(element)
-
-# Query Neo4j to confirm data storage if connected
-if neo4j_graph:
-    print("Sample nodes in Neo4j:")
-    nodes = neo4j_graph.query("MATCH (n) RETURN n LIMIT 5")
-    for node in nodes:
-        print(node)
-else:
-    print("Neo4j graph storage not connected, skipping query.")
+if __name__ == "__main__":
+    main()

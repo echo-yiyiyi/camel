@@ -1,83 +1,78 @@
 from camel.agents import ChatAgent
 from camel.models import ModelFactory
 from camel.toolkits import ArxivToolkit
-from camel.retrievers import VectorRetriever
+from camel.memories import VectorDBMemory
+from camel.memories.context_creators.score_based import ScoreBasedContextCreator
+from camel.storages.vectordb_storages import QdrantStorage
 from camel.types import ModelPlatformType, ModelType
+from camel.utils import OpenAITokenCounter
 
-# Define system message
-sys_msg = "You are a helpful assistant"
-
-# Initialize ArxivToolkit and get tools
+# 1) Create ArxivToolkit and get tools
 arxiv_toolkit = ArxivToolkit()
 tools = arxiv_toolkit.get_tools()
 
-# Create model
+# 2) Create a vector storage for memory
+vector_storage = QdrantStorage(
+    vector_dim=1536,  # typical embedding dimension
+    path=":memory:",  # in-memory storage
+)
+
+# 3) Create a ScoreBasedContextCreator for token limiting
+context_creator = ScoreBasedContextCreator(
+    token_counter=OpenAITokenCounter(ModelType.DEFAULT),
+    token_limit=1024,
+)
+
+# 4) Create the model
 model = ModelFactory.create(
     model_platform=ModelPlatformType.DEFAULT,
-    model_type=ModelType.DEFAULT,
+    model_type=ModelType.QWEN_2_5_14B,
 )
 
-# Create agent with Arxiv tools
+# 5) Create the ChatAgent with Arxiv tools and vector memory
 agent = ChatAgent(
-    system_message=sys_msg,
+    system_message="You are a helpful assistant with access to Arxiv papers.",
     model=model,
     tools=tools,
+    agent_id="arxiv_transformer_agent",
 )
 
+# 6) Create VectorDBMemory and assign to agent
+vector_memory = VectorDBMemory(
+    context_creator=context_creator,
+    storage=vector_storage,
+    retrieve_limit=3,
+    agent_id=agent.agent_id,
+)
+agent.memory = vector_memory
+
+# 7) Reset agent to initialize
 agent.reset()
 
-# Step 1: Search the paper "Attention Is All You Need"
-search_msg = "Search paper 'Attention Is All You Need'"
-search_response = agent.step(search_msg)
+# 8) Search and download the paper "Attention Is All You Need"
+search_response = agent.step("Search paper 'Attention Is All You Need'")
 
-# Extract paper ids from the search response info
+# Extract paper IDs from the search result tool call
 paper_ids = []
-try:
-    for record in search_response.info['tool_calls']:
-        tool_name = getattr(record, 'tool_name', None)
-        if tool_name == 'search_papers':
-            results = getattr(record, 'result', [])
-            if isinstance(results, list):
-                for paper in results:
-                    entry_id = paper.get('entry_id', '')
-                    paper_id = entry_id.split('/')[-1]
-                    paper_ids.append(paper_id)
-except Exception as e:
-    print("Error accessing tool call records:", e)
+for call in search_response.info.get('tool_calls', []):
+    if call.func_name == 'search_papers':
+        for paper in call.result:
+            # Extract arxiv id from entry_id url
+            entry_id = paper.get('entry_id', '')
+            if entry_id.startswith('http://arxiv.org/abs/'):
+                arxiv_id = entry_id.split('/')[-1]
+                paper_ids.append(arxiv_id)
 
-if not paper_ids:
-    raise ValueError("No paper ids found from search response")
+# Download the papers by IDs
+if paper_ids:
+    download_msg = f"Download paper 'Attention Is All You Need' for me with paper_ids {paper_ids}"
+    download_response = agent.step(download_msg)
+else:
+    print("No paper IDs found to download.")
 
-# Step 2: Download the paper using the download_papers tool
-# We use the first paper id for download
-download_msg = f"Download paper 'Attention Is All You Need' with paper_ids {paper_ids[:1]}"
-download_response = agent.step(download_msg)
+# 9) Ask the agent a question using vector retrieval
+question = "What is a Transformer?"
+answer_response = agent.step(question)
 
-# The download tool returns a success message
-print("Download response:", download_response.msg.content)
-
-# Step 3: Use VectorRetriever to process the paper content
-# We assume the downloaded paper content is accessible via the toolkit or agent
-# For simplicity, we use the search results summary as content for vector retrieval
-# In real case, we should load the actual paper content from downloaded files
-
-paper_content = "".join([paper.get('summary', '') for paper in search_response.info['tool_calls'][0].result])
-
-vector_retriever = VectorRetriever()
-vector_retriever.process(content=paper_content)
-
-# Step 4: Query the vector retriever for the question "What is a Transformer?"
-query = "What is a Transformer?"
-retrieved_info = vector_retriever.query(query=query, top_k=5)
-
-# Step 5: Create a new agent to answer the question based on retrieved context
-answer_sys_msg = "You are a helpful assistant. Answer the question based on the retrieved context."
-answer_agent = ChatAgent(system_message=answer_sys_msg, model=model)
-
-# Prepare user message with retrieved context and question
-user_msg = f"Context: {retrieved_info}\nQuestion: {query}"
-
-# Get answer
-answer_response = answer_agent.step(user_msg)
-
-print("Answer:", answer_response.msg.content)
+print("Question:", question)
+print("Answer:", answer_response.msgs[0].content if answer_response.msgs else "No answer")

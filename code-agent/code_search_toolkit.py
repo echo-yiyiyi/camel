@@ -22,7 +22,7 @@ import subprocess
 import fnmatch
 from pathlib import Path
 from typing import List, Optional, Literal
-from camel.toolkits import FunctionTool
+from camel.toolkits import FunctionTool, TerminalToolkit
 
 
 class CodeSearchToolkit:
@@ -31,11 +31,12 @@ class CodeSearchToolkit:
     This toolkit provides three core capabilities:
     1. glob_search: Fast file pattern matching (like `find` but faster)
     2. grep_search: Content search with regex support (uses ripgrep if available)
-    3. read_file: Read file contents with line limits
+    3. read_file: Read file contents using shell commands
 
     Key design principles:
     - Native Python operations where possible (faster than shell)
     - Ripgrep for content search (much faster than grep)
+    - Shell-based file reading for consistency with terminal operations
     - Structured output for LLM consumption
     - Built-in exclusion of common noise directories
     """
@@ -44,7 +45,8 @@ class CodeSearchToolkit:
     DEFAULT_EXCLUDE_DIRS = {
         'node_modules', '.venv', '.git', '__pycache__', '.tox',
         '.mypy_cache', '.pytest_cache', 'dist', 'build', '.eggs',
-        '*.egg-info', '.initial_env', 'venv', 'env'
+        '*.egg-info', '.initial_env', 'venv', 'env',
+        'task-script*',  # Exclude all task-script directories
     }
 
     def __init__(
@@ -68,6 +70,14 @@ class CodeSearchToolkit:
 
         # Check if ripgrep is available
         self._has_ripgrep = self._check_ripgrep()
+
+        # Initialize terminal toolkit for file reading
+        self._terminal_toolkit = TerminalToolkit(
+            working_directory=working_directory,
+            clone_current_env=True,
+            timeout=60.0,
+        )
+        self._shell_exec = self._terminal_toolkit.get_tools()[0]  # shell_exec tool
 
     def _check_ripgrep(self) -> bool:
         """Check if ripgrep (rg) is available on the system."""
@@ -355,25 +365,21 @@ class CodeSearchToolkit:
     def read_file(
         self,
         file_path: str,
-        start_line: Optional[int] = None,
-        end_line: Optional[int] = None,
-        max_lines: int = 500,
     ) -> str:
-        r"""Read file contents with optional line range.
+        r"""Read file contents using shell commands.
+
+        If the file is less than 200 lines, reads the whole file.
+        Otherwise, reads the first 2000 lines.
 
         Args:
             file_path: Path to the file (relative to working_dir or absolute).
-            start_line: Starting line number (1-indexed). If None, starts from beginning.
-            end_line: Ending line number (inclusive). If None, reads to max_lines.
-            max_lines: Maximum lines to read if no end_line specified.
 
         Returns:
-            File contents with line numbers, or error message.
+            File contents, or error message.
 
         Examples:
-            - read_file("camel/agents/chat_agent.py") - Read first 500 lines
-            - read_file("README.md", start_line=1, end_line=50) - Read lines 1-50
-            - read_file("long_file.py", start_line=100, end_line=200) - Read specific range
+            - read_file("camel/agents/chat_agent.py") - Read file
+            - read_file("README.md") - Read markdown file
         """
         # Resolve path
         path = Path(file_path)
@@ -387,39 +393,14 @@ class CodeSearchToolkit:
             return f"Error: '{file_path}' is not a file."
 
         try:
-            with open(path, 'r', encoding='utf-8', errors='replace') as f:
-                lines = f.readlines()
-
-            total_lines = len(lines)
-
-            # Determine line range
-            start = (start_line - 1) if start_line else 0
-            start = max(0, start)
-
-            if end_line:
-                end = min(end_line, total_lines)
-            else:
-                end = min(start + max_lines, total_lines)
-
-            # Extract lines
-            selected_lines = lines[start:end]
-
-            # Format with line numbers
-            result_lines = [f"File: {file_path} (lines {start+1}-{end} of {total_lines})"]
-            result_lines.append("-" * 60)
-
-            for i, line in enumerate(selected_lines, start + 1):
-                # Truncate very long lines
-                line_content = line.rstrip('\n\r')
-                if len(line_content) > 500:
-                    line_content = line_content[:500] + "..."
-                result_lines.append(f"{i:6d}\t{line_content}")
-
-            if end < total_lines:
-                result_lines.append(f"\n... ({total_lines - end} more lines)")
-
-            return "\n".join(result_lines)
-
+            # Use shell command to read file
+            # If file is less than 200 lines, read whole file; otherwise read first 2000 lines
+            command = f'lines=$(wc -l < "{path}") && if [ $lines -lt 200 ]; then cat "{path}"; else head -2000 "{path}"; fi'
+            result = self._shell_exec(
+                id=f"read_file_{file_path}",
+                command=command,
+            )
+            return result
         except Exception as e:
             return f"Error reading file: {e}"
 
@@ -565,7 +546,7 @@ class CodeSearchToolkit:
             FunctionTool(self.read_file),
             FunctionTool(self.list_directory),
             FunctionTool(self.find_definition),
-            FunctionTool(self.find_examples),
+            FunctionTool(self.find_imports),
         ]
 
 
