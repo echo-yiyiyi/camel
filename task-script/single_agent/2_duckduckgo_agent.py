@@ -5,28 +5,40 @@ from camel.toolkits.search_toolkit import SearchToolkit
 
 
 def main():
-    # Create Gemini model instance
+    # Create Gemini model
     model = ModelFactory.create(
         model_platform=ModelPlatformType.GEMINI,
         model_type=ModelType.GEMINI_3_PRO
     )
 
-    # Create DuckDuckGo search tool
+    # Get DuckDuckGo search tool from SearchToolkit
     search_toolkit = SearchToolkit()
-    duckduckgo_tool = search_toolkit.search_duckduckgo
+    tools = search_toolkit.get_tools()
+    duckduckgo_tool = None
+    for tool in tools:
+        # FunctionTool has attribute func.__name__ for function name
+        if tool.func.__name__ == "search_duckduckgo":
+            duckduckgo_tool = tool
+            break
 
-    # Create ChatAgent with Gemini model and DuckDuckGo tool
+    if duckduckgo_tool is None:
+        raise RuntimeError("DuckDuckGo search tool not found")
+
+    # Create agent with system message and tools
+    system_message = "You are a helpful assistant with access to DuckDuckGo search."
     agent = ChatAgent(
-        system_message="You are a helpful assistant.",
+        system_message=system_message,
         model=model,
         tools=[duckduckgo_tool]
     )
 
-    # Example usage: ask a question
+    # Example question
     question = "What is the capital of France?"
-    # Use agent.step() to get response
+
+    # Agent answers the question
     response = agent.step(question)
-    print(f"Q: {question}\nA: {response}")
+    print("Question:", question)
+    print("Answer:", response)
 
 
 if __name__ == "__main__":

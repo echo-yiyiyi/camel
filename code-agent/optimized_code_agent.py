@@ -606,14 +606,14 @@ if __name__ == "__main__":
     cnt = 0
     for task_name, task_description in task_list.items():
         cnt += 1
-        if cnt <= 0:
+        if cnt <= 2:
             continue
         result = run_task(task_name, task_description)
 
         print(f"\n--- Result Preview ---")
         print(f"Code output: {result['code_output'][:500]}...")
 
-        if cnt >= 2:  # Limit for testing
+        if cnt >= 20:  # Limit for testing
             break
 
     print(f"\n{'='*60}")

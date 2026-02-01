@@ -78,9 +78,10 @@ class CodeSearchToolkit:
         args = []
         for excl in self.exclude_dirs:
             if tool == 'fd':
-                args.append(f'-E "{excl}"')
+                # No quotes needed - fd handles patterns directly
+                args.append(f'-E {excl}')
             else:  # rg
-                args.append(f'--glob "!{excl}" --glob "!**/{excl}/**"')
+                args.append(f"--glob '!{excl}' --glob '!**/{excl}/**'")
         return ' '.join(args)
 
     def glob_search(
