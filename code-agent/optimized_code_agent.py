@@ -606,7 +606,7 @@ if __name__ == "__main__":
     cnt = 0
     for task_name, task_description in task_list.items():
         cnt += 1
-        if cnt <= 2:
+        if cnt <= 0:
             continue
         result = run_task(task_name, task_description)
 
