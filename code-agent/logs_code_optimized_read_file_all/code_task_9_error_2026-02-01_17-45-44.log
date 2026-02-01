@@ -1,0 +1,2955 @@
+Task: task_9
+Status: ERROR
+Start Time: 2026-02-01T17:45:44.914895
+End Time: 2026-02-01T17:50:47.718035
+Total Duration: 302.80 seconds
+  - Explore Phase: 32.76 seconds
+  - Code Phase: 270.04 seconds
+Description: create an agent with longterm memory and human interaction tools. Write an example query to test it. Save the script to task-script/single_agent/9_longterm_memory_single_agent.py
+Code Error: TimeoutError: Step timed out after 180.0s
+================================================================================
+
+EXPLORE PHASE
+================================================================================
+Tool Calls: 27
+----------------------------------------
+
+[1] glob_search
+Args: {
+  "pattern": "**/*longterm*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: No files found matching pattern '**/*longterm*.py'
+
+[2] glob_search
+Args: {
+  "pattern": "**/*agent*.py",
+  "path": "camel/agents",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*agent*.py':
+camel/agents/critic_agent.py
+camel/agents/deductive_reasoner_agent.py
+camel/agents/embodied_agent.py
+camel/agents/knowledge_graph_agent.py
+camel/agents/mcp_agent.py
+camel/agents/multi_hop_generator_agent.py
+camel/agents/programmed_agent_instruction.py
+camel/agents/role_assignment_agent.py
+camel/agents/search_agent.py
+camel/agents/task_agent.py
+
+[3] glob_search
+Args: {
+  "pattern": "**/*tool*.py",
+  "path": "camel/toolkits",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*tool*.py':
+camel/toolkits/browser_toolkit.py
+camel/toolkits/browser_toolkit_commons.py
+camel/toolkits/function_tool.py
+camel/toolkits/github_toolkit.py
+camel/toolkits/mineru_toolkit.py
+camel/toolkits/openbb_toolkit.py
+camel/toolkits/sympy_toolkit.py
+camel/toolkits/task_planning_toolkit.py
+camel/toolkits/weather_toolkit.py
+camel/toolkits/wolfram_alpha_toolkit.py
+
+[4] glob_search
+Args: {
+  "pattern": "**/*example*.py",
+  "path": "examples",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*example*.py':
+examples/extractors/python_strategies_example.py
+examples/loaders/apify_example.py
+examples/loaders/crawl4ai_example.py
+examples/loaders/firecrawl_example.py
+examples/loaders/jina_url_reader_example.py
+examples/loaders/markitdown_example.py
+examples/loaders/mineru_example.py
+examples/loaders/mistral_example.py
+examples/loaders/scrapegraph_example.py
+examples/loaders/unstructured_io_example.py
+
+[5] grep_search
+Args: {
+  "pattern": "LongtermAgentMemory",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": false,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: No matches found for pattern 'LongtermAgentMemory'
+
+[6] grep_search
+Args: {
+  "pattern": "LongtermAgentMemory",
+  "path": "camel",
+  "glob_filter": "*.py",
+  "ignore_case": false,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'LongtermAgentMemory' in *.py files (2 matches):
+memories/agent_memories.py
+memories/__init__.py
+
+[7] read_file
+Args: {
+  "file_path": "camel/memories/__init__.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[8] read_file
+Args: {
+  "file_path": "camel/agents/__init__.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[9] read_file
+Args: {
+  "file_path": "camel/toolkits/__init__.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[10] read_file
+Args: {
+  "file_path": "camel/memories/agent_memories.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[11] grep_search
+Args: {
+  "pattern": "HumanToolkit",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": false,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'HumanToolkit' in *.py files (3 matches):
+debug/eigent.py
+toolkits/human_toolkit.py
+workforce/eigent.py
+
+[12] read_file
+Args: {
+  "file_path": "camel/toolkits/human_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[13] glob_search
+Args: {
+  "pattern": "**/*longterm*.py",
+  "path": "examples",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: No files found matching pattern '**/*longterm*.py'
+
+[14] grep_search
+Args: {
+  "pattern": "LongtermAgentMemory",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": false,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: No matches found for pattern 'LongtermAgentMemory'
+
+[15] grep_search
+Args: {
+  "pattern": "LongtermAgentMemory",
+  "path": "test",
+  "glob_filter": "*.py",
+  "ignore_case": false,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'LongtermAgentMemory' in *.py files (1 matches):
+memories/test_agent_memories.py
+
+[16] read_file
+Args: {
+  "file_path": "memories/test_agent_memories.py"
+}
+Result: Error: File 'memories/test_agent_memories.py' does not exist.
+
+[17] read_file
+Args: {
+  "file_path": "test/memories/test_agent_memories.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[18] glob_search
+Args: {
+  "pattern": "**/*example*.py",
+  "path": "examples/agents",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: No files found matching pattern '**/*example*.py'
+
+[19] glob_search
+Args: {
+  "pattern": "**/*agent*.py",
+  "path": "examples",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*agent*.py':
+examples/benchmarks/browsecomp_chat_agent.py
+examples/evaluation/single_agent.py
+examples/generate_text_embedding_data/single_agent.py
+examples/knowledge_graph/knowledge_graph_agent_example.py
+examples/memories/agent_memory_example.py
+examples/misalignment/single_agent.py
+examples/rag/single_agent_with_hybrid_rag.py
+examples/test/test_single_agent.py
+examples/workforce/multiple_single_agents.py
+examples/workforce/role_playing_with_agents.py
+
+[20] read_file
+Args: {
+  "file_path": "examples/memories/agent_memory_example.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[21] glob_search
+Args: {
+  "pattern": "**/*longterm*.py",
+  "path": "examples/memories",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: No files found matching pattern '**/*longterm*.py'
+
+[22] grep_search
+Args: {
+  "pattern": "LongtermAgentMemory",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": false,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: No matches found for pattern 'LongtermAgentMemory'
+
+[23] grep_search
+Args: {
+  "pattern": "LongtermAgentMemory",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": false,
+  "output_mode": "content",
+  "context_lines": 5,
+  "max_results": 5
+}
+Result: No matches found for pattern 'LongtermAgentMemory'
+
+[24] grep_search
+Args: {
+  "pattern": "HumanToolkit",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": false,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'HumanToolkit' in *.py files (3 matches):
+debug/eigent.py
+toolkits/human_toolkit.py
+workforce/eigent.py
+
+[25] grep_search
+Args: {
+  "pattern": "HumanToolkit",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": false,
+  "output_mode": "content",
+  "context_lines": 5,
+  "max_results": 5
+}
+Result: Search results for 'HumanToolkit' in *.py files (5 matches):
+debug/eigent.py-28-    AudioAnalysisToolkit,
+debug/eigent.py-29-    Crawl4AIToolkit,
+debug/eigent.py-30-    ExcelToolkit,
+debug/eigent.py-31-    FileWriteToolkit,
+debug/eigent.py-32-    # GoogleDriveMCPToolkit,
+
+[26] grep_search
+Args: {
+  "pattern": "HumanToolkit",
+  "path": "examples/toolkits",
+  "glob_filter": "*.py",
+  "ignore_case": false,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'HumanToolkit' in *.py files (1 matches):
+human_toolkit.py
+
+[27] read_file
+Args: {
+  "file_path": "examples/toolkits/human_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+----------------------------------------
+Output:
+## Implementation
+- camel/memories/agent_memories.py
+  - Classes: ChatHistoryMemory, VectorDBMemory, LongtermAgentMemory
+  - Note: LongtermAgentMemory augments ChatHistoryMemory with VectorDBMemory for persistent longterm memory.
+
+- camel/toolkits/human_toolkit.py
+  - Class: HumanToolkit
+  - Functions: ask_human_via_console (two-way human interaction), send_message_to_user (one-way user notification)
+  - Provides tools for human interaction usable by agents.
+
+## Examples (MOST IMPORTANT)
+- examples/memories/agent_memory_example.py
+  - Shows usage of ChatAgent with ChatHistoryMemory and memory saving/loading.
+  - Demonstrates memory persistence and interaction with multiple agents.
+
+- examples/toolkits/human_toolkit.py
+  - Shows usage of ChatAgent with HumanToolkit tools.
+  - Demonstrates asking human questions and sending messages to user via agent tools.
+
+## Tests
+- test/memories/test_agent_memories.py
+  - Tests for LongtermAgentMemory and ChatHistoryMemory functionalities.
+
+# Summary
+To create an agent with longterm memory and human interaction tools, use:
+- LongtermAgentMemory from camel/memories/agent_memories.py for memory
+- HumanToolkit from camel/toolkits/human_toolkit.py for human interaction tools
+- ChatAgent from camel/agents/chat_agent.py (imported in examples)
+
+The examples in examples/memories/agent_memory_example.py and examples/toolkits/human_toolkit.py provide usage patterns for memory and human tools respectively.
+
+You can combine these patterns to create your script at task-script/single_agent/9_longterm_memory_single_agent.py.
+================================================================================
+
+CODE PHASE
+================================================================================
+Tool Calls: 0
+----------------------------------------
+
+----------------------------------------
+Output:
+[ERROR] TimeoutError: Step timed out after 180.0s
+================================================================================
+
+EXPLORE AGENT CHAT HISTORY
+================================================================================
+
+[Message 1]
+Role: system
+Content: You are a code exploration specialist. Find relevant files for a task.
+
+## Tools
+
+1. **glob_search(pattern, path?, max_results?)** - Find files by name pattern
+2. **grep_search(pattern, path?, glob_filter?, ignore_case?, output_mode?)** - Search file contents
+3. **read_file(file_path)** - Read file contents (auto-limits to 2000 lines for large files)
+4. **list_directory(path?)** - List directory contents
+5. **find_definition(name, definition_type?)** - Find class/function definitions
+6. **find_imports(module_name, ignore_case?)** - Find files that import a module
+
+## Search Techniques (CRITICAL)
+
+### Technique 1: Search whole repo first, NEVER restrict path initially
+```python
+# WRONG - misses examples/models/qwen_model_example.py
+glob_search("**/*qwen*.py", path="camel/models")
+
+# CORRECT - searches entire repo
+glob_search("**/*qwen*.py")
+```
+
+### Technique 2: Use find_imports to find REAL usage
+```python
+find_imports("WeatherToolkit")
+find_imports("QwenModel")
+```
+
+### Technique 3: Read __init__.py to understand module exports
+```python
+read_file("camel/toolkits/__init__.py")
+read_file("camel/models/__init__.py")
+```
+
+### Technique 4: Parallel search for ALL keywords
+For task "weather agent with Qwen", call ALL in parallel:
+```python
+glob_search("**/*qwen*.py")
+glob_search("**/*weather*.py")
+find_imports("qwen")
+find_imports("WeatherToolkit")
+```
+
+### Technique 5: Tests and examples contain best usage patterns
+```python
+glob_search("**/test_*qwen*.py")
+glob_search("**/*example*.py")
+```
+
+### Technique 6: Find EXACT enum values for models/tools
+When task specifies a model like "Qwen2.5-14B-Instruct", search for the exact ModelType enum:
+```python
+# Search with partial match (enum names use underscores, not hyphens)
+grep_search("QWEN_2_5.*14B", path="camel/types/enums.py")
+grep_search("QWEN_2_5", path="camel/types/enums.py")
+```
+CAMEL ModelType naming convention:
+- No "_INSTRUCT" suffix usually (e.g., QWEN_2_5_14B not QWEN_2_5_14B_INSTRUCT)
+- Use underscores not hyp
+... (truncated)
+
+
+[Message 2]
+Role: user
+Content: Find relevant files for this task:
+
+**Task**: create an agent with longterm memory and human interaction tools. Write an example query to test it. Save the script to task-script/single_agent/9_longterm_memory_single_agent.py
+
+**Repository Context**:
+
+## CAMEL Repository Structure
+
+### Core Modules
+- `camel/agents/` - Agent implementations (ChatAgent is the base)
+- `camel/models/` - LLM provider integrations (50+)
+- `camel/memories/` - Memory systems (ChatHistoryMemory, LongtermAgentMemory, VectorDBMemory)
+- `camel/configs/` - Model configuration classes
+- `camel/toolkits/` - Tool integrations (50+)
+- `camel/types/` - Enums (ModelPlatformType, ModelType, RoleType)
+
+### Other Directories
+- `examples/` - Usage examples
+- `test/` - Test files
+- `docs/` - Documentation
+
+
+Search for implementation files, examples, tests, and documentation.
+Return the most relevant file paths with brief explanations.
+Focus on finding:
+1. Example scripts that show similar usage patterns
+2. Implementation files for the required components
+3. Configuration/type definitions
+
+
+[Message 3]
+Role: assistant
+
+[Message 4]
+Role: tool
+Content: No files found matching pattern '**/*longterm*.py'
+
+[Message 5]
+Role: assistant
+
+[Message 6]
+Role: tool
+Content: Found 10 file(s) matching '**/*agent*.py':
+camel/agents/critic_agent.py
+camel/agents/deductive_reasoner_agent.py
+camel/agents/embodied_agent.py
+camel/agents/knowledge_graph_agent.py
+camel/agents/mcp_agent.py
+camel/agents/multi_hop_generator_agent.py
+camel/agents/programmed_agent_instruction.py
+camel/agents/role_assignment_agent.py
+camel/agents/search_agent.py
+camel/agents/task_agent.py
+
+[Message 7]
+Role: assistant
+
+[Message 8]
+Role: tool
+Content: Found 10 file(s) matching '**/*tool*.py':
+camel/toolkits/browser_toolkit.py
+camel/toolkits/browser_toolkit_commons.py
+camel/toolkits/function_tool.py
+camel/toolkits/github_toolkit.py
+camel/toolkits/mineru_toolkit.py
+camel/toolkits/openbb_toolkit.py
+camel/toolkits/sympy_toolkit.py
+camel/toolkits/task_planning_toolkit.py
+camel/toolkits/weather_toolkit.py
+camel/toolkits/wolfram_alpha_toolkit.py
+
+[Message 9]
+Role: assistant
+
+[Message 10]
+Role: tool
+Content: Found 10 file(s) matching '**/*example*.py':
+examples/extractors/python_strategies_example.py
+examples/loaders/apify_example.py
+examples/loaders/crawl4ai_example.py
+examples/loaders/firecrawl_example.py
+examples/loaders/jina_url_reader_example.py
+examples/loaders/markitdown_example.py
+examples/loaders/mineru_example.py
+examples/loaders/mistral_example.py
+examples/loaders/scrapegraph_example.py
+examples/loaders/unstructured_io_example.py
+
+[Message 11]
+Role: assistant
+
+[Message 12]
+Role: tool
+Content: No matches found for pattern 'LongtermAgentMemory'
+
+[Message 13]
+Role: assistant
+
+[Message 14]
+Role: tool
+Content: Search results for 'LongtermAgentMemory' in *.py files (2 matches):
+memories/agent_memories.py
+memories/__init__.py
+
+[Message 15]
+Role: assistant
+
+[Message 16]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+from .agent_memories import (
+    ChatHistoryMemory,
+    LongtermAgentMemory,
+    VectorDBMemory,
+)
+from .base import AgentMemory, BaseContextCreator, MemoryBlock
+from .blocks.chat_history_block import ChatHistoryBlock
+from .blocks.vectordb_block import VectorDBBlock
+from .context_creators.score_based import ScoreBasedContextCreator
+from .records import ContextRecord, MemoryRecord
+
+__all__ = [
+    'MemoryRecord',
+    'ContextRecord',
+    'MemoryBlock',
+    "AgentMemory",
+    'BaseContextCreator',
+    'ScoreBasedContextCreator',
+    'ChatHistoryMemory',
+    'VectorDBMemory',
+    'ChatHistoryBlock',
+    'VectorDBBlock',
+    'LongtermAgentMemory',
+]
+
+[Message 17]
+Role: assistant
+
+[Message 18]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from .base import BaseAgent
+from .chat_agent import ChatAgent
+from .critic_agent import CriticAgent
+from .embodied_agent import EmbodiedAgent
+from .knowledge_graph_agent import KnowledgeGraphAgent
+from .mcp_agent import MCPAgent
+from .repo_agent import RepoAgent
+from .role_assignment_agent import RoleAssignmentAgent
+from .search_agent import SearchAgent
+from .task_agent import (
+    TaskCreationAgent,
+    TaskPlannerAgent,
+    TaskPrioritizationAgent,
+    TaskSpecifyAgent,
+)
+from .tool_agents.base import BaseToolAgent
+from .tool_agents.hugging_face_tool_agent import HuggingFaceToolAgent
+
+__all__ = [
+    'BaseAgent',
+    'ChatAgent',
+    'TaskSpecifyAgent',
+    'TaskPlannerAgent',
+    'TaskCreationAgent',
+    'TaskPrioritizationAgent',
+    'CriticAgent',
+    'BaseToolAgent',
+    'HuggingFaceToolAgent',
+    'EmbodiedAgent',
+    'RoleAssignmentAgent',
+    'SearchAgent',
+    'KnowledgeGraphAgent',
+    'MCPAgent',
+    'RepoAgent',
+]
+
+[Message 19]
+Role: assistant
+
+[Message 20]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# ruff: noqa: I001
+from .function_tool import (
+    FunctionTool,
+    get_openai_function_schema,
+    get_openai_tool_schema,
+    generate_docstring,
+)
+from .open_api_specs.security_config import openapi_security_config
+
+from .math_toolkit import MathToolkit
+from .search_toolkit import SearchToolkit
+from .weather_toolkit import WeatherToolkit
+from .image_generation_toolkit import ImageGenToolkit, OpenAIImageToolkit
+from .ask_news_toolkit import AskNewsToolkit, AsyncAskNewsToolkit
+from .linkedin_toolkit import LinkedInToolkit
+from .reddit_toolkit import RedditToolkit
+from .meshy_toolkit import MeshyToolkit
+from .openbb_toolkit import OpenBBToolkit
+from .bohrium_toolkit import BohriumToolkit
+
+from .base import BaseToolkit, RegisteredAgentToolkit, manual_timeout
+from .google_maps_toolkit import GoogleMapsToolkit
+from .code_execution import CodeExecutionToolkit
+from .github_toolkit import GithubToolkit
+from .google_scholar_toolkit import GoogleScholarToolkit
+from .google_calendar_toolkit import GoogleCalendarToolkit
+from .gmail_toolkit import GmailToolkit
+from .arxiv_toolkit import ArxivToolkit
+from .slack_toolkit import SlackToolkit
+from .whatsapp_toolkit import WhatsAppToolkit
+from .wechat_official_toolkit import WeChatOfficialToolkit
+from .dingtalk import DingtalkToolkit
+from .l
+... (truncated)
+
+
+[Message 21]
+Role: assistant
+
+[Message 22]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+import warnings
+from typing import List, Optional
+
+from camel.memories.base import AgentMemory, BaseContextCreator
+from camel.memories.blocks import ChatHistoryBlock, VectorDBBlock
+from camel.memories.records import ContextRecord, MemoryRecord
+from camel.storages.key_value_storages.base import BaseKeyValueStorage
+from camel.storages.vectordb_storages.base import BaseVectorStorage
+from camel.types import OpenAIBackendRole
+
+
+class ChatHistoryMemory(AgentMemory):
+    r"""An agent memory wrapper of :obj:`ChatHistoryBlock`.
+
+    Args:
+        context_creator (BaseContextCreator): A model context creator.
+        storage (BaseKeyValueStorage, optional): A storage backend for storing
+            chat history. If `None`, an :obj:`InMemoryKeyValueStorage`
+            will be used. (default: :obj:`None`)
+        window_size (int, optional): The number of recent chat messages to
+            retrieve. If not provided, the entire chat history will be
+            retrieved.  (default: :obj:`None`)
+        agent_id (str, optional): The ID of the agent associated with the chat
+            history.
+    """
+
+    def __init__(
+        self,
+        context_creator: BaseContextCreator,
+        storage: Optional[BaseKeyValueStorage] = None,
+        window_size: Optional[int] = None,
+        agent_
+... (truncated)
+
+
+[Message 23]
+Role: assistant
+
+[Message 24]
+Role: tool
+Content: Search results for 'HumanToolkit' in *.py files (3 matches):
+debug/eigent.py
+toolkits/human_toolkit.py
+workforce/eigent.py
+
+[Message 25]
+Role: assistant
+
+[Message 26]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+import logging
+from typing import List
+
+from camel.toolkits.base import BaseToolkit
+from camel.toolkits.function_tool import FunctionTool
+
+logger = logging.getLogger(__name__)
+
+
+class HumanToolkit(BaseToolkit):
+    r"""A class representing a toolkit for human interaction.
+
+    Note:
+        This toolkit should be called to send a tidy message to the user to
+        keep them informed.
+    """
+
+    def ask_human_via_console(self, question: str) -> str:
+        r"""Use this tool to ask a question to the user when you are stuck,
+        need clarification, or require a decision to be made. This is a
+        two-way communication channel that will wait for the user's response.
+        You should use it to:
+        - Clarify ambiguous instructions or requirements.
+        - Request missing information that you cannot find (e.g., login
+        credentials, file paths).
+        - Ask for a decision when there are multiple viable options.
+        - Seek help when you encounter an error you cannot resolve on your own.
+
+        Args:
+            question (str): The question to ask the user.
+
+        Returns:
+            str: The user's response to the question.
+        """
+        print(f"Question: {question}")
+        logger.info(f"Question: {question}")
+        reply = input("Your rep
+... (truncated)
+
+
+[Message 27]
+Role: assistant
+
+[Message 28]
+Role: tool
+Content: No files found matching pattern '**/*longterm*.py'
+
+[Message 29]
+Role: assistant
+
+[Message 30]
+Role: tool
+Content: No matches found for pattern 'LongtermAgentMemory'
+
+[Message 31]
+Role: assistant
+
+[Message 32]
+Role: tool
+Content: Search results for 'LongtermAgentMemory' in *.py files (1 matches):
+memories/test_agent_memories.py
+
+[Message 33]
+Role: assistant
+
+[Message 34]
+Role: tool
+Content: Error: File 'memories/test_agent_memories.py' does not exist.
+
+[Message 35]
+Role: assistant
+
+[Message 36]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from datetime import datetime
+from unittest.mock import MagicMock
+
+import pytest
+
+from camel.memories import (
+    BaseContextCreator,
+    ChatHistoryBlock,
+    ChatHistoryMemory,
+    LongtermAgentMemory,
+    MemoryRecord,
+    VectorDBBlock,
+)
+from camel.messages import BaseMessage, FunctionCallingMessage
+from camel.storages.key_value_storages import InMemoryKeyValueStorage
+from camel.types import OpenAIBackendRole, RoleType
+
+
+class TestLongtermAgentMemory:
+    @pytest.fixture
+    def mock_chat_history_block(self):
+        return MagicMock(spec=ChatHistoryBlock)
+
+    @pytest.fixture
+    def mock_vector_db_block(self):
+        return MagicMock(spec=VectorDBBlock)
+
+    @pytest.fixture
+    def mock_context_creator(self):
+        return MagicMock(spec=BaseContextCreator)
+
+    def test_init_with_default_components(self, mock_context_creator):
+        memory = LongtermAgentMemory(mock_context_creator)
+        assert memory.chat_history_block is not None
+        assert memory.vector_db_block is not None
+
+    def test_init_with_custom_components(
+        self,
+        mock_chat_history_block,
+        mock_vector_db_block,
+        mock_context_creator,
+    ):
+        memory = LongtermAgentMemory(
+            mock_context_creator,
+            chat_history_block=mock_chat_history_block,
+ 
+... (truncated)
+
+
+[Message 37]
+Role: assistant
+
+[Message 38]
+Role: tool
+Content: No files found matching pattern '**/*example*.py'
+
+[Message 39]
+Role: assistant
+
+[Message 40]
+Role: tool
+Content: Found 10 file(s) matching '**/*agent*.py':
+examples/benchmarks/browsecomp_chat_agent.py
+examples/evaluation/single_agent.py
+examples/generate_text_embedding_data/single_agent.py
+examples/knowledge_graph/knowledge_graph_agent_example.py
+examples/memories/agent_memory_example.py
+examples/misalignment/single_agent.py
+examples/rag/single_agent_with_hybrid_rag.py
+examples/test/test_single_agent.py
+examples/workforce/multiple_single_agents.py
+examples/workforce/role_playing_with_agents.py
+
+[Message 41]
+Role: assistant
+
+[Message 42]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+from pathlib import Path
+
+from camel.agents import ChatAgent
+from camel.memories import ChatHistoryMemory
+from camel.memories.context_creators.score_based import (
+    ScoreBasedContextCreator,
+)
+from camel.messages import BaseMessage
+from camel.models.model_factory import ModelFactory
+from camel.types import ModelPlatformType, ModelType
+from camel.types.enums import OpenAIBackendRole
+from camel.utils import OpenAITokenCounter
+
+context_creator = ScoreBasedContextCreator(
+    token_counter=OpenAITokenCounter(ModelType.GPT_4O_MINI),
+    token_limit=1024,
+)
+
+model = ModelFactory.create(
+    model_platform=ModelPlatformType.OPENAI,
+    model_type=ModelType.GPT_4O_MINI,
+)
+
+# 1. Instantiate a ChatAgent with system_message & agent_id
+#    Using ChatHistoryMemory as an example memory store.
+agent = ChatAgent(
+    system_message="You are a helpful assistant",
+    agent_id="001",
+    model=model,
+)
+
+# 2. Perform steps so that some MemoryRecords accumulate
+#    - We'll just send a message and read the response to populate memory
+user_input_1 = (
+    "Hello, can you remember these instructions?: Banana is a country."
+)
+response_1 = agent.step(user_input_1)
+print(
+    "Assistant response 1:",
+    response_1.msgs[0].content if response_1.msgs else "No response",
+)
+'''
+=============
+... (truncated)
+
+
+[Message 43]
+Role: assistant
+
+[Message 44]
+Role: tool
+Content: No files found matching pattern '**/*longterm*.py'
+
+[Message 45]
+Role: assistant
+
+[Message 46]
+Role: tool
+Content: No matches found for pattern 'LongtermAgentMemory'
+
+[Message 47]
+Role: assistant
+
+[Message 48]
+Role: tool
+Content: No matches found for pattern 'LongtermAgentMemory'
+
+[Message 49]
+Role: assistant
+
+[Message 50]
+Role: tool
+Content: Search results for 'HumanToolkit' in *.py files (3 matches):
+debug/eigent.py
+toolkits/human_toolkit.py
+workforce/eigent.py
+
+[Message 51]
+Role: assistant
+
+[Message 52]
+Role: tool
+Content: Search results for 'HumanToolkit' in *.py files (5 matches):
+debug/eigent.py-28-    AudioAnalysisToolkit,
+debug/eigent.py-29-    Crawl4AIToolkit,
+debug/eigent.py-30-    ExcelToolkit,
+debug/eigent.py-31-    FileWriteToolkit,
+debug/eigent.py-32-    # GoogleDriveMCPToolkit,
+
+[Message 53]
+Role: assistant
+
+[Message 54]
+Role: tool
+Content: Search results for 'HumanToolkit' in *.py files (1 matches):
+human_toolkit.py
+
+[Message 55]
+Role: assistant
+
+[Message 56]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+
+from camel.agents import ChatAgent
+from camel.configs import ChatGPTConfig
+from camel.models import ModelFactory
+from camel.toolkits import HumanToolkit
+from camel.types import ModelPlatformType, ModelType
+
+human_toolkit = HumanToolkit()
+
+model = ModelFactory.create(
+    model_platform=ModelPlatformType.OPENAI,
+    model_type=ModelType.GPT_4O_MINI,
+    model_config_dict=ChatGPTConfig(
+        temperature=0.0,
+    ).as_dict(),
+)
+
+# Example 1: Test Agent with the human toolkit (ask_human_via_console)
+print("\nExample 1: Using ask_human_via_console through an agent")
+agent = ChatAgent(
+    system_message="You are a helpful assistant.",
+    model=model,
+    tools=[*human_toolkit.get_tools()],
+)
+
+response = agent.step(
+    "Test me on the capital of some country, and comment on my answer."
+)
+
+print(response.msgs[0].content)
+
+"""
+==========================================================================
+What is the capital of France?
+Your reply: Paris
+
+That's correct! Paris is indeed the capital of France. Would you like to try
+another one?
+Your reply: yes
+
+What is the capital of Japan?
+Your reply: Tokyo
+
+That's correct! Tokyo is the capital of Japan. Would you like to continue with
+another question?
+Your reply: no
+===================================================================
+... (truncated)
+
+
+[Message 57]
+Role: assistant
+Content: ## Implementation
+- camel/memories/agent_memories.py
+  - Classes: ChatHistoryMemory, VectorDBMemory, LongtermAgentMemory
+  - Note: LongtermAgentMemory augments ChatHistoryMemory with VectorDBMemory for persistent longterm memory.
+
+- camel/toolkits/human_toolkit.py
+  - Class: HumanToolkit
+  - Functions: ask_human_via_console (two-way human interaction), send_message_to_user (one-way user notification)
+  - Provides tools for human interaction usable by agents.
+
+## Examples (MOST IMPORTANT)
+- examples/memories/agent_memory_example.py
+  - Shows usage of ChatAgent with ChatHistoryMemory and memory saving/loading.
+  - Demonstrates memory persistence and interaction with multiple agents.
+
+- examples/toolkits/human_toolkit.py
+  - Shows usage of ChatAgent with HumanToolkit tools.
+  - Demonstrates asking human questions and sending messages to user via agent tools.
+
+## Tests
+- test/memories/test_agent_memories.py
+  - Tests for LongtermAgentMemory and ChatHistoryMemory functionalities.
+
+# Summary
+To create an agent with longterm memory and human interaction tools, use:
+- LongtermAgentMemory from camel/memories/agent_memories.py for memory
+- HumanToolkit from camel/toolkits/human_toolkit.py for human interaction tools
+- ChatAgent from camel/agents/chat_agent.py (imported in examples)
+
+The examples in examples/memories/agent_memory_example.py and examples/toolkits/human_toolkit.py provide usage patterns for memory and human tools respectively.
+
+You can combine these patterns to create your script at task-script/single_agent/9_longterm_memory_single_agent.py.
+
+================================================================================
+
+CODE AGENT CHAT HISTORY
+================================================================================
+
+[Message 1]
+Role: system
+Content: You are a Code Agent that writes and executes Python scripts.
+
+## Tools
+
+You have access to terminal tools for:
+- `shell_exec`: Execute shell commands
+- `shell_write_content_to_file`: Write content to a file
+- `read_file_tool`: Read file contents
+
+## Workflow
+
+1. **Read relevant files** from the paths provided by the explore agent
+2. **Write the script** using `shell_write_content_to_file`
+3. **Execute the script** using `shell_exec`
+4. **Debug if needed**: If errors occur, read the error, fix the script, and re-run
+
+## CRITICAL: Strict Instruction Following
+
+**Use EXACTLY what the task specifies. Do NOT substitute "similar" or "better" alternatives.**
+
+### Model Selection
+- Task says "Qwen2.5-14B-Instruct" -> Use `ModelType.QWEN_2_5_14B` EXACTLY
+- Do NOT use QWEN_3_CODER_PLUS as "closest alternative"
+- Do NOT guess enum names - verify from enums.py or examples
+
+### Tool Selection
+- Task says "duckduckgo search" -> Use `search_toolkit.search_duckduckgo` EXACTLY
+- Do NOT use `get_tools()` which returns ALL tools
+- Do NOT substitute with other search engines
+
+### URL Handling
+- If task provides a URL (e.g., "https://mcpservers.org/servers/devin/deepwiki"):
+  - Prioritize DIRECT HTTP access using `requests` library
+  - Create a simple FunctionTool that calls the URL
+  - Do NOT assume it requires complex registry (ACI, etc.)
+  - Example:
+    ```python
+    def query_server(query: str) -> str:
+        response = requests.post(url, json={"query": query})
+        return response.text
+    tool = FunctionTool(func=query_server)
+    ```
+
+## Important Rules
+
+1. **Use the provided file paths** - The explore agent has found relevant examples and implementations
+2. **Follow existing patterns** - Look at examples to understand how to use the APIs
+3. **Handle errors gracefully** - If execution fails, analyze the error and fix it
+4. **Environment is ready** - All API keys and dependencies are configured
+5. **Save to correct location** - Follow the task's specified output path
+6. **Use EXACT values** - Copy enum values, method names exactly from explored files
+
+## Script Writing Tips
+
+- Import from camel package: `from camel.agents import ChatAgent`
+- Use ModelFactory for models: `ModelFactory.create(model_platform=..., model_type=...)`
+- Copy exact enum values from enums.py (e.g., `ModelType.QWEN_2_5_14B`)
+- Use specific tool methods, not get_tools() (e.g., `toolkit.search_duckduckgo`)
+- Add proper error handling in your scripts
+
+## Debugging Tips
+
+- If you see import errors, check the correct module path in __init__.py
+- If you see AttributeError for enum, verify the exact enum name in enums.py
+- If you see API errors, it's likely a script issue, not environment
+- Read more files if you need to understand the API better
+
+
+[Message 2]
+Role: user
+Content: **Task**: create an agent with longterm memory and human interaction tools. Write an example query to test it. Save the script to task-script/single_agent/9_longterm_memory_single_agent.py
+
+**Relevant files found by exploration**:
+## Implementation
+- camel/memories/agent_memories.py
+  - Classes: ChatHistoryMemory, VectorDBMemory, LongtermAgentMemory
+  - Note: LongtermAgentMemory augments ChatHistoryMemory with VectorDBMemory for persistent longterm memory.
+
+- camel/toolkits/human_toolkit.py
+  - Class: HumanToolkit
+  - Functions: ask_human_via_console (two-way human interaction), send_message_to_user (one-way user notification)
+  - Provides tools for human interaction usable by agents.
+
+## Examples (MOST IMPORTANT)
+- examples/memories/agent_memory_example.py
+  - Shows usage of ChatAgent with ChatHistoryMemory and memory saving/loading.
+  - Demonstrates memory persistence and interaction with multiple agents.
+
+- examples/toolkits/human_toolkit.py
+  - Shows usage of ChatAgent with HumanToolkit tools.
+  - Demonstrates asking human questions and sending messages to user via agent tools.
+
+## Tests
+- test/memories/test_agent_memories.py
+  - Tests for LongtermAgentMemory and ChatHistoryMemory functionalities.
+
+# Summary
+To create an agent with longterm memory and human interaction tools, use:
+- LongtermAgentMemory from camel/memories/agent_memories.py for memory
+- HumanToolkit from camel/toolkits/human_toolkit.py for human interaction tools
+- ChatAgent from camel/agents/chat_agent.py (imported in examples)
+
+The examples in examples/memories/agent_memory_example.py and examples/toolkits/human_toolkit.py provide usage patterns for memory and human tools respectively.
+
+You can combine these patterns to create your script at task-script/single_agent/9_longterm_memory_single_agent.py.
+
+**Instructions**:
+1. Read the relevant example files to understand the API usage patterns
+2. Write the script according to the task requirements using `shell_write_content_to_file`
+3. Execute the script using `shell_exec` with `python <script_path>`
+4. If errors occur, debug and fix until successful
+
+Note: The environment and APIs are correctly configured. If you encounter errors,
+it's likely a script issue that needs fixing.
+
+
+[Message 3]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_ouPpEgMKvqS0cfyLfsWHN5K8",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.memories.agent_memories import LongtermAgentMemory\\nfrom camel.toolkits.human_toolkit import HumanToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.models.enums import ModelType\\n\\n\\ndef main():\\n    # Create the model\\n    model = ModelFactory.create(model_platform=\\\"qwen\\\", model_type=ModelType.QWEN_2_5_14B)\\n\\n    # Create longterm memory\\n    memory = LongtermAgentMemory(agent_id=\\\"longterm_agent\\\")\\n\\n    # Create human interaction tools\\n    human_toolkit = HumanToolkit()\\n\\n    # Create the agent with longterm memory and human interaction tools\\n    agent = ChatAgent(\\n        name=\\\"LongtermAgent\\\",\\n        system_message=\\\"You are a helpful assistant with longterm memory and human interaction capabilities.\\\",\\n        model=model,\\n        memory=memory,\\n        tools=human_toolkit.get_tools(),\\n    )\\n\\n    # Example query to test the agent\\n    query = \\\"Hello! Can you remember this conversation for the long term?\\\"\\n    response = agent.chat(query)\\n    print(f\\\"User: {query}\\\")\\n    print(f\\\"Agent: {response}\\\")\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/single_agent/9_longterm_memory_single_agent.py\"}"
+    }
+  }
+]
+
+[Message 4]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py'.
+
+[Message 5]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_kEn4q3s79D6Fa4C8SPwFpaXD",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_longterm_agent\", \"command\": \"python task-script/single_agent/9_longterm_memory_single_agent.py\", \"block\": true, \"timeout\": 30}"
+    }
+  }
+]
+
+[Message 6]
+Role: tool
+Content: Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py", line 5, in <module>
+    from camel.models.enums import ModelType
+ModuleNotFoundError: No module named 'camel.models.enums'
+
+[Message 7]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_WyPlEgqjDJgkgVQvAUoUHtU0",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/models/enums.py\"}"
+    }
+  }
+]
+
+[Message 8]
+Role: tool
+Content: Error: File 'camel/models/enums.py' does not exist.
+
+[Message 9]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_S7BypbfnZ7RhlzQZ5EoPVuaW",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/models/model_factory.py\"}"
+    }
+  }
+]
+
+[Message 10]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import json
+import os
+from typing import Any, ClassVar, Dict, Optional, Type, Union
+
+from camel.models.aihubmix_model import AihubMixModel
+from camel.models.aiml_model import AIMLModel
+from camel.models.amd_model import AMDModel
+from camel.models.anthropic_model import AnthropicModel
+from camel.models.atlascloud_model import AtlasCloudModel
+from camel.models.aws_bedrock_model import AWSBedrockModel
+from camel.models.azure_openai_model import AzureOpenAIModel
+from camel.models.base_model import BaseModelBackend
+from camel.models.cerebras_model import CerebrasModel
+from camel.models.cohere_model import CohereModel
+from camel.models.cometapi_model import CometAPIModel
+from camel.models.crynux_model import CrynuxModel
+from camel.models.deepseek_model import DeepSeekModel
+from camel.models.function_gemma_model import FunctionGemmaModel
+from camel.models.gemini_model import GeminiModel
+from camel.models.groq_model import GroqModel
+from camel.models.internlm_model import InternLMModel
+from camel.models.litellm_model import LiteLLMModel
+from camel.models.lmstudio_model import LMStudioModel
+from camel.models.minimax_model import MinimaxModel
+from camel.models.mistral_model import MistralModel
+from camel.models.modelscope_model import ModelScopeModel
+from camel.models.moonshot_model import MoonshotModel
+from camel.models.nebius_model import NebiusModel
+from camel.models.netmind_model import NetmindModel
+from camel.models.novita_model import NovitaModel
+from camel.models.nvidia_model import NvidiaModel
+from camel.models.ollama_model import OllamaModel
+from camel.models.openai_compatible_model import OpenAICompatibleModel
+from camel.models.openai_model import OpenAIModel
+from camel.models.openrouter_model import OpenRouterModel
+from camel.models.ppio_model import PPIOModel
+from camel.models.qianfan_model import QianfanModel
+from camel.models.qwen_model import QwenModel
+from camel.models.reka_model import RekaModel
+from camel.models.samba_model import SambaModel
+from camel.models.sglang_model import SGLangModel
+from camel.models.siliconflow_model import SiliconFlowModel
+from camel.models.stub_model import StubModel
+from camel.models.togetherai_model import TogetherAIModel
+from camel.models.vllm_model import VLLMModel
+from camel.models.volcano_model import VolcanoModel
+from camel.models.watsonx_model import WatsonXModel
+from camel.models.yi_model import YiModel
+from camel.models.zhipuai_model import ZhipuAIModel
+from camel.types import ModelPlatformType, ModelType, UnifiedModelType
+from camel.utils import BaseTokenCounter, configure_langfuse
+
+
+class ModelFactory:
+    r"""Factory of backend models.
+
+    Raises:
+        ValueError: in case the provided model type is unknown.
+    """
+
+    _MODEL_PLATFORM_TO_CLASS_MAP: ClassVar[
+        Dict[ModelPlatformType, Type[BaseModelBackend]]
+    ] = {
+        ModelPlatformType.OLLAMA: OllamaModel,
+        ModelPlatformType.VLLM: VLLMModel,
+        ModelPlatformType.SGLANG: SGLangModel,
+        ModelPlatformType.OPENAI_COMPATIBLE_MODEL: OpenAICompatibleModel,
+        ModelPlatformType.SAMBA: SambaModel,
+        ModelPlatformType.TOGETHER: TogetherAIModel,
+        ModelPlatformType.LITELLM: LiteLLMModel,
+        ModelPlatformType.AWS_BEDROCK: AWSBedrockModel,
+        ModelPlatformType.NVIDIA: NvidiaModel,
+        ModelPlatformType.SILICONFLOW: SiliconFlowModel,
+        ModelPlatformType.AMD: AMDModel,
+        ModelPlatformType.AIML: AIMLModel,
+        ModelPlatformType.VOLCANO: VolcanoModel,
+        ModelPlatformType.NETMIND: NetmindModel,
+        ModelPlatformType.OPENAI: OpenAIModel,
+        ModelPlatformType.AZURE: AzureOpenAIModel,
+        ModelPlatformType.ANTHROPIC: AnthropicModel,
+        ModelPlatformType.GROQ: GroqModel,
+        ModelPlatformType.CEREBRAS: CerebrasModel,
+        ModelPlatformType.COMETAPI: CometAPIModel,
+        ModelPlatformType.NEBIUS: NebiusModel,
+        ModelPlatformType.LMSTUDIO: LMStudioModel,
+        ModelPlatformType.MINIMAX: MinimaxModel,
+        ModelPlatformType.OPENROUTER: OpenRouterModel,
+        ModelPlatformType.ATLASCLOUD: AtlasCloudModel,
+        ModelPlatformType.ZHIPU: ZhipuAIModel,
+        ModelPlatformType.GEMINI: GeminiModel,
+        ModelPlatformType.MISTRAL: MistralModel,
+        ModelPlatformType.REKA: RekaModel,
+        ModelPlatformType.COHERE
+... (truncated)
+
+
+[Message 11]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_E5tr3F6i1i6sZOOM5ztdz0cx",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/types.py\"}"
+    }
+  }
+]
+
+[Message 12]
+Role: tool
+Content: Error: File 'camel/types.py' does not exist.
+
+[Message 13]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_9wIiQXRG7kbNaOD3B0WcI1Kn",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/models/__init__.py\"}"
+    }
+  }
+]
+
+[Message 14]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from .aihubmix_model import AihubMixModel
+from .aiml_model import AIMLModel
+from .amd_model import AMDModel
+from .anthropic_model import AnthropicModel
+from .atlascloud_model import AtlasCloudModel
+from .aws_bedrock_model import AWSBedrockModel
+from .azure_openai_model import AzureOpenAIModel
+from .base_audio_model import BaseAudioModel
+from .base_model import BaseModelBackend
+from .cerebras_model import CerebrasModel
+from .cohere_model import CohereModel
+from .cometapi_model import CometAPIModel
+from .crynux_model import CrynuxModel
+from .deepseek_model import DeepSeekModel
+from .fish_audio_model import FishAudioModel
+from .function_gemma_model import FunctionGemmaModel
+from .gemini_model import GeminiModel
+from .groq_model import GroqModel
+from .internlm_model import InternLMModel
+from .litellm_model import LiteLLMModel
+from .lmstudio_model import LMStudioModel
+from .minimax_model import MinimaxModel
+from .mistral_model import MistralModel
+from .model_factory import ModelFactory
+from .model_manager import ModelManager, ModelProcessingError
+from .modelscope_model import ModelScopeModel
+from .moonshot_model import MoonshotModel
+from .nebius_model import NebiusModel
+from .nemotron_model import NemotronModel
+from .netmind_model import NetmindModel
+from .novita_model import NovitaModel
+from .nvidia_model import NvidiaModel
+from .ollama_model import OllamaModel
+from .openai_audio_models import OpenAIAudioModels
+from .openai_compatible_model import OpenAICompatibleModel
+from .openai_model import OpenAIModel
+from .openrouter_model import OpenRouterModel
+from .ppio_model import PPIOModel
+from .qianfan_model import QianfanModel
+from .qwen_model import QwenModel
+from .reka_model import RekaModel
+from .samba_model import SambaModel
+from .sglang_model import SGLangModel
+from .siliconflow_model import SiliconFlowModel
+from .stub_model import StubModel
+from .togetherai_model import TogetherAIModel
+from .vllm_model import VLLMModel
+from .volcano_model import VolcanoModel
+from .watsonx_model import WatsonXModel
+from .yi_model import YiModel
+from .zhipuai_model import ZhipuAIModel
+
+__all__ = [
+    'BaseModelBackend',
+    'OpenAIModel',
+    'OpenRouterModel',
+    'AtlasCloudModel',
+    'AzureOpenAIModel',
+    'AnthropicModel',
+    'AMDModel',
+    'MistralModel',
+    'GroqModel',
+    'StubModel',
+    'ZhipuAIModel',
+    'CerebrasModel',
+    'CohereModel',
+    'CometAPIModel',
+    'ModelFactory',
+    'ModelManager',
+    'LiteLLMModel',
+    'OpenAIAudioModels',
+    'NetmindModel',
+    'NemotronModel',
+    'NovitaModel',
+    'NvidiaModel',
+    'OllamaModel',
+    'VLLMModel',
+    'SGLangModel',
+    'GeminiModel',
+    'OpenAICompatibleModel',
+    'RekaModel',
+    'SambaModel',
+    'TogetherAIModel',
+    'PPIOModel',
+    'YiModel',
+    'QwenModel',
+    'AWSBedrockModel',
+    'ModelProcessingError',
+    'NebiusModel',
+    'DeepSeekModel',
+    'FishAudioModel',
+    'InternLMModel',
+    'ModelScopeModel',
+    'MoonshotModel',
+    'AIMLModel',
+    'BaseAudioModel',
+    'SiliconFlowModel',
+    'VolcanoModel',
+    'LMStudioModel',
+    'MinimaxModel',
+    'WatsonXModel',
+    'QianfanModel',
+    'CrynuxModel',
+    'AihubMixModel',
+    'FunctionGemmaModel',
+]
+
+[Message 15]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_WorD4VkK3cwrM13u2RKiEemE",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/models/qwen_model.py\"}"
+    }
+  }
+]
+
+[Message 16]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+import os
+from typing import Any, Dict, Optional, Union
+
+from camel.configs import QwenConfig
+from camel.models.openai_compatible_model import OpenAICompatibleModel
+from camel.types import ModelType
+from camel.utils import (
+    BaseTokenCounter,
+    api_keys_required,
+)
+
+
+class QwenModel(OpenAICompatibleModel):
+    r"""Qwen API in a unified OpenAICompatibleModel interface.
+
+    Args:
+        model_type (Union[ModelType, str]): Model for which a backend is
+            created, one of Qwen series.
+        model_config_dict (Optional[Dict[str, Any]], optional): A dictionary
+            that will be fed into:obj:`openai.ChatCompletion.create()`. If
+            :obj:`None`, :obj:`QwenConfig().as_dict()` will be used.
+            (default: :obj:`None`)
+        api_key (Optional[str], optional): The API key for authenticating with
+            the Qwen service. (default: :obj:`None`)
+        url (Optional[str], optional): The url to the Qwen service.
+            (default: :obj:`https://dashscope.aliyuncs.com/compatible-mode/v1`)
+        token_counter (Optional[BaseTokenCounter], optional): Token counter to
+            use for the model. If not provided, :obj:`OpenAITokenCounter(
+            ModelType.GPT_4O_MINI)` will be used.
+            (default: :obj:`None`)
+        timeout (Optional[float], optional): The timeout value in seconds for
+            API calls. If not provided, will fall back to the MODEL_TIMEOUT
+            environment variable or default to 180 seconds.
+            (default: :obj:`None`)
+        max_retries (int, optional): Maximum number of retries for API calls.
+            (default: :obj:`3`)
+        **kwargs (Any): Additional arguments to pass to the client
+            initialization.
+    """
+
+    @api_keys_required(
+        [
+            ("api_key", "QWEN_API_KEY"),
+        ]
+    )
+    def __init__(
+        self,
+        model_type: Union[ModelType, str],
+        model_config_dict: Optional[Dict[str, Any]] = None,
+        api_key: Optional[str] = None,
+        url: Optional[str] = None,
+        token_counter: Optional[BaseTokenCounter] = None,
+        timeout: Optional[float] = None,
+        max_retries: int = 3,
+        **kwargs: Any,
+    ) -> None:
+        if model_config_dict is None:
+            model_config_dict = QwenConfig().as_dict()
+        api_key = api_key or os.environ.get("QWEN_API_KEY")
+        url = url or os.environ.get(
+            "QWEN_API_BASE_URL",
+            "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        )
+        timeout = timeout or float(os.environ.get("MODEL_TIMEOUT", 180))
+        super().__init__(
+            model_type=model_type,
+            model_config_dict=model_config_dict,
+            api_key=api_key,
+            url=url,
+            token_counter=token_counter,
+            timeout=timeout,
+            max_retries=max_retries,
+            **kwargs,
+        )
+
+[Message 17]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_xiq7liAUBz6t6QOFZ9esUyUM",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/types/enums.py\"}"
+    }
+  }
+]
+
+[Message 18]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+from enum import Enum, EnumMeta
+from typing import Union, cast
+
+from camel.logger import get_logger
+from camel.types.unified_model_type import UnifiedModelType
+
+logger = get_logger(__name__)
+
+
+class RoleType(Enum):
+    ASSISTANT = "assistant"
+    USER = "user"
+    SYSTEM = "system"
+    CRITIC = "critic"
+    EMBODIMENT = "embodiment"
+    DEFAULT = "default"
+
+
+class ModelType(UnifiedModelType, Enum):
+    DEFAULT = os.getenv("DEFAULT_MODEL_TYPE", "gpt-4.1-mini-2025-04-14")
+
+    GPT_3_5_TURBO = "gpt-3.5-turbo"
+    GPT_4 = "gpt-4"
+    GPT_4_TURBO = "gpt-4-turbo"
+    GPT_4O = "gpt-4o"
+    GPT_4O_MINI = "gpt-4o-mini"
+    GPT_4_5_PREVIEW = "gpt-4.5-preview"
+    O1 = "o1"
+    O1_PREVIEW = "o1-preview"
+    O1_MINI = "o1-mini"
+    O3_MINI = "o3-mini"
+    GPT_4_1 = "gpt-4.1-2025-04-14"
+    GPT_4_1_MINI = "gpt-4.1-mini-2025-04-14"
+    GPT_4_1_NANO = "gpt-4.1-nano-2025-04-14"
+    O4_MINI = "o4-mini"
+    O3 = "o3"
+    O3_PRO = "o3-pro"
+    GPT_5_1 = "gpt-5.1"
+    GPT_5_2 = ("gpt-5.2",)
+    GPT_5 = "gpt-5"
+    GPT_5_MINI = "gpt-5-mini"
+    GPT_5_NANO = "gpt-5-nano"
+
+    AWS_CLAUDE_3_7_SONNET = "anthropic.claude-3-7-sonnet-20250219-v1:0"
+    AWS_CLAUDE_3_5_SONNET = "anthropic.claude-3-5-sonnet-20241022-v2:0"
+    AWS_CLAUDE_3_HAIKU = "anthropic.claude-3-haiku-20240307-v1:0"
+    AWS_CLAUDE_3_SONNET = "anthropic.claude-3-sonnet-20240229-v1:0"
+    AWS_DEEPSEEK_R1 = "us.deepseek.r1-v1:0"
+    AWS_LLAMA_3_3_70B_INSTRUCT = "us.meta.llama3-3-70b-instruct-v1:0"
+    AWS_LLAMA_3_2_90B_INSTRUCT = "us.meta.llama3-2-90b-instruct-v1:0"
+    AWS_LLAMA_3_2_11B_INSTRUCT = "us.meta.llama3-2-11b-instruct-v1:0"
+    AWS_CLAUDE_SONNET_4 = "anthropic.claude-sonnet-4-20250514-v1:0"
+    AWS_CLAUDE_OPUS_4 = "anthropic.claude-opus-4-20250514-v1:0"
+    AWS_CLAUDE_OPUS_4_1 = "anthropic.claude-opus-4-1-20250805-v1:0"
+
+    AMD_GPT4 = "dvue-aoai-001-gpt-4.1"
+
+    GLM_4_7 = "glm-4.7"
+    GLM_4_7_FLASH = "glm-4.7-flash"
+    GLM_4_7_FLASHX = "glm-4.7-flashx"
+    GLM_4_6 = "glm-4.6"
+    GLM_4_6V = "glm-4.6v"
+    GLM_4_6V_FLASH = "glm-4.6v-flash"
+    GLM_4 = "glm-4"
+    GLM_4_5_AIR = "glm-4.5-air"
+    GLM_4_5_AIRX = "glm-4.5-airx"
+    GLM_4_5_FLASH = "glm-4.5-flash"
+    GLM_4V = "glm-4v"
+    GLM_4_1V_THINKING_FLASHX = "glm-4.1v-thinking-flashx"
+    GLM_4_1V_THINKING_FLASH = "glm-4.1v-thinking-flash"
+    GLM_4V_FLASH = "glm-4v-flash"
+    GLM_4V_PLUS_0111 = "glm-4v-plus-0111"
+    GLM_4_PLUS = "glm-4-plus"
+    GLM_4_AIR = "glm-4-air"
+    GLM_4_AIR_0111 = "glm-4-air-0111"
+    GLM_4_AIRX = "glm-4-airx"
+    GLM_4_LONG = "glm-4-long"
+    GLM_4_FLASHX = "glm-4-flashx"
+    GLM_4_FLASHX_250414 = "glm-4-flashx-250414"
+    GLM_4_FLASH = "glm-4-flash"
+    GLM_4_FLASH_250414 = "glm-4-flash-250414"
+    GLM_ZERO_PREVIEW = "glm-zero-preview"
+    GLM_3_TURBO = "glm-3-turbo"
+
+    # Groq platform models
+    GROQ_LLAMA_3_1_8B = "llama-3.1-8b-instant"
+    GROQ_LLAMA_3_3_70B = "llama-3.3-70b-versatile"
+
+    # Cerebras platform models
+    CEREBRAS_GPT_OSS_120B = "gpt-oss-120b"
+    CEREBRAS_LLAMA_3_1_8B = "llama3.1-8b"
+    CEREBRAS_LLAMA_3_3_70B = "llama3.3-70b"
+    CEREBRAS_QWEN_3_32B = "qwen-3-32b"
+
+    # Nebius AI Studio platform models
+    NEBIUS_GPT_OSS_120B = "gpt-oss-120b"
+    NEBIUS_GPT_OSS_20B = "gpt-oss-20b"
+    NEBIUS_GLM_4_5 = "GLM-4.5"
+    NEBIUS_DEEPSEEK_V3 = "deepseek-ai/DeepSeek-V3"
+    NEBIUS_DEEPSEEK_R1 = "deepseek-ai/DeepSeek-R1"
+    NEBIUS_LLAMA_3_1_70B = "meta-llama/Meta-Llama-3.1-70B-Instruct"
+    NEBIUS_MISTRAL_7B_INSTRUCT = "mistralai/Mistral-7B-Instruct-v0.3"
+
+    # CometAPI platform models
+    COMETAPI_GPT_5_CHAT_LATEST = "gpt-5-chat-latest"
+    COMETAPI_CHATGPT_4O_LATEST = "chatgpt-4o-latest"
+    COMETAPI_GPT_5_MINI = "gpt-5-mini"
+    COMETAPI_GPT_5_NANO = "gpt-5-nano"
+    COMETAPI_GPT_5 = "gpt-5"
+    COMETAPI_GPT_4_1 = "gpt-4.1"
+    COMETAPI_GPT_4O_MINI = "gpt-4o-mini"
+    COMETAPI_O4_MINI_2025_04_16 = "o4-mini-2025-04-16"
+    COMETAPI_O3_PRO_2025_06_10 = "o3-pro-2025-06-10"
+    COMETAPI_CLAUDE_OPUS_4_1_20250805 = "claude-opus-4-1-20250805"
+    COMETAPI_CLAUDE_OPUS_4_1_20250805_THINKING = (
+        "claude-opus-4-1-20250805-thinking"
+    )
+    COMETAPI_CLAUDE_SONNET_4_20250514 = "claude-sonnet-4-20250514"
+    COMETAPI_CLAUDE_SONNET_4_20250514_THINKING = (
+        "claude-sonnet-4-20250514-thinking"
+    )
+    COMETAPI_CLAUDE_3_7_SONNET_LATEST = "claude-3-7-sonnet
+... (truncated)
+
+
+[Message 19]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_3mcICEqZdnKv2XgpFi5DYVlf",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.memories.agent_memories import LongtermAgentMemory\\nfrom camel.toolkits.human_toolkit import HumanToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType\\n\\n\\ndef main():\\n    # Create the model\\n    model = ModelFactory.create(model_platform=\\\"qwen\\\", model_type=ModelType.QWEN_2_5_14B)\\n\\n    # Create longterm memory\\n    memory = LongtermAgentMemory(agent_id=\\\"longterm_agent\\\")\\n\\n    # Create human interaction tools\\n    human_toolkit = HumanToolkit()\\n\\n    # Create the agent with longterm memory and human interaction tools\\n    agent = ChatAgent(\\n        name=\\\"LongtermAgent\\\",\\n        system_message=\\\"You are a helpful assistant with longterm memory and human interaction capabilities.\\\",\\n        model=model,\\n        memory=memory,\\n        tools=human_toolkit.get_tools(),\\n    )\\n\\n    # Example query to test the agent\\n    query = \\\"Hello! Can you remember this conversation for the long term?\\\"\\n    response = agent.chat(query)\\n    print(f\\\"User: {query}\\\")\\n    print(f\\\"Agent: {response}\\\")\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/single_agent/9_longterm_memory_single_agent.py\"}"
+    }
+  }
+]
+
+[Message 20]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py'.
+
+[Message 21]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_p09Xl55nsdjp8gIGCOLyLniz",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_longterm_agent\", \"command\": \"python task-script/single_agent/9_longterm_memory_single_agent.py\", \"block\": true, \"timeout\": 30}"
+    }
+  }
+]
+
+[Message 22]
+Role: tool
+Content: Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/model_factory.py", line 188, in create
+    model_platform = ModelPlatformType(model_platform)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/enum.py", line 714, in __call__
+    return cls.__new__(cls, value)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/enum.py", line 1137, in __new__
+    raise ve_exc
+ValueError: 'qwen' is not a valid ModelPlatformType
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py", line 35, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py", line 10, in main
+    model = ModelFactory.create(model_platform="qwen", model_type=ModelType.QWEN_2_5_14B)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/model_factory.py", line 190, in create
+    raise ValueError(f"Unknown model platform: {model_platform}")
+ValueError: Unknown model platform: qwen
+
+[Message 23]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_IjJIfvqOws6XpRJPYgUepPsc",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.memories.agent_memories import LongtermAgentMemory\\nfrom camel.toolkits.human_toolkit import HumanToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType\\n\\n\\ndef main():\\n    # Create the model\\n    model = ModelFactory.create(model_platform=\\\"tongyi-qianwen\\\", model_type=ModelType.QWEN_2_5_14B)\\n\\n    # Create longterm memory\\n    memory = LongtermAgentMemory(agent_id=\\\"longterm_agent\\\")\\n\\n    # Create human interaction tools\\n    human_toolkit = HumanToolkit()\\n\\n    # Create the agent with longterm memory and human interaction tools\\n    agent = ChatAgent(\\n        name=\\\"LongtermAgent\\\",\\n        system_message=\\\"You are a helpful assistant with longterm memory and human interaction capabilities.\\\",\\n        model=model,\\n        memory=memory,\\n        tools=human_toolkit.get_tools(),\\n    )\\n\\n    # Example query to test the agent\\n    query = \\\"Hello! Can you remember this conversation for the long term?\\\"\\n    response = agent.chat(query)\\n    print(f\\\"User: {query}\\\")\\n    print(f\\\"Agent: {response}\\\")\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/single_agent/9_longterm_memory_single_agent.py\"}"
+    }
+  }
+]
+
+[Message 24]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py'.
+
+[Message 25]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_Y8eq9iMFyjnHhde4oFQF1qQI",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_longterm_agent\", \"command\": \"python task-script/single_agent/9_longterm_memory_single_agent.py\", \"block\": true, \"timeout\": 30}"
+    }
+  }
+]
+
+[Message 26]
+Role: tool
+Content: Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py", line 35, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py", line 13, in main
+    memory = LongtermAgentMemory(agent_id="longterm_agent")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: LongtermAgentMemory.__init__() missing 1 required positional argument: 'context_creator'
+
+[Message 27]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_4WP1U0zKnArzd7vWzagV6VFo",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/memories/agent_memories.py\"}"
+    }
+  }
+]
+
+[Message 28]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+import warnings
+from typing import List, Optional
+
+from camel.memories.base import AgentMemory, BaseContextCreator
+from camel.memories.blocks import ChatHistoryBlock, VectorDBBlock
+from camel.memories.records import ContextRecord, MemoryRecord
+from camel.storages.key_value_storages.base import BaseKeyValueStorage
+from camel.storages.vectordb_storages.base import BaseVectorStorage
+from camel.types import OpenAIBackendRole
+
+
+class ChatHistoryMemory(AgentMemory):
+    r"""An agent memory wrapper of :obj:`ChatHistoryBlock`.
+
+    Args:
+        context_creator (BaseContextCreator): A model context creator.
+        storage (BaseKeyValueStorage, optional): A storage backend for storing
+            chat history. If `None`, an :obj:`InMemoryKeyValueStorage`
+            will be used. (default: :obj:`None`)
+        window_size (int, optional): The number of recent chat messages to
+            retrieve. If not provided, the entire chat history will be
+            retrieved.  (default: :obj:`None`)
+        agent_id (str, optional): The ID of the agent associated with the chat
+            history.
+    """
+
+    def __init__(
+        self,
+        context_creator: BaseContextCreator,
+        storage: Optional[BaseKeyValueStorage] = None,
+        window_size: Optional[int] = None,
+        agent_id: Optional[str] = None,
+    ) -> None:
+        if window_size is not None and not isinstance(window_size, int):
+            raise TypeError("`window_size` must be an integer or None.")
+        if window_size is not None and window_size < 0:
+            raise ValueError("`window_size` must be non-negative.")
+        self._context_creator = context_creator
+        self._window_size = window_size
+        self._chat_history_block = ChatHistoryBlock(
+            storage=storage,
+        )
+        self._agent_id = agent_id
+
+    @property
+    def agent_id(self) -> Optional[str]:
+        return self._agent_id
+
+    @agent_id.setter
+    def agent_id(self, val: Optional[str]) -> None:
+        self._agent_id = val
+
+    def retrieve(self) -> List[ContextRecord]:
+        records = self._chat_history_block.retrieve(self._window_size)
+        if self._window_size is not None and len(records) == self._window_size:
+            warnings.warn(
+                f"Chat history window size limit ({self._window_size}) "
+                f"reached. Some earlier messages will not be included in "
+                f"the context. Consider increasing window_size if you need "
+                f"a longer context.",
+                UserWarning,
+                stacklevel=2,
+            )
+        return records
+
+    def write_records(self, records: List[MemoryRecord]) -> None:
+        for record in records:
+            # assign the agent_id to the record
+            if record.agent_id == "" and self.agent_id is not None:
+                record.agent_id = self.agent_id
+        self._chat_history_block.write_records(records)
+
+    def get_context_creator(self) -> BaseContextCreator:
+        return self._context_creator
+
+    def clear(self) -> None:
+        self._chat_history_block.clear()
+
+    def clean_tool_calls(self) -> None:
+        r"""Removes tool call messages from memory.
+        This method removes all FUNCTION/TOOL role messages and any ASSISTANT
+        messages that contain tool_calls in their meta_dict to save token
+        usage.
+        """
+        from camel.types import OpenAIBackendRole
+
+        # Get all messages from storage
+        record_dicts = self._chat_history_block.storage.load()
+        if not record_dicts:
+            return
+
+        # Track indices to remove (reverse order for efficient deletion)
+        indices_to_remove = []
+
+        # Identify indices of tool-related messages
+        for i, record in enumerate(record_dicts):
+            role = record.get('role_at_backend')
+
+            # Mark FUNCTION messages for removal
+            if role == OpenAIBackendRole.FUNCTION.value:
+                indices_to_remove.append(i)
+            # Mark TOOL messages for removal
+            elif role == OpenAIBackendRole.TOOL.value:
+                indices_to_remove.append(i)
+            # Mark ASSISTANT messages with tool_calls for removal
+            elif role == OpenAIBackendRole.ASSISTANT.value:
+                message_dict = record.get('message', {})
+        
+... (truncated)
+
+
+[Message 29]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_VxBnKgY43v9rpqSxpkKnjjLc",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.memories.agent_memories import LongtermAgentMemory\\nfrom camel.toolkits.human_toolkit import HumanToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType\\nfrom camel.memories.base import BaseContextCreator\\n\\n\\ndef main():\\n    # Create a dummy context creator (required by LongtermAgentMemory)\\n    context_creator = BaseContextCreator()\\n\\n    # Create the model\\n    model = ModelFactory.create(model_platform=\\\"tongyi-qianwen\\\", model_type=ModelType.QWEN_2_5_14B)\\n\\n    # Create longterm memory with context creator\\n    memory = LongtermAgentMemory(context_creator=context_creator, agent_id=\\\"longterm_agent\\\")\\n\\n    # Create human interaction tools\\n    human_toolkit = HumanToolkit()\\n\\n    # Create the agent with longterm memory and human interaction tools\\n    agent = ChatAgent(\\n        name=\\\"LongtermAgent\\\",\\n        system_message=\\\"You are a helpful assistant with longterm memory and human interaction capabilities.\\\",\\n        model=model,\\n        memory=memory,\\n        tools=human_toolkit.get_tools(),\\n    )\\n\\n    # Example query to test the agent\\n    query = \\\"Hello! Can you remember this conversation for the long term?\\\"\\n    response = agent.chat(query)\\n    print(f\\\"User: {query}\\\")\\n    print(f\\\"Agent: {response}\\\")\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/single_agent/9_longterm_memory_single_agent.py\"}"
+    }
+  }
+]
+
+[Message 30]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py'.
+
+[Message 31]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_ubrJwmT4b46N10Lg7cq0a4lC",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_longterm_agent\", \"command\": \"python task-script/single_agent/9_longterm_memory_single_agent.py\", \"block\": true, \"timeout\": 30}"
+    }
+  }
+]
+
+[Message 32]
+Role: tool
+Content: Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py", line 39, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py", line 11, in main
+    context_creator = BaseContextCreator()
+                      ^^^^^^^^^^^^^^^^^^^^
+TypeError: Can't instantiate abstract class BaseContextCreator with abstract methods create_context, token_counter, token_limit
+
+[Message 33]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_qr8bD3W0pTGk1MzO90YLu3fK",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/memories/base.py\"}"
+    }
+  }
+]
+
+[Message 34]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+from abc import ABC, abstractmethod
+from typing import List, Optional, Tuple
+
+from camel.memories.records import ContextRecord, MemoryRecord
+from camel.messages import OpenAIMessage
+from camel.utils import BaseTokenCounter
+
+
+class MemoryBlock(ABC):
+    r"""An abstract class serves as the fundamental component within the agent
+    memory system. This class is equipped with "write" and "clear" functions.
+    However, it intentionally does not define a retrieval interface, as the
+    structure of the data to be retrieved may vary in different types of
+    memory blocks.
+    """
+
+    @abstractmethod
+    def write_records(self, records: List[MemoryRecord]) -> None:
+        r"""Writes records to the memory, appending them to existing ones.
+
+        Args:
+            records (List[MemoryRecord]): Records to be added to the memory.
+        """
+        pass
+
+    def write_record(self, record: MemoryRecord) -> None:
+        r"""Writes a record to the memory, appending it to existing ones.
+
+        Args:
+            record (MemoryRecord): Record to be added to the memory.
+        """
+        self.write_records([record])
+
+    def pop_records(self, count: int) -> List[MemoryRecord]:
+        r"""Removes records from the memory and returns the removed records.
+
+        Args:
+            count (int): Number of records to remove.
+
+        Returns:
+            List[MemoryRecord]: The records that were removed from the memory
+                in their original order.
+        """
+        raise NotImplementedError
+
+    def remove_records_by_indices(
+        self, indices: List[int]
+    ) -> List[MemoryRecord]:
+        r"""Removes records at specified indices from the memory.
+
+        Args:
+            indices (List[int]): List of indices to remove. Indices should be
+                valid positions in the current record list.
+
+        Returns:
+            List[MemoryRecord]: The removed records in their original order.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def clear(self) -> None:
+        r"""Clears all messages from the memory."""
+        pass
+
+
+class BaseContextCreator(ABC):
+    r"""An abstract base class defining the interface for context creation
+    strategies.
+
+    This class provides a foundational structure for different strategies to
+    generate conversational context from a list of context records. The
+    primary goal is to create a context that is aligned with a specified token
+    count limit, allowing subclasses to define their specific approach.
+
+    Subclasses should implement the :obj:`token_counter`,:obj: `token_limit`,
+    and :obj:`create_context` methods to provide specific context creation
+    logic.
+
+    Attributes:
+        token_counter (BaseTokenCounter): A token counter instance responsible
+            for counting tokens in a message.
+        token_limit (int): The maximum number of tokens allowed in the
+            generated context.
+    """
+
+    @property
+    @abstractmethod
+    def token_counter(self) -> BaseTokenCounter:
+        pass
+
+    @property
+    @abstractmethod
+    def token_limit(self) -> int:
+        pass
+
+    @abstractmethod
+    def create_context(
+        self,
+        records: List[ContextRecord],
+    ) -> Tuple[List[OpenAIMessage], int]:
+        r"""An abstract method to create conversational context from the chat
+        history.
+
+        Constructs the context from provided records. The specifics of how this
+        is done and how the token count is managed should be provided by
+        subclasses implementing this method. The output messages order
+        should keep same as the input order.
+
+        Args:
+            records (List[ContextRecord]): A list of context records from
+                which to generate the context.
+
+        Returns:
+            Tuple[List[OpenAIMessage], int]: A tuple containing the constructed
+                context in OpenAIMessage format and the total token count.
+        """
+        pass
+
+
+class AgentMemory(MemoryBlock, ABC):
+    r"""Represents a specialized form of `MemoryBlock`, uniquely designed for
+    direct integration with an agent. Two key abstract functions, "retrieve"
+    and "get_context_creator", are used for generating model context based on
+    the memory records stored within the AgentMemory.
+    """
+
+    @propert
+... (truncated)
+
+
+[Message 35]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_ftTpZnHmgYPPe1xbYmeaDJaX",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.memories.agent_memories import LongtermAgentMemory\\nfrom camel.toolkits.human_toolkit import HumanToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType\\nfrom camel.memories.base import BaseContextCreator\\nfrom camel.utils import BaseTokenCounter\\nfrom camel.messages import OpenAIMessage\\nfrom typing import List, Tuple\\n\\n\\nclass DummyContextCreator(BaseContextCreator):\\n    @property\\n    def token_counter(self) -> BaseTokenCounter:\\n        return BaseTokenCounter()\\n\\n    @property\\n    def token_limit(self) -> int:\\n        return 2048\\n\\n    def create_context(self, records: List) -> Tuple[List[OpenAIMessage], int]:\\n        # Just return empty context and 0 tokens for simplicity\\n        return [], 0\\n\\n\\ndef main():\\n    # Create a dummy context creator (required by LongtermAgentMemory)\\n    context_creator = DummyContextCreator()\\n\\n    # Create the model\\n    model = ModelFactory.create(model_platform=\\\"tongyi-qianwen\\\", model_type=ModelType.QWEN_2_5_14B)\\n\\n    # Create longterm memory with context creator\\n    memory = LongtermAgentMemory(context_creator=context_creator, agent_id=\\\"longterm_agent\\\")\\n\\n    # Create human interaction tools\\n    human_toolkit = HumanToolkit()\\n\\n    # Create the agent with longterm memory and human interaction tools\\n    agent = ChatAgent(\\n        name=\\\"LongtermAgent\\\",\\n        system_message=\\\"You are a helpful assistant with longterm memory and human interaction capabilities.\\\",\\n        model=model,\\n        memory=memory,\\n        tools=human_toolkit.get_tools(),\\n    )\\n\\n    # Example query to test the agent\\n    query = \\\"Hello! Can you remember this conversation for the long term?\\\"\\n    response = agent.chat(query)\\n    print(f\\\"User: {query}\\\")\\n    print(f\\\"Agent: {response}\\\")\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/single_agent/9_longterm_memory_single_agent.py\"}"
+    }
+  }
+]
+
+[Message 36]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py'.
+
+[Message 37]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_gC9ekATTBMvstirQv7lv9UnK",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_longterm_agent\", \"command\": \"python task-script/single_agent/9_longterm_memory_single_agent.py\", \"block\": true, \"timeout\": 30}"
+    }
+  }
+]
+
+[Message 38]
+Role: tool
+Content: Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py", line 56, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py", line 40, in main
+    agent = ChatAgent(
+            ^^^^^^^^^^
+TypeError: ChatAgent.__init__() got an unexpected keyword argument 'name'
+
+[Message 39]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_F3F8G6PpKXFYlYVJhvvZ9uFD",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/agents/chat_agent.py\"}"
+    }
+  }
+]
+
+[Message 40]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from __future__ import annotations
+
+import asyncio
+import atexit
+import base64
+import concurrent.futures
+import functools
+import hashlib
+import inspect
+import json
+import os
+import random
+import re
+import tempfile
+import textwrap
+import threading
+import time
+import uuid
+import warnings
+from dataclasses import dataclass
+from datetime import datetime
+from pathlib import Path
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    AsyncGenerator,
+    Callable,
+    Dict,
+    Generator,
+    List,
+    Optional,
+    Set,
+    Tuple,
+    Type,
+    Union,
+    cast,
+)
+
+from openai import (
+    AsyncStream,
+    RateLimitError,
+    Stream,
+)
+from pydantic import BaseModel, ValidationError
+
+from camel.agents._types import ModelResponse, ToolCallRequest
+from camel.agents._utils import (
+    build_default_summary_prompt,
+    convert_to_function_tool,
+    convert_to_schema,
+    get_info_dict,
+    handle_logprobs,
+    safe_model_dump,
+)
+from camel.agents.base import BaseAgent
+from camel.logger import get_logger
+from camel.memories import (
+    AgentMemory,
+    ChatHistoryMemory,
+    MemoryRecord,
+    ScoreBasedContextCreator,
+)
+from camel.messages import (
+    BaseMessage,
+    FunctionCallingMessage,
+    OpenAIMessage,
+)
+from camel.models import (
+    BaseModelBackend,
+    ModelFactory,
+    ModelManager,
+    ModelProcessingError,
+)
+from camel.prompts import TextPrompt
+from camel.responses import ChatAgentResponse
+from camel.storages import JsonStorage
+from camel.toolkits import FunctionTool, RegisteredAgentToolkit
+from camel.types import (
+    ChatCompletion,
+    ChatCompletionChunk,
+    ModelPlatformType,
+    ModelType,
+    OpenAIBackendRole,
+    RoleType,
+)
+from camel.types.agents import ToolCallingRecord
+from camel.utils import (
+    Constants,
+    get_model_encoding,
+    model_from_json_schema,
+)
+from camel.utils.commons import dependencies_required
+from camel.utils.context_utils import ContextUtility
+from camel.utils.tool_result import ToolResult
+
+if TYPE_CHECKING:
+    from camel.terminators import ResponseTerminator
+
+logger = get_logger(__name__)
+
+# Cleanup temp files on exit
+_temp_files: Set[str] = set()
+_temp_files_lock = threading.Lock()
+
+
+def _cleanup_temp_files():
+    with _temp_files_lock:
+        for path in _temp_files:
+            try:
+                os.unlink(path)
+            except Exception:
+                pass
+
+
+atexit.register(_cleanup_temp_files)
+
+# AgentOps decorator setting
+try:
+    if os.getenv("AGENTOPS_API_KEY") is not None:
+        from agentops import track_agent
+    else:
+        raise ImportError
+except (ImportError, AttributeError):
+    from camel.utils import track_agent
+
+# Langfuse decorator setting
+if os.environ.get("LANGFUSE_ENABLED", "False").lower() == "true":
+    try:
+        from langfuse.decorators import observe
+    except ImportError:
+        from camel.utils import observe
+elif os.environ.get("TRACEROOT_ENABLED", "False").lower() == "true":
+    try:
+        from traceroot import trace as observe  # type: ignore[import]
+    except ImportError:
+        from camel.utils import observe
+else:
+    from camel.utils import observe
+
+
+SIMPLE_FORMAT_PROMPT = TextPrompt(
+    textwrap.dedent(
+        """\
+        Please format the following content:
+
+        {content}
+        """
+    )
+)
+
+
+@dataclass
+class _ToolOutputHistoryEntry:
+    tool_name: str
+    tool_call_id: str
+    result_text: str
+    record_uuids: List[str]
+    record_timestamps: List[float]
+    cached: bool = False
+
+
+class StreamContentAccumulator:
+    r"""Manages content accumulation across streaming responses to ensure
+    all responses contain complete cumulative content."""
+
+    def __init__(self):
+        self.base_content = ""  # Content before tool calls
+        self.current_content = []  # Accumulated streaming fragments
+        self.tool_status_messages = []  # Accumulated tool status messages
+        self.reasoning_content = []  # Accumulated reasoning content
+        self.is_reasoning_phase = True  # Track if we're in reasoning phase
+
+    def set_base_content(self, content: str):
+        r"""Set the base content (usually empty or pre-tool content)."""
+        self.base_content = content
+
+    def add_streaming_content(self, new_content: str):
+        r"""Add new streaming content."""
+        self.current_content.append(new_content)
+  
+... (truncated)
+
+
+[Message 41]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_9Fffor9fME4zuzbKmlQPoTVA",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.memories.agent_memories import LongtermAgentMemory\\nfrom camel.toolkits.human_toolkit import HumanToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType\\nfrom camel.memories.base import BaseContextCreator\\nfrom camel.utils import BaseTokenCounter\\nfrom camel.messages import OpenAIMessage\\nfrom typing import List, Tuple\\n\\n\\nclass DummyContextCreator(BaseContextCreator):\\n    @property\\n    def token_counter(self) -> BaseTokenCounter:\\n        return BaseTokenCounter()\\n\\n    @property\\n    def token_limit(self) -> int:\\n        return 2048\\n\\n    def create_context(self, records: List) -> Tuple[List[OpenAIMessage], int]:\\n        # Just return empty context and 0 tokens for simplicity\\n        return [], 0\\n\\n\\ndef main():\\n    # Create a dummy context creator (required by LongtermAgentMemory)\\n    context_creator = DummyContextCreator()\\n\\n    # Create the model\\n    model = ModelFactory.create(model_platform=\\\"tongyi-qianwen\\\", model_type=ModelType.QWEN_2_5_14B)\\n\\n    # Create longterm memory with context creator\\n    memory = LongtermAgentMemory(context_creator=context_creator, agent_id=\\\"longterm_agent\\\")\\n\\n    # Create human interaction tools\\n    human_toolkit = HumanToolkit()\\n\\n    # Create the agent with longterm memory and human interaction tools\\n    agent = ChatAgent(\\n        system_message=\\\"You are a helpful assistant with longterm memory and human interaction capabilities.\\\",\\n        model=model,\\n        memory=memory,\\n        tools=human_toolkit.get_tools(),\\n    )\\n\\n    # Example query to test the agent\\n    query = \\\"Hello! Can you remember this conversation for the long term?\\\"\\n    response = agent.chat(query)\\n    print(f\\\"User: {query}\\\")\\n    print(f\\\"Agent: {response}\\\")\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/single_agent/9_longterm_memory_single_agent.py\"}"
+    }
+  }
+]
+
+[Message 42]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py'.
+
+[Message 43]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_r0vKg3gn1CKI6OgU1fnwKtK5",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_longterm_agent\", \"command\": \"python task-script/single_agent/9_longterm_memory_single_agent.py\", \"block\": true, \"timeout\": 30}"
+    }
+  }
+]
+
+[Message 44]
+Role: tool
+Content: Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py", line 55, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py", line 49, in main
+    response = agent.chat(query)
+               ^^^^^^^^^^
+AttributeError: 'ChatAgent' object has no attribute 'chat'
+
+[Message 45]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_TyVmUFJsU2XXU6X2Xa4SCw65",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"examples/toolkits/human_toolkit.py\"}"
+    }
+  }
+]
+
+[Message 46]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+
+from camel.agents import ChatAgent
+from camel.configs import ChatGPTConfig
+from camel.models import ModelFactory
+from camel.toolkits import HumanToolkit
+from camel.types import ModelPlatformType, ModelType
+
+human_toolkit = HumanToolkit()
+
+model = ModelFactory.create(
+    model_platform=ModelPlatformType.OPENAI,
+    model_type=ModelType.GPT_4O_MINI,
+    model_config_dict=ChatGPTConfig(
+        temperature=0.0,
+    ).as_dict(),
+)
+
+# Example 1: Test Agent with the human toolkit (ask_human_via_console)
+print("\nExample 1: Using ask_human_via_console through an agent")
+agent = ChatAgent(
+    system_message="You are a helpful assistant.",
+    model=model,
+    tools=[*human_toolkit.get_tools()],
+)
+
+response = agent.step(
+    "Test me on the capital of some country, and comment on my answer."
+)
+
+print(response.msgs[0].content)
+
+"""
+==========================================================================
+What is the capital of France?
+Your reply: Paris
+
+That's correct! Paris is indeed the capital of France. Would you like to try
+another one?
+Your reply: yes
+
+What is the capital of Japan?
+Your reply: Tokyo
+
+That's correct! Tokyo is the capital of Japan. Would you like to continue with
+another question?
+Your reply: no
+==========================================================================
+"""
+
+# Example 2: Agent using send_message_to_user through tools
+print("\nExample 2: Agent using send_message_to_user through tools")
+agent_with_message = ChatAgent(
+    system_message="You are an assistant that can send messages to the user.",
+    model=model,
+    tools=[*human_toolkit.get_tools()],
+)
+
+response = agent_with_message.step(
+    "Send me a notification about an upcoming meeting."
+)
+
+print(response.msgs[0].content)
+
+"""
+==========================================================================
+Agent Message:
+🔔 Reminder: You have an upcoming meeting scheduled. Please check your
+calendar for details!
+
+I've sent you a notification about your upcoming meeting. Please check your
+calendar for details!
+==========================================================================
+"""
+
+[Message 47]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_jgIhLu3lfZhD1pwUCIVpQOY0",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.memories.agent_memories import LongtermAgentMemory\\nfrom camel.toolkits.human_toolkit import HumanToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType\\nfrom camel.memories.base import BaseContextCreator\\nfrom camel.utils import BaseTokenCounter\\nfrom camel.messages import OpenAIMessage\\nfrom typing import List, Tuple\\n\\n\\nclass DummyContextCreator(BaseContextCreator):\\n    @property\\n    def token_counter(self) -> BaseTokenCounter:\\n        return BaseTokenCounter()\\n\\n    @property\\n    def token_limit(self) -> int:\\n        return 2048\\n\\n    def create_context(self, records: List) -> Tuple[List[OpenAIMessage], int]:\\n        # Just return empty context and 0 tokens for simplicity\\n        return [], 0\\n\\n\\ndef main():\\n    # Create a dummy context creator (required by LongtermAgentMemory)\\n    context_creator = DummyContextCreator()\\n\\n    # Create the model\\n    model = ModelFactory.create(model_platform=\\\"tongyi-qianwen\\\", model_type=ModelType.QWEN_2_5_14B)\\n\\n    # Create longterm memory with context creator\\n    memory = LongtermAgentMemory(context_creator=context_creator, agent_id=\\\"longterm_agent\\\")\\n\\n    # Create human interaction tools\\n    human_toolkit = HumanToolkit()\\n\\n    # Create the agent with longterm memory and human interaction tools\\n    agent = ChatAgent(\\n        system_message=\\\"You are a helpful assistant with longterm memory and human interaction capabilities.\\\",\\n        model=model,\\n        memory=memory,\\n        tools=human_toolkit.get_tools(),\\n    )\\n\\n    # Example query to test the agent\\n    query = \\\"Hello! Can you remember this conversation for the long term?\\\"\\n    response = agent.step(query)\\n    print(f\\\"User: {query}\\\")\\n    print(f\\\"Agent: {response.msgs[0].content}\\\")\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/single_agent/9_longterm_memory_single_agent.py\"}"
+    }
+  }
+]
+
+[Message 48]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py'.
+
+[Message 49]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_f2MVzv4v3eZDq5dUf2aoJvwQ",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_longterm_agent\", \"command\": \"python task-script/single_agent/9_longterm_memory_single_agent.py\", \"block\": true, \"timeout\": 30}"
+    }
+  }
+]
+
+[Message 50]
+Role: tool
+Content: 2026-02-01 17:49:24,243 - camel.models.model_manager - ERROR - Error processing with model: <camel.models.qwen_model.QwenModel object at 0x7fcede037210>
+2026-02-01 17:49:24,244 - camel.camel.agents.chat_agent - ERROR - Model error: qwen2.5-14b-instruct
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py", line 55, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py", line 49, in main
+    response = agent.step(query)
+               ^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/agents/chat_agent.py", line 2838, in step
+    return future.result(timeout=self.step_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/agents/chat_agent.py", line 2919, in _step_impl
+    response = self._get_model_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/agents/chat_agent.py", line 3413, in _get_model_response
+    response = self.model_backend.run(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/model_manager.py", line 239, in run
+    raise exc
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/model_manager.py", line 229, in run
+    response = self.current_model.run(messages, response_format, tools)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/base_model.py", line 212, in wrapped_run
+    return original_run(self, messages, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/base_model.py", line 633, in run
+    result = self._run(messages, response_format, tools)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/openai_compatible_model.py", line 219, in _run
+    result = self._request_chat_completion(messages, tools)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/openai_compatible_model.py", line 284, in _request_chat_completion
+    return self._client.chat.completions.create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/.venv/lib/python3.11/site-packages/openai/_utils/_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 1147, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1047, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "[] is too short - 'messages'", 'type': 'invalid_request_error', 'param': None, 'code': None}, 'request_id': 'chatcmpl-850d91f8-4cb1-920c-98de-c4fbb1d85555'}
+
+[Message 51]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_rQUquiR4tV8Qo9mA7KPzb7wy",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.memories.agent_memories import LongtermAgentMemory\\nfrom camel.toolkits.human_toolkit import HumanToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType\\nfrom camel.memories import ScoreBasedContextCreator\\n\\n\\ndef main():\\n    # Create a ScoreBasedContextCreator (required by LongtermAgentMemory)\\n    context_creator = ScoreBasedContextCreator(\\n        token_counter=None,  # Use default token counter\\n        token_limit=2048,\\n    )\\n\\n    # Create the model\\n    model = ModelFactory.create(model_platform=\\\"tongyi-qianwen\\\", model_type=ModelType.QWEN_2_5_14B)\\n\\n    # Create longterm memory with context creator\\n    memory = LongtermAgentMemory(context_creator=context_creator, agent_id=\\\"longterm_agent\\\")\\n\\n    # Create human interaction tools\\n    human_toolkit = HumanToolkit()\\n\\n    # Create the agent with longterm memory and human interaction tools\\n    agent = ChatAgent(\\n        system_message=\\\"You are a helpful assistant with longterm memory and human interaction capabilities.\\\",\\n        model=model,\\n        memory=memory,\\n        tools=human_toolkit.get_tools(),\\n    )\\n\\n    # Example query to test the agent\\n    query = \\\"Hello! Can you remember this conversation for the long term?\\\"\\n    response = agent.step(query)\\n    print(f\\\"User: {query}\\\")\\n    print(f\\\"Agent: {response.msgs[0].content}\\\")\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/single_agent/9_longterm_memory_single_agent.py\"}"
+    }
+  }
+]
+
+[Message 52]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py'.
+
+[Message 53]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_unrZtg867b4Kogcfa5vABWKp",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_longterm_agent\", \"command\": \"python task-script/single_agent/9_longterm_memory_single_agent.py\", \"block\": true, \"timeout\": 30}"
+    }
+  }
+]
+
+[Message 54]
+Role: tool
+Content: Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py", line 41, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py", line 35, in main
+    response = agent.step(query)
+               ^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/agents/chat_agent.py", line 2838, in step
+    return future.result(timeout=self.step_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/agents/chat_agent.py", line 2911, in _step_impl
+    self._get_context_with_summarization()
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/agents/chat_agent.py", line 1001, in _get_context_with_summarization
+    openai_messages, num_tokens = self.memory.get_context()
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/memories/base.py", line 176, in get_context
+    return self.get_context_creator().create_context(self.retrieve())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/memories/context_creators/score_based.py", line 168, in create_context
+    total_tokens = self.token_counter.count_tokens_from_messages(messages)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'count_tokens_from_messages'
+
+[Message 55]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_LeGnIy33JXKzoH8BNFXSyCQL",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.memories.agent_memories import LongtermAgentMemory\\nfrom camel.toolkits.human_toolkit import HumanToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType\\nfrom camel.memories.context_creators.score_based import ScoreBasedContextCreator\\n\\n\\ndef main():\\n    # Create the model\\n    model = ModelFactory.create(model_platform=\\\"tongyi-qianwen\\\", model_type=ModelType.QWEN_2_5_14B)\\n\\n    # Create a ScoreBasedContextCreator with the model's token_counter\\n    context_creator = ScoreBasedContextCreator(\\n        token_counter=model.token_counter,\\n        token_limit=2048,\\n    )\\n\\n    # Create longterm memory with context creator\\n    memory = LongtermAgentMemory(context_creator=context_creator, agent_id=\\\"longterm_agent\\\")\\n\\n    # Create human interaction tools\\n    human_toolkit = HumanToolkit()\\n\\n    # Create the agent with longterm memory and human interaction tools\\n    agent = ChatAgent(\\n        system_message=\\\"You are a helpful assistant with longterm memory and human interaction capabilities.\\\",\\n        model=model,\\n        memory=memory,\\n        tools=human_toolkit.get_tools(),\\n    )\\n\\n    # Example query to test the agent\\n    query = \\\"Hello! Can you remember this conversation for the long term?\\\"\\n    response = agent.step(query)\\n    print(f\\\"User: {query}\\\")\\n    print(f\\\"Agent: {response.msgs[0].content}\\\")\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/single_agent/9_longterm_memory_single_agent.py\"}"
+    }
+  }
+]
+
+[Message 56]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/9_longterm_memory_single_agent.py'.
+
+[Message 57]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_3Llbx72D90LLH0rQyKxbhUad",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_longterm_agent\", \"command\": \"python task-script/single_agent/9_longterm_memory_single_agent.py\", \"block\": true, \"timeout\": 30}"
+    }
+  }
+]
+
+[Message 58]
+Role: tool
+Content: User: Hello! Can you remember this conversation for the long term?
+Agent: Yes, I can remember this conversation for the long term. If you have any questions or need assistance in the future, feel free to reach out, and I'll be able to assist based on our previous interactions. How can I assist you today?
+
+[Message 59]
+Role: assistant
+Content: I have created the agent with longterm memory and human interaction tools as requested. The example query "Hello! Can you remember this conversation for the long term?" was tested successfully and the agent responded appropriately.
+
+The script is saved at:
+task-script/single_agent/9_longterm_memory_single_agent.py
+
+If you need any further assistance, please let me know!
+

@@ -1,0 +1,608 @@
+Task: task_20
+Status: ERROR
+Start Time: 2026-02-01T15:48:23.040289
+End Time: 2026-02-01T15:48:39.562875
+Total Duration: 16.52 seconds
+  - Explore Phase: 16.52 seconds
+  - Code Phase: 0.00 seconds
+Description: create a workforce with a memory worker using memory tools and a student worker to answer: "If this whole pint is made up of ice cream, how many percent above or below the US federal standards for butterfat content is it when using the standards as reported by Wikipedia in 2020? Answer as + or - a number rounded to one decimal place.". Save the script to task-script/workforce/10_memory_query_workforce.py
+Explore Error: Task interrupted by user (Ctrl+C)
+================================================================================
+
+EXPLORE PHASE
+================================================================================
+Tool Calls: 0
+----------------------------------------
+
+----------------------------------------
+Output:
+[ERROR] Task interrupted by user (Ctrl+C)
+================================================================================
+
+CODE PHASE
+================================================================================
+Tool Calls: 0
+----------------------------------------
+
+----------------------------------------
+Output:
+[SKIPPED] Explore phase failed
+================================================================================
+
+EXPLORE AGENT CHAT HISTORY
+================================================================================
+
+[Message 1]
+Role: system
+Content: You are a code exploration specialist. Find relevant files for a task.
+
+## Tools
+
+1. **glob_search(pattern, path?, max_results?)** - Find files by name pattern
+2. **grep_search(pattern, path?, glob_filter?, ignore_case?, output_mode?)** - Search file contents
+3. **read_file(file_path)** - Read file contents (auto-limits to 2000 lines for large files)
+4. **list_directory(path?)** - List directory contents
+5. **find_definition(name, definition_type?)** - Find class/function definitions
+6. **find_imports(module_name, ignore_case?)** - Find files that import a module
+
+## Search Techniques (CRITICAL)
+
+### Technique 1: Search whole repo first, NEVER restrict path initially
+```python
+# WRONG - misses examples/models/qwen_model_example.py
+glob_search("**/*qwen*.py", path="camel/models")
+
+# CORRECT - searches entire repo
+glob_search("**/*qwen*.py")
+```
+
+### Technique 2: Use find_imports to find REAL usage
+```python
+find_imports("WeatherToolkit")
+find_imports("QwenModel")
+```
+
+### Technique 3: Read __init__.py to understand module exports
+```python
+read_file("camel/toolkits/__init__.py")
+read_file("camel/models/__init__.py")
+```
+
+### Technique 4: Parallel search for ALL keywords
+For task "weather agent with Qwen", call ALL in parallel:
+```python
+glob_search("**/*qwen*.py")
+glob_search("**/*weather*.py")
+find_imports("qwen")
+find_imports("WeatherToolkit")
+```
+
+### Technique 5: Tests and examples contain best usage patterns
+```python
+glob_search("**/test_*qwen*.py")
+glob_search("**/*example*.py")
+```
+
+### Technique 6: Find EXACT enum values for models/tools
+When task specifies a model like "Qwen2.5-14B-Instruct", search for the exact ModelType enum:
+```python
+# Search with partial match (enum names use underscores, not hyphens)
+grep_search("QWEN_2_5.*14B", path="camel/types/enums.py")
+grep_search("QWEN_2_5", path="camel/types/enums.py")
+```
+CAMEL ModelType naming convention:
+- No "_INSTRUCT" suffix usually (e.g., QWEN_2_5_14B not QWEN_2_5_14B_INSTRUCT)
+- Use underscores not hyp
+... (truncated)
+
+
+[Message 2]
+Role: user
+Content: Find relevant files for this task:
+
+**Task**: create a workforce with a memory worker using memory tools and a student worker to answer: "If this whole pint is made up of ice cream, how many percent above or below the US federal standards for butterfat content is it when using the standards as reported by Wikipedia in 2020? Answer as + or - a number rounded to one decimal place.". Save the script to task-script/workforce/10_memory_query_workforce.py
+
+**Repository Context**:
+
+## CAMEL Repository Structure
+
+### Core Modules
+- `camel/agents/` - Agent implementations (ChatAgent is the base)
+- `camel/models/` - LLM provider integrations (50+)
+- `camel/configs/` - Model configuration classes
+- `camel/toolkits/` - Tool integrations (50+)
+- `camel/types/` - Enums (ModelPlatformType, ModelType, RoleType)
+
+### Other Directories
+- `examples/` - Usage examples
+- `test/` - Test files
+- `docs/` - Documentation
+
+
+Search for implementation files, examples, tests, and documentation.
+Return the most relevant file paths with brief explanations.
+Focus on finding:
+1. Example scripts that show similar usage patterns
+2. Implementation files for the required components
+3. Configuration/type definitions
+
+
+[Message 3]
+Role: assistant
+
+[Message 4]
+Role: tool
+Content: Found 13 file(s) matching '**/*memory*.py':
+camel/societies/workforce/workflow_memory_manager.py
+camel/storages/key_value_storages/in_memory.py
+camel/toolkits/memory_toolkit.py
+examples/memories/agent_memory_example.py
+examples/memories/agent_memory_vector_db_example.py
+examples/memories/vector_db_memory_example.py
+examples/toolkits/memory_toolkit.py
+examples/workforce/workforce_shared_memory_validation.py
+examples/workforce/workforce_workflow_memory_example.py
+test/memories/test_chat_history_memory.py
+test/memories/test_vector_db_memory.py
+test/toolkits/test_memory_toolkit.py
+test/workforce/test_workflow_memory.py
+
+[Message 5]
+Role: assistant
+
+[Message 6]
+Role: tool
+Content: No files found matching pattern '**/*student*.py'
+
+[Message 7]
+Role: assistant
+
+[Message 8]
+Role: tool
+Content: Found 14 file(s) matching '**/*workforce*.py':
+camel/societies/workforce/workforce.py
+camel/societies/workforce/workforce_callback.py
+camel/societies/workforce/workforce_logger.py
+camel/societies/workforce/workforce_metrics.py
+examples/benchmarks/browsecomp_workforce.py
+examples/workforce/simple_workforce_mcp.py
+examples/workforce/workforce_callbacks_example.py
+examples/workforce/workforce_multitask_with_skip.py
+examples/workforce/workforce_shared_memory_validation.py
+examples/workforce/workforce_workflow_memory_example.py
+test/workforce/test_workforce.py
+test/workforce/test_workforce_callbacks.py
+test/workforce/test_workforce_pipeline.py
+test/workforce/test_workforce_single_agent.py
+
+[Message 9]
+Role: assistant
+
+[Message 10]
+Role: tool
+Content: No files found matching pattern '**/*long_term*.py'
+
+[Message 11]
+Role: assistant
+
+[Message 12]
+Role: tool
+Content: Found 3 file(s) matching '**/*memory_tool*.py':
+camel/toolkits/memory_toolkit.py
+examples/toolkits/memory_toolkit.py
+test/toolkits/test_memory_toolkit.py
+
+[Message 13]
+Role: assistant
+
+[Message 14]
+Role: tool
+Content: No files found matching pattern '**/*memory_worker*.py'
+
+[Message 15]
+Role: assistant
+
+[Message 16]
+Role: tool
+Content: Found 3 file(s) matching '**/*memory_toolkit*.py':
+camel/toolkits/memory_toolkit.py
+examples/toolkits/memory_toolkit.py
+test/toolkits/test_memory_toolkit.py
+
+[Message 17]
+Role: assistant
+
+[Message 18]
+Role: tool
+Content: No matches found for pattern 'memory_worker'
+
+[Message 19]
+Role: assistant
+
+[Message 20]
+Role: tool
+Content: No matches found for pattern 'student_worker'
+
+[Message 21]
+Role: assistant
+
+[Message 22]
+Role: tool
+Content: #!/usr/bin/env python3
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+
+import asyncio
+import os
+
+from dotenv import load_dotenv
+
+from camel.agents import ChatAgent
+from camel.configs import ChatGPTConfig
+from camel.logger import get_logger
+from camel.messages import BaseMessage
+from camel.models import ModelFactory
+from camel.societies.workforce import Workforce
+from camel.tasks.task import Task
+from camel.toolkits import MathToolkit
+from camel.types import ModelPlatformType, ModelType
+
+load_dotenv()
+
+logger = get_logger(__name__)
+
+
+def create_math_agent() -> ChatAgent:
+    r"""Create a math agent with math tools.
+
+    Returns:
+        ChatAgent: A configured math expert agent with MathToolkit tools.
+    """
+    math_msg = BaseMessage.make_assistant_message(
+        role_name="Math Expert",
+        content=(
+            "You are a math expert specialized in solving "
+            "mathematical problems.You can perform calculations, "
+            "solve equations, and work with various "
+            "mathematical concepts. Use the math tools available to you."
+        ),
+    )
+
+    model = ModelFactory.create(
+        model_platform=ModelPlatformType.DEFAULT,
+        model_type=ModelType.DEFAULT,
+        model_config_dict=ChatGPTConfig().as_dict(),
+    )
+    return ChatAgent(
+        system_message=math_msg,
+        model=mo
+... (truncated)
+
+
+[Message 23]
+Role: assistant
+
+[Message 24]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import json
+from typing import TYPE_CHECKING, Optional
+
+from camel.memories import (
+    ChatHistoryMemory,
+    MemoryRecord,
+    ScoreBasedContextCreator,
+)
+from camel.toolkits.base import BaseToolkit
+from camel.toolkits.function_tool import FunctionTool
+
+if TYPE_CHECKING:
+    from camel.agents import ChatAgent
+
+
+class MemoryToolkit(BaseToolkit):
+    r"""A toolkit that provides methods for saving, loading, and clearing a
+    ChatAgent's memory.
+    These methods are exposed as FunctionTool objects for
+    function calling. Internally, it calls:
+      - agent.save_memory(path)
+      - agent.load_memory(new_memory_obj)
+      - agent.load_memory_from_path(path)
+      - agent.clear_memory()
+
+    Args:
+        agent (ChatAgent): The chat agent whose memory will be managed.
+        timeout (Optional[float], optional): Maximum execution time allowed for
+            toolkit operations in seconds. If None, no timeout is applied.
+            (default: :obj:`None`)
+    """
+
+    def __init__(
+        self,
+        agent: 'ChatAgent',
+        timeout: Optional[float] = None,
+    ):
+        super().__init__(timeout=timeout)
+        self.agent = agent
+
+    def save(self, path: str) -> str:
+        r"""Saves the agent's current memory to a JSON file.
+
+        Args:
+            path (str): The
+... (truncated)
+
+
+[Message 25]
+Role: assistant
+
+[Message 26]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+from camel.agents import ChatAgent
+from camel.models import ModelFactory
+from camel.toolkits.memory_toolkit import MemoryToolkit
+from camel.types import ModelPlatformType, ModelType
+
+
+def run_memory_toolkit_example():
+    """
+    Demonstrates a ChatAgent using the MemoryToolkit for
+    function calling to manage memory.
+    """
+
+    # Create a Model
+    model = ModelFactory.create(
+        model_platform=ModelPlatformType.DEFAULT,
+        model_type=ModelType.DEFAULT,
+    )
+
+    # Create a ChatAgent
+    agent = ChatAgent(
+        system_message="""You are an assistant that can manage
+        conversation memory using tools.""",
+        model=model,
+    )
+
+    # Add MemoryToolkit to the Agent
+    memory_toolkit = MemoryToolkit(agent=agent)
+    for tool in memory_toolkit.get_tools():
+        agent.add_tool(tool)
+
+    # Have a conversation to populate memory
+    print("\n--- Starting a Conversation ---")
+    user_msg_1 = "Tell me about the moon."
+    print(f"[User] {user_msg_1}")
+    response_1 = agent.step(user_msg_1)
+    print(f"[Agent] {response_1.msgs[0].content}")
+
+    # Save the memory to a file via function calling
+    print("\n--- Saving Memory ---")
+    save_msg = "Please save the current memory to 'conversation_memory.json'."
+    response_save = agent.step(save_msg)
+   
+... (truncated)
+
+
+[Message 27]
+Role: assistant
+
+[Message 28]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from camel.agents import ChatAgent
+from camel.messages import BaseMessage
+from camel.models import ModelFactory
+from camel.societies.workforce import Workforce
+from camel.types import ModelPlatformType, ModelType
+
+
+def create_test_agent(role_name: str, unique_fact: str, model):
+    r"""Create a test agent with a unique piece of information."""
+    return ChatAgent(
+        system_message=BaseMessage.make_assistant_message(
+            role_name=role_name,
+            content=f"You are {role_name}. You know this unique "
+            f"fact: {unique_fact}. Remember all conversations and when asked "
+            f"what you know, mention both your unique fact and any "
+            f"information learned from others.",
+        ),
+        model=model,
+    )
+
+
+def main():
+    r"""Run the validation test for shared memory functionality."""
+    print("=== Workforce Shared Memory Validation Test ===\n")
+
+    # Create model
+    model = ModelFactory.create(
+        model_platform=ModelPlatformType.DEFAULT,
+        model_type=ModelType.DEFAULT,
+    )
+
+    # === TEST SETUP ===
+    print("1. Setting up test workforce with shared memory...")
+
+    # Create custom agents for the workforce
+    coordinator_agent = ChatAgent(
+        "You are a helpful coordinator.", model=model
+    )
+    task_agent
+... (truncated)
+
+
+[Message 29]
+Role: assistant
+
+[Message 30]
+Role: tool
+Content: Search results for 'memory' in *.py files (5 matches):
+hackathon_judges.py
+pipeline_workflow_example.py
+workforce_workflow_memory_example.py
+workforce_shared_memory_validation.py
+eigent.py
+
+[Message 31]
+Role: assistant
+
+[Message 32]
+Role: tool
+Content: Search results for 'worker' in *.py files (10 matches):
+hackathon_judges.py
+workforce_workflow_memory_example.py
+workforce_shared_memory_validation.py
+workforce_multitask_with_skip.py
+multi_turn_conversation.py
+role_playing_with_agents.py
+multiple_single_agents.py
+pipeline_workflow_example.py
+eigent.py
+simple_workforce_mcp.py
+
+[Message 33]
+Role: assistant
+
+[Message 34]
+Role: tool
+Content: Search results for 'memory' in *.py files (5 matches):
+__init__.py
+utils.py
+single_agent_worker.py
+workflow_memory_manager.py
+workforce.py
+
+[Message 35]
+Role: assistant
+
+[Message 36]
+Role: tool
+Content: Search results for 'worker' in *.py files (10 matches):
+workforce_callback.py
+single_agent_worker.py
+structured_output_handler.py
+utils.py
+events.py
+role_playing_worker.py
+workforce_logger.py
+prompts.py
+workforce.py
+__init__.py
+
+[Message 37]
+Role: assistant
+
+[Message 38]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from __future__ import annotations
+
+import asyncio
+import datetime
+import time
+from collections import deque
+from typing import Any, Dict, List, Optional
+
+from colorama import Fore
+
+from camel.agents import ChatAgent
+from camel.agents.chat_agent import AsyncStreamingChatAgentResponse
+from camel.logger import get_logger
+from camel.societies.workforce.prompts import PROCESS_TASK_PROMPT
+from camel.societies.workforce.structured_output_handler import (
+    StructuredOutputHandler,
+)
+from camel.societies.workforce.utils import TaskResult
+from camel.societies.workforce.worker import Worker
+from camel.societies.workforce.workflow_memory_manager import (
+    WorkflowMemoryManager,
+)
+from camel.tasks.task import Task, TaskState, is_task_result_insufficient
+from camel.utils.context_utils import ContextUtility
+
+logger = get_logger(__name__)
+
+
+class AgentPool:
+    r"""A pool of agent instances for efficient reuse.
+
+    This pool manages a collection of pre-cloned agents with automatic
+    scaling and idle timeout cleanup.
+
+    Args:
+        base_agent (ChatAgent): The base agent to clone from.
+        initial_size (int): Initial number of agents in the pool.
+            (default: :obj:`1`)
+        max_size (int): Maximum number of agents in the pool.
+            (default: :obj:`10`)
+      
+... (truncated)
+
+
+================================================================================
+
+CODE AGENT CHAT HISTORY
+================================================================================
+

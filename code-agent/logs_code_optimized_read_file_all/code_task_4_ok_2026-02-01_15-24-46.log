@@ -1,0 +1,2333 @@
+Task: task_4
+Status: SUCCESS
+Start Time: 2026-02-01T15:24:46.251685
+End Time: 2026-02-01T15:26:17.592305
+Total Duration: 91.34 seconds
+  - Explore Phase: 23.22 seconds
+  - Code Phase: 68.12 seconds
+Description: create an agent with terminal tools and code execution tools. Prompt it to retrieve system information and print it in a Python interpreter. Save the script to task-script/single_agent/4_terminal_sysinfo_agent.py
+================================================================================
+
+EXPLORE PHASE
+================================================================================
+Tool Calls: 16
+----------------------------------------
+
+[1] glob_search
+Args: {
+  "pattern": "**/*terminal*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 4 file(s) matching '**/*terminal*.py':
+camel/toolkits/terminal_toolkit/terminal_toolkit.py
+examples/toolkits/mcp/mcp_terminal_toolkit/terminal_toolkit_server.py
+examples/toolkits/terminal_toolkit.py
+test/toolkits/test_terminal_toolkit.py
+
+[2] glob_search
+Args: {
+  "pattern": "**/*code_exec*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 7 file(s) matching '**/*code_exec*.py':
+camel/toolkits/code_execution.py
+examples/embodiment/code_execution.py
+examples/runtimes/code_execution_with_docker_runtime.py
+examples/runtimes/code_execution_with_llm_guard_runtime.py
+examples/toolkits/code_execution_toolkit.py
+test/runtimes/test_code_execution_with_llm_guard_runtime.py
+test/toolkits/test_code_execution.py
+
+[3] glob_search
+Args: {
+  "pattern": "**/*sysinfo*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: No files found matching pattern '**/*sysinfo*.py'
+
+[4] glob_search
+Args: {
+  "pattern": "**/*agent*.py",
+  "path": "camel/agents",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*agent*.py':
+camel/agents/critic_agent.py
+camel/agents/deductive_reasoner_agent.py
+camel/agents/embodied_agent.py
+camel/agents/knowledge_graph_agent.py
+camel/agents/mcp_agent.py
+camel/agents/multi_hop_generator_agent.py
+camel/agents/programmed_agent_instruction.py
+camel/agents/role_assignment_agent.py
+camel/agents/search_agent.py
+camel/agents/task_agent.py
+
+[5] glob_search
+Args: {
+  "pattern": "**/*toolkit*.py",
+  "path": "camel/toolkits",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*toolkit*.py':
+camel/toolkits/browser_toolkit.py
+camel/toolkits/browser_toolkit_commons.py
+camel/toolkits/dappier_toolkit.py
+camel/toolkits/github_toolkit.py
+camel/toolkits/mineru_toolkit.py
+camel/toolkits/openbb_toolkit.py
+camel/toolkits/sympy_toolkit.py
+camel/toolkits/task_planning_toolkit.py
+camel/toolkits/weather_toolkit.py
+camel/toolkits/wolfram_alpha_toolkit.py
+
+[6] glob_search
+Args: {
+  "pattern": "**/*example*.py",
+  "path": "examples",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*example*.py':
+examples/extractors/python_strategies_example.py
+examples/loaders/apify_example.py
+examples/loaders/crawl4ai_example.py
+examples/loaders/firecrawl_example.py
+examples/loaders/jina_url_reader_example.py
+examples/loaders/markitdown_example.py
+examples/loaders/mineru_example.py
+examples/loaders/mistral_example.py
+examples/loaders/scrapegraph_example.py
+examples/loaders/unstructured_io_example.py
+
+[7] glob_search
+Args: {
+  "pattern": "**/*test*.py",
+  "path": "test",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*test*.py':
+test/conftest.py
+test/extractors/test_base_extractor.py
+test/extractors/test_python_strategies.py
+test/loaders/test_base_io.py
+test/loaders/test_markitdown.py
+test/loaders/test_mineru_extractor.py
+test/loaders/test_unstructured_io.py
+test/test_all_exports.py
+test/test_generators.py
+test/test_human.py
+
+[8] read_file
+Args: {
+  "file_path": "camel/toolkits/terminal_toolkit/terminal_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[9] read_file
+Args: {
+  "file_path": "camel/toolkits/code_execution.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[10] read_file
+Args: {
+  "file_path": "camel/agents/task_agent.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[11] read_file
+Args: {
+  "file_path": "examples/toolkits/terminal_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[12] glob_search
+Args: {
+  "pattern": "**/*example*.py",
+  "path": "examples/agents",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: No files found matching pattern '**/*example*.py'
+
+[13] glob_search
+Args: {
+  "pattern": "**/*agent*.py",
+  "path": "examples",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*agent*.py':
+examples/benchmarks/browsecomp_chat_agent.py
+examples/evaluation/single_agent.py
+examples/generate_text_embedding_data/single_agent.py
+examples/knowledge_graph/knowledge_graph_agent_example.py
+examples/memories/agent_memory_example.py
+examples/misalignment/single_agent.py
+examples/rag/single_agent_with_hybrid_rag.py
+examples/test/test_single_agent.py
+examples/workforce/multiple_single_agents.py
+examples/workforce/role_playing_with_agents.py
+
+[14] read_file
+Args: {
+  "file_path": "examples/evaluation/single_agent.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[15] glob_search
+Args: {
+  "pattern": "**/*config*.py",
+  "path": "camel/configs",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*config*.py':
+camel/configs/aihubmix_config.py
+camel/configs/cometapi_config.py
+camel/configs/crynux_config.py
+camel/configs/deepseek_config.py
+camel/configs/minimax_config.py
+camel/configs/openai_config.py
+camel/configs/qianfan_config.py
+camel/configs/qwen_config.py
+camel/configs/sglang_config.py
+camel/configs/watsonx_config.py
+
+[16] read_file
+Args: {
+  "file_path": "camel/configs/openai_config.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+----------------------------------------
+Output:
+## Examples (MOST IMPORTANT)
+- examples/toolkits/terminal_toolkit.py - Example usage of TerminalToolkit with shell command execution and interaction.
+- examples/evaluation/single_agent.py - Example of a single agent usage pattern (though not terminal or code execution specific).
+
+## Implementation
+- camel/toolkits/terminal_toolkit/terminal_toolkit.py - Implementation of TerminalToolkit for terminal command execution with local and Docker backends.
+- camel/toolkits/code_execution.py - Implementation of CodeExecutionToolkit for code execution in various sandboxes including subprocess and internal Python interpreter.
+- camel/agents/task_agent.py - Various agent implementations including ChatAgent base usage, useful for creating custom agents.
+
+## Configuration
+- camel/configs/openai_config.py - Configuration class ChatGPTConfig for model parameters including tool integration.
+
+# Summary
+To create an agent with terminal tools and code execution tools that can retrieve system information and print it in a Python interpreter, the most relevant files are:
+
+- The TerminalToolkit implementation and example (camel/toolkits/terminal_toolkit/terminal_toolkit.py and examples/toolkits/terminal_toolkit.py).
+- The CodeExecutionToolkit implementation (camel/toolkits/code_execution.py).
+- The agent base and task agent implementations (camel/agents/task_agent.py).
+- The model configuration for setting up the LLM (camel/configs/openai_config.py).
+
+These provide the necessary toolkits, agent base, and example usage patterns to build the requested agent script.
+================================================================================
+
+CODE PHASE
+================================================================================
+Tool Calls: 11
+----------------------------------------
+
+[1] read_file_tool
+Args: {
+  "file_path": "examples/toolkits/terminal_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+import os
+
+from camel.agents import ChatAgent
+from camel.configs import ChatGPTConfig
+from camel.models import ModelFactory
+from camel.toolkits import TerminalToolkit
+from camel.types import ModelPlatformType, ModelType
+
+# Get current script directory
+base_dir = os.path.dirname(os.path.abspath(__...
+
+[2] read_file_tool
+Args: {
+  "file_path": "examples/evaluation/single_agent.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import json
+import os
+import re
+from typing import Any, Dict, List
+
+from camel.agents import ChatAgent
+from camel.prompts import PromptTemplateGenerator
+from camel.types import TaskType
+
+
+def parse_question_string(
+    question_string: str, category: str
+) -> List[Dict[str, Any]]:
+    pattern = r'...
+
+[3] read_file_tool
+Args: {
+  "file_path": "camel/toolkits/code_execution.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from typing import List, Literal, Optional, Union
+
+from camel.interpreters import (
+    DockerInterpreter,
+    E2BInterpreter,
+    InternalPythonInterpreter,
+    JupyterKernelInterpreter,
+    MicrosandboxInterpreter,
+    SubprocessInterpreter,
+)
+from camel.logger import get_logger
+from camel.toolk...
+
+[4] read_file_tool
+Args: {
+  "file_path": "camel/agents/task_agent.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from typing import Any, Dict, List, Optional, Union
+
+from camel.agents.chat_agent import ChatAgent
+from camel.messages import BaseMessage
+from camel.models import BaseModelBackend
+from camel.prompts import PromptTemplateGenerator, TextPrompt
+from camel.types import RoleType, TaskType
+from camel.ut...
+
+[5] read_file_tool
+Args: {
+  "file_path": "camel/configs/openai_config.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from __future__ import annotations
+
+from typing import Dict, Optional, Sequence, Type, Union
+
+from pydantic import BaseModel
+
+from camel.configs.base_config import BaseConfig
+
+
+class ChatGPTConfig(BaseConfig):
+    r"""Defines the parameters for generating chat completions using the
+    OpenAI API....
+
+[6] shell_write_content_to_file
+Args: {
+  "content": "import os\n\nfrom camel.agents import ChatAgent\nfrom camel.configs.openai_config import ChatGPTConfig\nfrom camel.models import ModelFactory\nfrom camel.toolkits.code_execution import CodeExecutionToolkit\nfrom camel.toolkits.terminal_toolkit.terminal_toolkit import TerminalToolkit\nfrom camel.types import ModelPlatformType, ModelType\n\n# Define workspace directory\nworkspace_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), \"workspace\")\n\n# Initialize terminal toolkit\nterminal_toolkit = TerminalToolkit(working_directory=workspace_dir)\nterminal_tools = terminal_toolkit.get_tools()\n\n# Initialize code execution toolkit with internal python interpreter\ncode_exec_toolkit = CodeExecutionToolkit(sandbox=\"internal_python\")\ncode_exec_tools = code_exec_toolkit.get_tools()\n\n# Combine tools\ntools = terminal_tools + code_exec_tools\n\n# System message for the agent\nsystem_message = (\n    \"You are an assistant with access to terminal tools and code execution tools. \"\n    \"Retrieve system information using terminal tools and then print it using the Python interpreter.\"\n)\n\n# Model config\nmodel_config = ChatGPTConfig(temperature=0.0).as_dict()\n\n# Create model with Qwen2.5-14B-Instruct\nmodel = ModelFactory.create(\n    model_platform=ModelPlatformType.DEFAULT,\n    model_type=ModelType.QWEN_2_5_14B,\n    model_config_dict=model_config,\n)\n\n# Create agent\nagent = ChatAgent(\n    system_message=system_message,\n    model=model,\n    tools=tools,\n)\n\nagent.reset()\n\n# User message to retrieve system info and print it in python interpreter\nuser_message = (\n    \"Retrieve system information using terminal commands like 'uname -a' or 'cat /etc/os-release'. \"\n    \"Then print the retrieved system information in the Python interpreter.\"\n)\n\nresponse = agent.step(user_message)\n\nprint(\"Agent response:\")\nprint(response.msg.content)\n\n# Print tool calls for debugging\nprint(\"Tool calls:\")\nfor call in response.info.get('tool_calls', []):\n    print(call)\n",
+  "file_path": "task-script/single_agent/4_terminal_sysinfo_agent.py"
+}
+Result: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/4_terminal_sysinfo_agent.py'.
+
+[7] shell_exec
+Args: {
+  "id": "run_sysinfo_agent",
+  "command": "python task-script/single_agent/4_terminal_sysinfo_agent.py",
+  "block": true,
+  "timeout": 60
+}
+Result: 2026-02-01 15:25:32,408 - camel.models.model_manager - ERROR - Error processing with model: <camel.models.openai_model.OpenAIModel object at 0x7f39290ac810>
+2026-02-01 15:25:32,408 - camel.camel.agents.chat_agent - ERROR - Model error: qwen2.5-14b-instruct
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/4_terminal_sysinfo_agent.py", line 55, in <module>
+    response = agent.step(user_message)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/agents/chat_agent.py", line 2838, in step
+    return future.result(timeout=self.step_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    ...
+
+[8] shell_write_content_to_file
+Args: {
+  "content": "import os\n\nfrom camel.agents import ChatAgent\nfrom camel.configs.openai_config import ChatGPTConfig\nfrom camel.models import ModelFactory\nfrom camel.toolkits.code_execution import CodeExecutionToolkit\nfrom camel.toolkits.terminal_toolkit.terminal_toolkit import TerminalToolkit\nfrom camel.types import ModelPlatformType, ModelType\n\n# Define workspace directory\nworkspace_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), \"workspace\")\n\n# Initialize terminal toolkit\nterminal_toolkit = TerminalToolkit(working_directory=workspace_dir)\nterminal_tools = terminal_toolkit.get_tools()\n\n# Initialize code execution toolkit with internal python interpreter\ncode_exec_toolkit = CodeExecutionToolkit(sandbox=\"internal_python\")\ncode_exec_tools = code_exec_toolkit.get_tools()\n\n# Combine tools\ntools = terminal_tools + code_exec_tools\n\n# System message for the agent\nsystem_message = (\n    \"You are an assistant with access to terminal tools and code execution tools. \"\n    \"Retrieve system information using terminal tools and then print it using the Python interpreter.\"\n)\n\n# Model config\nmodel_config = ChatGPTConfig(temperature=0.0).as_dict()\n\n# Create model with QWEN_2_5_14B (correct enum)\nmodel = ModelFactory.create(\n    model_platform=ModelPlatformType.DEFAULT,\n    model_type=ModelType.QWEN_2_5_14B,\n    model_config_dict=model_config,\n)\n\n# Create agent\nagent = ChatAgent(\n    system_message=system_message,\n    model=model,\n    tools=tools,\n)\n\nagent.reset()\n\n# User message to retrieve system info and print it in python interpreter\nuser_message = (\n    \"Retrieve system information using terminal commands like 'uname -a' or 'cat /etc/os-release'. \"\n    \"Then print the retrieved system information in the Python interpreter.\"\n)\n\nresponse = agent.step(user_message)\n\nprint(\"Agent response:\")\nprint(response.msg.content)\n\n# Print tool calls for debugging\nprint(\"Tool calls:\")\nfor call in response.info.get('tool_calls', []):\n    print(call)\n",
+  "file_path": "task-script/single_agent/4_terminal_sysinfo_agent.py"
+}
+Result: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/4_terminal_sysinfo_agent.py'.
+
+[9] shell_exec
+Args: {
+  "id": "run_sysinfo_agent",
+  "command": "python task-script/single_agent/4_terminal_sysinfo_agent.py",
+  "block": true,
+  "timeout": 60
+}
+Result: 2026-02-01 15:25:49,847 - camel.models.model_manager - ERROR - Error processing with model: <camel.models.openai_model.OpenAIModel object at 0x7fa4b818ca10>
+2026-02-01 15:25:49,847 - camel.camel.agents.chat_agent - ERROR - Model error: qwen2.5-14b-instruct
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/4_terminal_sysinfo_agent.py", line 55, in <module>
+    response = agent.step(user_message)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/agents/chat_agent.py", line 2838, in step
+    return future.result(timeout=self.step_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    ...
+
+[10] shell_write_content_to_file
+Args: {
+  "content": "import os\n\nfrom camel.agents import ChatAgent\nfrom camel.configs.openai_config import ChatGPTConfig\nfrom camel.models import ModelFactory\nfrom camel.toolkits.code_execution import CodeExecutionToolkit\nfrom camel.toolkits.terminal_toolkit.terminal_toolkit import TerminalToolkit\nfrom camel.types import ModelPlatformType, ModelType\n\n# Define workspace directory\nworkspace_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), \"workspace\")\n\n# Initialize terminal toolkit\nterminal_toolkit = TerminalToolkit(working_directory=workspace_dir)\nterminal_tools = terminal_toolkit.get_tools()\n\n# Initialize code execution toolkit with internal python interpreter\ncode_exec_toolkit = CodeExecutionToolkit(sandbox=\"internal_python\")\ncode_exec_tools = code_exec_toolkit.get_tools()\n\n# Combine tools\ntools = terminal_tools + code_exec_tools\n\n# System message for the agent\nsystem_message = (\n    \"You are an assistant with access to terminal tools and code execution tools. \"\n    \"Retrieve system information using terminal tools and then print it using the Python interpreter.\"\n)\n\n# Model config\nmodel_config = ChatGPTConfig(temperature=0.0).as_dict()\n\n# Create model with DEFAULT (fallback)\nmodel = ModelFactory.create(\n    model_platform=ModelPlatformType.DEFAULT,\n    model_type=ModelType.DEFAULT,\n    model_config_dict=model_config,\n)\n\n# Create agent\nagent = ChatAgent(\n    system_message=system_message,\n    model=model,\n    tools=tools,\n)\n\nagent.reset()\n\n# User message to retrieve system info and print it in python interpreter\nuser_message = (\n    \"Retrieve system information using terminal commands like 'uname -a' or 'cat /etc/os-release'. \"\n    \"Then print the retrieved system information in the Python interpreter.\"\n)\n\nresponse = agent.step(user_message)\n\nprint(\"Agent response:\")\nprint(response.msg.content)\n\n# Print tool calls for debugging\nprint(\"Tool calls:\")\nfor call in response.info.get('tool_calls', []):\n    print(call)\n",
+  "file_path": "task-script/single_agent/4_terminal_sysinfo_agent.py"
+}
+Result: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/4_terminal_sysinfo_agent.py'.
+
+[11] shell_exec
+Args: {
+  "id": "run_sysinfo_agent",
+  "command": "python task-script/single_agent/4_terminal_sysinfo_agent.py",
+  "block": true,
+  "timeout": 60
+}
+Result: System Information:
+uname -a output:
+Linux KW61526 5.15.0-164-generic #174-Ubuntu SMP Fri Nov 14 20:25:16 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+
+/etc/os-release content:
+PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+Agent response:
+System Information:
+uname -a output:
+Linux KW61526 5.15.0-164-generic #174-Ubuntu SMP Fri Nov 14 20:25:16 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+
+/etc/os-release content:
+PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bu...
+
+----------------------------------------
+Output:
+I have created the agent script with terminal tools and code execution tools that retrieves system information and prints it in a Python interpreter. The script is saved at task-script/single_agent/4_terminal_sysinfo_agent.py.
+
+The agent successfully executed the commands `uname -a` and `cat /etc/os-release` to get system information, then printed the information using the Python interpreter.
+
+If you want, I can provide the script content or assist with running or modifying it further.
+================================================================================
+
+EXPLORE AGENT CHAT HISTORY
+================================================================================
+
+[Message 1]
+Role: system
+Content: You are a code exploration specialist. Find relevant files for a task.
+
+## Tools
+
+1. **glob_search(pattern, path?, max_results?)** - Find files by name pattern
+2. **grep_search(pattern, path?, glob_filter?, ignore_case?, output_mode?)** - Search file contents
+3. **read_file(file_path)** - Read file contents (auto-limits to 2000 lines for large files)
+4. **list_directory(path?)** - List directory contents
+5. **find_definition(name, definition_type?)** - Find class/function definitions
+6. **find_imports(module_name, ignore_case?)** - Find files that import a module
+
+## Search Techniques (CRITICAL)
+
+### Technique 1: Search whole repo first, NEVER restrict path initially
+```python
+# WRONG - misses examples/models/qwen_model_example.py
+glob_search("**/*qwen*.py", path="camel/models")
+
+# CORRECT - searches entire repo
+glob_search("**/*qwen*.py")
+```
+
+### Technique 2: Use find_imports to find REAL usage
+```python
+find_imports("WeatherToolkit")
+find_imports("QwenModel")
+```
+
+### Technique 3: Read __init__.py to understand module exports
+```python
+read_file("camel/toolkits/__init__.py")
+read_file("camel/models/__init__.py")
+```
+
+### Technique 4: Parallel search for ALL keywords
+For task "weather agent with Qwen", call ALL in parallel:
+```python
+glob_search("**/*qwen*.py")
+glob_search("**/*weather*.py")
+find_imports("qwen")
+find_imports("WeatherToolkit")
+```
+
+### Technique 5: Tests and examples contain best usage patterns
+```python
+glob_search("**/test_*qwen*.py")
+glob_search("**/*example*.py")
+```
+
+### Technique 6: Find EXACT enum values for models/tools
+When task specifies a model like "Qwen2.5-14B-Instruct", search for the exact ModelType enum:
+```python
+# Search with partial match (enum names use underscores, not hyphens)
+grep_search("QWEN_2_5.*14B", path="camel/types/enums.py")
+grep_search("QWEN_2_5", path="camel/types/enums.py")
+```
+CAMEL ModelType naming convention:
+- No "_INSTRUCT" suffix usually (e.g., QWEN_2_5_14B not QWEN_2_5_14B_INSTRUCT)
+- Use underscores not hyp
+... (truncated)
+
+
+[Message 2]
+Role: user
+Content: Find relevant files for this task:
+
+**Task**: create an agent with terminal tools and code execution tools. Prompt it to retrieve system information and print it in a Python interpreter. Save the script to task-script/single_agent/4_terminal_sysinfo_agent.py
+
+**Repository Context**:
+
+## CAMEL Repository Structure
+
+### Core Modules
+- `camel/agents/` - Agent implementations (ChatAgent is the base)
+- `camel/models/` - LLM provider integrations (50+)
+- `camel/configs/` - Model configuration classes
+- `camel/toolkits/` - Tool integrations (50+)
+- `camel/types/` - Enums (ModelPlatformType, ModelType, RoleType)
+
+### Other Directories
+- `examples/` - Usage examples
+- `test/` - Test files
+- `docs/` - Documentation
+
+
+Search for implementation files, examples, tests, and documentation.
+Return the most relevant file paths with brief explanations.
+Focus on finding:
+1. Example scripts that show similar usage patterns
+2. Implementation files for the required components
+3. Configuration/type definitions
+
+
+[Message 3]
+Role: assistant
+
+[Message 4]
+Role: tool
+Content: Found 4 file(s) matching '**/*terminal*.py':
+camel/toolkits/terminal_toolkit/terminal_toolkit.py
+examples/toolkits/mcp/mcp_terminal_toolkit/terminal_toolkit_server.py
+examples/toolkits/terminal_toolkit.py
+test/toolkits/test_terminal_toolkit.py
+
+[Message 5]
+Role: assistant
+
+[Message 6]
+Role: tool
+Content: Found 7 file(s) matching '**/*code_exec*.py':
+camel/toolkits/code_execution.py
+examples/embodiment/code_execution.py
+examples/runtimes/code_execution_with_docker_runtime.py
+examples/runtimes/code_execution_with_llm_guard_runtime.py
+examples/toolkits/code_execution_toolkit.py
+test/runtimes/test_code_execution_with_llm_guard_runtime.py
+test/toolkits/test_code_execution.py
+
+[Message 7]
+Role: assistant
+
+[Message 8]
+Role: tool
+Content: No files found matching pattern '**/*sysinfo*.py'
+
+[Message 9]
+Role: assistant
+
+[Message 10]
+Role: tool
+Content: Found 10 file(s) matching '**/*agent*.py':
+camel/agents/critic_agent.py
+camel/agents/deductive_reasoner_agent.py
+camel/agents/embodied_agent.py
+camel/agents/knowledge_graph_agent.py
+camel/agents/mcp_agent.py
+camel/agents/multi_hop_generator_agent.py
+camel/agents/programmed_agent_instruction.py
+camel/agents/role_assignment_agent.py
+camel/agents/search_agent.py
+camel/agents/task_agent.py
+
+[Message 11]
+Role: assistant
+
+[Message 12]
+Role: tool
+Content: Found 10 file(s) matching '**/*toolkit*.py':
+camel/toolkits/browser_toolkit.py
+camel/toolkits/browser_toolkit_commons.py
+camel/toolkits/dappier_toolkit.py
+camel/toolkits/github_toolkit.py
+camel/toolkits/mineru_toolkit.py
+camel/toolkits/openbb_toolkit.py
+camel/toolkits/sympy_toolkit.py
+camel/toolkits/task_planning_toolkit.py
+camel/toolkits/weather_toolkit.py
+camel/toolkits/wolfram_alpha_toolkit.py
+
+[Message 13]
+Role: assistant
+
+[Message 14]
+Role: tool
+Content: Found 10 file(s) matching '**/*example*.py':
+examples/extractors/python_strategies_example.py
+examples/loaders/apify_example.py
+examples/loaders/crawl4ai_example.py
+examples/loaders/firecrawl_example.py
+examples/loaders/jina_url_reader_example.py
+examples/loaders/markitdown_example.py
+examples/loaders/mineru_example.py
+examples/loaders/mistral_example.py
+examples/loaders/scrapegraph_example.py
+examples/loaders/unstructured_io_example.py
+
+[Message 15]
+Role: assistant
+
+[Message 16]
+Role: tool
+Content: Found 10 file(s) matching '**/*test*.py':
+test/conftest.py
+test/extractors/test_base_extractor.py
+test/extractors/test_python_strategies.py
+test/loaders/test_base_io.py
+test/loaders/test_markitdown.py
+test/loaders/test_mineru_extractor.py
+test/loaders/test_unstructured_io.py
+test/test_all_exports.py
+test/test_generators.py
+test/test_human.py
+
+[Message 17]
+Role: assistant
+
+[Message 18]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+import platform
+import select
+import shlex
+import subprocess
+import sys
+import threading
+import time
+import uuid
+from queue import Empty, Full, Queue
+from typing import Any, Dict, List, Optional
+
+from camel.logger import get_logger
+from camel.toolkits import manual_timeout
+from camel.toolkits.base import BaseToolkit
+from camel.toolkits.function_tool import FunctionTool
+from camel.toolkits.terminal_toolkit.utils import (
+    check_nodejs_availability,
+    clone_current_environment,
+    ensure_uv_available,
+    sanitize_command,
+    setup_initial_env_with_uv,
+    setup_initial_env_with_venv,
+)
+from camel.utils import MCPServer
+
+logger = get_logger(__name__)
+
+# Try to import docker, but don't make it a hard requirement
+try:
+    import docker
+    from docker.errors import APIError, NotFound
+except ImportError:
+    docker = None
+    NotFound = None
+    APIError = None
+
+
+def _to_plain(text: str) -> str:
+    r"""Convert ANSI text to plain text using rich if available."""
+    try:
+        from rich.text import Text as _RichText
+
+        return _RichText.from_ansi(text).plain
+    except Exception:
+        return text
+
+
+@MCPServer()
+class TerminalToolkit(BaseToolkit):
+    r"""A toolkit for LLM agents to execute and interact with terminal commands
+    in either a local or a sand
+... (truncated)
+
+
+[Message 19]
+Role: assistant
+
+[Message 20]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from typing import List, Literal, Optional, Union
+
+from camel.interpreters import (
+    DockerInterpreter,
+    E2BInterpreter,
+    InternalPythonInterpreter,
+    JupyterKernelInterpreter,
+    MicrosandboxInterpreter,
+    SubprocessInterpreter,
+)
+from camel.logger import get_logger
+from camel.toolkits import FunctionTool
+from camel.toolkits.base import BaseToolkit
+from camel.utils import MCPServer
+
+logger = get_logger(__name__)
+
+
+@MCPServer()
+class CodeExecutionToolkit(BaseToolkit):
+    r"""A toolkit for code execution.
+
+    Args:
+        sandbox (str): The environment type used to execute code.
+            (default: `subprocess`)
+        verbose (bool): Whether to print the output of the code execution.
+            (default: :obj:`False`)
+        unsafe_mode (bool):  If `True`, the interpreter runs the code
+            by `eval()` without any security check. (default: :obj:`False`)
+        import_white_list (Optional[List[str]]): A list of allowed imports.
+            (default: :obj:`None`)
+        require_confirm (bool): Whether to require confirmation before
+            executing code. (default: :obj:`False`)
+        timeout (Optional[float]): General timeout for toolkit operations.
+            (default: :obj:`None`)
+        microsandbox_config (Optional[dict]): Configuration
+... (truncated)
+
+
+[Message 21]
+Role: assistant
+
+[Message 22]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from typing import Any, Dict, List, Optional, Union
+
+from camel.agents.chat_agent import ChatAgent
+from camel.messages import BaseMessage
+from camel.models import BaseModelBackend
+from camel.prompts import PromptTemplateGenerator, TextPrompt
+from camel.types import RoleType, TaskType
+from camel.utils import get_task_list
+
+# AgentOps decorator setting
+try:
+    import os
+
+    if os.getenv("AGENTOPS_API_KEY") is not None:
+        from agentops import track_agent
+    else:
+        raise ImportError
+except (ImportError, AttributeError):
+    from camel.utils import track_agent
+
+
+@track_agent(name="TaskSpecifyAgent")
+class TaskSpecifyAgent(ChatAgent):
+    r"""An agent that specifies a given task prompt by prompting the user to
+    provide more details.
+
+    Attributes:
+        DEFAULT_WORD_LIMIT (int): The default word limit for the task prompt.
+        task_specify_prompt (TextPrompt): The prompt for specifying the task.
+
+    Args:
+        model (BaseModelBackend, optional): The model backend to use for
+            generating responses. (default: :obj:`OpenAIModel` with
+            `GPT_4O_MINI`)
+        task_type (TaskType, optional): The type of task for which to generate
+            a prompt. (default: :obj:`TaskType.AI_SOCIETY`)
+        task_specify_prompt (Union[str, TextPrompt]
+... (truncated)
+
+
+[Message 23]
+Role: assistant
+
+[Message 24]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+import os
+
+from camel.agents import ChatAgent
+from camel.configs import ChatGPTConfig
+from camel.models import ModelFactory
+from camel.toolkits import TerminalToolkit
+from camel.types import ModelPlatformType, ModelType
+
+# Get current script directory
+base_dir = os.path.dirname(os.path.abspath(__file__))
+# Define workspace directory for the toolkit
+workspace_dir = os.path.join(
+    os.path.dirname(os.path.dirname(base_dir)), "workspace"
+)
+
+# Define system message
+sys_msg = (
+    "You are a System Administrator helping with log management tasks. "
+    "You have access to terminal tools that can help you execute "
+    "shell commands and search files. "
+)
+
+# Set model config
+tools = TerminalToolkit(working_directory=workspace_dir).get_tools()
+
+model_config_dict = ChatGPTConfig(
+    temperature=0.0,
+).as_dict()
+
+model = ModelFactory.create(
+    model_platform=ModelPlatformType.DEFAULT,
+    model_type=ModelType.DEFAULT,
+    model_config_dict=model_config_dict,
+)
+
+# Set agent
+camel_agent = ChatAgent(
+    system_message=sys_msg,
+    model=model,
+    tools=tools,
+)
+camel_agent.reset()
+
+# Define a user message for creating logs directory
+usr_msg = (
+    f"Create a 'logs' directory in '{workspace_dir}' and list its contents"
+)
+
+# Get response information
+response = camel_agent.step(usr
+... (truncated)
+
+
+[Message 25]
+Role: assistant
+
+[Message 26]
+Role: tool
+Content: No files found matching pattern '**/*example*.py'
+
+[Message 27]
+Role: assistant
+
+[Message 28]
+Role: tool
+Content: Found 10 file(s) matching '**/*agent*.py':
+examples/benchmarks/browsecomp_chat_agent.py
+examples/evaluation/single_agent.py
+examples/generate_text_embedding_data/single_agent.py
+examples/knowledge_graph/knowledge_graph_agent_example.py
+examples/memories/agent_memory_example.py
+examples/misalignment/single_agent.py
+examples/rag/single_agent_with_hybrid_rag.py
+examples/test/test_single_agent.py
+examples/workforce/multiple_single_agents.py
+examples/workforce/role_playing_with_agents.py
+
+[Message 29]
+Role: assistant
+
+[Message 30]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import json
+import os
+import re
+from typing import Any, Dict, List
+
+from camel.agents import ChatAgent
+from camel.prompts import PromptTemplateGenerator
+from camel.types import TaskType
+
+
+def parse_question_string(
+    question_string: str, category: str
+) -> List[Dict[str, Any]]:
+    pattern = r'^(\d+)\.\s+(.*?)\s*\n*$'
+    questions = []
+    for match in re.finditer(pattern, question_string, re.MULTILINE):
+        question_id = int(match.group(1))
+        text = match.group(2)
+        questions.append(
+            {'question_id': question_id, 'text': text, 'category': category}
+        )
+    return questions
+
+
+def generate_questions(
+    examples: str,
+    category: str,
+    save_file_name: str,
+    key: str = 'generate_questions',
+    num_questions: int = 20,
+    model=None,
+) -> None:
+    prompt_template = PromptTemplateGenerator().get_prompt_from_key(
+        TaskType.EVALUATION, key
+    )
+
+    evaluation_dict = {
+        'num_questions': num_questions,
+        'category': category,
+        'examples': examples,
+    }
+
+    prompt = prompt_template.format(**evaluation_dict)
+    print(prompt)
+
+    agent = ChatAgent("You are a helpful assistant.", model=model)
+    agent.reset()
+
+    assistant_response = agent.step(prompt)
+
+    if len(assistant_response.msgs) > 0:
+        prin
+... (truncated)
+
+
+[Message 31]
+Role: assistant
+
+[Message 32]
+Role: tool
+Content: Found 10 file(s) matching '**/*config*.py':
+camel/configs/aihubmix_config.py
+camel/configs/cometapi_config.py
+camel/configs/crynux_config.py
+camel/configs/deepseek_config.py
+camel/configs/minimax_config.py
+camel/configs/openai_config.py
+camel/configs/qianfan_config.py
+camel/configs/qwen_config.py
+camel/configs/sglang_config.py
+camel/configs/watsonx_config.py
+
+[Message 33]
+Role: assistant
+
+[Message 34]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from __future__ import annotations
+
+from typing import Dict, Optional, Sequence, Type, Union
+
+from pydantic import BaseModel
+
+from camel.configs.base_config import BaseConfig
+
+
+class ChatGPTConfig(BaseConfig):
+    r"""Defines the parameters for generating chat completions using the
+    OpenAI API.
+
+    Args:
+        temperature (float, optional): Sampling temperature to use, between
+            :obj:`0` and :obj:`2`. Higher values make the output more random,
+            while lower values make it more focused and deterministic.
+            (default: :obj:`None`)
+        top_p (float, optional): An alternative to sampling with temperature,
+            called nucleus sampling, where the model considers the results of
+            the tokens with top_p probability mass. So :obj:`0.1` means only
+            the tokens comprising the top 10% probability mass are considered.
+            (default: :obj:`None`)
+        n (int, optional): How many chat completion choices to generate for
+            each input message. (default: :obj:`None`)
+        response_format (object, optional): An object specifying the format
+            that the model must output. Compatible with GPT-4 Turbo and all
+            GPT-3.5 Turbo models newer than gpt-3.5-turbo-1106. Setting to
+            {"type": "j
+... (truncated)
+
+
+[Message 35]
+Role: assistant
+Content: ## Examples (MOST IMPORTANT)
+- examples/toolkits/terminal_toolkit.py - Example usage of TerminalToolkit with shell command execution and interaction.
+- examples/evaluation/single_agent.py - Example of a single agent usage pattern (though not terminal or code execution specific).
+
+## Implementation
+- camel/toolkits/terminal_toolkit/terminal_toolkit.py - Implementation of TerminalToolkit for terminal command execution with local and Docker backends.
+- camel/toolkits/code_execution.py - Implementation of CodeExecutionToolkit for code execution in various sandboxes including subprocess and internal Python interpreter.
+- camel/agents/task_agent.py - Various agent implementations including ChatAgent base usage, useful for creating custom agents.
+
+## Configuration
+- camel/configs/openai_config.py - Configuration class ChatGPTConfig for model parameters including tool integration.
+
+# Summary
+To create an agent with terminal tools and code execution tools that can retrieve system information and print it in a Python interpreter, the most relevant files are:
+
+- The TerminalToolkit implementation and example (camel/toolkits/terminal_toolkit/terminal_toolkit.py and examples/toolkits/terminal_toolkit.py).
+- The CodeExecutionToolkit implementation (camel/toolkits/code_execution.py).
+- The agent base and task agent implementations (camel/agents/task_agent.py).
+- The model configuration for setting up the LLM (camel/configs/openai_config.py).
+
+These provide the necessary toolkits, agent base, and example usage patterns to build the requested agent script.
+
+================================================================================
+
+CODE AGENT CHAT HISTORY
+================================================================================
+
+[Message 1]
+Role: system
+Content: You are a Code Agent that writes and executes Python scripts.
+
+## Tools
+
+You have access to terminal tools for:
+- `shell_exec`: Execute shell commands
+- `shell_write_content_to_file`: Write content to a file
+- `read_file_tool`: Read file contents
+
+## Workflow
+
+1. **Read relevant files** from the paths provided by the explore agent
+2. **Write the script** using `shell_write_content_to_file`
+3. **Execute the script** using `shell_exec`
+4. **Debug if needed**: If errors occur, read the error, fix the script, and re-run
+
+## CRITICAL: Strict Instruction Following
+
+**Use EXACTLY what the task specifies. Do NOT substitute "similar" or "better" alternatives.**
+
+### Model Selection
+- Task says "Qwen2.5-14B-Instruct" -> Use `ModelType.QWEN_2_5_14B` EXACTLY
+- Do NOT use QWEN_3_CODER_PLUS as "closest alternative"
+- Do NOT guess enum names - verify from enums.py or examples
+
+### Tool Selection
+- Task says "duckduckgo search" -> Use `search_toolkit.search_duckduckgo` EXACTLY
+- Do NOT use `get_tools()` which returns ALL tools
+- Do NOT substitute with other search engines
+
+### URL Handling
+- If task provides a URL (e.g., "https://mcpservers.org/servers/devin/deepwiki"):
+  - Prioritize DIRECT HTTP access using `requests` library
+  - Create a simple FunctionTool that calls the URL
+  - Do NOT assume it requires complex registry (ACI, etc.)
+  - Example:
+    ```python
+    def query_server(query: str) -> str:
+        response = requests.post(url, json={"query": query})
+        return response.text
+    tool = FunctionTool(func=query_server)
+    ```
+
+## Important Rules
+
+1. **Use the provided file paths** - The explore agent has found relevant examples and implementations
+2. **Follow existing patterns** - Look at examples to understand how to use the APIs
+3. **Handle errors gracefully** - If execution fails, analyze the error and fix it
+4. **Environment is ready** - All API keys and dependencies are configured
+5. **Save to correct location** - Follow the task's specified output path
+6. **Use EXACT values** - Copy enum values, method names exactly from explored files
+
+## Script Writing Tips
+
+- Import from camel package: `from camel.agents import ChatAgent`
+- Use ModelFactory for models: `ModelFactory.create(model_platform=..., model_type=...)`
+- Copy exact enum values from enums.py (e.g., `ModelType.QWEN_2_5_14B`)
+- Use specific tool methods, not get_tools() (e.g., `toolkit.search_duckduckgo`)
+- Add proper error handling in your scripts
+
+## Debugging Tips
+
+- If you see import errors, check the correct module path in __init__.py
+- If you see AttributeError for enum, verify the exact enum name in enums.py
+- If you see API errors, it's likely a script issue, not environment
+- Read more files if you need to understand the API better
+
+
+[Message 2]
+Role: user
+Content: **Task**: create an agent with terminal tools and code execution tools. Prompt it to retrieve system information and print it in a Python interpreter. Save the script to task-script/single_agent/4_terminal_sysinfo_agent.py
+
+**Relevant files found by exploration**:
+## Examples (MOST IMPORTANT)
+- examples/toolkits/terminal_toolkit.py - Example usage of TerminalToolkit with shell command execution and interaction.
+- examples/evaluation/single_agent.py - Example of a single agent usage pattern (though not terminal or code execution specific).
+
+## Implementation
+- camel/toolkits/terminal_toolkit/terminal_toolkit.py - Implementation of TerminalToolkit for terminal command execution with local and Docker backends.
+- camel/toolkits/code_execution.py - Implementation of CodeExecutionToolkit for code execution in various sandboxes including subprocess and internal Python interpreter.
+- camel/agents/task_agent.py - Various agent implementations including ChatAgent base usage, useful for creating custom agents.
+
+## Configuration
+- camel/configs/openai_config.py - Configuration class ChatGPTConfig for model parameters including tool integration.
+
+# Summary
+To create an agent with terminal tools and code execution tools that can retrieve system information and print it in a Python interpreter, the most relevant files are:
+
+- The TerminalToolkit implementation and example (camel/toolkits/terminal_toolkit/terminal_toolkit.py and examples/toolkits/terminal_toolkit.py).
+- The CodeExecutionToolkit implementation (camel/toolkits/code_execution.py).
+- The agent base and task agent implementations (camel/agents/task_agent.py).
+- The model configuration for setting up the LLM (camel/configs/openai_config.py).
+
+These provide the necessary toolkits, agent base, and example usage patterns to build the requested agent script.
+
+**Instructions**:
+1. Read the relevant example files to understand the API usage patterns
+2. Write the script according to the task requirements using `shell_write_content_to_file`
+3. Execute the script using `shell_exec` with `python <script_path>`
+4. If errors occur, debug and fix until successful
+
+Note: The environment and APIs are correctly configured. If you encounter errors,
+it's likely a script issue that needs fixing.
+
+
+[Message 3]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_BeRueBk3YUHnre16tT1pMF5m",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"examples/toolkits/terminal_toolkit.py\"}"
+    }
+  }
+]
+
+[Message 4]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+import os
+
+from camel.agents import ChatAgent
+from camel.configs import ChatGPTConfig
+from camel.models import ModelFactory
+from camel.toolkits import TerminalToolkit
+from camel.types import ModelPlatformType, ModelType
+
+# Get current script directory
+base_dir = os.path.dirname(os.path.abspath(__file__))
+# Define workspace directory for the toolkit
+workspace_dir = os.path.join(
+    os.path.dirname(os.path.dirname(base_dir)), "workspace"
+)
+
+# Define system message
+sys_msg = (
+    "You are a System Administrator helping with log management tasks. "
+    "You have access to terminal tools that can help you execute "
+    "shell commands and search files. "
+)
+
+# Set model config
+tools = TerminalToolkit(working_directory=workspace_dir).get_tools()
+
+model_config_dict = ChatGPTConfig(
+    temperature=0.0,
+).as_dict()
+
+model = ModelFactory.create(
+    model_platform=ModelPlatformType.DEFAULT,
+    model_type=ModelType.DEFAULT,
+    model_config_dict=model_config_dict,
+)
+
+# Set agent
+camel_agent = ChatAgent(
+    system_message=sys_msg,
+    model=model,
+    tools=tools,
+)
+camel_agent.reset()
+
+# Define a user message for creating logs directory
+usr_msg = (
+    f"Create a 'logs' directory in '{workspace_dir}' and list its contents"
+)
+
+# Get response information
+response = camel_agent.step(usr_msg)
+print(str(response.info['tool_calls'])[:1000])
+"""
+===============================================================================
+[ToolCallingRecord(tool_name='shell_exec', args={'id': 'session1', 'exec_dir':
+'/Users/enrei/Desktop/camel0302/camel/workspace', 'command': 'mkdir logs'},
+result='', tool_call_id='call_ekWtDhrwxOg20lz55pqLEKvm'), ToolCallingRecord
+(tool_name='shell_exec', args={'id': 'session2', 'exec_dir': '/Users/enrei/
+Desktop/camel0302/camel/workspace/logs', 'command': 'ls -la'}, result='total
+0\ndrwxr-xr-x  2 enrei  staff   64 Mar 30 04:29 .\ndrwxr-xr-x  4 enrei  staff
+128 Mar 30 04:29 ..\n', tool_call_id='call_FNdkLkvUahtEZUf7YZiJrjfo')]
+===============================================================================
+"""
+
+# Define a user message for creating log files
+usr_msg = (
+    f"Create 'app.log' in the logs directory at "
+    f"'{os.path.join(workspace_dir, 'logs')}' with content: INFO: Application "
+    f"started successfully at 2024-03-10 and show the file content"
+)
+
+# Get response information
+camel_agent.reset()
+response = camel_agent.step(usr_msg)
+print(str(response.info['tool_calls'])[:1000])
+"""
+===============================================================================
+[ToolCallingRecord(tool_name='shell_exec', args={'id': 'create_log_file',
+'exec_dir': '/Users/enrei/Desktop/camel0302/camel/workspace/logs', 'command':
+"echo 'INFO: Application started successfully at 2024-03-10' > app.log"},
+result='', tool_call_id='call_bctQQYnWgAuPp1ga7a7xM6bo'), ToolCallingRecord
+(tool_name='shell_exec', args={'id': 'show_log_file_content', 'exec_dir': '/
+Users/enrei/Desktop/camel0302/camel/workspace/logs', 'command': 'cat app.
+log'}, result='INFO: Application started successfully at 2024-03-10\n',
+tool_call_id='call_wPYJBG3eYrUsjFJYIYYynxuz')]
+===============================================================================
+"""
+
+# Define a user message for searching in logs
+usr_msg = (
+    f"Search for 'INFO' keyword in the log file at "
+    f"'{os.path.join(workspace_dir, 'logs', 'app.log')}'"
+)
+
+# Get response information
+camel_agent.reset()
+response = camel_agent.step(usr_msg)
+print(str(response.info['tool_calls'])[:1000])
+"""
+===============================================================================
+[ToolCallingRecord(tool_name='file_find_in_content', args={'file': '/Users/
+enrei/Desktop/camel0302/camel/workspace/logs/app.log', 'regex': 'INFO',
+'sudo': False}, result='INFO: Application started successfully at 2024-03-10',
+ tool_call_id='call_PpeRUsldHyg5jSPLZxiGoVfq')]
+===============================================================================
+"""
+
+# Define a user message for cleaning up logs
+usr_msg = (
+    f"Remove the 'logs' directory and all its contents in '{workspace_dir}'"
+)
+
+# Get response information
+camel_agent.reset()
+response = camel_agent.step(usr_msg)
+print(response.info['tool_calls'])
+"""
+===============================================================================
+[ToolCallingRecord(tool_na
+... (truncated)
+
+
+[Message 5]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_NSknAIQNqswsKWYN3FmeTpBx",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"examples/evaluation/single_agent.py\"}"
+    }
+  }
+]
+
+[Message 6]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import json
+import os
+import re
+from typing import Any, Dict, List
+
+from camel.agents import ChatAgent
+from camel.prompts import PromptTemplateGenerator
+from camel.types import TaskType
+
+
+def parse_question_string(
+    question_string: str, category: str
+) -> List[Dict[str, Any]]:
+    pattern = r'^(\d+)\.\s+(.*?)\s*\n*$'
+    questions = []
+    for match in re.finditer(pattern, question_string, re.MULTILINE):
+        question_id = int(match.group(1))
+        text = match.group(2)
+        questions.append(
+            {'question_id': question_id, 'text': text, 'category': category}
+        )
+    return questions
+
+
+def generate_questions(
+    examples: str,
+    category: str,
+    save_file_name: str,
+    key: str = 'generate_questions',
+    num_questions: int = 20,
+    model=None,
+) -> None:
+    prompt_template = PromptTemplateGenerator().get_prompt_from_key(
+        TaskType.EVALUATION, key
+    )
+
+    evaluation_dict = {
+        'num_questions': num_questions,
+        'category': category,
+        'examples': examples,
+    }
+
+    prompt = prompt_template.format(**evaluation_dict)
+    print(prompt)
+
+    agent = ChatAgent("You are a helpful assistant.", model=model)
+    agent.reset()
+
+    assistant_response = agent.step(prompt)
+
+    if len(assistant_response.msgs) > 0:
+        print(assistant_response.msg.content)
+
+        parsed_assistant_msg = parse_question_string(
+            assistant_response.msg.content, category
+        )
+
+        # save json file
+        folder_path = './evaluation_data/questions'
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+
+        with open(f"{folder_path}/{save_file_name}.jsonl", "w") as f:
+            for item in parsed_assistant_msg:
+                json.dump(item, f, ensure_ascii=False)
+                f.write('\n')
+
+
+def main(model=None) -> None:
+    # generate ai society evaluation questions
+    examples = (
+        "1. What are the most effective ways to deal with stress?\n"
+        "2. Explain the process of natural selection and how it "
+        "contributes to the evolution and adaptation of species.\n"
+        "3. Can you help me write a formal email to a potential"
+        "business partner proposing a joint venture?"
+    )
+
+    category = 'generic task Q&A'
+    save_file_name = 'questions_ai_society'
+    generate_questions(examples, category, save_file_name, model=model)
+
+    # generate coding evaluation questions
+    examples = (
+        "1. Develop a C++ program that reads a text file line by line and"
+        "counts the number of occurrences of a specific word in the file.\n"
+        "2. Implement a Java function to find the longest common"
+        " subsequence of two input strings using dynamic programming.\n"
+        "3. Implement a machine learning-based chatbot system in Python."
+    )
+
+    category = 'coding task'
+    save_file_name = 'questions_code'
+    generate_questions(examples, category, save_file_name, model=model)
+
+    # generate math evaluation questions
+    examples = (
+        "1. Given that f(x) = 5x^3 - 2x + 3, find the value of f(2).\n"
+        "2. If the endpoints of a line segment are (2, -2) and (10, 4), "
+        "what is the length of the segment?\n"
+        "3. Solve for x in the equation 3x + 10 = 5(x - 2)."
+    )
+
+    category = 'math'
+    save_file_name = 'questions_math'
+    generate_questions(examples, category, save_file_name, model=model)
+
+    # generate science evaluation questions
+    examples = (
+        "1. What is the probability of finding a particle with a given energy"
+        " in a one-dimensional infinite square well potential when the"
+        " potential width is 2 nm and the particle has a mass of 5x10^-26"
+        " kg? Use the Schrödinger equation to solve for the allowed energy"
+        " states and their wave functions.\n"
+        "2. How does habitat loss and fragmentation affect the migratory"
+        " patterns and survival of a specific species, such as the monarch"
+        " butterfly, over time?\n"
+        "3. What is the systematic name of the organic compound with the"
+        " molecular formula C6H12O and a ketone functional group located"
+        " on the second carbon atom from the left end?"
+    )
+
+    category = 'science'
+
+    save_file_name = 'questions_science'
+    generate_qu
+... (truncated)
+
+
+[Message 7]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_JkX3ZBNvXEosUrF9sJvjF4PI",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/toolkits/code_execution.py\"}"
+    }
+  }
+]
+
+[Message 8]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from typing import List, Literal, Optional, Union
+
+from camel.interpreters import (
+    DockerInterpreter,
+    E2BInterpreter,
+    InternalPythonInterpreter,
+    JupyterKernelInterpreter,
+    MicrosandboxInterpreter,
+    SubprocessInterpreter,
+)
+from camel.logger import get_logger
+from camel.toolkits import FunctionTool
+from camel.toolkits.base import BaseToolkit
+from camel.utils import MCPServer
+
+logger = get_logger(__name__)
+
+
+@MCPServer()
+class CodeExecutionToolkit(BaseToolkit):
+    r"""A toolkit for code execution.
+
+    Args:
+        sandbox (str): The environment type used to execute code.
+            (default: `subprocess`)
+        verbose (bool): Whether to print the output of the code execution.
+            (default: :obj:`False`)
+        unsafe_mode (bool):  If `True`, the interpreter runs the code
+            by `eval()` without any security check. (default: :obj:`False`)
+        import_white_list (Optional[List[str]]): A list of allowed imports.
+            (default: :obj:`None`)
+        require_confirm (bool): Whether to require confirmation before
+            executing code. (default: :obj:`False`)
+        timeout (Optional[float]): General timeout for toolkit operations.
+            (default: :obj:`None`)
+        microsandbox_config (Optional[dict]): Configuration for microsandbox
+            interpreter. Available keys: 'server_url', 'api_key',
+            'namespace', 'sandbox_name', 'timeout'.
+            If None, uses default configuration. (default: :obj:`None`)
+    """
+
+    def __init__(
+        self,
+        sandbox: Literal[
+            "internal_python",
+            "jupyter",
+            "docker",
+            "subprocess",
+            "e2b",
+            "microsandbox",
+        ] = "subprocess",
+        verbose: bool = False,
+        unsafe_mode: bool = False,
+        import_white_list: Optional[List[str]] = None,
+        require_confirm: bool = False,
+        timeout: Optional[float] = None,
+        # Microsandbox configuration dictionary
+        microsandbox_config: Optional[dict] = None,
+    ) -> None:
+        super().__init__(timeout=timeout)
+        self.verbose = verbose
+        self.unsafe_mode = unsafe_mode
+        self.import_white_list = import_white_list or list()
+
+        # Type annotation for interpreter to allow all possible types
+        self.interpreter: Union[
+            InternalPythonInterpreter,
+            JupyterKernelInterpreter,
+            DockerInterpreter,
+            SubprocessInterpreter,
+            E2BInterpreter,
+            MicrosandboxInterpreter,
+        ]
+
+        if sandbox == "internal_python":
+            self.interpreter = InternalPythonInterpreter(
+                unsafe_mode=self.unsafe_mode,
+                import_white_list=self.import_white_list,
+            )
+        elif sandbox == "jupyter":
+            self.interpreter = JupyterKernelInterpreter(
+                require_confirm=require_confirm,
+                print_stdout=self.verbose,
+                print_stderr=self.verbose,
+            )
+        elif sandbox == "docker":
+            self.interpreter = DockerInterpreter(
+                require_confirm=require_confirm,
+                print_stdout=self.verbose,
+                print_stderr=self.verbose,
+            )
+        elif sandbox == "subprocess":
+            self.interpreter = SubprocessInterpreter(
+                require_confirm=require_confirm,
+                print_stdout=self.verbose,
+                print_stderr=self.verbose,
+            )
+        elif sandbox == "e2b":
+            self.interpreter = E2BInterpreter(require_confirm=require_confirm)
+        elif sandbox == "microsandbox":
+            # Extract parameters with proper types for microsandbox
+            config = microsandbox_config or {}
+
+            self.interpreter = MicrosandboxInterpreter(
+                require_confirm=require_confirm,
+                server_url=config.get("server_url"),
+                api_key=config.get("api_key"),
+                namespace=config.get("namespace", "default"),
+                sandbox_name=config.get("sandbox_name"),
+                timeout=config.get("timeout", 30),
+            )
+        else:
+            raise RuntimeError(
+                f"The sandbox type `{sandbox}` is not supported."
+            )
+
+    def execute_code(sel
+... (truncated)
+
+
+[Message 9]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_2CvJVYfpGLNmuD9Xj1MChXMc",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/agents/task_agent.py\"}"
+    }
+  }
+]
+
+[Message 10]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from typing import Any, Dict, List, Optional, Union
+
+from camel.agents.chat_agent import ChatAgent
+from camel.messages import BaseMessage
+from camel.models import BaseModelBackend
+from camel.prompts import PromptTemplateGenerator, TextPrompt
+from camel.types import RoleType, TaskType
+from camel.utils import get_task_list
+
+# AgentOps decorator setting
+try:
+    import os
+
+    if os.getenv("AGENTOPS_API_KEY") is not None:
+        from agentops import track_agent
+    else:
+        raise ImportError
+except (ImportError, AttributeError):
+    from camel.utils import track_agent
+
+
+@track_agent(name="TaskSpecifyAgent")
+class TaskSpecifyAgent(ChatAgent):
+    r"""An agent that specifies a given task prompt by prompting the user to
+    provide more details.
+
+    Attributes:
+        DEFAULT_WORD_LIMIT (int): The default word limit for the task prompt.
+        task_specify_prompt (TextPrompt): The prompt for specifying the task.
+
+    Args:
+        model (BaseModelBackend, optional): The model backend to use for
+            generating responses. (default: :obj:`OpenAIModel` with
+            `GPT_4O_MINI`)
+        task_type (TaskType, optional): The type of task for which to generate
+            a prompt. (default: :obj:`TaskType.AI_SOCIETY`)
+        task_specify_prompt (Union[str, TextPrompt], optional): The prompt for
+            specifying the task. (default: :obj:`None`)
+        word_limit (int, optional): The word limit for the task prompt.
+            (default: :obj:`50`)
+        output_language (str, optional): The language to be output by the
+            agent. (default: :obj:`None`)
+    """
+
+    DEFAULT_WORD_LIMIT = 50
+
+    def __init__(
+        self,
+        model: Optional[BaseModelBackend] = None,
+        task_type: TaskType = TaskType.AI_SOCIETY,
+        task_specify_prompt: Optional[Union[str, TextPrompt]] = None,
+        word_limit: int = DEFAULT_WORD_LIMIT,
+        output_language: Optional[str] = None,
+    ) -> None:
+        self.task_specify_prompt: Union[str, TextPrompt]
+        if task_specify_prompt is None:
+            task_specify_prompt_template = (
+                PromptTemplateGenerator().get_task_specify_prompt(task_type)
+            )
+
+            self.task_specify_prompt = task_specify_prompt_template.format(
+                word_limit=word_limit
+            )
+        else:
+            self.task_specify_prompt = TextPrompt(task_specify_prompt)
+
+        system_message = BaseMessage(
+            role_name="Task Specifier",
+            role_type=RoleType.ASSISTANT,
+            meta_dict=None,
+            content="You can make a task more specific.",
+        )
+
+        super().__init__(
+            system_message,
+            model=model,
+            output_language=output_language,
+        )
+
+    def run(
+        self,
+        task_prompt: Union[str, TextPrompt],
+        meta_dict: Optional[Dict[str, Any]] = None,
+    ) -> TextPrompt:
+        r"""Specify the given task prompt by providing more details.
+
+        Args:
+            task_prompt (Union[str, TextPrompt]): The original task
+                prompt.
+            meta_dict (Dict[str, Any], optional): A dictionary containing
+                additional information to include in the prompt.
+                (default: :obj:`None`)
+
+        Returns:
+            TextPrompt: The specified task prompt.
+        """
+        self.reset()
+        task_specify_prompt = self.task_specify_prompt.format(task=task_prompt)
+
+        if meta_dict is not None:
+            task_specify_prompt = task_specify_prompt.format(**meta_dict)
+        task_msg = BaseMessage.make_user_message(
+            role_name="Task Specifier", content=task_specify_prompt
+        )
+        specifier_response = self.step(task_msg)
+
+        if specifier_response.terminated:
+            raise RuntimeError("Task specification failed.")
+        if len(specifier_response.msgs) == 0:
+            raise RuntimeError("Got no specification message.")
+
+        specified_task_msg = specifier_response.msgs[0]
+
+        return TextPrompt(specified_task_msg.content)
+
+
+@track_agent(name="TaskPlannerAgent")
+class TaskPlannerAgent(ChatAgent):
+    r"""An agent that helps divide a task into subtasks based on the input
+    task prompt.
+
+    Attributes:
+        task_planner_prompt (TextPrompt): A prompt for the agent to d
+... (truncated)
+
+
+[Message 11]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_gWlddqmzPZsXILNOEIlImHPf",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/configs/openai_config.py\"}"
+    }
+  }
+]
+
+[Message 12]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from __future__ import annotations
+
+from typing import Dict, Optional, Sequence, Type, Union
+
+from pydantic import BaseModel
+
+from camel.configs.base_config import BaseConfig
+
+
+class ChatGPTConfig(BaseConfig):
+    r"""Defines the parameters for generating chat completions using the
+    OpenAI API.
+
+    Args:
+        temperature (float, optional): Sampling temperature to use, between
+            :obj:`0` and :obj:`2`. Higher values make the output more random,
+            while lower values make it more focused and deterministic.
+            (default: :obj:`None`)
+        top_p (float, optional): An alternative to sampling with temperature,
+            called nucleus sampling, where the model considers the results of
+            the tokens with top_p probability mass. So :obj:`0.1` means only
+            the tokens comprising the top 10% probability mass are considered.
+            (default: :obj:`None`)
+        n (int, optional): How many chat completion choices to generate for
+            each input message. (default: :obj:`None`)
+        response_format (object, optional): An object specifying the format
+            that the model must output. Compatible with GPT-4 Turbo and all
+            GPT-3.5 Turbo models newer than gpt-3.5-turbo-1106. Setting to
+            {"type": "json_object"} enables JSON mode, which guarantees the
+            message the model generates is valid JSON. Important: when using
+            JSON mode, you must also instruct the model to produce JSON
+            yourself via a system or user message. Without this, the model
+            may generate an unending stream of whitespace until the generation
+            reaches the token limit, resulting in a long-running and seemingly
+            "stuck" request. Also note that the message content may be
+            partially cut off if finish_reason="length", which indicates the
+            generation exceeded max_tokens or the conversation exceeded the
+            max context length.
+        stream (bool, optional): If True, partial message deltas will be sent
+            as data-only server-sent events as they become available.
+            (default: :obj:`None`)
+        stop (str or list, optional): Up to :obj:`4` sequences where the API
+            will stop generating further tokens. (default: :obj:`None`)
+        max_tokens (int, optional): The maximum number of tokens to generate
+            in the chat completion. The total length of input tokens and
+            generated tokens is limited by the model's context length.
+            (default: :obj:`None`)
+        presence_penalty (float, optional): Number between :obj:`-2.0` and
+            :obj:`2.0`. Positive values penalize new tokens based on whether
+            they appear in the text so far, increasing the model's likelihood
+            to talk about new topics. See more information about frequency and
+            presence penalties. (default: :obj:`None`)
+        frequency_penalty (float, optional): Number between :obj:`-2.0` and
+            :obj:`2.0`. Positive values penalize new tokens based on their
+            existing frequency in the text so far, decreasing the model's
+            likelihood to repeat the same line verbatim. See more information
+            about frequency and presence penalties. (default: :obj:`None`)
+        logit_bias (dict, optional): Modify the likelihood of specified tokens
+            appearing in the completion. Accepts a json object that maps tokens
+            (specified by their token ID in the tokenizer) to an associated
+            bias value from :obj:`-100` to :obj:`100`. Mathematically, the bias
+            is added to the logits generated by the model prior to sampling.
+            The exact effect will vary per model, but values between:obj:` -1`
+            and :obj:`1` should decrease or increase likelihood of selection;
+            values like :obj:`-100` or :obj:`100` should result in a ban or
+            exclusive selection of the relevant token. (default: :obj:`None`)
+        user (str, optional): A unique identifier representing your end-user,
+            which can help OpenAI to monitor and detect abuse.
+            (default: :obj:`None`)
+        tools (list[FunctionTool], optional): A list of tools the model may
+            call. Curren
+... (truncated)
+
+
+[Message 13]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_rECrFU2zdrhzKG69fIbVmxVs",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"import os\\n\\nfrom camel.agents import ChatAgent\\nfrom camel.configs.openai_config import ChatGPTConfig\\nfrom camel.models import ModelFactory\\nfrom camel.toolkits.code_execution import CodeExecutionToolkit\\nfrom camel.toolkits.terminal_toolkit.terminal_toolkit import TerminalToolkit\\nfrom camel.types import ModelPlatformType, ModelType\\n\\n# Define workspace directory\\nworkspace_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), \\\"workspace\\\")\\n\\n# Initialize terminal toolkit\\nterminal_toolkit = TerminalToolkit(working_directory=workspace_dir)\\nterminal_tools = terminal_toolkit.get_tools()\\n\\n# Initialize code execution toolkit with internal python interpreter\\ncode_exec_toolkit = CodeExecutionToolkit(sandbox=\\\"internal_python\\\")\\ncode_exec_tools = code_exec_toolkit.get_tools()\\n\\n# Combine tools\\ntools = terminal_tools + code_exec_tools\\n\\n# System message for the agent\\nsystem_message = (\\n    \\\"You are an assistant with access to terminal tools and code execution tools. \\\"\\n    \\\"Retrieve system information using terminal tools and then print it using the Python interpreter.\\\"\\n)\\n\\n# Model config\\nmodel_config = ChatGPTConfig(temperature=0.0).as_dict()\\n\\n# Create model with Qwen2.5-14B-Instruct\\nmodel = ModelFactory.create(\\n    model_platform=ModelPlatformType.DEFAULT,\\n    model_type=ModelType.QWEN_2_5_14B,\\n    model_config_dict=model_config,\\n)\\n\\n# Create agent\\nagent = ChatAgent(\\n    system_message=system_message,\\n    model=model,\\n    tools=tools,\\n)\\n\\nagent.reset()\\n\\n# User message to retrieve system info and print it in python interpreter\\nuser_message = (\\n    \\\"Retrieve system information using terminal commands like 'uname -a' or 'cat /etc/os-release'. \\\"\\n    \\\"Then print the retrieved system information in the Python interpreter.\\\"\\n)\\n\\nresponse = agent.step(user_message)\\n\\nprint(\\\"Agent response:\\\")\\nprint(response.msg.content)\\n\\n# Print tool calls for debugging\\nprint(\\\"Tool calls:\\\")\\nfor call in response.info.get('tool_calls', []):\\n    print(call)\\n\", \"file_path\": \"task-script/single_agent/4_terminal_sysinfo_agent.py\"}"
+    }
+  }
+]
+
+[Message 14]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/4_terminal_sysinfo_agent.py'.
+
+[Message 15]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_rLgwjCNPzhmpILBDOJM4sNow",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_sysinfo_agent\", \"command\": \"python task-script/single_agent/4_terminal_sysinfo_agent.py\", \"block\": true, \"timeout\": 60}"
+    }
+  }
+]
+
+[Message 16]
+Role: tool
+Content: 2026-02-01 15:25:32,408 - camel.models.model_manager - ERROR - Error processing with model: <camel.models.openai_model.OpenAIModel object at 0x7f39290ac810>
+2026-02-01 15:25:32,408 - camel.camel.agents.chat_agent - ERROR - Model error: qwen2.5-14b-instruct
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/4_terminal_sysinfo_agent.py", line 55, in <module>
+    response = agent.step(user_message)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/agents/chat_agent.py", line 2838, in step
+    return future.result(timeout=self.step_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/agents/chat_agent.py", line 2919, in _step_impl
+    response = self._get_model_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/agents/chat_agent.py", line 3413, in _get_model_response
+    response = self.model_backend.run(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/model_manager.py", line 239, in run
+    raise exc
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/model_manager.py", line 229, in run
+    response = self.current_model.run(messages, response_format, tools)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/base_model.py", line 212, in wrapped_run
+    return original_run(self, messages, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/base_model.py", line 633, in run
+    result = self._run(messages, response_format, tools)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/openai_model.py", line 320, in _run
+    result = self._request_chat_completion(messages, tools)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/openai_model.py", line 387, in _request_chat_completion
+    return self._client.chat.completions.create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/.venv/lib/python3.11/site-packages/openai/_utils/_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 1147, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1047, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.NotFoundError: Error code: 404 - {'error': {'message': 'The model `qwen2.5-14b-instruct` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}
+
+[Message 17]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_9YFNvwHZ2hSfRzwVk1SigYbE",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"import os\\n\\nfrom camel.agents import ChatAgent\\nfrom camel.configs.openai_config import ChatGPTConfig\\nfrom camel.models import ModelFactory\\nfrom camel.toolkits.code_execution import CodeExecutionToolkit\\nfrom camel.toolkits.terminal_toolkit.terminal_toolkit import TerminalToolkit\\nfrom camel.types import ModelPlatformType, ModelType\\n\\n# Define workspace directory\\nworkspace_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), \\\"workspace\\\")\\n\\n# Initialize terminal toolkit\\nterminal_toolkit = TerminalToolkit(working_directory=workspace_dir)\\nterminal_tools = terminal_toolkit.get_tools()\\n\\n# Initialize code execution toolkit with internal python interpreter\\ncode_exec_toolkit = CodeExecutionToolkit(sandbox=\\\"internal_python\\\")\\ncode_exec_tools = code_exec_toolkit.get_tools()\\n\\n# Combine tools\\ntools = terminal_tools + code_exec_tools\\n\\n# System message for the agent\\nsystem_message = (\\n    \\\"You are an assistant with access to terminal tools and code execution tools. \\\"\\n    \\\"Retrieve system information using terminal tools and then print it using the Python interpreter.\\\"\\n)\\n\\n# Model config\\nmodel_config = ChatGPTConfig(temperature=0.0).as_dict()\\n\\n# Create model with QWEN_2_5_14B (correct enum)\\nmodel = ModelFactory.create(\\n    model_platform=ModelPlatformType.DEFAULT,\\n    model_type=ModelType.QWEN_2_5_14B,\\n    model_config_dict=model_config,\\n)\\n\\n# Create agent\\nagent = ChatAgent(\\n    system_message=system_message,\\n    model=model,\\n    tools=tools,\\n)\\n\\nagent.reset()\\n\\n# User message to retrieve system info and print it in python interpreter\\nuser_message = (\\n    \\\"Retrieve system information using terminal commands like 'uname -a' or 'cat /etc/os-release'. \\\"\\n    \\\"Then print the retrieved system information in the Python interpreter.\\\"\\n)\\n\\nresponse = agent.step(user_message)\\n\\nprint(\\\"Agent response:\\\")\\nprint(response.msg.content)\\n\\n# Print tool calls for debugging\\nprint(\\\"Tool calls:\\\")\\nfor call in response.info.get('tool_calls', []):\\n    print(call)\\n\", \"file_path\": \"task-script/single_agent/4_terminal_sysinfo_agent.py\"}"
+    }
+  }
+]
+
+[Message 18]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/4_terminal_sysinfo_agent.py'.
+
+[Message 19]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_oVHw4xrFtocWbBh7An2vUGrX",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_sysinfo_agent\", \"command\": \"python task-script/single_agent/4_terminal_sysinfo_agent.py\", \"block\": true, \"timeout\": 60}"
+    }
+  }
+]
+
+[Message 20]
+Role: tool
+Content: 2026-02-01 15:25:49,847 - camel.models.model_manager - ERROR - Error processing with model: <camel.models.openai_model.OpenAIModel object at 0x7fa4b818ca10>
+2026-02-01 15:25:49,847 - camel.camel.agents.chat_agent - ERROR - Model error: qwen2.5-14b-instruct
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/4_terminal_sysinfo_agent.py", line 55, in <module>
+    response = agent.step(user_message)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/agents/chat_agent.py", line 2838, in step
+    return future.result(timeout=self.step_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/agents/chat_agent.py", line 2919, in _step_impl
+    response = self._get_model_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/agents/chat_agent.py", line 3413, in _get_model_response
+    response = self.model_backend.run(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/model_manager.py", line 239, in run
+    raise exc
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/model_manager.py", line 229, in run
+    response = self.current_model.run(messages, response_format, tools)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/base_model.py", line 212, in wrapped_run
+    return original_run(self, messages, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/base_model.py", line 633, in run
+    result = self._run(messages, response_format, tools)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/openai_model.py", line 320, in _run
+    result = self._request_chat_completion(messages, tools)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/openai_model.py", line 387, in _request_chat_completion
+    return self._client.chat.completions.create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/.venv/lib/python3.11/site-packages/openai/_utils/_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 1147, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1047, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.NotFoundError: Error code: 404 - {'error': {'message': 'The model `qwen2.5-14b-instruct` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}
+
+[Message 21]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_XTkyXxKKIperjUfS4g4uN1ud",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"import os\\n\\nfrom camel.agents import ChatAgent\\nfrom camel.configs.openai_config import ChatGPTConfig\\nfrom camel.models import ModelFactory\\nfrom camel.toolkits.code_execution import CodeExecutionToolkit\\nfrom camel.toolkits.terminal_toolkit.terminal_toolkit import TerminalToolkit\\nfrom camel.types import ModelPlatformType, ModelType\\n\\n# Define workspace directory\\nworkspace_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), \\\"workspace\\\")\\n\\n# Initialize terminal toolkit\\nterminal_toolkit = TerminalToolkit(working_directory=workspace_dir)\\nterminal_tools = terminal_toolkit.get_tools()\\n\\n# Initialize code execution toolkit with internal python interpreter\\ncode_exec_toolkit = CodeExecutionToolkit(sandbox=\\\"internal_python\\\")\\ncode_exec_tools = code_exec_toolkit.get_tools()\\n\\n# Combine tools\\ntools = terminal_tools + code_exec_tools\\n\\n# System message for the agent\\nsystem_message = (\\n    \\\"You are an assistant with access to terminal tools and code execution tools. \\\"\\n    \\\"Retrieve system information using terminal tools and then print it using the Python interpreter.\\\"\\n)\\n\\n# Model config\\nmodel_config = ChatGPTConfig(temperature=0.0).as_dict()\\n\\n# Create model with DEFAULT (fallback)\\nmodel = ModelFactory.create(\\n    model_platform=ModelPlatformType.DEFAULT,\\n    model_type=ModelType.DEFAULT,\\n    model_config_dict=model_config,\\n)\\n\\n# Create agent\\nagent = ChatAgent(\\n    system_message=system_message,\\n    model=model,\\n    tools=tools,\\n)\\n\\nagent.reset()\\n\\n# User message to retrieve system info and print it in python interpreter\\nuser_message = (\\n    \\\"Retrieve system information using terminal commands like 'uname -a' or 'cat /etc/os-release'. \\\"\\n    \\\"Then print the retrieved system information in the Python interpreter.\\\"\\n)\\n\\nresponse = agent.step(user_message)\\n\\nprint(\\\"Agent response:\\\")\\nprint(response.msg.content)\\n\\n# Print tool calls for debugging\\nprint(\\\"Tool calls:\\\")\\nfor call in response.info.get('tool_calls', []):\\n    print(call)\\n\", \"file_path\": \"task-script/single_agent/4_terminal_sysinfo_agent.py\"}"
+    }
+  }
+]
+
+[Message 22]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/4_terminal_sysinfo_agent.py'.
+
+[Message 23]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_efInB1TNfnHRK91CLQ6YnUPD",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_sysinfo_agent\", \"command\": \"python task-script/single_agent/4_terminal_sysinfo_agent.py\", \"block\": true, \"timeout\": 60}"
+    }
+  }
+]
+
+[Message 24]
+Role: tool
+Content: System Information:
+uname -a output:
+Linux KW61526 5.15.0-164-generic #174-Ubuntu SMP Fri Nov 14 20:25:16 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+
+/etc/os-release content:
+PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+Agent response:
+System Information:
+uname -a output:
+Linux KW61526 5.15.0-164-generic #174-Ubuntu SMP Fri Nov 14 20:25:16 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+
+/etc/os-release content:
+PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+Tool calls:
+Tool Execution: shell_exec
+	Args: {'id': 'sysinfo_uname', 'command': 'uname -a', 'block': True, 'timeout': 10}
+	Result: Linux KW61526 5.15.0-164-generic #174-Ubuntu SMP Fri Nov 14 20:25:16 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+
+Tool Execution: shell_exec
+	Args: {'id': 'sysinfo_osrelease', 'command': 'cat /etc/os-release', 'block': True, 'timeout': 10}
+	Result: PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+
+Tool Execution: execute_code
+	Args: {'code': '# Printing the retrieved system information\nuname_info = "Linux KW61526 5.15.0-164-generic #174-Ubuntu SMP Fri Nov 14 20:25:16 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux"\nos_release_info = \'\'\'PRETTY_NAME="Ubuntu 22.04.5 LTS"\nNAME="Ubuntu"\nVERSION_ID="22.04"\nVERSION="22.04.5 LTS (Jammy Jellyfish)"\nVERSION_CODENAME=jammy\nID=ubuntu\nID_LIKE=debian\nHOME_URL="https://www.ubuntu.com/"\nSUPPORT_URL="https://help.ubuntu.com/"\nBUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"\nPRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"\nUBUNTU_CODENAME=jammy\'\'\'\n\nprint("System Information:")\nprint("uname -a output:")\nprint(uname_info)\nprint()\nprint("/etc/os-release content:")\nprint(os_release_info)', 'code_type': 'python'}
+	Result: Executed the code below:
+```python
+# Printing the retrieved system information
+uname_info = "Linux KW61526 5.15.0-164-generic #174-Ubuntu SMP Fri Nov 14 20:25:16 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux"
+os_release_info = '''PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy'''
+
+print("System Information:")
+print("uname -a output:")
+print(uname_info)
+print()
+print("/etc/os-release content:")
+print(os_release_info)
+```
+> Executed Results:
+PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+
+
+[Message 25]
+Role: assistant
+Content: I have created the agent script with terminal tools and code execution tools that retrieves system information and prints it in a Python interpreter. The script is saved at task-script/single_agent/4_terminal_sysinfo_agent.py.
+
+The agent successfully executed the commands `uname -a` and `cat /etc/os-release` to get system information, then printed the information using the Python interpreter.
+
+If you want, I can provide the script content or assist with running or modifying it further.
+

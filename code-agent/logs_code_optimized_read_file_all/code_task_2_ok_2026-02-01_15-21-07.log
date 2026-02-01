@@ -1,0 +1,1529 @@
+Task: task_2
+Status: SUCCESS
+Start Time: 2026-02-01T15:21:07.215451
+End Time: 2026-02-01T15:22:36.924106
+Total Duration: 89.71 seconds
+  - Explore Phase: 54.86 seconds
+  - Code Phase: 34.84 seconds
+Description: create an agent using the Gemini model with a tools to search duckduckgo. And then it can be used to answer questions. Save the script to task-script/single_agent/2_duckduckgo_agent.py
+================================================================================
+
+EXPLORE PHASE
+================================================================================
+Tool Calls: 19
+----------------------------------------
+
+[1] grep_search
+Args: {
+  "pattern": "gemini",
+  "path": null,
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'gemini' in *.py files (10 matches):
+test/models/test_model_factory.py
+test/models/test_gemini_model.py
+test/models/test_cometapi_model.py
+test/agents/test_chat_agent.py
+examples/models/gemini_model_example.py
+examples/models/cometapi_model_example.py
+examples/models/role_playing_with_gemini.py
+camel/utils/commons.py
+camel/configs/gemini_config.py
+camel/configs/__init__.py
+
+[2] grep_search
+Args: {
+  "pattern": "duckduckgo",
+  "path": null,
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'duckduckgo' in *.py files (9 matches):
+examples/models/role_playing_with_cohere.py
+test/toolkits/test_search_functions.py
+camel/toolkits/search_toolkit.py
+examples/models/crynux_model_example.py
+examples/models/openai_structured_output_example.py
+examples/vision/duckduckgo_video_object_recognition.py
+examples/toolkits/role_playing_with_functions.py
+examples/workforce/hackathon_judges.py
+camel/societies/workforce/workforce.py
+
+[3] glob_search
+Args: {
+  "pattern": "*gemini*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: No files found matching pattern '*gemini*.py'
+
+[4] glob_search
+Args: {
+  "pattern": "*duckduckgo*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: No files found matching pattern '*duckduckgo*.py'
+
+[5] find_imports
+Args: {
+  "module_name": "gemini",
+  "ignore_case": true
+}
+Result: Search results for '(from\s+\S*gemini\S*\s+import|import\s+\S*gemini)' in *.py files (11 matches):
+camel/embeddings/__init__.py:16:from .gemini_embedding import GeminiEmbedding
+examples/models/gemini_model_example.py:17:from camel.configs import GeminiConfig
+camel/configs/__init__.py:30:from .gemini_config import Gemini_API_PARAMS, GeminiConfig
+camel/models/gemini_model.py:29:from camel.configs import GeminiConfig
+examples/embeddings/gemini_embedding_example.py:15:from camel.embeddings import Ge...
+
+[6] read_file
+Args: {
+  "file_path": "examples/models/gemini_model_example.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[7] read_file
+Args: {
+  "file_path": "camel/models/gemini_model.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[8] read_file
+Args: {
+  "file_path": "camel/toolkits/search_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[9] read_file
+Args: {
+  "file_path": "camel/configs/gemini_config.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[10] read_file
+Args: {
+  "file_path": "test/models/test_gemini_model.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[11] glob_search
+Args: {
+  "pattern": "*duckduckgo_agent.py",
+  "path": "examples",
+  "file_type": "file",
+  "max_results": 5
+}
+Result: No files found matching pattern '*duckduckgo_agent.py'
+
+[12] glob_search
+Args: {
+  "pattern": "*agent*.py",
+  "path": "examples",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: No files found matching pattern '*agent*.py'
+
+[13] glob_search
+Args: {
+  "pattern": "*duckduckgo*.py",
+  "path": "examples",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: No files found matching pattern '*duckduckgo*.py'
+
+[14] glob_search
+Args: {
+  "pattern": "*agent*.py",
+  "path": "examples",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: No files found matching pattern '*agent*.py'
+
+[15] glob_search
+Args: {
+  "pattern": "*duckduckgo*.py",
+  "path": "examples",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: No files found matching pattern '*duckduckgo*.py'
+
+[16] find_imports
+Args: {
+  "module_name": "duckduckgo",
+  "ignore_case": true
+}
+Result: No matches found for pattern '(from\s+\S*duckduckgo\S*\s+import|import\s+\S*duckduckgo)'
+
+[17] find_imports
+Args: {
+  "module_name": "gemini",
+  "ignore_case": true
+}
+Result: Search results for '(from\s+\S*gemini\S*\s+import|import\s+\S*gemini)' in *.py files (11 matches):
+examples/models/gemini_model_example.py:17:from camel.configs import GeminiConfig
+examples/embeddings/gemini_embedding_example.py:15:from camel.embeddings import GeminiEmbedding
+camel/embeddings/__init__.py:16:from .gemini_embedding import GeminiEmbedding
+test/models/test_gemini_model.py:17:from camel.configs import GeminiConfig
+test/models/test_gemini_model.py:18:from camel.models import GeminiMod...
+
+[18] read_file
+Args: {
+  "file_path": "examples/models/role_playing_with_functions.py"
+}
+Result: Error: File 'examples/models/role_playing_with_functions.py' does not exist.
+
+[19] read_file
+Args: {
+  "file_path": "examples/toolkits/role_playing_with_functions.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+----------------------------------------
+Output:
+## Examples (MOST IMPORTANT)
+- examples/models/gemini_model_example.py - Example script showing how to create a ChatAgent using Gemini models with tools (TerminalToolkit used in example, can replace with SearchToolkit for duckduckgo)
+- examples/toolkits/role_playing_with_functions.py - Example showing usage of SearchToolkit with duckduckgo search tool in a role-playing multi-agent setup
+
+## Implementation
+- camel/models/gemini_model.py - Implementation of GeminiModel class, the LLM provider integration for Gemini models
+- camel/toolkits/search_toolkit.py - Implementation of SearchToolkit including the duckduckgo search method and get_tools() method returning duckduckgo tool
+- camel/configs/gemini_config.py - Configuration class GeminiConfig for Gemini model parameters
+
+## Tests
+- test/models/test_gemini_model.py - Test cases for GeminiModel including message processing and tool call merging
+
+These files provide the necessary model, config, and toolkit implementations plus usage examples to create an agent using Gemini model with duckduckgo search tool to answer questions. The example in examples/models/gemini_model_example.py can be adapted to use SearchToolkit().get_tools() or specifically SearchToolkit().search_duckduckgo as the tools list. The role_playing_with_functions.py example shows how to use SearchToolkit's duckduckgo search tool in an agent context. The test file ensures GeminiModel behavior is correct.
+================================================================================
+
+CODE PHASE
+================================================================================
+Tool Calls: 8
+----------------------------------------
+
+[1] shell_write_content_to_file
+Args: {
+  "content": "from camel.agents import ChatAgent\nfrom camel.models.gemini_model import GeminiModel\nfrom camel.toolkits.search_toolkit import SearchToolkit\n\n\ndef main():\n    # Initialize the Gemini model\n    model = GeminiModel()\n\n    # Initialize the SearchToolkit and get the duckduckgo search tool\n    search_toolkit = SearchToolkit()\n    duckduckgo_tool = search_toolkit.search_duckduckgo\n\n    # Create the ChatAgent with the Gemini model and the duckduckgo search tool\n    agent = ChatAgent(\n        model=model,\n        tools=[duckduckgo_tool],\n        name=\"GeminiDuckDuckGoAgent\"\n    )\n\n    # Example question to ask the agent\n    question = \"What is the capital of France?\"\n\n    # Get the agent's answer\n    answer = agent.chat(question)\n\n    print(f\"Question: {question}\")\n    print(f\"Answer: {answer}\")\n\n\nif __name__ == \"__main__\":\n    main()\n",
+  "file_path": "task-script/single_agent/2_duckduckgo_agent.py"
+}
+Result: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/2_duckduckgo_agent.py'.
+
+[2] shell_exec
+Args: {
+  "id": "run_duckduckgo_agent",
+  "command": "python task-script/single_agent/2_duckduckgo_agent.py",
+  "block": true,
+  "timeout": 30
+}
+Result: Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/2_duckduckgo_agent.py", line 32, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/2_duckduckgo_agent.py", line 8, in main
+    model = GeminiModel()
+            ^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/utils/commons.py", line 280, in wrapper
+    bound_arguments = signature.bind(*args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/inspect.py", line 3195, in bind
+    return self._bind(args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/inspect.py", line 3110, in _bind
+    raise TypeError(msg) from None
+TypeError: missing a required argument: 'model_type'
+
+[3] read_file_tool
+Args: {
+  "file_path": "examples/models/gemini_model_example.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+
+from camel.agents import ChatAgent
+from camel.configs import GeminiConfig
+from camel.models import ModelFactory
+from camel.toolkits import TerminalToolkit
+from camel.types import ModelPlatformType, ModelType
+
+# Define system message
+sys_msg = "You are a helpful assistant."
+
+
+# Get curre...
+
+[4] shell_write_content_to_file
+Args: {
+  "content": "from camel.agents import ChatAgent\nfrom camel.models import ModelFactory\nfrom camel.toolkits.search_toolkit import SearchToolkit\nfrom camel.types import ModelPlatformType, ModelType\nfrom camel.configs import GeminiConfig\n\n\ndef main():\n    # Initialize the Gemini model using ModelFactory with required parameters\n    model = ModelFactory.create(\n        model_platform=ModelPlatformType.GEMINI,\n        model_type=ModelType.GEMINI_3_FLASH,\n        model_config_dict=GeminiConfig(temperature=0.2).as_dict(),\n    )\n\n    # Initialize the SearchToolkit and get the duckduckgo search tool\n    search_toolkit = SearchToolkit()\n    duckduckgo_tool = search_toolkit.search_duckduckgo\n\n    # Create the ChatAgent with the Gemini model and the duckduckgo search tool\n    agent = ChatAgent(\n        system_message=\"You are a helpful assistant.\",\n        model=model,\n        tools=[duckduckgo_tool],\n        name=\"GeminiDuckDuckGoAgent\"\n    )\n\n    # Example question to ask the agent\n    question = \"What is the capital of France?\"\n\n    # Get the agent's answer\n    response = agent.step(question)\n\n    print(f\"Question: {question}\")\n    print(f\"Answer: {response.msgs[0].content}\")\n\n\nif __name__ == \"__main__\":\n    main()\n",
+  "file_path": "task-script/single_agent/2_duckduckgo_agent.py"
+}
+Result: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/2_duckduckgo_agent.py'.
+
+[5] shell_exec
+Args: {
+  "id": "run_duckduckgo_agent_v2",
+  "command": "python task-script/single_agent/2_duckduckgo_agent.py",
+  "block": true,
+  "timeout": 30
+}
+Result: Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/2_duckduckgo_agent.py", line 39, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/2_duckduckgo_agent.py", line 21, in main
+    agent = ChatAgent(
+            ^^^^^^^^^^
+TypeError: ChatAgent.__init__() got an unexpected keyword argument 'name'
+
+[6] read_file_tool
+Args: {
+  "file_path": "examples/toolkits/role_playing_with_functions.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+from typing import List
+
+from colorama import Fore
+
+from camel.agents.chat_agent import ToolCallingRecord
+from camel.models import ModelFactory
+from camel.societies import RolePlaying
+from camel.toolkits import (
+    MathToolkit,
+    SearchToolkit,
+)
+from camel.types import ModelPlatformType, Mod...
+
+[7] shell_write_content_to_file
+Args: {
+  "content": "from camel.agents import ChatAgent\nfrom camel.models import ModelFactory\nfrom camel.toolkits.search_toolkit import SearchToolkit\nfrom camel.types import ModelPlatformType, ModelType\nfrom camel.configs import GeminiConfig\n\n\ndef main():\n    # Initialize the Gemini model using ModelFactory with required parameters\n    model = ModelFactory.create(\n        model_platform=ModelPlatformType.GEMINI,\n        model_type=ModelType.GEMINI_3_FLASH,\n        model_config_dict=GeminiConfig(temperature=0.2).as_dict(),\n    )\n\n    # Initialize the SearchToolkit and get the duckduckgo search tool\n    search_toolkit = SearchToolkit()\n    duckduckgo_tool = search_toolkit.search_duckduckgo\n\n    # Create the ChatAgent with the Gemini model and the duckduckgo search tool\n    agent = ChatAgent(\n        system_message=\"You are a helpful assistant.\",\n        model=model,\n        tools=[duckduckgo_tool],\n    )\n\n    # Example question to ask the agent\n    question = \"What is the capital of France?\"\n\n    # Get the agent's answer\n    response = agent.step(question)\n\n    print(f\"Question: {question}\")\n    print(f\"Answer: {response.msgs[0].content}\")\n\n\nif __name__ == \"__main__\":\n    main()\n",
+  "file_path": "task-script/single_agent/2_duckduckgo_agent.py"
+}
+Result: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/2_duckduckgo_agent.py'.
+
+[8] shell_exec
+Args: {
+  "id": "run_duckduckgo_agent_v3",
+  "command": "python task-script/single_agent/2_duckduckgo_agent.py",
+  "block": true,
+  "timeout": 30
+}
+Result: Question: What is the capital of France?
+Answer: The capital of France is **Paris**.
+
+----------------------------------------
+Output:
+I have created the script as requested. It creates an agent using the Gemini model with the duckduckgo search tool and uses it to answer a question. The script is saved at task-script/single_agent/2_duckduckgo_agent.py and runs successfully producing the expected output.
+================================================================================
+
+EXPLORE AGENT CHAT HISTORY
+================================================================================
+
+[Message 1]
+Role: system
+Content: You are a code exploration specialist. Find relevant files for a task.
+
+## Tools
+
+1. **glob_search(pattern, path?, max_results?)** - Find files by name pattern
+2. **grep_search(pattern, path?, glob_filter?, ignore_case?, output_mode?)** - Search file contents
+3. **read_file(file_path)** - Read file contents (auto-limits to 2000 lines for large files)
+4. **list_directory(path?)** - List directory contents
+5. **find_definition(name, definition_type?)** - Find class/function definitions
+6. **find_imports(module_name, ignore_case?)** - Find files that import a module
+
+## Search Techniques (CRITICAL)
+
+### Technique 1: Search whole repo first, NEVER restrict path initially
+```python
+# WRONG - misses examples/models/qwen_model_example.py
+glob_search("**/*qwen*.py", path="camel/models")
+
+# CORRECT - searches entire repo
+glob_search("**/*qwen*.py")
+```
+
+### Technique 2: Use find_imports to find REAL usage
+```python
+find_imports("WeatherToolkit")
+find_imports("QwenModel")
+```
+
+### Technique 3: Read __init__.py to understand module exports
+```python
+read_file("camel/toolkits/__init__.py")
+read_file("camel/models/__init__.py")
+```
+
+### Technique 4: Parallel search for ALL keywords
+For task "weather agent with Qwen", call ALL in parallel:
+```python
+glob_search("**/*qwen*.py")
+glob_search("**/*weather*.py")
+find_imports("qwen")
+find_imports("WeatherToolkit")
+```
+
+### Technique 5: Tests and examples contain best usage patterns
+```python
+glob_search("**/test_*qwen*.py")
+glob_search("**/*example*.py")
+```
+
+### Technique 6: Find EXACT enum values for models/tools
+When task specifies a model like "Qwen2.5-14B-Instruct", search for the exact ModelType enum:
+```python
+# Search with partial match (enum names use underscores, not hyphens)
+grep_search("QWEN_2_5.*14B", path="camel/types/enums.py")
+grep_search("QWEN_2_5", path="camel/types/enums.py")
+```
+CAMEL ModelType naming convention:
+- No "_INSTRUCT" suffix usually (e.g., QWEN_2_5_14B not QWEN_2_5_14B_INSTRUCT)
+- Use underscores not hyp
+... (truncated)
+
+
+[Message 2]
+Role: user
+Content: Find relevant files for this task:
+
+**Task**: create an agent using the Gemini model with a tools to search duckduckgo. And then it can be used to answer questions. Save the script to task-script/single_agent/2_duckduckgo_agent.py
+
+**Repository Context**:
+
+## CAMEL Repository Structure
+
+### Core Modules
+- `camel/agents/` - Agent implementations (ChatAgent is the base)
+- `camel/models/` - LLM provider integrations (50+)
+- `camel/configs/` - Model configuration classes
+- `camel/toolkits/` - Tool integrations (50+)
+- `camel/types/` - Enums (ModelPlatformType, ModelType, RoleType)
+
+### Other Directories
+- `examples/` - Usage examples
+- `test/` - Test files
+- `docs/` - Documentation
+
+
+Search for implementation files, examples, tests, and documentation.
+Return the most relevant file paths with brief explanations.
+Focus on finding:
+1. Example scripts that show similar usage patterns
+2. Implementation files for the required components
+3. Configuration/type definitions
+
+
+[Message 3]
+Role: assistant
+
+[Message 4]
+Role: tool
+Content: Search results for 'gemini' in *.py files (10 matches):
+test/models/test_model_factory.py
+test/models/test_gemini_model.py
+test/models/test_cometapi_model.py
+test/agents/test_chat_agent.py
+examples/models/gemini_model_example.py
+examples/models/cometapi_model_example.py
+examples/models/role_playing_with_gemini.py
+camel/utils/commons.py
+camel/configs/gemini_config.py
+camel/configs/__init__.py
+
+[Message 5]
+Role: assistant
+
+[Message 6]
+Role: tool
+Content: Search results for 'duckduckgo' in *.py files (9 matches):
+examples/models/role_playing_with_cohere.py
+test/toolkits/test_search_functions.py
+camel/toolkits/search_toolkit.py
+examples/models/crynux_model_example.py
+examples/models/openai_structured_output_example.py
+examples/vision/duckduckgo_video_object_recognition.py
+examples/toolkits/role_playing_with_functions.py
+examples/workforce/hackathon_judges.py
+camel/societies/workforce/workforce.py
+
+[Message 7]
+Role: assistant
+
+[Message 8]
+Role: tool
+Content: No files found matching pattern '*gemini*.py'
+
+[Message 9]
+Role: assistant
+
+[Message 10]
+Role: tool
+Content: No files found matching pattern '*duckduckgo*.py'
+
+[Message 11]
+Role: assistant
+
+[Message 12]
+Role: tool
+Content: Search results for '(from\s+\S*gemini\S*\s+import|import\s+\S*gemini)' in *.py files (11 matches):
+camel/embeddings/__init__.py:16:from .gemini_embedding import GeminiEmbedding
+examples/models/gemini_model_example.py:17:from camel.configs import GeminiConfig
+camel/configs/__init__.py:30:from .gemini_config import Gemini_API_PARAMS, GeminiConfig
+camel/models/gemini_model.py:29:from camel.configs import GeminiConfig
+examples/embeddings/gemini_embedding_example.py:15:from camel.embeddings import GeminiEmbedding
+camel/models/model_factory.py:32:from camel.models.gemini_model import GeminiModel
+camel/models/__init__.py:30:from .gemini_model import GeminiModel
+test/models/test_gemini_model.py:17:from camel.configs import GeminiConfig
+test/models/test_gemini_model.py:18:from camel.models import GeminiModel
+test/embeddings/test_gemini_embedding.py:17:from camel.embeddings import GeminiEmbedding
+test/embeddings/test_gemini_embedding.py:18:from camel.types import GeminiEmbeddingTaskType
+
+[Message 13]
+Role: assistant
+
+[Message 14]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+
+from camel.agents import ChatAgent
+from camel.configs import GeminiConfig
+from camel.models import ModelFactory
+from camel.toolkits import TerminalToolkit
+from camel.types import ModelPlatformType, ModelType
+
+# Define system message
+sys_msg = "You are a helpful assistant."
+
+
+# Get current script directory
+base_dir = os.path.dirname(os.path.abspath(__file__))
+# Define workspace directory for the toolkit
+workspace_dir = os.path.join(
+    os.path.dirname(os.path.dirname(base_dir)), "workspace"
+)
+
+# Set model config
+tools = [
+    *TerminalToolkit(working_directory=workspace_dir).get_tools(),
+]
+# Example of using the gemini-3-pro-preview model
+model_3_pro_pre = ModelFactory.create(
+    model_platform=ModelPlatformType.GEMINI,
+    model_type=ModelType.GEMINI_3_PRO,
+    model_config_dict=GeminiConfig(temperature=0.2).as_dict(),
+)
+
+user_msg = """
+Create an interactive HTML webpage that allows users to play with a
+Rubik's Cube, and saved it to local file.
+"""
+
+camel_agent_pro = ChatAgent(
+    system_message=sys_msg, model=model_3_pro_pre, tools=tools
+)
+response_pro = camel_agent_pro.step(user_msg)
+print(response_pro.msgs[0].content)
+
+'''
+===============================================================================
+I have created an interactive HTML webpage for playing with 
+... (truncated)
+
+
+[Message 15]
+Role: assistant
+
+[Message 16]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+from typing import (
+    Any,
+    AsyncGenerator,
+    Dict,
+    Generator,
+    List,
+    Optional,
+    Type,
+    Union,
+)
+
+from openai import AsyncStream, Stream
+from pydantic import BaseModel
+
+from camel.configs import GeminiConfig
+from camel.messages import OpenAIMessage
+from camel.models.openai_compatible_model import OpenAICompatibleModel
+from camel.types import (
+    ChatCompletion,
+    ChatCompletionChunk,
+    ModelType,
+)
+from camel.utils import (
+    BaseTokenCounter,
+    api_keys_required,
+)
+
+if os.environ.get("LANGFUSE_ENABLED", "False").lower() == "true":
+    try:
+        from langfuse.decorators import observe
+    except ImportError:
+        from camel.utils import observe
+elif os.environ.get("TRACEROOT_ENABLED", "False").lower() == "true":
+    try:
+        from traceroot import trace as observe  # type: ignore[import]
+    except ImportError:
+        from camel.utils import observe
+else:
+    from camel.utils import observe
+
+
+class GeminiModel(OpenAICompatibleModel):
+    r"""Gemini API in a unified OpenAICompatibleModel interface.
+
+    Args:
+        model_type (Union[ModelType, str]): Model for which a backend is
+            created, one of Gemini series.
+        model_config_dict (Optional[Dict[str, Any]], optional): A dictionary
+            that will be f
+... (truncated)
+
+
+[Message 17]
+Role: assistant
+
+[Message 18]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+import warnings
+from typing import Any, Dict, List, Literal, Optional, TypeAlias, Union, cast
+
+import requests
+
+from camel.logger import get_logger
+from camel.toolkits.base import BaseToolkit
+from camel.toolkits.function_tool import FunctionTool
+from camel.utils import (
+    MCPServer,
+    api_keys_required,
+    dependencies_required,
+)
+
+logger = get_logger(__name__)
+
+
+@MCPServer()
+class SearchToolkit(BaseToolkit):
+    r"""A class representing a toolkit for web search.
+
+    This class provides methods for searching information on the web using
+    search engines like Google, DuckDuckGo, Wikipedia and Wolfram Alpha, Brave.
+    """
+
+    def __init__(
+        self,
+        timeout: Optional[float] = None,
+        exclude_domains: Optional[List[str]] = None,
+    ):
+        r"""Initializes the SearchToolkit.
+
+        Args:
+            timeout (float): Timeout for API requests in seconds.
+                (default: :obj:`None`)
+            exclude_domains (Optional[List[str]]): List of domains to
+                exclude from search results. Currently only supported
+                by the `search_google` function.
+                (default: :obj:`None`)
+        """
+        super().__init__(timeout=timeout)
+        self.exclude_domains = exclude_domains
+
+    @api_keys_required(
+... (truncated)
+
+
+[Message 19]
+Role: assistant
+
+[Message 20]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+from __future__ import annotations
+
+from typing import Dict, Optional, Sequence, Type, Union
+
+from pydantic import BaseModel
+
+from camel.configs.base_config import BaseConfig
+
+
+class GeminiConfig(BaseConfig):
+    r"""Defines the parameters for generating chat completions using the
+    Gemini API.
+
+    Args:
+        temperature (float, optional): Sampling temperature to use, between
+            :obj:`0` and :obj:`2`. Higher values make the output more random,
+            while lower values make it more focused and deterministic.
+            (default: :obj:`None`)
+        top_p (float, optional): An alternative to sampling with temperature,
+            called nucleus sampling, where the model considers the results of
+            the tokens with top_p probability mass. So :obj:`0.1` means only
+            the tokens comprising the top 10% probability mass are considered.
+            (default: :obj:`None`)
+        n (int, optional): How many chat completion choices to generate for
+            each input message. (default: :obj:`None`)
+        response_format (object, optional): An object specifying the format
+            that the model must output. Compatible with GPT-4 Turbo and all
+            GPT-3.5 Turbo models newer than gpt-3.5-turbo-1106. Setting to
+            {"type": "j
+... (truncated)
+
+
+[Message 21]
+Role: assistant
+
+[Message 22]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+import pytest
+
+from camel.configs import GeminiConfig
+from camel.models import GeminiModel
+from camel.types import ModelType
+from camel.utils import OpenAITokenCounter
+
+
+@pytest.mark.model_backend
+@pytest.mark.parametrize(
+    "model_type",
+    [
+        ModelType.GEMINI_2_5_PRO,
+        ModelType.GEMINI_2_0_FLASH,
+        ModelType.GEMINI_2_0_FLASH_THINKING,
+        ModelType.GEMINI_2_0_FLASH_LITE_PREVIEW,
+        ModelType.GEMINI_2_0_PRO_EXP,
+    ],
+)
+def test_gemini_model(model_type: ModelType):
+    model_config_dict = GeminiConfig().as_dict()
+    model = GeminiModel(model_type, model_config_dict)
+    assert model.model_type == model_type
+    assert model.model_config_dict == model_config_dict
+    assert isinstance(model.token_counter, OpenAITokenCounter)
+    assert isinstance(model.model_type.value_for_tiktoken, str)
+    assert isinstance(model.model_type.token_limit, int)
+
+
+@pytest.mark.model_backend
+def test_gemini_process_messages_merges_parallel_tool_calls():
+    r"""Test that _process_messages merges consecutive assistant messages with
+    single tool calls into a single assistant message with multiple tool calls.
+
+    This is required for Gemini's OpenAI-compatible API for parallel function
+    calling.
+    """
+    model_config_dict = GeminiConfig().as_dict()
+    mod
+... (truncated)
+
+
+[Message 23]
+Role: assistant
+
+[Message 24]
+Role: tool
+Content: No files found matching pattern '*duckduckgo_agent.py'
+
+[Message 25]
+Role: assistant
+
+[Message 26]
+Role: tool
+Content: No files found matching pattern '*agent*.py'
+
+[Message 27]
+Role: assistant
+
+[Message 28]
+Role: tool
+Content: No files found matching pattern '*duckduckgo*.py'
+
+[Message 29]
+Role: assistant
+
+[Message 30]
+Role: tool
+Content: No files found matching pattern '*agent*.py'
+
+[Message 31]
+Role: assistant
+
+[Message 32]
+Role: tool
+Content: No files found matching pattern '*duckduckgo*.py'
+
+[Message 33]
+Role: assistant
+
+[Message 34]
+Role: tool
+Content: No matches found for pattern '(from\s+\S*duckduckgo\S*\s+import|import\s+\S*duckduckgo)'
+
+[Message 35]
+Role: assistant
+
+[Message 36]
+Role: tool
+Content: Search results for '(from\s+\S*gemini\S*\s+import|import\s+\S*gemini)' in *.py files (11 matches):
+examples/models/gemini_model_example.py:17:from camel.configs import GeminiConfig
+examples/embeddings/gemini_embedding_example.py:15:from camel.embeddings import GeminiEmbedding
+camel/embeddings/__init__.py:16:from .gemini_embedding import GeminiEmbedding
+test/models/test_gemini_model.py:17:from camel.configs import GeminiConfig
+test/models/test_gemini_model.py:18:from camel.models import GeminiModel
+camel/configs/__init__.py:30:from .gemini_config import Gemini_API_PARAMS, GeminiConfig
+camel/models/gemini_model.py:29:from camel.configs import GeminiConfig
+camel/models/model_factory.py:32:from camel.models.gemini_model import GeminiModel
+camel/models/__init__.py:30:from .gemini_model import GeminiModel
+test/embeddings/test_gemini_embedding.py:17:from camel.embeddings import GeminiEmbedding
+test/embeddings/test_gemini_embedding.py:18:from camel.types import GeminiEmbeddingTaskType
+
+[Message 37]
+Role: assistant
+
+[Message 38]
+Role: tool
+Content: Error: File 'examples/models/role_playing_with_functions.py' does not exist.
+
+[Message 39]
+Role: assistant
+
+[Message 40]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+from typing import List
+
+from colorama import Fore
+
+from camel.agents.chat_agent import ToolCallingRecord
+from camel.models import ModelFactory
+from camel.societies import RolePlaying
+from camel.toolkits import (
+    MathToolkit,
+    SearchToolkit,
+)
+from camel.types import ModelPlatformType, ModelType
+from camel.utils import print_text_animated
+
+
+def main(
+    model_platform=ModelPlatformType.DEFAULT,
+    model_type=ModelType.DEFAULT,
+    chat_turn_limit=10,
+) -> None:
+    task_prompt = (
+        "Assume now is 2024 in the Gregorian calendar, "
+        "estimate the current age of University of Oxford "
+        "and then add 10 more years to this age, "
+        "and get the current weather of the city where "
+        "the University is located. You must use tool to solve the task."
+    )
+
+    tools_list = [
+        *MathToolkit().get_tools(),
+        SearchToolkit().search_duckduckgo,
+    ]
+
+    role_play_session = RolePlaying(
+        assistant_role_name="Searcher",
+        user_role_name="Professor",
+        assistant_agent_kwargs=dict(
+            model=ModelFactory.create(
+                model_platform=model_platform,
+                model_type=model_type,
+            ),
+            tools=tools_list,
+        ),
+        user_agent_kwargs=dict(
+            model=ModelFacto
+... (truncated)
+
+
+[Message 41]
+Role: assistant
+Content: ## Examples (MOST IMPORTANT)
+- examples/models/gemini_model_example.py - Example script showing how to create a ChatAgent using Gemini models with tools (TerminalToolkit used in example, can replace with SearchToolkit for duckduckgo)
+- examples/toolkits/role_playing_with_functions.py - Example showing usage of SearchToolkit with duckduckgo search tool in a role-playing multi-agent setup
+
+## Implementation
+- camel/models/gemini_model.py - Implementation of GeminiModel class, the LLM provider integration for Gemini models
+- camel/toolkits/search_toolkit.py - Implementation of SearchToolkit including the duckduckgo search method and get_tools() method returning duckduckgo tool
+- camel/configs/gemini_config.py - Configuration class GeminiConfig for Gemini model parameters
+
+## Tests
+- test/models/test_gemini_model.py - Test cases for GeminiModel including message processing and tool call merging
+
+These files provide the necessary model, config, and toolkit implementations plus usage examples to create an agent using Gemini model with duckduckgo search tool to answer questions. The example in examples/models/gemini_model_example.py can be adapted to use SearchToolkit().get_tools() or specifically SearchToolkit().search_duckduckgo as the tools list. The role_playing_with_functions.py example shows how to use SearchToolkit's duckduckgo search tool in an agent context. The test file ensures GeminiModel behavior is correct.
+
+================================================================================
+
+CODE AGENT CHAT HISTORY
+================================================================================
+
+[Message 1]
+Role: system
+Content: You are a Code Agent that writes and executes Python scripts.
+
+## Tools
+
+You have access to terminal tools for:
+- `shell_exec`: Execute shell commands
+- `shell_write_content_to_file`: Write content to a file
+- `read_file_tool`: Read file contents
+
+## Workflow
+
+1. **Read relevant files** from the paths provided by the explore agent
+2. **Write the script** using `shell_write_content_to_file`
+3. **Execute the script** using `shell_exec`
+4. **Debug if needed**: If errors occur, read the error, fix the script, and re-run
+
+## CRITICAL: Strict Instruction Following
+
+**Use EXACTLY what the task specifies. Do NOT substitute "similar" or "better" alternatives.**
+
+### Model Selection
+- Task says "Qwen2.5-14B-Instruct" -> Use `ModelType.QWEN_2_5_14B` EXACTLY
+- Do NOT use QWEN_3_CODER_PLUS as "closest alternative"
+- Do NOT guess enum names - verify from enums.py or examples
+
+### Tool Selection
+- Task says "duckduckgo search" -> Use `search_toolkit.search_duckduckgo` EXACTLY
+- Do NOT use `get_tools()` which returns ALL tools
+- Do NOT substitute with other search engines
+
+### URL Handling
+- If task provides a URL (e.g., "https://mcpservers.org/servers/devin/deepwiki"):
+  - Prioritize DIRECT HTTP access using `requests` library
+  - Create a simple FunctionTool that calls the URL
+  - Do NOT assume it requires complex registry (ACI, etc.)
+  - Example:
+    ```python
+    def query_server(query: str) -> str:
+        response = requests.post(url, json={"query": query})
+        return response.text
+    tool = FunctionTool(func=query_server)
+    ```
+
+## Important Rules
+
+1. **Use the provided file paths** - The explore agent has found relevant examples and implementations
+2. **Follow existing patterns** - Look at examples to understand how to use the APIs
+3. **Handle errors gracefully** - If execution fails, analyze the error and fix it
+4. **Environment is ready** - All API keys and dependencies are configured
+5. **Save to correct location** - Follow the task's specified output path
+6. **Use EXACT values** - Copy enum values, method names exactly from explored files
+
+## Script Writing Tips
+
+- Import from camel package: `from camel.agents import ChatAgent`
+- Use ModelFactory for models: `ModelFactory.create(model_platform=..., model_type=...)`
+- Copy exact enum values from enums.py (e.g., `ModelType.QWEN_2_5_14B`)
+- Use specific tool methods, not get_tools() (e.g., `toolkit.search_duckduckgo`)
+- Add proper error handling in your scripts
+
+## Debugging Tips
+
+- If you see import errors, check the correct module path in __init__.py
+- If you see AttributeError for enum, verify the exact enum name in enums.py
+- If you see API errors, it's likely a script issue, not environment
+- Read more files if you need to understand the API better
+
+
+[Message 2]
+Role: user
+Content: **Task**: create an agent using the Gemini model with a tools to search duckduckgo. And then it can be used to answer questions. Save the script to task-script/single_agent/2_duckduckgo_agent.py
+
+**Relevant files found by exploration**:
+## Examples (MOST IMPORTANT)
+- examples/models/gemini_model_example.py - Example script showing how to create a ChatAgent using Gemini models with tools (TerminalToolkit used in example, can replace with SearchToolkit for duckduckgo)
+- examples/toolkits/role_playing_with_functions.py - Example showing usage of SearchToolkit with duckduckgo search tool in a role-playing multi-agent setup
+
+## Implementation
+- camel/models/gemini_model.py - Implementation of GeminiModel class, the LLM provider integration for Gemini models
+- camel/toolkits/search_toolkit.py - Implementation of SearchToolkit including the duckduckgo search method and get_tools() method returning duckduckgo tool
+- camel/configs/gemini_config.py - Configuration class GeminiConfig for Gemini model parameters
+
+## Tests
+- test/models/test_gemini_model.py - Test cases for GeminiModel including message processing and tool call merging
+
+These files provide the necessary model, config, and toolkit implementations plus usage examples to create an agent using Gemini model with duckduckgo search tool to answer questions. The example in examples/models/gemini_model_example.py can be adapted to use SearchToolkit().get_tools() or specifically SearchToolkit().search_duckduckgo as the tools list. The role_playing_with_functions.py example shows how to use SearchToolkit's duckduckgo search tool in an agent context. The test file ensures GeminiModel behavior is correct.
+
+**Instructions**:
+1. Read the relevant example files to understand the API usage patterns
+2. Write the script according to the task requirements using `shell_write_content_to_file`
+3. Execute the script using `shell_exec` with `python <script_path>`
+4. If errors occur, debug and fix until successful
+
+Note: The environment and APIs are correctly configured. If you encounter errors,
+it's likely a script issue that needs fixing.
+
+
+[Message 3]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_vG1GEJx893xifPASvAUeQi16",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.models.gemini_model import GeminiModel\\nfrom camel.toolkits.search_toolkit import SearchToolkit\\n\\n\\ndef main():\\n    # Initialize the Gemini model\\n    model = GeminiModel()\\n\\n    # Initialize the SearchToolkit and get the duckduckgo search tool\\n    search_toolkit = SearchToolkit()\\n    duckduckgo_tool = search_toolkit.search_duckduckgo\\n\\n    # Create the ChatAgent with the Gemini model and the duckduckgo search tool\\n    agent = ChatAgent(\\n        model=model,\\n        tools=[duckduckgo_tool],\\n        name=\\\"GeminiDuckDuckGoAgent\\\"\\n    )\\n\\n    # Example question to ask the agent\\n    question = \\\"What is the capital of France?\\\"\\n\\n    # Get the agent's answer\\n    answer = agent.chat(question)\\n\\n    print(f\\\"Question: {question}\\\")\\n    print(f\\\"Answer: {answer}\\\")\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/single_agent/2_duckduckgo_agent.py\"}"
+    }
+  }
+]
+
+[Message 4]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/2_duckduckgo_agent.py'.
+
+[Message 5]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_7AQBXrbA7C4YNNMsJHE0nhb0",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_duckduckgo_agent\", \"command\": \"python task-script/single_agent/2_duckduckgo_agent.py\", \"block\": true, \"timeout\": 30}"
+    }
+  }
+]
+
+[Message 6]
+Role: tool
+Content: Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/2_duckduckgo_agent.py", line 32, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/2_duckduckgo_agent.py", line 8, in main
+    model = GeminiModel()
+            ^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/utils/commons.py", line 280, in wrapper
+    bound_arguments = signature.bind(*args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/inspect.py", line 3195, in bind
+    return self._bind(args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/inspect.py", line 3110, in _bind
+    raise TypeError(msg) from None
+TypeError: missing a required argument: 'model_type'
+
+[Message 7]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_2JDi9HmEoijzM97kRwUlPBWx",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"examples/models/gemini_model_example.py\"}"
+    }
+  }
+]
+
+[Message 8]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+
+from camel.agents import ChatAgent
+from camel.configs import GeminiConfig
+from camel.models import ModelFactory
+from camel.toolkits import TerminalToolkit
+from camel.types import ModelPlatformType, ModelType
+
+# Define system message
+sys_msg = "You are a helpful assistant."
+
+
+# Get current script directory
+base_dir = os.path.dirname(os.path.abspath(__file__))
+# Define workspace directory for the toolkit
+workspace_dir = os.path.join(
+    os.path.dirname(os.path.dirname(base_dir)), "workspace"
+)
+
+# Set model config
+tools = [
+    *TerminalToolkit(working_directory=workspace_dir).get_tools(),
+]
+# Example of using the gemini-3-pro-preview model
+model_3_pro_pre = ModelFactory.create(
+    model_platform=ModelPlatformType.GEMINI,
+    model_type=ModelType.GEMINI_3_PRO,
+    model_config_dict=GeminiConfig(temperature=0.2).as_dict(),
+)
+
+user_msg = """
+Create an interactive HTML webpage that allows users to play with a
+Rubik's Cube, and saved it to local file.
+"""
+
+camel_agent_pro = ChatAgent(
+    system_message=sys_msg, model=model_3_pro_pre, tools=tools
+)
+response_pro = camel_agent_pro.step(user_msg)
+print(response_pro.msgs[0].content)
+
+'''
+===============================================================================
+I have created an interactive HTML webpage for playing with a Rubik's Cube.
+
+The file is saved as: **`rubiks_cube_interactive.html`**
+
+You can open this file in any modern web browser to play. It features:
+*   **3D Rendering:** Uses Three.js for a 3D view of the cube.
+*   **Controls:**
+    *   **Rotate View:** Left-click and drag.
+    *   **Rotate Layers:** Use the on-screen buttons (R, L, U, D, F, B).
+    *   **Scramble:** A button to randomly scramble the cube.
+    *   **Reset:** A button to solve/reset the cube instantly.
+===============================================================================
+'''
+
+
+# Example of using the gemini-3-flash model
+model_3_flash = ModelFactory.create(
+    model_platform=ModelPlatformType.GEMINI,
+    model_type=ModelType.GEMINI_3_FLASH,
+    model_config_dict=GeminiConfig(temperature=0.2).as_dict(),
+)
+camel_agent_flash = ChatAgent(system_message=sys_msg, model=model_3_flash)
+user_msg = """
+Explain how Generative AI works in short language.
+"""
+response_flash = camel_agent_flash.step(user_msg)
+print(response_flash.msgs[0].content)
+
+'''
+===============================================================================
+Generative AI works in three simple steps:
+
+1.  **Training:** It "reads" or "looks at" massive amounts of existing data
+(like books, code, or images) to learn patterns, styles, and structures.
+2.  **Prediction:** When you give it a prompt, it doesn't "think"—it
+calculates probability. It predicts what word, pixel, or note should come next
+based on the patterns it learned.
+3.  **Creation:** By repeating these predictions millions of times per second,
+it generates entirely new content that looks or sounds like it was made by a
+human.
+
+**In short:** It is a super-powered version of **autocomplete** that uses math
+to guess the most likely next piece of information.
+===============================================================================
+'''
+
+[Message 9]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_DIjWV8hrwiCJB4Xyn6wHYCFo",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.models import ModelFactory\\nfrom camel.toolkits.search_toolkit import SearchToolkit\\nfrom camel.types import ModelPlatformType, ModelType\\nfrom camel.configs import GeminiConfig\\n\\n\\ndef main():\\n    # Initialize the Gemini model using ModelFactory with required parameters\\n    model = ModelFactory.create(\\n        model_platform=ModelPlatformType.GEMINI,\\n        model_type=ModelType.GEMINI_3_FLASH,\\n        model_config_dict=GeminiConfig(temperature=0.2).as_dict(),\\n    )\\n\\n    # Initialize the SearchToolkit and get the duckduckgo search tool\\n    search_toolkit = SearchToolkit()\\n    duckduckgo_tool = search_toolkit.search_duckduckgo\\n\\n    # Create the ChatAgent with the Gemini model and the duckduckgo search tool\\n    agent = ChatAgent(\\n        system_message=\\\"You are a helpful assistant.\\\",\\n        model=model,\\n        tools=[duckduckgo_tool],\\n        name=\\\"GeminiDuckDuckGoAgent\\\"\\n    )\\n\\n    # Example question to ask the agent\\n    question = \\\"What is the capital of France?\\\"\\n\\n    # Get the agent's answer\\n    response = agent.step(question)\\n\\n    print(f\\\"Question: {question}\\\")\\n    print(f\\\"Answer: {response.msgs[0].content}\\\")\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/single_agent/2_duckduckgo_agent.py\"}"
+    }
+  }
+]
+
+[Message 10]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/2_duckduckgo_agent.py'.
+
+[Message 11]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_vWYOsGztD0UXWLaO9WIGduGi",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_duckduckgo_agent_v2\", \"command\": \"python task-script/single_agent/2_duckduckgo_agent.py\", \"block\": true, \"timeout\": 30}"
+    }
+  }
+]
+
+[Message 12]
+Role: tool
+Content: Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/2_duckduckgo_agent.py", line 39, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/2_duckduckgo_agent.py", line 21, in main
+    agent = ChatAgent(
+            ^^^^^^^^^^
+TypeError: ChatAgent.__init__() got an unexpected keyword argument 'name'
+
+[Message 13]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_46UaTp9G4SxMhLTzCjh3360I",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"examples/toolkits/role_playing_with_functions.py\"}"
+    }
+  }
+]
+
+[Message 14]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+from typing import List
+
+from colorama import Fore
+
+from camel.agents.chat_agent import ToolCallingRecord
+from camel.models import ModelFactory
+from camel.societies import RolePlaying
+from camel.toolkits import (
+    MathToolkit,
+    SearchToolkit,
+)
+from camel.types import ModelPlatformType, ModelType
+from camel.utils import print_text_animated
+
+
+def main(
+    model_platform=ModelPlatformType.DEFAULT,
+    model_type=ModelType.DEFAULT,
+    chat_turn_limit=10,
+) -> None:
+    task_prompt = (
+        "Assume now is 2024 in the Gregorian calendar, "
+        "estimate the current age of University of Oxford "
+        "and then add 10 more years to this age, "
+        "and get the current weather of the city where "
+        "the University is located. You must use tool to solve the task."
+    )
+
+    tools_list = [
+        *MathToolkit().get_tools(),
+        SearchToolkit().search_duckduckgo,
+    ]
+
+    role_play_session = RolePlaying(
+        assistant_role_name="Searcher",
+        user_role_name="Professor",
+        assistant_agent_kwargs=dict(
+            model=ModelFactory.create(
+                model_platform=model_platform,
+                model_type=model_type,
+            ),
+            tools=tools_list,
+        ),
+        user_agent_kwargs=dict(
+            model=ModelFactory.create(
+                model_platform=model_platform,
+                model_type=model_type,
+            ),
+        ),
+        task_prompt=task_prompt,
+        with_task_specify=False,
+    )
+
+    print(
+        Fore.GREEN
+        + f"AI Assistant sys message:\n{role_play_session.assistant_sys_msg}\n"
+    )
+    print(
+        Fore.BLUE + f"AI User sys message:\n{role_play_session.user_sys_msg}\n"
+    )
+
+    print(Fore.YELLOW + f"Original task prompt:\n{task_prompt}\n")
+    print(
+        Fore.CYAN
+        + "Specified task prompt:"
+        + f"\n{role_play_session.specified_task_prompt}\n"
+    )
+    print(Fore.RED + f"Final task prompt:\n{role_play_session.task_prompt}\n")
+
+    n = 0
+    input_msg = role_play_session.init_chat()
+    while n < chat_turn_limit:
+        n += 1
+        assistant_response, user_response = role_play_session.step(input_msg)
+
+        if assistant_response.terminated:
+            print(
+                Fore.GREEN
+                + (
+                    "AI Assistant terminated. Reason: "
+                    f"{assistant_response.info['termination_reasons']}."
+                )
+            )
+            break
+        if user_response.terminated:
+            print(
+                Fore.GREEN
+                + (
+                    "AI User terminated. "
+                    f"Reason: {user_response.info['termination_reasons']}."
+                )
+            )
+            break
+
+        # Print output from the user
+        print_text_animated(
+            Fore.BLUE + f"AI User:\n\n{user_response.msg.content}\n"
+        )
+
+        # Print output from the assistant, including any function
+        # execution information
+        print_text_animated(Fore.GREEN + "AI Assistant:")
+        tool_calls: List[ToolCallingRecord] = [
+            ToolCallingRecord(**call.as_dict())
+            for call in assistant_response.info['tool_calls']
+        ]
+        for func_record in tool_calls:
+            print_text_animated(f"{func_record}")
+        print_text_animated(f"{assistant_response.msg.content}\n")
+
+        if "CAMEL_TASK_DONE" in user_response.msg.content:
+            break
+
+        input_msg = assistant_response.msg
+
+
+if __name__ == "__main__":
+    main()
+
+[Message 15]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_MaVSV4Vn8umlTYPbZmJbkhBF",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.models import ModelFactory\\nfrom camel.toolkits.search_toolkit import SearchToolkit\\nfrom camel.types import ModelPlatformType, ModelType\\nfrom camel.configs import GeminiConfig\\n\\n\\ndef main():\\n    # Initialize the Gemini model using ModelFactory with required parameters\\n    model = ModelFactory.create(\\n        model_platform=ModelPlatformType.GEMINI,\\n        model_type=ModelType.GEMINI_3_FLASH,\\n        model_config_dict=GeminiConfig(temperature=0.2).as_dict(),\\n    )\\n\\n    # Initialize the SearchToolkit and get the duckduckgo search tool\\n    search_toolkit = SearchToolkit()\\n    duckduckgo_tool = search_toolkit.search_duckduckgo\\n\\n    # Create the ChatAgent with the Gemini model and the duckduckgo search tool\\n    agent = ChatAgent(\\n        system_message=\\\"You are a helpful assistant.\\\",\\n        model=model,\\n        tools=[duckduckgo_tool],\\n    )\\n\\n    # Example question to ask the agent\\n    question = \\\"What is the capital of France?\\\"\\n\\n    # Get the agent's answer\\n    response = agent.step(question)\\n\\n    print(f\\\"Question: {question}\\\")\\n    print(f\\\"Answer: {response.msgs[0].content}\\\")\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/single_agent/2_duckduckgo_agent.py\"}"
+    }
+  }
+]
+
+[Message 16]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/2_duckduckgo_agent.py'.
+
+[Message 17]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_wbXr1jmV5mEbA159S3TRuTol",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_duckduckgo_agent_v3\", \"command\": \"python task-script/single_agent/2_duckduckgo_agent.py\", \"block\": true, \"timeout\": 30}"
+    }
+  }
+]
+
+[Message 18]
+Role: tool
+Content: Question: What is the capital of France?
+Answer: The capital of France is **Paris**.
+
+[Message 19]
+Role: assistant
+Content: I have created the script as requested. It creates an agent using the Gemini model with the duckduckgo search tool and uses it to answer a question. The script is saved at task-script/single_agent/2_duckduckgo_agent.py and runs successfully producing the expected output.
+
