@@ -37,7 +37,7 @@ from camel.types import ModelPlatformType, ModelType
 # Import the optimized code search toolkit
 from code_search_toolkit import CodeSearchToolkit
 
-exp_id = "_code_optimized_read_file_all"
+exp_id = "_code_optimized_read_file_all_generalization_prompt"
 
 set_log_level('INFO')
 
@@ -94,17 +94,17 @@ EXPLORE_SYSTEM_PROMPT = """You are a code exploration specialist. Find relevant 
 
 ### Technique 1: Search whole repo first, NEVER restrict path initially
 ```python
-# WRONG - misses examples/models/qwen_model_example.py
-glob_search("**/*qwen*.py", path="camel/models")
+# WRONG - misses examples/models/llama_model_example.py
+glob_search("**/*llama*.py", path="camel/models")
 
 # CORRECT - searches entire repo
-glob_search("**/*qwen*.py")
+glob_search("**/*llama*.py")
 ```
 
 ### Technique 2: Use find_imports to find REAL usage
 ```python
 find_imports("WeatherToolkit")
-find_imports("QwenModel")
+find_imports("LlamaModel")
 ```
 
 ### Technique 3: Read __init__.py to understand module exports
@@ -114,36 +114,36 @@ read_file("camel/models/__init__.py")
 ```
 
 ### Technique 4: Parallel search for ALL keywords
-For task "weather agent with Qwen", call ALL in parallel:
+For task "weather agent with Llama", call ALL in parallel:
 ```python
-glob_search("**/*qwen*.py")
+glob_search("**/*llama*.py")
 glob_search("**/*weather*.py")
-find_imports("qwen")
+find_imports("llama")
 find_imports("WeatherToolkit")
 ```
 
 ### Technique 5: Tests and examples contain best usage patterns
 ```python
-glob_search("**/test_*qwen*.py")
+glob_search("**/test_*llama*.py")
 glob_search("**/*example*.py")
 ```
 
 ### Technique 6: Find EXACT enum values for models/tools
-When task specifies a model like "Qwen2.5-14B-Instruct", search for the exact ModelType enum:
+When task specifies a model like "Llama-3.1-8B-Instruct", search for the exact ModelType enum:
 ```python
 # Search with partial match (enum names use underscores, not hyphens)
-grep_search("QWEN_2_5.*14B", path="camel/types/enums.py")
-grep_search("QWEN_2_5", path="camel/types/enums.py")
+grep_search("LLAMA_3_1.*8B", path="camel/types/enums.py")
+grep_search("LLAMA_3_1", path="camel/types/enums.py")
 ```
 CAMEL ModelType naming convention:
-- No "_INSTRUCT" suffix usually (e.g., QWEN_2_5_14B not QWEN_2_5_14B_INSTRUCT)
-- Use underscores not hyphens (e.g., QWEN_2_5 not QWEN-2.5)
+- No "_INSTRUCT" suffix usually (e.g., LLAMA_3_1_8B not LLAMA_3_1_8B_INSTRUCT)
+- Use underscores not hyphens (e.g., LLAMA_3_1 not LLAMA-3.1)
 
 ### Technique 7: Find SPECIFIC tool methods
-When task specifies a tool like "duckduckgo search", find the exact method:
+When task specifies a tool like "brave search", find the exact method:
 ```python
-grep_search("search_duckduckgo", path="camel/toolkits")
-grep_search("def search_duckduckgo")
+grep_search("search_brave", path="camel/toolkits")
+grep_search("def search_brave")
 ```
 Don't use get_tools() if task asks for a specific tool - use the specific method directly.
 
@@ -178,21 +178,21 @@ For each file, **list the core classes/functions inside**:
 
 ```
 ## Examples (MOST IMPORTANT)
-- examples/models/qwen_model_example.py
-  - Shows: ModelFactory.create() with QWEN model
-  - Key usage: model_platform=ModelPlatformType.QWEN, model_type=ModelType.QWEN_2_5_14B
+- examples/models/llama_model_example.py
+  - Shows: ModelFactory.create() with LLAMA model
+  - Key usage: model_platform=ModelPlatformType.TOGETHER, model_type=ModelType.LLAMA_3_1_8B
 
 ## Implementation
 - camel/memories/agent_memories.py
   - Classes: AgentMemory, ChatHistoryMemory, VectorDBMemory, **LongtermAgentMemory**
   - Note: LongtermAgentMemory is for persistent memory across sessions
 
-- camel/models/qwen_model.py
-  - Classes: QwenModel
-  - Config: QwenConfig
+- camel/models/togetherai_model.py
+  - Classes: TogetherAIModel
+  - Config: TogetherAIConfig
 
 ## Enums (for exact values)
-- camel/types/enums.py:317 - QWEN_2_5_14B = "qwen2.5-14b-instruct"
+- camel/types/enums.py:317 - LLAMA_3_1_8B = "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"
 
 ## Tests
 - test/models/test_qwen_model.py - test cases showing parameter usage
@@ -265,12 +265,13 @@ You have access to terminal tools for:
 **Use EXACTLY what the task specifies. Do NOT substitute "similar" or "better" alternatives.**
 
 ### Model Selection
-- Task says "Qwen2.5-14B-Instruct" -> Use `ModelType.QWEN_2_5_14B` EXACTLY
-- Do NOT use QWEN_3_CODER_PLUS as "closest alternative"
+- Task says "Llama-3.1-8B-Instruct" -> Use `ModelType.LLAMA_3_1_8B` EXACTLY
+- Do NOT use LLAMA_3_2_3B as "closest alternative"
 - Do NOT guess enum names - verify from enums.py or examples
+- ModelPlatformType and ModelType MUST match according to enums.py (e.g., MODELSCOPE models use MODELSCOPE platform, QWEN models use QWEN platform)
 
 ### Tool Selection
-- Task says "duckduckgo search" -> Use `search_toolkit.search_duckduckgo` EXACTLY
+- Task says "brave search" -> Use `search_toolkit.search_brave` EXACTLY
 - Do NOT use `get_tools()` which returns ALL tools
 - Do NOT substitute with other search engines
 
@@ -300,8 +301,8 @@ You have access to terminal tools for:
 
 - Import from camel package: `from camel.agents import ChatAgent`
 - Use ModelFactory for models: `ModelFactory.create(model_platform=..., model_type=...)`
-- Copy exact enum values from enums.py (e.g., `ModelType.QWEN_2_5_14B`)
-- Use specific tool methods, not get_tools() (e.g., `toolkit.search_duckduckgo`)
+- Copy exact enum values from enums.py (e.g., `ModelType.LLAMA_3_1_8B`)
+- Use specific tool methods, not get_tools() (e.g., `toolkit.search_brave`)
 - Add proper error handling in your scripts
 
 ## Debugging Tips
@@ -605,14 +606,14 @@ if __name__ == "__main__":
     cnt = 0
     for task_name, task_description in task_list.items():
         cnt += 1
-        if cnt <= 8:
+        if cnt <= 0:
             continue
         result = run_task(task_name, task_description)
 
         print(f"\n--- Result Preview ---")
         print(f"Code output: {result['code_output'][:500]}...")
 
-        if cnt >= 8:  # Limit for testing
+        if cnt >= 2:  # Limit for testing
             break
 
     print(f"\n{'='*60}")

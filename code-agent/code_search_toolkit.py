@@ -14,12 +14,9 @@
 
 """
 Optimized code search toolkit for fast and precise file exploration.
-Inspired by Claude Code's internal Glob/Grep/Read tools.
+All operations use TerminalToolkit shell commands for consistency.
 """
 
-import re
-import subprocess
-import fnmatch
 from pathlib import Path
 from typing import List, Optional, Literal
 from camel.toolkits import FunctionTool, TerminalToolkit
@@ -28,15 +25,15 @@ from camel.toolkits import FunctionTool, TerminalToolkit
 class CodeSearchToolkit:
     """A toolkit optimized for fast code exploration and file search.
 
-    This toolkit provides three core capabilities:
-    1. glob_search: Fast file pattern matching (like `find` but faster)
-    2. grep_search: Content search with regex support (uses ripgrep if available)
-    3. read_file: Read file contents using shell commands
+    This toolkit provides core capabilities using shell commands:
+    1. glob_search: Fast file pattern matching using fd/find
+    2. grep_search: Content search using ripgrep (rg)
+    3. read_file: Read file contents using cat/head
+    4. list_directory: List directory contents using ls
 
     Key design principles:
-    - Native Python operations where possible (faster than shell)
-    - Ripgrep for content search (much faster than grep)
-    - Shell-based file reading for consistency with terminal operations
+    - All operations use TerminalToolkit for consistency
+    - Uses fast tools: fd for glob, rg for grep
     - Structured output for LLM consumption
     - Built-in exclusion of common noise directories
     """
@@ -46,7 +43,7 @@ class CodeSearchToolkit:
         'node_modules', '.venv', '.git', '__pycache__', '.tox',
         '.mypy_cache', '.pytest_cache', 'dist', 'build', '.eggs',
         '*.egg-info', '.initial_env', 'venv', 'env',
-        'task-script*',  # Exclude all task-script directories
+        'task-script*',
     }
 
     def __init__(
@@ -68,33 +65,23 @@ class CodeSearchToolkit:
             self.exclude_dirs.update(exclude_dirs)
         self.max_results = max_results
 
-        # Check if ripgrep is available
-        self._has_ripgrep = self._check_ripgrep()
-
-        # Initialize terminal toolkit for file reading
+        # Initialize terminal toolkit
         self._terminal_toolkit = TerminalToolkit(
             working_directory=working_directory,
             clone_current_env=True,
             timeout=60.0,
         )
-        self._shell_exec = self._terminal_toolkit.get_tools()[0]  # shell_exec tool
+        self._shell_exec = self._terminal_toolkit.get_tools()[0]
 
-    def _check_ripgrep(self) -> bool:
-        """Check if ripgrep (rg) is available on the system."""
-        try:
-            subprocess.run(['rg', '--version'], capture_output=True, check=True)
-            return True
-        except (subprocess.CalledProcessError, FileNotFoundError):
-            return False
-
-    def _should_exclude(self, path: Path) -> bool:
-        """Check if a path should be excluded based on exclude patterns."""
-        parts = path.parts
-        for part in parts:
-            for pattern in self.exclude_dirs:
-                if fnmatch.fnmatch(part, pattern):
-                    return True
-        return False
+    def _build_exclude_args(self, tool: str = 'fd') -> str:
+        """Build exclude arguments for fd or rg commands."""
+        args = []
+        for excl in self.exclude_dirs:
+            if tool == 'fd':
+                args.append(f'-E "{excl}"')
+            else:  # rg
+                args.append(f'--glob "!{excl}" --glob "!**/{excl}/**"')
+        return ' '.join(args)
 
     def glob_search(
         self,
@@ -103,9 +90,8 @@ class CodeSearchToolkit:
         file_type: Optional[Literal['file', 'dir', 'any']] = 'file',
         max_results: Optional[int] = None,
     ) -> str:
-        r"""Fast file pattern matching using glob patterns.
+        r"""Fast file pattern matching using fd command.
 
-        This is much faster than shell `find` for most use cases.
         Supports patterns like "**/*.py", "src/**/*.ts", "test_*.py".
 
         Args:
@@ -116,8 +102,7 @@ class CodeSearchToolkit:
             max_results: Override default max results limit.
 
         Returns:
-            A formatted string with matching file paths, sorted by
-            modification time (most recent first).
+            A formatted string with matching file paths.
 
         Examples:
             - glob_search("**/*.py") - Find all Python files
@@ -125,45 +110,65 @@ class CodeSearchToolkit:
             - glob_search("**/*agent*.py") - Find files with 'agent' in name
             - glob_search("*.md", path="docs") - Find markdown in docs/
         """
-        search_dir = self.working_dir
+        search_dir = str(self.working_dir)
         if path:
-            search_dir = self.working_dir / path
-
-        if not search_dir.exists():
-            return f"Error: Directory '{search_dir}' does not exist."
+            search_dir = str(self.working_dir / path)
 
         limit = max_results or self.max_results
-        matches = []
+        exclude_args = self._build_exclude_args('fd')
+
+        # Build fd command
+        # fd uses regex by default, convert glob pattern to fd-compatible
+        # Remove leading **/ as fd searches recursively by default
+        fd_pattern = pattern.replace('**/', '').replace('*', '.*')
+
+        type_flag = ''
+        if file_type == 'file':
+            type_flag = '-t f'
+        elif file_type == 'dir':
+            type_flag = '-t d'
+
+        # Try fd first, fall back to find
+        command = f'''
+if command -v fd &> /dev/null; then
+    fd {type_flag} {exclude_args} "{fd_pattern}" "{search_dir}" 2>/dev/null | head -n {limit}
+else
+    find "{search_dir}" -name "{pattern.replace('**/', '')}" {"-type f" if file_type == "file" else "-type d" if file_type == "dir" else ""} 2>/dev/null | head -n {limit}
+fi
+'''
 
         try:
-            for match in search_dir.glob(pattern):
-                # Skip excluded directories
-                if self._should_exclude(match.relative_to(self.working_dir)):
-                    continue
+            result = self._shell_exec(
+                id=f"glob_search_{pattern}",
+                command=command.strip(),
+            )
 
-                # Filter by type
-                if file_type == 'file' and not match.is_file():
-                    continue
-                elif file_type == 'dir' and not match.is_dir():
-                    continue
-
-                matches.append(match)
-
-                if len(matches) >= limit:
-                    break
-
-            # Sort alphabetically for consistent results
-            matches.sort(key=lambda p: str(p).lower())
-
-            if not matches:
+            if not result or result.strip() == '':
                 return f"No files found matching pattern '{pattern}'"
 
-            # Format output
-            result_lines = [f"Found {len(matches)} file(s) matching '{pattern}':"]
-            for match in matches:
-                rel_path = match.relative_to(self.working_dir)
-                result_lines.append(str(rel_path))
+            # Convert to relative paths and format output
+            lines = result.strip().split('\n')
+            rel_paths = []
+            for line in lines:
+                line = line.strip()
+                if line:
+                    try:
+                        if line.startswith(str(self.working_dir)):
+                            rel_path = line[len(str(self.working_dir)):].lstrip('/')
+                        else:
+                            rel_path = line
+                        rel_paths.append(rel_path)
+                    except:
+                        rel_paths.append(line)
 
+            if not rel_paths:
+                return f"No files found matching pattern '{pattern}'"
+
+            # Sort alphabetically
+            rel_paths.sort(key=str.lower)
+
+            result_lines = [f"Found {len(rel_paths)} file(s) matching '{pattern}':"]
+            result_lines.extend(rel_paths)
             return "\n".join(result_lines)
 
         except Exception as e:
@@ -179,10 +184,7 @@ class CodeSearchToolkit:
         context_lines: int = 0,
         max_results: Optional[int] = None,
     ) -> str:
-        r"""Search file contents using regex patterns.
-
-        Uses ripgrep (rg) if available for best performance,
-        falls back to Python regex otherwise.
+        r"""Search file contents using ripgrep (rg) command.
 
         Args:
             pattern: Regex pattern to search for in file contents.
@@ -205,81 +207,55 @@ class CodeSearchToolkit:
             - grep_search("import re", output_mode="files") - Files importing re
             - grep_search("TODO", output_mode="content", context_lines=2)
         """
-        search_dir = self.working_dir
+        search_dir = str(self.working_dir)
         if path:
-            search_dir = self.working_dir / path
-
-        if not search_dir.exists():
-            return f"Error: Directory '{search_dir}' does not exist."
+            search_dir = str(self.working_dir / path)
 
         limit = max_results or self.max_results
+        exclude_args = self._build_exclude_args('rg')
 
-        if self._has_ripgrep:
-            return self._grep_with_ripgrep(
-                pattern, search_dir, glob_filter, ignore_case,
-                output_mode, context_lines, limit
-            )
-        else:
-            return self._grep_with_python(
-                pattern, search_dir, glob_filter, ignore_case,
-                output_mode, context_lines, limit
-            )
-
-    def _grep_with_ripgrep(
-        self,
-        pattern: str,
-        search_dir: Path,
-        glob_filter: Optional[str],
-        ignore_case: bool,
-        output_mode: str,
-        context_lines: int,
-        limit: int,
-    ) -> str:
-        """Use ripgrep for fast content search."""
-        cmd = ['rg', '--no-heading', '--with-filename']
-
-        # Add exclude patterns
-        for excl in self.exclude_dirs:
-            cmd.extend(['--glob', f'!{excl}', '--glob', f'!**/{excl}/**'])
+        # Build rg command
+        cmd_parts = ['rg', '--no-heading', '--with-filename']
+        cmd_parts.append(exclude_args)
 
         if ignore_case:
-            cmd.append('-i')
+            cmd_parts.append('-i')
 
         if glob_filter:
-            cmd.extend(['--glob', glob_filter])
+            cmd_parts.append(f'--glob "{glob_filter}"')
 
         if output_mode == 'files':
-            cmd.append('-l')  # Only print file names
+            cmd_parts.append('-l')
         elif output_mode == 'count':
-            cmd.append('-c')  # Print count per file
+            cmd_parts.append('-c')
         elif output_mode == 'content':
-            cmd.append('-n')  # Print line numbers
+            cmd_parts.append('-n')
             if context_lines > 0:
-                cmd.extend(['-C', str(context_lines)])
+                cmd_parts.append(f'-C {context_lines}')
 
-        cmd.extend(['-m', str(limit)])  # Max matches per file
-        cmd.append(pattern)
-        cmd.append(str(search_dir))
+        cmd_parts.append(f'-m {limit}')
+
+        # Escape pattern for shell
+        escaped_pattern = pattern.replace('"', '\\"')
+        cmd_parts.append(f'"{escaped_pattern}"')
+        cmd_parts.append(f'"{search_dir}"')
+
+        command = ' '.join(cmd_parts) + f' 2>/dev/null | head -n {limit}'
 
         try:
-            result = subprocess.run(
-                cmd,
-                capture_output=True,
-                text=True,
-                timeout=30,
-                cwd=str(self.working_dir)
+            result = self._shell_exec(
+                id=f"grep_search_{pattern}",
+                command=command,
             )
 
-            output = result.stdout.strip()
-            if not output:
+            if not result or result.strip() == '':
                 return f"No matches found for pattern '{pattern}'"
 
-            # Convert absolute paths to relative
-            lines = output.split('\n')[:limit]
+            # Convert to relative paths
+            lines = result.strip().split('\n')
             rel_lines = []
             for line in lines:
                 try:
-                    # Try to make paths relative
                     if str(search_dir) in line:
                         line = line.replace(str(search_dir) + '/', '')
                     elif str(self.working_dir) in line:
@@ -295,72 +271,8 @@ class CodeSearchToolkit:
 
             return header + "\n" + "\n".join(rel_lines)
 
-        except subprocess.TimeoutExpired:
-            return "Error: Search timed out after 30 seconds"
         except Exception as e:
-            return f"Error during ripgrep search: {e}"
-
-    def _grep_with_python(
-        self,
-        pattern: str,
-        search_dir: Path,
-        glob_filter: Optional[str],
-        ignore_case: bool,
-        output_mode: str,
-        context_lines: int,
-        limit: int,
-    ) -> str:
-        """Fallback to Python regex for content search."""
-        flags = re.IGNORECASE if ignore_case else 0
-        try:
-            regex = re.compile(pattern, flags)
-        except re.error as e:
-            return f"Invalid regex pattern: {e}"
-
-        file_pattern = glob_filter or '**/*'
-        results = []
-        files_searched = 0
-
-        for file_path in search_dir.glob(file_pattern):
-            if not file_path.is_file():
-                continue
-            if self._should_exclude(file_path.relative_to(self.working_dir)):
-                continue
-
-            files_searched += 1
-            if files_searched > 1000:  # Safety limit
-                break
-
-            try:
-                content = file_path.read_text(encoding='utf-8', errors='ignore')
-                lines = content.split('\n')
-
-                matches_in_file = []
-                for i, line in enumerate(lines, 1):
-                    if regex.search(line):
-                        matches_in_file.append((i, line.strip()))
-
-                if matches_in_file:
-                    rel_path = file_path.relative_to(self.working_dir)
-                    if output_mode == 'files':
-                        results.append(str(rel_path))
-                    elif output_mode == 'count':
-                        results.append(f"{rel_path}: {len(matches_in_file)}")
-                    else:  # content
-                        for line_num, line_text in matches_in_file[:5]:
-                            results.append(f"{rel_path}:{line_num}: {line_text[:200]}")
-
-                if len(results) >= limit:
-                    break
-
-            except Exception:
-                continue
-
-        if not results:
-            return f"No matches found for pattern '{pattern}'"
-
-        header = f"Search results for '{pattern}' ({len(results)} matches):"
-        return header + "\n" + "\n".join(results[:limit])
+            return f"Error during grep search: {e}"
 
     def read_file(
         self,
@@ -386,19 +298,26 @@ class CodeSearchToolkit:
         if not path.is_absolute():
             path = self.working_dir / path
 
-        if not path.exists():
-            return f"Error: File '{file_path}' does not exist."
-
-        if not path.is_file():
-            return f"Error: '{file_path}' is not a file."
+        # Use shell command to read file
+        command = f'''
+if [ ! -e "{path}" ]; then
+    echo "Error: File '{file_path}' does not exist."
+elif [ ! -f "{path}" ]; then
+    echo "Error: '{file_path}' is not a file."
+else
+    lines=$(wc -l < "{path}")
+    if [ $lines -lt 200 ]; then
+        cat "{path}"
+    else
+        head -2000 "{path}"
+    fi
+fi
+'''
 
         try:
-            # Use shell command to read file
-            # If file is less than 200 lines, read whole file; otherwise read first 2000 lines
-            command = f'lines=$(wc -l < "{path}") && if [ $lines -lt 200 ]; then cat "{path}"; else head -2000 "{path}"; fi'
             result = self._shell_exec(
                 id=f"read_file_{file_path}",
-                command=command,
+                command=command.strip(),
             )
             return result
         except Exception as e:
@@ -410,7 +329,7 @@ class CodeSearchToolkit:
         show_hidden: bool = False,
         max_items: int = 200,
     ) -> str:
-        r"""List directory contents with file types.
+        r"""List directory contents using ls command.
 
         Args:
             path: Directory path (relative to working_dir). If None, lists working_dir.
@@ -420,49 +339,37 @@ class CodeSearchToolkit:
         Returns:
             Formatted directory listing with [DIR] and [FILE] markers.
         """
-        target_dir = self.working_dir
+        target_dir = str(self.working_dir)
         if path:
-            target_dir = self.working_dir / path
+            target_dir = str(self.working_dir / path)
 
-        if not target_dir.exists():
-            return f"Error: Directory '{path}' does not exist."
+        hidden_flag = '-a' if show_hidden else ''
 
-        if not target_dir.is_dir():
-            return f"Error: '{path}' is not a directory."
+        # Use ls with -F flag to mark directories with /
+        command = f'''
+if [ ! -e "{target_dir}" ]; then
+    echo "Error: Directory '{path or "."}' does not exist."
+elif [ ! -d "{target_dir}" ]; then
+    echo "Error: '{path or "."}' is not a directory."
+else
+    echo "Contents of {path or '.'}:"
+    echo "----------------------------------------"
+    ls -1F {hidden_flag} "{target_dir}" 2>/dev/null | head -n {max_items} | while read item; do
+        if [[ "$item" == */ ]]; then
+            echo "[DIR]  $item"
+        else
+            echo "[FILE] $item"
+        fi
+    done
+fi
+'''
 
         try:
-            items = list(target_dir.iterdir())
-
-            # Filter hidden files
-            if not show_hidden:
-                items = [i for i in items if not i.name.startswith('.')]
-
-            # Sort: directories first, then files, alphabetically
-            dirs = sorted([i for i in items if i.is_dir()], key=lambda x: x.name.lower())
-            files = sorted([i for i in items if i.is_file()], key=lambda x: x.name.lower())
-
-            result_lines = [f"Contents of {path or '.'}:"]
-            result_lines.append("-" * 40)
-
-            count = 0
-            for d in dirs:
-                if count >= max_items:
-                    break
-                if not self._should_exclude(d.relative_to(self.working_dir)):
-                    result_lines.append(f"[DIR]  {d.name}/")
-                    count += 1
-
-            for f in files:
-                if count >= max_items:
-                    break
-                result_lines.append(f"[FILE] {f.name}")
-                count += 1
-
-            if len(items) > max_items:
-                result_lines.append(f"\n... and {len(items) - max_items} more items")
-
-            return "\n".join(result_lines)
-
+            result = self._shell_exec(
+                id=f"list_directory_{path}",
+                command=command.strip(),
+            )
+            return result
         except Exception as e:
             return f"Error listing directory: {e}"
 
@@ -477,7 +384,7 @@ class CodeSearchToolkit:
         Searches for both 'from X import' and 'import X' patterns.
 
         Args:
-            module_name: Module or class name to search for (e.g., 'weather', 'QwenModel').
+            module_name: Module or class name to search for (e.g., 'weather', 'LlamaModel').
             ignore_case: Whether to ignore case in matching.
 
         Returns:
@@ -485,7 +392,7 @@ class CodeSearchToolkit:
 
         Examples:
             - find_imports("WeatherToolkit") - Find files using WeatherToolkit
-            - find_imports("qwen") - Find files importing anything with 'qwen'
+            - find_imports("llama") - Find files importing anything with 'llama'
         """
         # Build regex pattern for import statements
         pattern = f"(from\\s+\\S*{module_name}\\S*\\s+import|import\\s+\\S*{module_name})"
