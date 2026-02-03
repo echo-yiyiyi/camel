@@ -1,146 +1,77 @@
-import time
 from camel.agents import ChatAgent
-from camel.toolkits.arxiv_toolkit import ArxivToolkit
-from camel.memories import VectorDBMemory
-from camel.memories.blocks.vectordb_block import VectorDBBlock
-from camel.memories.context_creators.score_based import ScoreBasedContextCreator
-from camel.memories.records import MemoryRecord
 from camel.models import ModelFactory
-from camel.embeddings import OpenAIEmbedding
-from camel.storages.vectordb_storages import QdrantStorage
-from camel.types.enums import ModelPlatformType, ModelType
-from camel.utils import OpenAITokenCounter
+from camel.toolkits import ArxivToolkit
+from camel.memories.blocks.vectordb_block import VectorDBBlock
+from camel.memories.agent_memories import VectorDBMemory
+from camel.memories.context_creators.score_based import ScoreBasedContextCreator
+from camel.types import ModelPlatformType, ModelType
+from camel.memories.records import MemoryRecord
+import time
 
+# Create Arxiv toolkit and get tools
+arxiv_toolkit = ArxivToolkit()
+tools = arxiv_toolkit.get_tools()
 
-def wait_for_tool_call(agent, max_wait=10):
-    # Wait for tool call info to appear in agent response
-    for _ in range(max_wait):
-        time.sleep(1)
-        if agent._last_tool_call_record is not None:
-            return True
-    return False
+# Create model
+model = ModelFactory.create(
+    model_platform=ModelPlatformType.DEFAULT,
+    model_type=ModelType.DEFAULT,
+)
 
+# Create context creator with model's token counter
+context_creator = ScoreBasedContextCreator(
+    token_counter=model.token_counter,
+    token_limit=4096,
+)
 
-def main():
-    # Create the model
-    model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
-        model_type=ModelType.DEFAULT
+# Create vector memory
+vector_memory = VectorDBMemory(context_creator=context_creator)
+
+# Create ChatAgent with Arxiv tools and vector memory
+agent = ChatAgent(
+    system_message="You are a helpful assistant.",
+    model=model,
+    tools=tools,
+    memory=vector_memory,
+)
+
+agent.reset()
+
+# Step 1: Download the paper "Attention Is All You Need"
+download_response = agent.step('Download paper "Attention Is All You Need"')
+print("Download response:", download_response.msg.content)
+
+# Step 2: Search the paper to get paper text
+search_results = arxiv_toolkit.search_papers(query="Attention Is All You Need", max_results=1)
+
+# Extract paper text from search results
+paper_text = ""
+if search_results and 'paper_text' in search_results[0]:
+    paper_text = search_results[0]['paper_text']
+
+# Write paper text to vector memory
+if paper_text:
+    record = MemoryRecord(
+        message=agent.memory._vectordb_block.embedding.get_output_dim() and agent.memory._vectordb_block.embedding and agent.memory._vectordb_block.embedding.__class__ and agent.memory._vectordb_block.embedding.__class__.__name__ and agent.memory._vectordb_block.embedding.embed and agent.memory._vectordb_block.embedding.embed.__class__ and agent.memory._vectordb_block.embedding.embed.__class__.__name__ and agent.memory._vectordb_block.embedding.embed.__code__ and agent.memory._vectordb_block.embedding.embed.__code__.co_varnames and agent.memory._vectordb_block.embedding.embed.__code__.co_varnames[0] and agent.memory._vectordb_block.embedding.embed.__code__.co_varnames[0] == 'text' and agent.memory._memory.message_class.make_assistant_message(
+            content=paper_text
+        ),
+        role_at_backend=None,
+        timestamp=time.time(),
+        agent_id=agent.agent_id,
     )
+    agent.memory.write_records([record])
+    print("Paper text written to vector memory.")
+else:
+    print("No paper text found to write to vector memory.")
 
-    # Create embedding for vector DB
-    embedding = OpenAIEmbedding()
+# Step 3: Ask the agent a question using vector retrieval
+query = "What is a Transformer?"
+retrieved_contexts = agent.memory.retrieve()
 
-    # Create vector storage
-    vector_storage = QdrantStorage(
-        vector_dim=embedding.get_output_dim(),
-        path=":memory:"
-    )
+# Compose context string from retrieved contexts
+context_str = "\n\n".join([ctx.memory_record.message.content for ctx in retrieved_contexts])
 
-    # Create context creator
-    context_creator = ScoreBasedContextCreator(
-        token_counter=OpenAITokenCounter(ModelType.DEFAULT),
-        token_limit=2048,
-    )
-
-    # Create ArxivToolkit
-    arxiv_toolkit = ArxivToolkit()
-
-    # Create vector DB memory
-    vector_db_memory = VectorDBMemory(
-        context_creator=context_creator,
-        storage=vector_storage,
-        retrieve_limit=3,
-        agent_id="arxiv_rag_agent",
-    )
-
-    # Create the agent with Arxiv tools and vector memory
-    agent = ChatAgent(
-        system_message="You are a helpful assistant.",
-        model=model,
-        memory=vector_db_memory,
-        tools=arxiv_toolkit.get_tools(),
-    )
-
-    # Step 1: Search the paper "Attention Is All You Need"
-    search_query = "Search paper 'Attention Is All You Need'"
-    search_response = agent.step(search_query)
-
-    if not wait_for_tool_call(agent):
-        print("Timeout waiting for search tool call.")
-        return
-
-    # Extract paper id from tool call result
-    tool_calls = search_response.info.get('tool_calls', [])
-    if not tool_calls:
-        print("No tool calls found for search.")
-        return
-
-    search_result = tool_calls[0].result
-    if not search_result or len(search_result) == 0:
-        print("No search results found.")
-        return
-
-    paper_id = search_result[0].get('id') or search_result[0].get('entry_id')
-    if not paper_id:
-        print("No paper id found in search result.")
-        return
-
-    # Step 2: Download the paper by id
-    download_query = f"Download paper 'Attention Is All You Need' with id {paper_id}"
-    download_response = agent.step(download_query)
-
-    if not wait_for_tool_call(agent):
-        print("Timeout waiting for download tool call.")
-        return
-
-    # Extract download result
-    download_tool_calls = download_response.info.get('tool_calls', [])
-    if not download_tool_calls:
-        print("No tool calls found for download.")
-        return
-
-    download_result = download_tool_calls[0].result
-    if not download_result:
-        print("Download failed or no result.")
-        return
-
-    # Add the downloaded paper content to vector memory
-    download_tool = [t for t in arxiv_toolkit.get_tools() if t.get_function_name() == "download_papers"]
-    if not download_tool:
-        print("Download tool not found.")
-        return
-
-    download_tool = download_tool[0]
-    papers = download_tool.func(ids=[paper_id])
-
-    for paper in papers:
-        content = paper.get("content", "")
-        if content:
-            record = MemoryRecord(
-                message=None,
-                id=paper["id"],
-                text=content,
-                metadata={"title": paper["title"]}
-            )
-            vector_db_memory.write_records([record])
-
-    # Now query the agent with vector retrieval
-    question = "What is a Transformer?"
-
-    # Retrieve relevant context from vector memory
-    retrieved_docs = vector_db_memory.retrieve(question, limit=3)
-
-    # Compose prompt with retrieved context
-    context_texts = "\n\n".join([doc.memory_record.text for doc in retrieved_docs])
-    prompt = f"Context:\n{context_texts}\n\nQuestion: {question}\nAnswer:" 
-
-    # Use the model to answer the question with context
-    answer = model.chat(prompt)
-
-    print("Question:", question)
-    print("Answer:", answer)
-
-
-if __name__ == "__main__":
-    main()
+# Ask the agent with context
+question_prompt = f"Based on the following context, answer the question:\n{context_str}\n\nQuestion: {query}"
+response = agent.step(question_prompt)
+print("Answer:", response.msg.content)

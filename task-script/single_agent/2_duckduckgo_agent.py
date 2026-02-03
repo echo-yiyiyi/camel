@@ -1,50 +1,40 @@
+import sys
 from camel.agents import ChatAgent
+from camel.configs import GeminiConfig
 from camel.models import ModelFactory
-from camel.configs.gemini_config import GeminiConfig
-from camel.types.enums import ModelPlatformType, ModelType
-from camel.toolkits.search_toolkit import SearchToolkit
+from camel.toolkits import SearchToolkit
+from camel.types import ModelPlatformType, ModelType
 
 
 def main():
-    # Create Gemini model config
-    gemini_config = GeminiConfig()
+    # Define system message
+    system_message = "You are a helpful assistant."
 
-    # Create Gemini model without passing tools in constructor
+    # Create Gemini model
     model = ModelFactory.create(
         model_platform=ModelPlatformType.GEMINI,
         model_type=ModelType.GEMINI_3_PRO,
-        model_config_dict=gemini_config.__dict__,
+        model_config_dict=GeminiConfig(temperature=0.2).as_dict(),
     )
 
-    # Get DuckDuckGo search tool from SearchToolkit
+    # Create SearchToolkit and get DuckDuckGo search tool
     search_toolkit = SearchToolkit()
-    duckduckgo_tool = None
-    for tool in search_toolkit.get_tools():
-        if tool.func.__name__ == "search_duckduckgo":
-            duckduckgo_tool = tool
-            break
-
-    if duckduckgo_tool is None:
-        raise RuntimeError("DuckDuckGo search tool not found")
-
-    # System message for the agent
-    system_message = "You are a helpful assistant with access to DuckDuckGo search."
+    # Filter to get only the duckduckgo search tool
+    duckduckgo_tools = [tool for tool in search_toolkit.get_tools() if tool.func.__name__ == "search_duckduckgo"]
 
     # Create ChatAgent with Gemini model and DuckDuckGo search tool
-    agent = ChatAgent(
-        system_message=system_message,
-        model=model,
-        tools=[duckduckgo_tool]
-    )
+    agent = ChatAgent(system_message=system_message, model=model, tools=duckduckgo_tools)
 
-    # Example question to ask
+    # Example question
     question = "What is the capital of France?"
+    if len(sys.argv) > 1:
+        question = sys.argv[1]
 
-    # Get agent response with question string
+    # Get response from agent
     response = agent.step(question)
 
-    print(f"Question: {question}")
-    print(f"Answer: {response}")
+    # Print the answer
+    print(response.msgs[0].content)
 
 
 if __name__ == "__main__":

@@ -1,56 +1,56 @@
-"""
-This script creates a knowledge graph agent that uses LinkUp tools to retrieve webpages related to LLM-based social simulation research,
-extracts knowledge graph elements from the content, and stores them in a Neo4j graph database.
-"""
+from dotenv import load_dotenv
 
-from camel.agents.knowledge_graph_agent import KnowledgeGraphAgent
-from camel.toolkits.search_toolkit import SearchToolkit
+from camel.agents import KnowledgeGraphAgent
+from camel.loaders import UnstructuredIO
 from camel.storages.graph_storages.neo4j_graph import Neo4jGraph
+from camel.toolkits.search_toolkit import SearchToolkit
+
+load_dotenv()
 
 
 def main():
-    # Define the query for LinkUp search
-    query = "LLM-based social simulation research"
-
-    # Initialize the search toolkit
+    # Initialize the LinkUp search toolkit
     search_toolkit = SearchToolkit()
 
-    # Perform LinkUp search to retrieve webpages
-    print(f"Searching LinkUp for query: {query}")
-    search_results = search_toolkit.search_linkup(query=query)
+    # Query for LLM-based social simulation research
+    query = "LLM-based social simulation research"
+    search_results = search_toolkit.search_linkup(query=query, depth="standard", output_type="searchResults")
 
-    # Initialize the knowledge graph agent
+    # Initialize UnstructuredIO and KnowledgeGraphAgent
+    uio = UnstructuredIO()
     kg_agent = KnowledgeGraphAgent()
 
-    # Initialize Neo4j graph storage with credentials
+    # Initialize Neo4jGraph connection
     neo4j_graph = Neo4jGraph(
-        url="bolt://localhost:7687",  # Replace with your Neo4j URL
-        username="neo4j",             # Replace with your Neo4j username
-        password="password"           # Replace with your Neo4j password
+        url="bolt://localhost:7687",
+        username="neo4j",
+        password="password",
+        database="neo4j"
     )
 
+    graph_elements = []
+
     # Process each search result
-    for idx, result in enumerate(search_results):
-        print(f"Processing result {idx + 1}/{len(search_results)}: {result['title']}")
-        content = result.get('content', '')
-        url = result.get('url', '')
+    for result in search_results.get("results", []):
+        title = result.get("title", "")
+        snippet = result.get("snippet", "")
+        url = result.get("url", "")
 
-        # Run the knowledge graph agent on the content
-        kg_agent.run(content)
+        # Combine title and snippet as text content
+        text_content = f"Title: {title}\nSnippet: {snippet}\nURL: {url}"
 
-        # Extract graph elements from the agent's output
-        graph_elements = kg_agent._parse_graph_elements(kg_agent.output)
+        # Create element from text
+        element = uio.create_element_from_text(text=text_content)
 
-        # Add graph elements to Neo4j
-        neo4j_graph.add_graph_elements(graph_elements)
+        # Extract graph elements from content
+        graph_element = kg_agent.run(element, parse_graph_elements=True)
 
-        # Optionally, add a node for the source URL
-        if url:
-            from camel.schema.graph_element import Node
-            source_node = Node(id=url, name=url, type="WebPage")
-            neo4j_graph.add_graph_elements([source_node])
+        graph_elements.append(graph_element)
 
-    print("Finished processing and storing knowledge graph elements.")
+    # Add extracted graph elements to Neo4j
+    neo4j_graph.add_graph_elements(graph_elements, include_source=True, base_entity_label=True)
+
+    print(f"Added {len(graph_elements)} graph elements to Neo4j.")
 
 
 if __name__ == "__main__":

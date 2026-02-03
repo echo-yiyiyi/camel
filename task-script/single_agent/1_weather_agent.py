@@ -1,35 +1,40 @@
 from camel.agents import ChatAgent
-from camel.models import ModelFactory
 from camel.configs import QwenConfig
+from camel.models import ModelFactory
 from camel.toolkits.weather_toolkit import WeatherToolkit
-from camel.types.enums import ModelPlatformType, ModelType
+from camel.types import ModelPlatformType, ModelType
 
 
 def main():
-    # Create Qwen model with Qwen2.5-14B-Instruct
+    # Create the Qwen 2.5 14B Instruct model
     model = ModelFactory.create(
         model_platform=ModelPlatformType.QWEN,
         model_type=ModelType.QWEN_2_5_14B,
-        model_config_dict=QwenConfig().as_dict()
+        model_config_dict=QwenConfig(temperature=0.2).as_dict(),
     )
 
-    # Get weather tools
+    # Create the weather toolkit
     weather_toolkit = WeatherToolkit()
-    tools = weather_toolkit.get_tools()
 
-    # Create ChatAgent with weather tools
+    # Define system message
+    sys_msg = "You are a helpful assistant with access to weather information."
+
+    # Create the agent with the weather tool
     agent = ChatAgent(
-        system_message="You are a helpful assistant that can answer questions about the weather.",
+        system_message=sys_msg,
         model=model,
-        tools=tools
+        tools=weather_toolkit.get_tools(),
     )
 
-    # Example question about weather
-    question = "What is the weather like in New York today?"
-    response = agent.step(question)
-    print("Question:", question)
-    print("Answer:", response.msgs[0].content)
+    # Example user question about weather
+    user_msg = "What's the weather like in New York City today?"
+
+    # Get response from the agent
+    response = agent.step(user_msg)
+
+    # Print the response content
+    print(response.msgs[0].content)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

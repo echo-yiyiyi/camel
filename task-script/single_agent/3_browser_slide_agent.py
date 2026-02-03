@@ -1,44 +1,60 @@
 from camel.agents import ChatAgent
 from camel.models import ModelFactory
 from camel.toolkits import BrowserToolkit, PPTXToolkit
-from camel.types import ModelType, ModelPlatformType
+from camel.types import ModelPlatformType, ModelType
 
+# Create models for the agent and browser/planning agents
+model = ModelFactory.create(
+    model_platform=ModelPlatformType.DEFAULT,
+    model_type=ModelType.DEFAULT,
+)
 
-def main():
-    # Create the model
-    model = ModelFactory.create(
-        model_platform=ModelPlatformType.TOGETHER,
-        model_type=ModelType.TOGETHER_LLAMA_3_1_8B
-    )
+web_agent_model = ModelFactory.create(
+    model_platform=ModelPlatformType.DEFAULT,
+    model_type=ModelType.DEFAULT,
+)
 
-    # Create the browser toolkit
-    browser_toolkit = BrowserToolkit()
+planning_agent_model = ModelFactory.create(
+    model_platform=ModelPlatformType.DEFAULT,
+    model_type=ModelType.DEFAULT,
+)
 
-    # Create the PPTX toolkit
-    pptx_toolkit = PPTXToolkit(working_directory="./pptx_outputs")
+# Initialize BrowserToolkit with the browser models
+browser_toolkit = BrowserToolkit(
+    headless=True,
+    web_agent_model=web_agent_model,
+    planning_agent_model=planning_agent_model,
+)
 
-    # Combine tools from both toolkits
-    tools = browser_toolkit.get_tools() + pptx_toolkit.get_tools()
+# Initialize PPTXToolkit for slide generation
+pptx_toolkit = PPTXToolkit(
+    working_directory="./pptx_outputs",
+)
 
-    # Create the agent with combined tools
-    agent = ChatAgent(model=model, tools=tools, max_iteration=10)
+# Create a ChatAgent with both BrowserToolkit and PPTXToolkit tools
+agent = ChatAgent(
+    system_message="You are a helpful assistant that can browse the web and create PowerPoint presentations.",
+    model=model,
+    tools=[*browser_toolkit.get_tools(), *pptx_toolkit.get_tools()],
+)
 
-    # Define the task prompt
-    prompt = (
-        "Search for information about CAMEL-AI using the browser tools, "
-        "then generate a PowerPoint presentation summarizing the key points. "
-        "Save the presentation as 'camel_ai_presentation.pptx'."
-    )
+# Step 1: Use the agent to browse and gather information about CAMEL-AI
+browse_task = "Search for detailed information about CAMEL-AI, including its purpose, features, community, and impact."
+start_url = "https://www.camel-ai.org/"  # Assuming this is the official site
 
-    # Run the agent synchronously with step()
-    response = agent.step(prompt)
+print("Browsing and gathering information about CAMEL-AI...")
+browse_response = agent.step(f"browse_url('{browse_task}', '{start_url}')")
+print(browse_response.msgs[0].content)
 
-    print("Agent response:")
-    if response.msgs:
-        print(response.msgs[0].content)
-    else:
-        print("No response message.")
+# Step 2: Use the agent to generate a PowerPoint presentation about CAMEL-AI
+presentation_prompt = (
+    "Create a PowerPoint presentation about CAMEL-AI based on the information you gathered. "
+    "Include slides on introduction, key features, applications, community, and future outlook. "
+    "Use appropriate templates and formatting."
+)
 
+print("Generating PowerPoint presentation about CAMEL-AI...")
+pptx_response = agent.step(presentation_prompt)
+print(pptx_response.msgs[0].content)
 
-if __name__ == "__main__":
-    main()
+print("Script execution completed. Check the pptx_outputs directory for the generated presentation.")

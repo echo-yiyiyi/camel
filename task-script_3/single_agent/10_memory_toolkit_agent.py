@@ -4,26 +4,23 @@ from camel.toolkits.memory_toolkit import MemoryToolkit
 from camel.types import ModelPlatformType, ModelType
 
 
-def run_memory_toolkit_agent():
-    """
-    Create a ChatAgent with MemoryToolkit tools to manage memory
-    and run example queries demonstrating memory save, clear, load.
-    """
-
-    # Create a Model
+def main():
+    # Create a model instance
     model = ModelFactory.create(
         model_platform=ModelPlatformType.DEFAULT,
-        model_type=ModelType.DEFAULT,
+        model_type=ModelType.DEFAULT
     )
 
-    # Create a ChatAgent
+    # Create a ChatAgent with the model
     agent = ChatAgent(
         system_message="You are an assistant that can manage conversation memory using tools.",
-        model=model,
+        model=model
     )
 
-    # Add MemoryToolkit to the Agent
+    # Create a MemoryToolkit for the agent
     memory_toolkit = MemoryToolkit(agent=agent)
+
+    # Add the memory toolkit tools to the agent
     for tool in memory_toolkit.get_tools():
         agent.add_tool(tool)
 
@@ -69,4 +66,4 @@ def run_memory_toolkit_agent():
 
 
 if __name__ == "__main__":
-    run_memory_toolkit_agent()
+    main()

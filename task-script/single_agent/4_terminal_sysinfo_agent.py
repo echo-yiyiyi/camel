@@ -1,44 +1,53 @@
+import os
+
 from camel.agents import ChatAgent
-from camel.toolkits.terminal_toolkit.terminal_toolkit import TerminalToolkit
-from camel.toolkits.code_execution import CodeExecutionToolkit
-from camel.configs import ChatGPTConfig
 from camel.models import ModelFactory
+from camel.toolkits import TerminalToolkit, CodeExecutionToolkit
 from camel.types import ModelPlatformType, ModelType
 
+# Define system message
+system_message = (
+    "You are an assistant with access to terminal and code execution tools. "
+    "Retrieve system information using terminal commands and print it in a Python interpreter."
+)
 
-def main():
-    # Create terminal and code execution toolkits
-    terminal_toolkit = TerminalToolkit()
-    code_execution_toolkit = CodeExecutionToolkit()
+# Setup working directory
+working_directory = os.getcwd()
 
-    # Create model config and model
-    model_config_dict = ChatGPTConfig(temperature=0.0).as_dict()
-    model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
-        model_type=ModelType.DEFAULT,
-        model_config_dict=model_config_dict,
-    )
+# Create toolkits
+terminal_toolkit = TerminalToolkit(working_directory=working_directory)
+code_exec_toolkit = CodeExecutionToolkit(sandbox="internal_python")
 
-    # Create the agent with the two toolkits
-    agent = ChatAgent(
-        system_message="You are a helpful assistant.",
-        model=model,
-        tools=terminal_toolkit.get_tools() + code_execution_toolkit.get_tools(),
-    )
+# Get tools from toolkits
+terminal_tools = terminal_toolkit.get_tools()
+code_exec_tools = code_exec_toolkit.get_tools()
 
-    # Prompt to retrieve system info and print it in Python interpreter
-    prompt = (
-        "Retrieve system information using terminal commands and then print it using a Python interpreter. "
-        "Use the terminal toolkit to get system info (e.g., uname -a, lscpu, free -h) and then use the code execution toolkit to print it. "
-        "Show the output in the Python interpreter."
-    )
+# Combine tools
+tools = terminal_tools + code_exec_tools
 
-    # Run the agent with the prompt
-    response = agent.step(prompt)
+# Create model
+model = ModelFactory.create(
+    model_platform=ModelPlatformType.DEFAULT,
+    model_type=ModelType.DEFAULT,
+)
 
-    # Print the agent's response
-    print(response.message)
+# Create agent
+agent = ChatAgent(
+    system_message=system_message,
+    model=model,
+    tools=tools,
+)
 
+agent.reset()
 
-if __name__ == "__main__":
-    main()
+# User prompt to retrieve system info and print it in Python interpreter
+user_prompt = (
+    "Retrieve system information such as OS details, CPU info, and memory usage "
+    "using terminal commands. Then print the retrieved information in a Python interpreter."
+)
+
+# Step the agent
+response = agent.step(user_prompt)
+
+# Print the final response content
+print(response.msg.content)

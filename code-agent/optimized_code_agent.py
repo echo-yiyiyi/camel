@@ -37,7 +37,7 @@ from camel.types import ModelPlatformType, ModelType
 # Import the optimized code search toolkit
 from code_search_toolkit import CodeSearchToolkit
 
-exp_id = "_code_optimized_read_file_all_generalization_prompt"
+exp_id = "_code_optimized_read_file_4"
 
 set_log_level('INFO')
 
@@ -253,18 +253,30 @@ You have access to terminal tools for:
 - `shell_write_content_to_file`: Write content to a file
 - `read_file_tool`: Read file contents
 
-## Workflow
+## Workflow (MUST FOLLOW IN ORDER)
 
-1. **Read relevant files** from the paths provided by the explore agent
-2. **Write the script** using `shell_write_content_to_file`
-3. **Execute the script** using `shell_exec`
-4. **Debug if needed**: If errors occur, read the error, fix the script, and re-run
+### Step 1: READ BEFORE WRITE (MANDATORY)
+**You MUST read files that are relevant to what you're going to write before writing any code.**
+- Read example files or implementation files that relate to your task
+- You don't need to read all files - only the ones relevant to your task
+- **DO NOT write code based only on the summary** - the summary may be incomplete
+
+### Step 2: Write the script
+- Copy import statements and API patterns EXACTLY from the files you read
+- Use `shell_write_content_to_file` to save the script
+
+### Step 3: Execute the script
+- Use `shell_exec` with `python <script_path>`
+
+### Step 4: Debug if needed
+- If errors occur, read more files to understand the correct API, then fix and re-run
 
 ## CRITICAL: Strict Instruction Following
 
 **Use EXACTLY what the task specifies. Do NOT substitute "similar" or "better" alternatives.**
 
 ### Model Selection
+- If task does NOT specify a model -> Use `ModelPlatformType.DEFAULT` and `ModelType.DEFAULT`
 - Task says "Llama-3.1-8B-Instruct" -> Use `ModelType.LLAMA_3_1_8B` EXACTLY
 - Do NOT use LLAMA_3_2_3B as "closest alternative"
 - Do NOT guess enum names - verify from enums.py or examples
@@ -301,9 +313,9 @@ You have access to terminal tools for:
 
 - Import from camel package: `from camel.agents import ChatAgent`
 - Use ModelFactory for models: `ModelFactory.create(model_platform=..., model_type=...)`
+- If task does NOT specify a model, use DEFAULT: `ModelPlatformType.DEFAULT, ModelType.DEFAULT`
 - Copy exact enum values from enums.py (e.g., `ModelType.LLAMA_3_1_8B`)
 - Use specific tool methods, not get_tools() (e.g., `toolkit.search_brave`)
-- Add proper error handling in your scripts
 
 ## Debugging Tips
 
@@ -311,6 +323,7 @@ You have access to terminal tools for:
 - If you see AttributeError for enum, verify the exact enum name in enums.py
 - If you see API errors, it's likely a script issue, not environment
 - Read more files if you need to understand the API better
+- **If a file does not exist, do NOT retry the same path** - search for the correct path instead (e.g., use glob_search or grep)
 """
 
 crawl4ai_toolkit = Crawl4AIToolkit()
@@ -387,16 +400,49 @@ def run_code_phase(task_description: str, explore_output: str) -> tuple:
     """Run the code generation phase to write and execute the script."""
     code_agent.reset()
 
+    # Extract all .py file paths from explore output for explicit instruction
+    relevant_files = []
+    for line in explore_output.split('\n'):
+        line = line.strip()
+        # Match lines like "- examples/xxx.py" or "- camel/xxx.py" or just "examples/xxx.py"
+        if '.py' in line:
+            # Extract path that ends with .py
+            parts = line.lstrip('- ').split()
+            for part in parts:
+                if part.endswith('.py') and ('examples/' in part or 'camel/' in part):
+                    relevant_files.append(part)
+                    break
+
+    # Remove duplicates while preserving order
+    seen = set()
+    relevant_files = [f for f in relevant_files if not (f in seen or seen.add(f))]
+
+    file_instruction = ""
+    if relevant_files:
+        file_instruction = f"""
+**Available files** (use `read_file_tool` to read):
+{chr(10).join(f'- {f}' for f in relevant_files[:5])}
+
+**IMPORTANT**: Before writing code, you MUST read the files that are relevant to your task.
+You don't need to read all files - only the ones related to what you're going to write.
+The summary may be incomplete - verify API usage by reading actual files.
+"""
+
     code_prompt = f"""**Task**: {task_description}
 
 **Relevant files found by exploration**:
 {explore_output}
-
+{file_instruction}
 **Instructions**:
-1. Read the relevant example files to understand the API usage patterns
-2. Write the script according to the task requirements using `shell_write_content_to_file`
-3. Execute the script using `shell_exec` with `python <script_path>`
-4. If errors occur, debug and fix until successful
+1. **FIRST**: Read the files that are relevant to what you're going to write
+2. Write the script using `shell_write_content_to_file`
+3. Execute with `shell_exec python <script_path>`
+4. If errors occur, read more files to understand the correct API, then fix and re-run
+
+**WARNINGS**:
+- DO NOT write code based only on the summary - read actual files first
+- Copy code patterns EXACTLY from the files you read
+- If task does NOT specify a model, use DEFAULT: ModelPlatformType.DEFAULT, ModelType.DEFAULT
 
 Note: The environment and APIs are correctly configured. If you encounter errors,
 it's likely a script issue that needs fixing.
@@ -613,7 +659,7 @@ if __name__ == "__main__":
         print(f"\n--- Result Preview ---")
         print(f"Code output: {result['code_output'][:500]}...")
 
-        if cnt >= 20:  # Limit for testing
+        if cnt >= 10:  # Limit for testing
             break
 
     print(f"\n{'='*60}")
