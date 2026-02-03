@@ -1,0 +1,1478 @@
+Task: task_10
+Status: SUCCESS
+Start Time: 2026-02-03T15:07:53.512553
+End Time: 2026-02-03T15:08:59.749796
+Total Duration: 66.24 seconds
+  - Explore Phase: 21.21 seconds
+  - Code Phase: 45.03 seconds
+Description: create an agent with memory tools to manage memory and run query examples. Save the script to task-script/single_agent/10_memory_toolkit_agent.py
+================================================================================
+
+EXPLORE PHASE
+================================================================================
+Tool Calls: 14
+----------------------------------------
+
+[1] glob_search
+Args: {
+  "pattern": "**/*memory*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 20
+}
+Result: Found 14 file(s) matching '**/*memory*.py':
+camel/societies/workforce/workflow_memory_manager.py
+camel/storages/key_value_storages/in_memory.py
+camel/toolkits/memory_toolkit.py
+docs/cookbooks/advanced_features/agents_with_memory.ipynb
+examples/memories/agent_memory_example.py
+examples/memories/agent_memory_vector_db_example.py
+examples/memories/vector_db_memory_example.py
+examples/toolkits/memory_toolkit.py
+examples/workforce/workforce_shared_memory_validation.py
+examples/workforce/workforce_wor...
+
+[2] glob_search
+Args: {
+  "pattern": "**/*agent*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 20
+}
+Result: Found 20 file(s) matching '**/*agent*.py':
+apps/agents/agents.py
+apps/agents/test/test_agents.py
+camel/agents/chat_agent.py
+camel/agents/critic_agent.py
+camel/agents/deductive_reasoner_agent.py
+camel/agents/embodied_agent.py
+camel/agents/knowledge_graph_agent.py
+camel/agents/mcp_agent.py
+camel/agents/multi_hop_generator_agent.py
+camel/agents/programmed_agent_instruction.py
+camel/agents/repo_agent.py
+camel/agents/role_assignment_agent.py
+camel/agents/search_agent.py
+camel/agents/task_agent.py
+cam...
+
+[3] glob_search
+Args: {
+  "pattern": "**/*toolkit*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 20
+}
+Result: Found 20 file(s) matching '**/*toolkit*.py':
+camel/runtimes/utils/function_risk_toolkit.py
+camel/runtimes/utils/ignore_risk_toolkit.py
+camel/toolkits/aci_toolkit.py
+camel/toolkits/arxiv_toolkit.py
+camel/toolkits/ask_news_toolkit.py
+camel/toolkits/async_browser_toolkit.py
+camel/toolkits/audio_analysis_toolkit.py
+camel/toolkits/bohrium_toolkit.py
+camel/toolkits/browser_toolkit.py
+camel/toolkits/browser_toolkit_commons.py
+camel/toolkits/context_summarizer_toolkit.py
+camel/toolkits/craw4ai_toolkit.p...
+
+[4] glob_search
+Args: {
+  "pattern": "**/*example*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 20
+}
+Result: Found 20 file(s) matching '**/*example*.py':
+examples/datagen/self_improving_cot/self_improving_cot_example.py
+examples/datagen/self_improving_cot/self_improving_cot_example_with_r1.py
+examples/debug/traceroot_example.py
+examples/embeddings/gemini_embedding_example.py
+examples/embeddings/jina_embedding_example.py
+examples/embeddings/openai_compatible_embedding_example.py
+examples/embeddings/together_embedding_example.py
+examples/embeddings/vlm_embedding_example.py
+examples/environments/rlcards_e...
+
+[5] glob_search
+Args: {
+  "pattern": "**/test_*memory*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 20
+}
+Result: Found 4 file(s) matching '**/test_*memory*.py':
+test/memories/test_chat_history_memory.py
+test/memories/test_vector_db_memory.py
+test/toolkits/test_memory_toolkit.py
+test/workforce/test_workflow_memory.py
+
+[6] glob_search
+Args: {
+  "pattern": "**/test_*agent*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 20
+}
+Result: Found 19 file(s) matching '**/test_*agent*.py':
+apps/agents/test/test_agents.py
+examples/test/test_single_agent.py
+test/agents/test_agent_base.py
+test/agents/test_chat_agent.py
+test/agents/test_critic_agent.py
+test/agents/test_deductive_reasoner_agent.py
+test/agents/test_embodied_agent.py
+test/agents/test_knowledge_agent.py
+test/agents/test_mcp_agent.py
+test/agents/test_repo_agent.py
+test/agents/test_role_assignment_agent.py
+test/agents/test_task_agent.py
+test/agents/tool_agents/test_hugging_fac...
+
+[7] read_file
+Args: {
+  "file_path": "camel/memories/__init__.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[8] read_file
+Args: {
+  "file_path": "camel/memories/agent_memories.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[9] read_file
+Args: {
+  "file_path": "examples/memories/agent_memory_example.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[10] read_file
+Args: {
+  "file_path": "examples/toolkits/memory_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[11] read_file
+Args: {
+  "file_path": "camel/toolkits/memory_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[12] glob_search
+Args: {
+  "pattern": "**/agent_memory_example.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 5
+}
+Result: Found 1 file(s) matching '**/agent_memory_example.py':
+examples/memories/agent_memory_example.py
+
+[13] glob_search
+Args: {
+  "pattern": "**/memory_toolkit_example.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 5
+}
+Result: Found 1 file(s) matching '**/memory_toolkit_example.py':
+Command executed successfully (no output).
+
+[14] glob_search
+Args: {
+  "pattern": "**/memory_toolkit.py",
+  "path": "examples/toolkits",
+  "file_type": "file",
+  "max_results": 5
+}
+Result: Found 1 file(s) matching '**/memory_toolkit.py':
+examples/toolkits/memory_toolkit.py
+
+----------------------------------------
+Output:
+## Examples (MOST IMPORTANT)
+- examples/memories/agent_memory_example.py
+  - Shows: Creating a ChatAgent with ChatHistoryMemory
+  - Demonstrates saving/loading memory to/from JSON file and loading memory from another agent
+  - Uses ScoreBasedContextCreator for memory context
+  - Uses ModelFactory to create model and ChatAgent for interaction
+
+- examples/toolkits/memory_toolkit.py
+  - Shows: Using MemoryToolkit with ChatAgent to manage memory via function calling tools
+  - Demonstrates saving, loading, clearing memory with tool calls in conversation
+
+## Implementation
+- camel/memories/agent_memories.py
+  - Classes: ChatHistoryMemory, VectorDBMemory, LongtermAgentMemory
+  - Implements memory management classes for agents with context creators and storage backends
+  - Supports retrieving, writing, clearing, and removing memory records
+
+- camel/memories/__init__.py
+  - Exports: ChatHistoryMemory, LongtermAgentMemory, VectorDBMemory, AgentMemory, BaseContextCreator, ScoreBasedContextCreator, MemoryRecord, ContextRecord
+
+- camel/toolkits/memory_toolkit.py
+  - Class: MemoryToolkit
+  - Provides function tools for saving, loading, clearing ChatAgent memory
+  - Uses ChatAgent methods: save_memory, load_memory, load_memory_from_path, clear_memory
+
+## Configs/Types
+- camel/types/enums.py (not explicitly read but relevant for ModelPlatformType, ModelType used in examples)
+
+## Tests
+- test/memories/test_chat_history_memory.py
+- test/memories/test_vector_db_memory.py
+- test/toolkits/test_memory_toolkit.py
+
+These files collectively provide the necessary components and usage examples to create an agent with memory tools, manage memory, and run query examples. The example scripts in `examples/memories/agent_memory_example.py` and `examples/toolkits/memory_toolkit.py` are especially relevant for creating your task script at `task-script/single_agent/10_memory_toolkit_agent.py`.
+================================================================================
+
+CODE PHASE
+================================================================================
+Tool Calls: 5
+----------------------------------------
+
+[1] read_file_tool
+Args: {
+  "file_path": "examples/toolkits/memory_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+from camel.agents import ChatAgent
+from camel.models import ModelFactory
+from camel.toolkits.memory_toolkit import MemoryToolkit
+from camel.types import ModelPlatformType, ModelType
+
+
+def run_memory_toolkit_example():
+    """
+    Demonstrates a ChatAgent using the MemoryToolkit for
+    function c...
+
+[2] read_file_tool
+Args: {
+  "file_path": "examples/memories/agent_memory_example.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+from pathlib import Path
+
+from camel.agents import ChatAgent
+from camel.memories import ChatHistoryMemory
+from camel.memories.context_creators.score_based import (
+    ScoreBasedContextCreator,
+)
+from camel.messages import BaseMessage
+from camel.models.model_factory import ModelFactory
+f...
+
+[3] shell_exec
+Args: {
+  "id": "run_memory_toolkit_agent",
+  "command": "python task-script/single_agent/10_memory_toolkit_agent.py",
+  "block": true,
+  "timeout": 60
+}
+Result: python: can't open file '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/10_memory_toolkit_agent.py': [Errno 2] No such file or directory
+
+[4] shell_write_content_to_file
+Args: {
+  "content": "from camel.agents import ChatAgent\nfrom camel.models import ModelFactory\nfrom camel.toolkits.memory_toolkit import MemoryToolkit\nfrom camel.types import ModelPlatformType, ModelType\n\n\ndef run_memory_toolkit_agent():\n    \"\"\"\n    Create a ChatAgent with MemoryToolkit tools to manage memory\n    and run example queries demonstrating memory save, clear, load.\n    \"\"\"\n\n    # Create a Model\n    model = ModelFactory.create(\n        model_platform=ModelPlatformType.DEFAULT,\n        model_type=ModelType.DEFAULT,\n    )\n\n    # Create a ChatAgent\n    agent = ChatAgent(\n        system_message=\"You are an assistant that can manage conversation memory using tools.\",\n        model=model,\n    )\n\n    # Add MemoryToolkit to the Agent\n    memory_toolkit = MemoryToolkit(agent=agent)\n    for tool in memory_toolkit.get_tools():\n        agent.add_tool(tool)\n\n    # Have a conversation to populate memory\n    print(\"\\n--- Starting a Conversation ---\")\n    user_msg_1 = \"Tell me about the moon.\"\n    print(f\"[User] {user_msg_1}\")\n    response_1 = agent.step(user_msg_1)\n    print(f\"[Agent] {response_1.msgs[0].content}\")\n\n    # Save the memory to a file via function calling\n    print(\"\\n--- Saving Memory ---\")\n    save_msg = \"Please save the current memory to 'conversation_memory.json'.\"\n    response_save = agent.step(save_msg)\n    print(f\"[Agent] {response_save.msgs[0].content}\")\n    print(f\"[Tool Call Info] {response_save.info['tool_calls']}\")\n\n    # Clear the memory via function calling\n    print(\"\\n--- Clearing Memory ---\")\n    clear_msg = \"Please clear the memory.\"\n    response_clear = agent.step(clear_msg)\n    print(f\"[Agent] {response_clear.msgs[0].content}\")\n    print(f\"[Tool Call Info] {response_clear.info['tool_calls']}\")\n\n    # Verify memory is cleared\n    print(\"\\n--- Checking Memory After Clear ---\")\n    check_msg = \"What do you remember about the moon?\"\n    response_check = agent.step(check_msg)\n    print(f\"[Agent] {response_check.msgs[0].content}\")\n\n    # Load memory from the saved file via function calling\n    print(\"\\n--- Loading Memory from File ---\")\n    load_msg = \"Please load the memory from 'conversation_memory.json'.\"\n    response_load = agent.step(load_msg)\n    print(f\"[Agent] {response_load.msgs[0].content}\")\n    print(f\"[Tool Call Info] {response_load.info['tool_calls']}\")\n\n    # Verify memory is restored\n    print(\"\\n--- Checking Memory After Load ---\")\n    check_msg = \"What do you remember about the moon?\"\n    response_restored = agent.step(check_msg)\n    print(f\"[Agent] {response_restored.msgs[0].content}\")\n\n\nif __name__ == \"__main__\":\n    run_memory_toolkit_agent()\n",
+  "file_path": "task-script/single_agent/10_memory_toolkit_agent.py"
+}
+Result: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/10_memory_toolkit_agent.py'.
+
+[5] shell_exec
+Args: {
+  "id": "run_memory_toolkit_agent",
+  "command": "python task-script/single_agent/10_memory_toolkit_agent.py",
+  "block": true,
+  "timeout": 60
+}
+Result: 
+--- Starting a Conversation ---
+[User] Tell me about the moon.
+[Agent] The Moon is Earth's only natural satellite and is the fifth largest moon in the solar system. It is about 1/6th the size of Earth and is located about 384,400 kilometers (238,855 miles) away from our planet. The Moon has a rocky surface covered with dust and debris from impacts. It has no atmosphere, weather, or liquid water.
+
+The Moon goes through different phases as it orbits the Earth, including new moon, crescent, quarter, gibbous, and full moon. These phases result from the changing angles of sunlight hitting the Moon as seen from Earth.
+
+The Moon's gravitational pull creates tides in Earth's oceans. It also stabilizes Earth's axial tilt, which helps maintain a relatively stable climate.
+
+Human exploration of the Moon began with the Apollo missions, with Apollo 11 being the first mission to land humans on the Moon in 1969. Astronauts conducted experiments and brought back lunar samples for study.
+
+The Moon con...
+
+----------------------------------------
+Output:
+I have created the script as requested at task-script/single_agent/10_memory_toolkit_agent.py. The script creates a ChatAgent with MemoryToolkit tools to manage memory and runs example queries demonstrating memory save, clear, and load operations. The script executed successfully and demonstrated the expected memory management behavior.
+================================================================================
+
+EXPLORE AGENT CHAT HISTORY
+================================================================================
+
+[Message 1]
+Role: system
+Content: You are a code exploration specialist. Find relevant files for a task.
+
+## Tools
+
+1. **glob_search(pattern, path?, max_results?)** - Find files by name pattern
+2. **grep_search(pattern, path?, glob_filter?, ignore_case?, output_mode?)** - Search file contents
+3. **read_file(file_path)** - Read file contents (auto-limits to 2000 lines for large files)
+4. **list_directory(path?)** - List directory contents
+5. **find_definition(name, definition_type?)** - Find class/function definitions
+6. **find_imports(module_name, ignore_case?)** - Find files that import a module
+
+## Search Techniques (CRITICAL)
+
+### Technique 1: Search whole repo first, NEVER restrict path initially
+```python
+# WRONG - misses examples/models/llama_model_example.py
+glob_search("**/*llama*.py", path="camel/models")
+
+# CORRECT - searches entire repo
+glob_search("**/*llama*.py")
+```
+
+### Technique 2: Use find_imports to find REAL usage
+```python
+find_imports("WeatherToolkit")
+find_imports("LlamaModel")
+```
+
+### Technique 3: Read __init__.py to understand module exports
+```python
+read_file("camel/toolkits/__init__.py")
+read_file("camel/models/__init__.py")
+```
+
+### Technique 4: Parallel search for ALL keywords
+For task "weather agent with Llama", call ALL in parallel:
+```python
+glob_search("**/*llama*.py")
+glob_search("**/*weather*.py")
+find_imports("llama")
+find_imports("WeatherToolkit")
+```
+
+### Technique 5: Tests and examples contain best usage patterns
+```python
+glob_search("**/test_*llama*.py")
+glob_search("**/*example*.py")
+```
+
+### Technique 6: Find EXACT enum values for models/tools
+When task specifies a model like "Llama-3.1-8B-Instruct", search for the exact ModelType enum:
+```python
+# Search with partial match (enum names use underscores, not hyphens)
+grep_search("LLAMA_3_1.*8B", path="camel/types/enums.py")
+grep_search("LLAMA_3_1", path="camel/types/enums.py")
+```
+CAMEL ModelType naming convention:
+- No "_INSTRUCT" suffix usually (e.g., LLAMA_3_1_8B not LLAMA_3_1_8B_INSTRUCT)
+- Use underscor
+... (truncated)
+
+
+[Message 2]
+Role: user
+Content: Find relevant files for this task:
+
+**Task**: create an agent with memory tools to manage memory and run query examples. Save the script to task-script/single_agent/10_memory_toolkit_agent.py
+
+**Repository Context**:
+
+## CAMEL Repository Structure
+
+### Core Modules
+- `camel/agents/` - Agent implementations (ChatAgent is the base)
+- `camel/models/` - LLM provider integrations (50+)
+- `camel/memories/` - Memory systems (ChatHistoryMemory, LongtermAgentMemory, VectorDBMemory)
+- `camel/configs/` - Model configuration classes
+- `camel/toolkits/` - Tool integrations (50+)
+- `camel/types/` - Enums (ModelPlatformType, ModelType, RoleType)
+
+### Other Directories
+- `examples/` - Usage examples
+- `test/` - Test files
+- `docs/` - Documentation
+
+
+Search for implementation files, examples, tests, and documentation.
+Return the most relevant file paths with brief explanations.
+Focus on finding:
+1. Example scripts that show similar usage patterns
+2. Implementation files for the required components
+3. Configuration/type definitions
+
+
+[Message 3]
+Role: assistant
+
+[Message 4]
+Role: tool
+Content: Found 14 file(s) matching '**/*memory*.py':
+camel/societies/workforce/workflow_memory_manager.py
+camel/storages/key_value_storages/in_memory.py
+camel/toolkits/memory_toolkit.py
+docs/cookbooks/advanced_features/agents_with_memory.ipynb
+examples/memories/agent_memory_example.py
+examples/memories/agent_memory_vector_db_example.py
+examples/memories/vector_db_memory_example.py
+examples/toolkits/memory_toolkit.py
+examples/workforce/workforce_shared_memory_validation.py
+examples/workforce/workforce_workflow_memory_example.py
+test/memories/test_chat_history_memory.py
+test/memories/test_vector_db_memory.py
+test/toolkits/test_memory_toolkit.py
+test/workforce/test_workflow_memory.py
+
+[Message 5]
+Role: assistant
+
+[Message 6]
+Role: tool
+Content: Found 20 file(s) matching '**/*agent*.py':
+apps/agents/agents.py
+apps/agents/test/test_agents.py
+camel/agents/chat_agent.py
+camel/agents/critic_agent.py
+camel/agents/deductive_reasoner_agent.py
+camel/agents/embodied_agent.py
+camel/agents/knowledge_graph_agent.py
+camel/agents/mcp_agent.py
+camel/agents/multi_hop_generator_agent.py
+camel/agents/programmed_agent_instruction.py
+camel/agents/repo_agent.py
+camel/agents/role_assignment_agent.py
+camel/agents/search_agent.py
+camel/agents/task_agent.py
+camel/agents/tool_agents/hugging_face_tool_agent.py
+camel/memories/agent_memories.py
+camel/responses/agent_responses.py
+camel/services/agent_openapi_server.py
+camel/societies/workforce/single_agent_worker.py
+camel/toolkits/hybrid_browser_toolkit_py/agent.py
+
+[Message 7]
+Role: assistant
+
+[Message 8]
+Role: tool
+Content: Found 20 file(s) matching '**/*toolkit*.py':
+camel/runtimes/utils/function_risk_toolkit.py
+camel/runtimes/utils/ignore_risk_toolkit.py
+camel/toolkits/aci_toolkit.py
+camel/toolkits/arxiv_toolkit.py
+camel/toolkits/ask_news_toolkit.py
+camel/toolkits/async_browser_toolkit.py
+camel/toolkits/audio_analysis_toolkit.py
+camel/toolkits/bohrium_toolkit.py
+camel/toolkits/browser_toolkit.py
+camel/toolkits/browser_toolkit_commons.py
+camel/toolkits/context_summarizer_toolkit.py
+camel/toolkits/craw4ai_toolkit.py
+camel/toolkits/dappier_toolkit.py
+camel/toolkits/data_commons_toolkit.py
+camel/toolkits/earth_science_toolkit.py
+camel/toolkits/edgeone_pages_mcp_toolkit.py
+camel/toolkits/excel_toolkit.py
+camel/toolkits/file_toolkit.py
+camel/toolkits/github_toolkit.py
+camel/toolkits/gmail_toolkit.py
+
+[Message 9]
+Role: assistant
+
+[Message 10]
+Role: tool
+Content: Found 20 file(s) matching '**/*example*.py':
+examples/datagen/self_improving_cot/self_improving_cot_example.py
+examples/datagen/self_improving_cot/self_improving_cot_example_with_r1.py
+examples/debug/traceroot_example.py
+examples/embeddings/gemini_embedding_example.py
+examples/embeddings/jina_embedding_example.py
+examples/embeddings/openai_compatible_embedding_example.py
+examples/embeddings/together_embedding_example.py
+examples/embeddings/vlm_embedding_example.py
+examples/environments/rlcards_example.py
+examples/extractors/python_strategies_example.py
+examples/interpreters/ipython_interpreter_example.py
+examples/interpreters/microsandbox_interpreter_example.py
+examples/knowledge_graph/knowledge_graph_agent_example.py
+examples/knowledge_graph/neo4j_example.py
+examples/loaders/apify_example.py
+examples/loaders/chunkr_example.py
+examples/loaders/crawl4ai_example.py
+examples/loaders/firecrawl_example.py
+examples/loaders/jina_url_reader_example.py
+examples/loaders/markitdown_example.py
+
+[Message 11]
+Role: assistant
+
+[Message 12]
+Role: tool
+Content: Found 4 file(s) matching '**/test_*memory*.py':
+test/memories/test_chat_history_memory.py
+test/memories/test_vector_db_memory.py
+test/toolkits/test_memory_toolkit.py
+test/workforce/test_workflow_memory.py
+
+[Message 13]
+Role: assistant
+
+[Message 14]
+Role: tool
+Content: Found 19 file(s) matching '**/test_*agent*.py':
+apps/agents/test/test_agents.py
+examples/test/test_single_agent.py
+test/agents/test_agent_base.py
+test/agents/test_chat_agent.py
+test/agents/test_critic_agent.py
+test/agents/test_deductive_reasoner_agent.py
+test/agents/test_embodied_agent.py
+test/agents/test_knowledge_agent.py
+test/agents/test_mcp_agent.py
+test/agents/test_repo_agent.py
+test/agents/test_role_assignment_agent.py
+test/agents/test_task_agent.py
+test/agents/tool_agents/test_hugging_face_tool_agent.py
+test/agents/tool_agents/test_tool_agent_base.py
+test/memories/test_agent_memories.py
+test/services/test_agent_mcp_server.py
+test/services/test_agent_openapi_server.py
+test/toolkits/test_message_agent_toolkit.py
+test/workforce/test_workforce_single_agent.py
+
+[Message 15]
+Role: assistant
+
+[Message 16]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+from .agent_memories import (
+    ChatHistoryMemory,
+    LongtermAgentMemory,
+    VectorDBMemory,
+)
+from .base import AgentMemory, BaseContextCreator, MemoryBlock
+from .blocks.chat_history_block import ChatHistoryBlock
+from .blocks.vectordb_block import VectorDBBlock
+from .context_creators.score_based import ScoreBasedContextCreator
+from .records import ContextRecord, MemoryRecord
+
+__all__ = [
+    'MemoryRecord',
+    'ContextRecord',
+    'MemoryBlock',
+    "AgentMemory",
+    'BaseContextCreator',
+    'ScoreBasedContextCreator',
+    'ChatHistoryMemory',
+    'VectorDBMemory',
+    'ChatHistoryBlock',
+    'VectorDBBlock',
+    'LongtermAgentMemory',
+]
+
+[Message 17]
+Role: assistant
+
+[Message 18]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+import warnings
+from typing import List, Optional
+
+from camel.memories.base import AgentMemory, BaseContextCreator
+from camel.memories.blocks import ChatHistoryBlock, VectorDBBlock
+from camel.memories.records import ContextRecord, MemoryRecord
+from camel.storages.key_value_storages.base import BaseKeyValueStorage
+from camel.storages.vectordb_storages.base import BaseVectorStorage
+from camel.types import OpenAIBackendRole
+
+
+class ChatHistoryMemory(AgentMemory):
+    r"""An agent memory wrapper of :obj:`ChatHistoryBlock`.
+
+    Args:
+        context_creator (BaseContextCreator): A model context creator.
+        storage (BaseKeyValueStorage, optional): A storage backend for storing
+            chat history. If `None`, an :obj:`InMemoryKeyValueStorage`
+            will be used. (default: :obj:`None`)
+        window_size (int, optional): The number of recent chat messages to
+            retrieve. If not provided, the entire chat history will be
+            retrieved.  (default: :obj:`None`)
+        agent_id (str, optional): The ID of the agent associated with the chat
+            history.
+    """
+
+    def __init__(
+        self,
+        context_creator: BaseContextCreator,
+        storage: Optional[BaseKeyValueStorage] = None,
+        window_size: Optional[int] = None,
+        agent_
+... (truncated)
+
+
+[Message 19]
+Role: assistant
+
+[Message 20]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+from pathlib import Path
+
+from camel.agents import ChatAgent
+from camel.memories import ChatHistoryMemory
+from camel.memories.context_creators.score_based import (
+    ScoreBasedContextCreator,
+)
+from camel.messages import BaseMessage
+from camel.models.model_factory import ModelFactory
+from camel.types import ModelPlatformType, ModelType
+from camel.types.enums import OpenAIBackendRole
+from camel.utils import OpenAITokenCounter
+
+context_creator = ScoreBasedContextCreator(
+    token_counter=OpenAITokenCounter(ModelType.GPT_4O_MINI),
+    token_limit=1024,
+)
+
+model = ModelFactory.create(
+    model_platform=ModelPlatformType.OPENAI,
+    model_type=ModelType.GPT_4O_MINI,
+)
+
+# 1. Instantiate a ChatAgent with system_message & agent_id
+#    Using ChatHistoryMemory as an example memory store.
+agent = ChatAgent(
+    system_message="You are a helpful assistant",
+    agent_id="001",
+    model=model,
+)
+
+# 2. Perform steps so that some MemoryRecords accumulate
+#    - We'll just send a message and read the response to populate memory
+user_input_1 = (
+    "Hello, can you remember these instructions?: Banana is a country."
+)
+response_1 = agent.step(user_input_1)
+print(
+    "Assistant response 1:",
+    response_1.msgs[0].content if response_1.msgs else "No response",
+)
+'''
+=============
+... (truncated)
+
+
+[Message 21]
+Role: assistant
+
+[Message 22]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+from camel.agents import ChatAgent
+from camel.models import ModelFactory
+from camel.toolkits.memory_toolkit import MemoryToolkit
+from camel.types import ModelPlatformType, ModelType
+
+
+def run_memory_toolkit_example():
+    """
+    Demonstrates a ChatAgent using the MemoryToolkit for
+    function calling to manage memory.
+    """
+
+    # Create a Model
+    model = ModelFactory.create(
+        model_platform=ModelPlatformType.DEFAULT,
+        model_type=ModelType.DEFAULT,
+    )
+
+    # Create a ChatAgent
+    agent = ChatAgent(
+        system_message="""You are an assistant that can manage
+        conversation memory using tools.""",
+        model=model,
+    )
+
+    # Add MemoryToolkit to the Agent
+    memory_toolkit = MemoryToolkit(agent=agent)
+    for tool in memory_toolkit.get_tools():
+        agent.add_tool(tool)
+
+    # Have a conversation to populate memory
+    print("\n--- Starting a Conversation ---")
+    user_msg_1 = "Tell me about the moon."
+    print(f"[User] {user_msg_1}")
+    response_1 = agent.step(user_msg_1)
+    print(f"[Agent] {response_1.msgs[0].content}")
+
+    # Save the memory to a file via function calling
+    print("\n--- Saving Memory ---")
+    save_msg = "Please save the current memory to 'conversation_memory.json'."
+    response_save = agent.step(save_msg)
+   
+... (truncated)
+
+
+[Message 23]
+Role: assistant
+
+[Message 24]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import json
+from typing import TYPE_CHECKING, Optional
+
+from camel.memories import (
+    ChatHistoryMemory,
+    MemoryRecord,
+    ScoreBasedContextCreator,
+)
+from camel.toolkits.base import BaseToolkit
+from camel.toolkits.function_tool import FunctionTool
+
+if TYPE_CHECKING:
+    from camel.agents import ChatAgent
+
+
+class MemoryToolkit(BaseToolkit):
+    r"""A toolkit that provides methods for saving, loading, and clearing a
+    ChatAgent's memory.
+    These methods are exposed as FunctionTool objects for
+    function calling. Internally, it calls:
+      - agent.save_memory(path)
+      - agent.load_memory(new_memory_obj)
+      - agent.load_memory_from_path(path)
+      - agent.clear_memory()
+
+    Args:
+        agent (ChatAgent): The chat agent whose memory will be managed.
+        timeout (Optional[float], optional): Maximum execution time allowed for
+            toolkit operations in seconds. If None, no timeout is applied.
+            (default: :obj:`None`)
+    """
+
+    def __init__(
+        self,
+        agent: 'ChatAgent',
+        timeout: Optional[float] = None,
+    ):
+        super().__init__(timeout=timeout)
+        self.agent = agent
+
+    def save(self, path: str) -> str:
+        r"""Saves the agent's current memory to a JSON file.
+
+        Args:
+            path (str): The
+... (truncated)
+
+
+[Message 25]
+Role: assistant
+
+[Message 26]
+Role: tool
+Content: Found 1 file(s) matching '**/agent_memory_example.py':
+examples/memories/agent_memory_example.py
+
+[Message 27]
+Role: assistant
+
+[Message 28]
+Role: tool
+Content: Found 1 file(s) matching '**/memory_toolkit_example.py':
+Command executed successfully (no output).
+
+[Message 29]
+Role: assistant
+
+[Message 30]
+Role: tool
+Content: Found 1 file(s) matching '**/memory_toolkit.py':
+examples/toolkits/memory_toolkit.py
+
+[Message 31]
+Role: assistant
+Content: ## Examples (MOST IMPORTANT)
+- examples/memories/agent_memory_example.py
+  - Shows: Creating a ChatAgent with ChatHistoryMemory
+  - Demonstrates saving/loading memory to/from JSON file and loading memory from another agent
+  - Uses ScoreBasedContextCreator for memory context
+  - Uses ModelFactory to create model and ChatAgent for interaction
+
+- examples/toolkits/memory_toolkit.py
+  - Shows: Using MemoryToolkit with ChatAgent to manage memory via function calling tools
+  - Demonstrates saving, loading, clearing memory with tool calls in conversation
+
+## Implementation
+- camel/memories/agent_memories.py
+  - Classes: ChatHistoryMemory, VectorDBMemory, LongtermAgentMemory
+  - Implements memory management classes for agents with context creators and storage backends
+  - Supports retrieving, writing, clearing, and removing memory records
+
+- camel/memories/__init__.py
+  - Exports: ChatHistoryMemory, LongtermAgentMemory, VectorDBMemory, AgentMemory, BaseContextCreator, ScoreBasedContextCreator, MemoryRecord, ContextRecord
+
+- camel/toolkits/memory_toolkit.py
+  - Class: MemoryToolkit
+  - Provides function tools for saving, loading, clearing ChatAgent memory
+  - Uses ChatAgent methods: save_memory, load_memory, load_memory_from_path, clear_memory
+
+## Configs/Types
+- camel/types/enums.py (not explicitly read but relevant for ModelPlatformType, ModelType used in examples)
+
+## Tests
+- test/memories/test_chat_history_memory.py
+- test/memories/test_vector_db_memory.py
+- test/toolkits/test_memory_toolkit.py
+
+These files collectively provide the necessary components and usage examples to create an agent with memory tools, manage memory, and run query examples. The example scripts in `examples/memories/agent_memory_example.py` and `examples/toolkits/memory_toolkit.py` are especially relevant for creating your task script at `task-script/single_agent/10_memory_toolkit_agent.py`.
+
+================================================================================
+
+CODE AGENT CHAT HISTORY
+================================================================================
+
+[Message 1]
+Role: system
+Content: You are a Code Agent that writes and executes Python scripts.
+
+## Tools
+
+You have access to terminal tools for:
+- `shell_exec`: Execute shell commands
+- `shell_write_content_to_file`: Write content to a file
+- `read_file_tool`: Read file contents
+
+## Workflow (MUST FOLLOW IN ORDER)
+
+### Step 1: READ BEFORE WRITE (MANDATORY)
+**You MUST read files that are relevant to what you're going to write before writing any code.**
+- Read example files or implementation files that relate to your task
+- You don't need to read all files - only the ones relevant to your task
+- **DO NOT write code based only on the summary** - the summary may be incomplete
+
+### Step 2: Write the script
+- Copy import statements and API patterns EXACTLY from the files you read
+- Use `shell_write_content_to_file` to save the script
+
+### Step 3: Execute the script
+- Use `shell_exec` with `python <script_path>`
+
+### Step 4: Debug if needed
+- If errors occur, read more files to understand the correct API, then fix and re-run
+
+## CRITICAL: Strict Instruction Following
+
+**Use EXACTLY what the task specifies. Do NOT substitute "similar" or "better" alternatives.**
+
+### Model Selection
+- If task does NOT specify a model -> Use `ModelPlatformType.DEFAULT` and `ModelType.DEFAULT`
+- Task says "Llama-3.1-8B-Instruct" -> Use `ModelType.LLAMA_3_1_8B` EXACTLY
+- Do NOT use LLAMA_3_2_3B as "closest alternative"
+- Do NOT guess enum names - verify from enums.py or examples
+- ModelPlatformType and ModelType MUST match according to enums.py (e.g., MODELSCOPE models use MODELSCOPE platform, QWEN models use QWEN platform)
+
+### Tool Selection
+- Task says "brave search" -> Use `search_toolkit.search_brave` EXACTLY
+- Do NOT use `get_tools()` which returns ALL tools
+- Do NOT substitute with other search engines
+
+### URL Handling
+- If task provides a URL (e.g., "https://mcpservers.org/servers/devin/deepwiki"):
+  - Prioritize DIRECT HTTP access using `requests` library
+  - Create a simple FunctionTool that calls the URL
+  - Do NOT assume it requires complex registry (ACI, etc.)
+  - Example:
+    ```python
+    def query_server(query: str) -> str:
+        response = requests.post(url, json={"query": query})
+        return response.text
+    tool = FunctionTool(func=query_server)
+    ```
+
+## Important Rules
+
+1. **Use the provided file paths** - The explore agent has found relevant examples and implementations
+2. **Follow existing patterns** - Look at examples to understand how to use the APIs
+3. **Handle errors gracefully** - If execution fails, analyze the error and fix it
+4. **Environment is ready** - All API keys and dependencies are configured
+5. **Save to correct location** - Follow the task's specified output path
+6. **Use EXACT values** - Copy enum values, method names exactly from explored files
+
+## Script Writing Tips
+
+- Import from camel package: `from camel.agents import ChatAgent`
+- Use ModelFactory for models: `ModelFactory.create(model_platform=..., model_type=...)`
+- If task does NOT specify a model, use DEFAULT: `ModelPlatformType.DEFAULT, ModelType.DEFAULT`
+- Copy exact enum values from enums.py (e.g., `ModelType.LLAMA_3_1_8B`)
+- Use specific tool methods, not get_tools() (e.g., `toolkit.search_brave`)
+
+## Debugging Tips
+
+- If you see import errors, check the correct module path in __init__.py
+- If you see AttributeError for enum, verify the exact enum name in enums.py
+- If you see API errors, it's likely a script issue, not environment
+- Read more files if you need to understand the API better
+- **If a file does not exist, do NOT retry the same path** - search for the correct path instead (e.g., use glob_search or grep)
+
+
+[Message 2]
+Role: user
+Content: **Task**: create an agent with memory tools to manage memory and run query examples. Save the script to task-script/single_agent/10_memory_toolkit_agent.py
+
+**Relevant files found by exploration**:
+## Examples (MOST IMPORTANT)
+- examples/memories/agent_memory_example.py
+  - Shows: Creating a ChatAgent with ChatHistoryMemory
+  - Demonstrates saving/loading memory to/from JSON file and loading memory from another agent
+  - Uses ScoreBasedContextCreator for memory context
+  - Uses ModelFactory to create model and ChatAgent for interaction
+
+- examples/toolkits/memory_toolkit.py
+  - Shows: Using MemoryToolkit with ChatAgent to manage memory via function calling tools
+  - Demonstrates saving, loading, clearing memory with tool calls in conversation
+
+## Implementation
+- camel/memories/agent_memories.py
+  - Classes: ChatHistoryMemory, VectorDBMemory, LongtermAgentMemory
+  - Implements memory management classes for agents with context creators and storage backends
+  - Supports retrieving, writing, clearing, and removing memory records
+
+- camel/memories/__init__.py
+  - Exports: ChatHistoryMemory, LongtermAgentMemory, VectorDBMemory, AgentMemory, BaseContextCreator, ScoreBasedContextCreator, MemoryRecord, ContextRecord
+
+- camel/toolkits/memory_toolkit.py
+  - Class: MemoryToolkit
+  - Provides function tools for saving, loading, clearing ChatAgent memory
+  - Uses ChatAgent methods: save_memory, load_memory, load_memory_from_path, clear_memory
+
+## Configs/Types
+- camel/types/enums.py (not explicitly read but relevant for ModelPlatformType, ModelType used in examples)
+
+## Tests
+- test/memories/test_chat_history_memory.py
+- test/memories/test_vector_db_memory.py
+- test/toolkits/test_memory_toolkit.py
+
+These files collectively provide the necessary components and usage examples to create an agent with memory tools, manage memory, and run query examples. The example scripts in `examples/memories/agent_memory_example.py` and `examples/toolkits/memory_toolkit.py` are especially relevant for creating your task script at `task-script/single_agent/10_memory_toolkit_agent.py`.
+
+**Available files** (use `read_file_tool` to read):
+- examples/memories/agent_memory_example.py
+- examples/toolkits/memory_toolkit.py
+- camel/memories/agent_memories.py
+- camel/memories/__init__.py
+- camel/toolkits/memory_toolkit.py
+
+**IMPORTANT**: Before writing code, you MUST read the files that are relevant to your task.
+You don't need to read all files - only the ones related to what you're going to write.
+The summary may be incomplete - verify API usage by reading actual files.
+
+**Instructions**:
+1. **FIRST**: Read the files that are relevant to what you're going to write
+2. Write the script using `shell_write_content_to_file`
+3. Execute with `shell_exec python <script_path>`
+4. If errors occur, read more files to understand the correct API, then fix and re-run
+
+**WARNINGS**:
+- DO NOT write code based only on the summary - read actual files first
+- Copy code patterns EXACTLY from the files you read
+- If task does NOT specify a model, use DEFAULT: ModelPlatformType.DEFAULT, ModelType.DEFAULT
+
+Note: The environment and APIs are correctly configured. If you encounter errors,
+it's likely a script issue that needs fixing.
+
+
+[Message 3]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_fqDNz1hmHh5TGUI4DgIwr9no",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"examples/toolkits/memory_toolkit.py\"}"
+    }
+  }
+]
+
+[Message 4]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+from camel.agents import ChatAgent
+from camel.models import ModelFactory
+from camel.toolkits.memory_toolkit import MemoryToolkit
+from camel.types import ModelPlatformType, ModelType
+
+
+def run_memory_toolkit_example():
+    """
+    Demonstrates a ChatAgent using the MemoryToolkit for
+    function calling to manage memory.
+    """
+
+    # Create a Model
+    model = ModelFactory.create(
+        model_platform=ModelPlatformType.DEFAULT,
+        model_type=ModelType.DEFAULT,
+    )
+
+    # Create a ChatAgent
+    agent = ChatAgent(
+        system_message="""You are an assistant that can manage
+        conversation memory using tools.""",
+        model=model,
+    )
+
+    # Add MemoryToolkit to the Agent
+    memory_toolkit = MemoryToolkit(agent=agent)
+    for tool in memory_toolkit.get_tools():
+        agent.add_tool(tool)
+
+    # Have a conversation to populate memory
+    print("\n--- Starting a Conversation ---")
+    user_msg_1 = "Tell me about the moon."
+    print(f"[User] {user_msg_1}")
+    response_1 = agent.step(user_msg_1)
+    print(f"[Agent] {response_1.msgs[0].content}")
+
+    # Save the memory to a file via function calling
+    print("\n--- Saving Memory ---")
+    save_msg = "Please save the current memory to 'conversation_memory.json'."
+    response_save = agent.step(save_msg)
+    print(f"[Agent] {response_save.msgs[0].content}")
+    print(f"[Tool Call Info] {response_save.info['tool_calls']}")
+
+    # Clear the memory via function calling
+    print("\n--- Clearing Memory ---")
+    clear_msg = "Please clear the memory."
+    response_clear = agent.step(clear_msg)
+    print(f"[Agent] {response_clear.msgs[0].content}")
+    print(f"[Tool Call Info] {response_clear.info['tool_calls']}")
+
+    # Verify memory is cleared
+    print("\n--- Checking Memory After Clear ---")
+    check_msg = "What do you remember about the moon?"
+    response_check = agent.step(check_msg)
+    print(f"[Agent] {response_check.msgs[0].content}")
+
+    # Load memory from the saved file via function calling
+    print("\n--- Loading Memory from File ---")
+    load_msg = "Please load the memory from 'conversation_memory.json'."
+    response_load = agent.step(load_msg)
+    print(f"[Agent] {response_load.msgs[0].content}")
+    print(f"[Tool Call Info] {response_load.info['tool_calls']}")
+
+    # Verify memory is restored
+    print("\n--- Checking Memory After Load ---")
+    check_msg = "What do you remember about the moon?"
+    response_restored = agent.step(check_msg)
+    print(f"[Agent] {response_restored.msgs[0].content}")
+
+
+if __name__ == "__main__":
+    run_memory_toolkit_example()
+
+[Message 5]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_IgP6ApUPb9UDVpD3oUCJM5NA",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"examples/memories/agent_memory_example.py\"}"
+    }
+  }
+]
+
+[Message 6]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+from pathlib import Path
+
+from camel.agents import ChatAgent
+from camel.memories import ChatHistoryMemory
+from camel.memories.context_creators.score_based import (
+    ScoreBasedContextCreator,
+)
+from camel.messages import BaseMessage
+from camel.models.model_factory import ModelFactory
+from camel.types import ModelPlatformType, ModelType
+from camel.types.enums import OpenAIBackendRole
+from camel.utils import OpenAITokenCounter
+
+context_creator = ScoreBasedContextCreator(
+    token_counter=OpenAITokenCounter(ModelType.GPT_4O_MINI),
+    token_limit=1024,
+)
+
+model = ModelFactory.create(
+    model_platform=ModelPlatformType.OPENAI,
+    model_type=ModelType.GPT_4O_MINI,
+)
+
+# 1. Instantiate a ChatAgent with system_message & agent_id
+#    Using ChatHistoryMemory as an example memory store.
+agent = ChatAgent(
+    system_message="You are a helpful assistant",
+    agent_id="001",
+    model=model,
+)
+
+# 2. Perform steps so that some MemoryRecords accumulate
+#    - We'll just send a message and read the response to populate memory
+user_input_1 = (
+    "Hello, can you remember these instructions?: Banana is a country."
+)
+response_1 = agent.step(user_input_1)
+print(
+    "Assistant response 1:",
+    response_1.msgs[0].content if response_1.msgs else "No response",
+)
+'''
+===============================================================================
+Assistant response 1: Yes, I can remember that instruction. "Banana" is
+designated as a country in this context. How can I assist you further with
+this information?
+===============================================================================
+'''
+
+user_input_2 = "Please store and recall this next time: CAMEL lives in Banana."
+response_2 = agent.step(user_input_2)
+print(
+    "Assistant response 2:",
+    response_2.msgs[0].content if response_2.msgs else "No response",
+)
+'''
+===============================================================================
+Assistant response 2: Got it! I will remember that CAMEL lives in Banana. How
+can I assist you further?
+===============================================================================
+'''
+
+# 3. Save the agent's memory to a JSON file
+save_path = Path("./chat_agent_memory.json")
+agent.save_memory(save_path)
+print(f"Agent memory saved to {save_path}.")
+'''
+===============================================================================
+Agent memory saved to chat_agent_memory.json.
+===============================================================================
+'''
+
+# 4. Create a separate agent that loads memory from the file
+#    We'll pass no explicit memory, as the loaded data will be used
+new_agent = ChatAgent(
+    system_message="You are a helpful assistant",
+    agent_id="001",
+    model=model,
+)
+
+# Load the memory from our file
+new_agent.load_memory_from_path(save_path)
+
+# Test that the memory is loaded by requesting a response
+user_input_3 = "What were we talking about?"
+response_3 = new_agent.step(user_input_3)
+print(
+    "New Agent response (after loading memory):",
+    response_3.msgs[0].content if response_3.msgs else "No response",
+)
+'''
+===============================================================================
+New Agent response (after loading memory): We were discussing that "Banana" is
+a country, and you mentioned that CAMEL lives in Banana. How can I assist you
+further with this information?
+===============================================================================
+'''
+
+# 5. Demonstrate loading memory from an existing AgentMemory
+#    Suppose we had another agent with some different or combined memory:
+another_agent = ChatAgent(
+    system_message="Another system message",
+    agent_id="002",
+    memory=ChatHistoryMemory(agent_id="002", context_creator=context_creator),
+)
+
+# Add some record to the second agent's memory
+message = BaseMessage.make_user_message(
+    role_name="User", content="This is memory from a second agent"
+)
+another_agent.update_memory(
+    message, role=OpenAIBackendRole.USER
+)  # role passed for demonstration
+
+# Extract the memory object from the second agent
+second_agent_memory = another_agent.memory
+
+# Now load that memory into new_agent. We override new_agent's memory.
+new_agent.load_memory(second_agent_memory)
+
+# Confirm it's loaded by printing some details:
+print("After loading another
+... (truncated)
+
+
+[Message 7]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_trrtkXjuyD8y8cLysMw33R1T",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_memory_toolkit_agent\", \"command\": \"python task-script/single_agent/10_memory_toolkit_agent.py\", \"block\": true, \"timeout\": 60}"
+    }
+  }
+]
+
+[Message 8]
+Role: tool
+Content: python: can't open file '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/10_memory_toolkit_agent.py': [Errno 2] No such file or directory
+
+[Message 9]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_1agKrC2JTYWMTlcbtj980DvS",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.models import ModelFactory\\nfrom camel.toolkits.memory_toolkit import MemoryToolkit\\nfrom camel.types import ModelPlatformType, ModelType\\n\\n\\ndef run_memory_toolkit_agent():\\n    \\\"\\\"\\\"\\n    Create a ChatAgent with MemoryToolkit tools to manage memory\\n    and run example queries demonstrating memory save, clear, load.\\n    \\\"\\\"\\\"\\n\\n    # Create a Model\\n    model = ModelFactory.create(\\n        model_platform=ModelPlatformType.DEFAULT,\\n        model_type=ModelType.DEFAULT,\\n    )\\n\\n    # Create a ChatAgent\\n    agent = ChatAgent(\\n        system_message=\\\"You are an assistant that can manage conversation memory using tools.\\\",\\n        model=model,\\n    )\\n\\n    # Add MemoryToolkit to the Agent\\n    memory_toolkit = MemoryToolkit(agent=agent)\\n    for tool in memory_toolkit.get_tools():\\n        agent.add_tool(tool)\\n\\n    # Have a conversation to populate memory\\n    print(\\\"\\\\n--- Starting a Conversation ---\\\")\\n    user_msg_1 = \\\"Tell me about the moon.\\\"\\n    print(f\\\"[User] {user_msg_1}\\\")\\n    response_1 = agent.step(user_msg_1)\\n    print(f\\\"[Agent] {response_1.msgs[0].content}\\\")\\n\\n    # Save the memory to a file via function calling\\n    print(\\\"\\\\n--- Saving Memory ---\\\")\\n    save_msg = \\\"Please save the current memory to 'conversation_memory.json'.\\\"\\n    response_save = agent.step(save_msg)\\n    print(f\\\"[Agent] {response_save.msgs[0].content}\\\")\\n    print(f\\\"[Tool Call Info] {response_save.info['tool_calls']}\\\")\\n\\n    # Clear the memory via function calling\\n    print(\\\"\\\\n--- Clearing Memory ---\\\")\\n    clear_msg = \\\"Please clear the memory.\\\"\\n    response_clear = agent.step(clear_msg)\\n    print(f\\\"[Agent] {response_clear.msgs[0].content}\\\")\\n    print(f\\\"[Tool Call Info] {response_clear.info['tool_calls']}\\\")\\n\\n    # Verify memory is cleared\\n    print(\\\"\\\\n--- Checking Memory After Clear ---\\\")\\n    check_msg = \\\"What do you remember about the moon?\\\"\\n    response_check = agent.step(check_msg)\\n    print(f\\\"[Agent] {response_check.msgs[0].content}\\\")\\n\\n    # Load memory from the saved file via function calling\\n    print(\\\"\\\\n--- Loading Memory from File ---\\\")\\n    load_msg = \\\"Please load the memory from 'conversation_memory.json'.\\\"\\n    response_load = agent.step(load_msg)\\n    print(f\\\"[Agent] {response_load.msgs[0].content}\\\")\\n    print(f\\\"[Tool Call Info] {response_load.info['tool_calls']}\\\")\\n\\n    # Verify memory is restored\\n    print(\\\"\\\\n--- Checking Memory After Load ---\\\")\\n    check_msg = \\\"What do you remember about the moon?\\\"\\n    response_restored = agent.step(check_msg)\\n    print(f\\\"[Agent] {response_restored.msgs[0].content}\\\")\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    run_memory_toolkit_agent()\\n\", \"file_path\": \"task-script/single_agent/10_memory_toolkit_agent.py\"}"
+    }
+  }
+]
+
+[Message 10]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/10_memory_toolkit_agent.py'.
+
+[Message 11]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_G7fZOlNashUJFn8m6YefThoW",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_memory_toolkit_agent\", \"command\": \"python task-script/single_agent/10_memory_toolkit_agent.py\", \"block\": true, \"timeout\": 60}"
+    }
+  }
+]
+
+[Message 12]
+Role: tool
+Content: 
+--- Starting a Conversation ---
+[User] Tell me about the moon.
+[Agent] The Moon is Earth's only natural satellite and is the fifth largest moon in the solar system. It is about 1/6th the size of Earth and is located about 384,400 kilometers (238,855 miles) away from our planet. The Moon has a rocky surface covered with dust and debris from impacts. It has no atmosphere, weather, or liquid water.
+
+The Moon goes through different phases as it orbits the Earth, including new moon, crescent, quarter, gibbous, and full moon. These phases result from the changing angles of sunlight hitting the Moon as seen from Earth.
+
+The Moon's gravitational pull creates tides in Earth's oceans. It also stabilizes Earth's axial tilt, which helps maintain a relatively stable climate.
+
+Human exploration of the Moon began with the Apollo missions, with Apollo 11 being the first mission to land humans on the Moon in 1969. Astronauts conducted experiments and brought back lunar samples for study.
+
+The Moon continues to be an important subject of scientific research and interest for future space exploration. If you want more specific information or have any questions, feel free to ask!
+
+--- Saving Memory ---
+[Agent] The current memory has been saved to 'conversation_memory.json'. If you need anything else, just let me know!
+[Tool Call Info] [ToolCallingRecord(tool_name='save', args={'path': 'conversation_memory.json'}, result='Memory saved to conversation_memory.json', tool_call_id='call_qg4Ibi5uQtFWOa7IEQCN3Ui5', images=None)]
+
+--- Clearing Memory ---
+[Agent] I have cleared my memory. How can I assist you today?
+[Tool Call Info] [ToolCallingRecord(tool_name='clear_memory', args={}, result='Memory has been cleared.', tool_call_id='call_RUEsVerAhjMQVLJncPXCyCnX', images=None)]
+
+--- Checking Memory After Clear ---
+[Agent] I currently have no prior memory stored, so I don't remember anything specific about the moon from our previous conversations. However, I can provide information about the moon if you'd like! What would you like to know?
+
+--- Loading Memory from File ---
+[Agent] The memory from 'conversation_memory.json' has been loaded. How can I assist you further with information about the moon or anything else?
+[Tool Call Info] [ToolCallingRecord(tool_name='load_from_path', args={'path': 'conversation_memory.json'}, result='Memory loaded from conversation_memory.json', tool_call_id='call_iUB8SZYsuoPj7UptK5hCwyYA', images=None)]
+
+--- Checking Memory After Load ---
+[Agent] From the loaded memory, I remember that the Moon is Earth's only natural satellite and the fifth largest moon in the solar system. It is about 1/6th the size of Earth with a diameter of approximately 3,474 kilometers (2,159 miles). The Moon orbits Earth at an average distance of about 384,400 kilometers (238,855 miles).
+
+Key points include:
+- The Moon's surface has craters, mountains, and flat plains known as maria formed by ancient volcanic activity.
+- It has no atmosphere, leading to temperature extremes.
+- The Moon influences Earth's tides through its gravitational pull.
+- It goes through phases such as new moon, crescent, quarter, gibbous, and full moon.
+- Human exploration began with NASA's Apollo missions, with Apollo 11 landing humans on the Moon in 1969.
+- The Moon helps stabilize Earth's axial tilt, contributing to climate stability.
+- It has no weather or liquid water and its gravity is about 1/6th that of Earth.
+
+If you want detailed information on any specific aspect, feel free to ask!
+
+[Message 13]
+Role: assistant
+Content: I have created the script as requested at task-script/single_agent/10_memory_toolkit_agent.py. The script creates a ChatAgent with MemoryToolkit tools to manage memory and runs example queries demonstrating memory save, clear, and load operations. The script executed successfully and demonstrated the expected memory management behavior.
+
