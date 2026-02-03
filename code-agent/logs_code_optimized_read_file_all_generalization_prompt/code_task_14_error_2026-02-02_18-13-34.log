@@ -1,0 +1,2590 @@
+Task: task_14
+Status: ERROR
+Start Time: 2026-02-02T18:13:34.907506
+End Time: 2026-02-02T18:20:08.802049
+Total Duration: 393.89 seconds
+  - Explore Phase: 174.79 seconds
+  - Code Phase: 219.11 seconds
+Description: create a workforce with workers using OpenAI, Gemini, and Qwen models to discuss which model performs best. Save the script to task-script/workforce/4_model_comparison_workforce.py
+Code Error: TimeoutError: Step timed out after 180.0s
+================================================================================
+
+EXPLORE PHASE
+================================================================================
+Tool Calls: 28
+----------------------------------------
+
+[1] glob_search
+Args: {
+  "pattern": "**/*model*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 20
+}
+Result: Found 20 file(s) matching '**/*model*.py':
+camel/bots/slack/models.py
+camel/configs/modelscope_config.py
+camel/datagen/source2synth/models.py
+camel/datahubs/models.py
+camel/datasets/models.py
+camel/environments/models.py
+camel/messages/conversion/conversation_models.py
+camel/models/aihubmix_model.py
+camel/models/aiml_model.py
+camel/models/amd_model.py
+camel/models/anthropic_model.py
+camel/models/atlascloud_model.py
+camel/models/aws_bedrock_model.py
+camel/models/azure_openai_model.py
+camel/models...
+
+[2] glob_search
+Args: {
+  "pattern": "**/*example*.py",
+  "path": "examples",
+  "file_type": "file",
+  "max_results": 20
+}
+Result: Found 20 file(s) matching '**/*example*.py':
+examples/datagen/self_improving_cot/self_improving_cot_example.py
+examples/datagen/self_improving_cot/self_improving_cot_example_with_r1.py
+examples/debug/traceroot_example.py
+examples/embeddings/gemini_embedding_example.py
+examples/embeddings/jina_embedding_example.py
+examples/embeddings/openai_compatible_embedding_example.py
+examples/embeddings/together_embedding_example.py
+examples/embeddings/vlm_embedding_example.py
+examples/environments/rlcards_e...
+
+[3] grep_search
+Args: {
+  "pattern": "OpenAI",
+  "path": "camel/models",
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'OpenAI' in *.py files (10 matches):
+sglang_model.py
+model_manager.py
+openai_model.py
+samba_model.py
+ppio_model.py
+litellm_model.py
+crynux_model.py
+aiml_model.py
+nvidia_model.py
+nemotron_model.py
+
+[4] grep_search
+Args: {
+  "pattern": "Gemini",
+  "path": "camel/models",
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'Gemini' in *.py files (3 matches):
+__init__.py
+model_factory.py
+gemini_model.py
+
+[5] grep_search
+Args: {
+  "pattern": "Qwen",
+  "path": "camel/models",
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'Qwen' in *.py files (3 matches):
+__init__.py
+qwen_model.py
+model_factory.py
+
+[6] grep_search
+Args: {
+  "pattern": "workforce",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'workforce' in *.py files (10 matches):
+benchmarks/browsecomp_workforce.py
+toolkits/async_browser_toolkit.py
+toolkits/message_agent_toolkit.py
+debug/eigent.py
+workforce/eigent.py
+workforce/simple_workforce_mcp.py
+workforce/role_playing_with_agents.py
+workforce/workforce_shared_memory_validation.py
+workforce/multi_turn_conversation.py
+workforce/workforce_multitask_with_skip.py
+
+[7] grep_search
+Args: {
+  "pattern": "workforce",
+  "path": "camel/agents",
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'workforce' in *.py files (1 matches):
+Command executed successfully (no output).
+
+[8] grep_search
+Args: {
+  "pattern": "ModelType",
+  "path": "camel/types",
+  "glob_filter": "*.py",
+  "ignore_case": false,
+  "output_mode": "content",
+  "context_lines": 5,
+  "max_results": 10
+}
+Result: Search results for 'ModelType' in *.py files (10 matches):
+__init__.py-10-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+__init__.py-11-# See the License for the specific language governing permissions and
+__init__.py-12-# limitations under the License.
+__init__.py-13-# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+__init__.py-14-from .enums import (
+__init__.py:15:    AudioModelType,
+__init__.py:16:    EmbeddingModelType,
+__init__.py-17...
+
+[9] read_file
+Args: {
+  "file_path": "camel/types/__init__.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[10] read_file
+Args: {
+  "file_path": "camel/types/enums.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[11] glob_search
+Args: {
+  "pattern": "**/*workforce*.py",
+  "path": "examples",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 6 file(s) matching '**/*workforce*.py':
+examples/benchmarks/browsecomp_workforce.py
+examples/workforce/simple_workforce_mcp.py
+examples/workforce/workforce_callbacks_example.py
+examples/workforce/workforce_multitask_with_skip.py
+examples/workforce/workforce_shared_memory_validation.py
+examples/workforce/workforce_workflow_memory_example.py
+
+[12] glob_search
+Args: {
+  "pattern": "**/*workforce*.py",
+  "path": "workforce",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 1 file(s) matching '**/*workforce*.py':
+Command executed successfully (no output).
+
+[13] grep_search
+Args: {
+  "pattern": "OpenAI",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'OpenAI' in *.py files (10 matches):
+dataset/few_shot_generator.py
+dataset/self_instruct_generator.py
+schema_outputs/openai_converter_example.py
+toolkits/human_toolkit.py
+toolkits/sql_toolkit.py
+toolkits/excel_toolkit.py
+agents/create_chat_agent.py
+vision/image_crafting.py
+vision/multi_turn_image_refining.py
+vision/multi_condition_image_crafting.py
+
+[14] grep_search
+Args: {
+  "pattern": "Gemini",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'Gemini' in *.py files (8 matches):
+models/gemini_model_example.py
+embeddings/gemini_embedding_example.py
+models/cometapi_model_example.py
+usecases/aci_mcp/camel_mcp_aci.py
+usecases/aci_mcp/aci_toolkit_camel.py
+models/role_playing_with_gemini.py
+usecases/cloudfare_mcp_camel/run_cloudflare_mcp_with_camel_ai.py
+usecases/cloudfare_mcp_camel/app.py
+
+[15] grep_search
+Args: {
+  "pattern": "Qwen",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'Qwen' in *.py files (10 matches):
+models/crynux_model_example.py
+models/sglang_model_example.py
+models/modelscope_model_example.py
+agents/agents_share_modelmanager.py
+models/qwen_model_example.py
+models/cometapi_model_example.py
+models/qwq_model_example.py
+models/openai_compatibility_model_examples/qwen.py
+tasks/multi_modal_task_generation.py
+structured_response/structure_response_prompt_engineering.py
+
+[16] read_file
+Args: {
+  "file_path": "examples/workforce/simple_workforce_mcp.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[17] read_file
+Args: {
+  "file_path": "examples/models/openai_model_example.py"
+}
+Result: Error: File 'examples/models/openai_model_example.py' does not exist.
+
+[18] glob_search
+Args: {
+  "pattern": "**/*openai*.py",
+  "path": "examples/models",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 4 file(s) matching '**/*openai*.py':
+examples/models/azure_openai_model_example.py
+examples/models/openai_audio_models_example.py
+examples/models/openai_example.py
+examples/models/openai_structured_output_example.py
+
+[19] read_file
+Args: {
+  "file_path": "examples/models/openai_example.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[20] read_file
+Args: {
+  "file_path": "examples/models/gemini_model_example.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[21] read_file
+Args: {
+  "file_path": "examples/models/qwen_model_example.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[22] glob_search
+Args: {
+  "pattern": "**/__init__.py",
+  "path": "camel/models",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 2 file(s) matching '**/__init__.py':
+camel/models/__init__.py
+camel/models/reward/__init__.py
+
+[23] read_file
+Args: {
+  "file_path": "camel/models/__init__.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[24] read_file
+Args: {
+  "file_path": "camel/societies/workforce.py"
+}
+Result: Error: File 'camel/societies/workforce.py' does not exist.
+
+[25] glob_search
+Args: {
+  "pattern": "**/workforce.py",
+  "path": "camel/societies",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 1 file(s) matching '**/workforce.py':
+camel/societies/workforce/workforce.py
+
+[26] read_file
+Args: {
+  "file_path": "camel/societies/workforce/workforce.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[27] glob_search
+Args: {
+  "pattern": "**/*worker*.py",
+  "path": "camel/societies/workforce",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 3 file(s) matching '**/*worker*.py':
+camel/societies/workforce/role_playing_worker.py
+camel/societies/workforce/single_agent_worker.py
+camel/societies/workforce/worker.py
+
+[28] read_file
+Args: {
+  "file_path": "camel/societies/workforce/single_agent_worker.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+----------------------------------------
+Output:
+## Examples (MOST IMPORTANT)
+- examples/workforce/simple_workforce_mcp.py
+  - Shows: Creating a simple workforce with a single ChatAgent worker
+  - Usage: Workforce class from camel.societies.workforce.workforce
+
+- examples/models/openai_example.py
+  - Shows: Creating and using OpenAI model with ChatAgent
+  - Usage: ModelFactory.create with ModelPlatformType.OPENAI and ModelType.GPT_4O_MINI
+
+- examples/models/gemini_model_example.py
+  - Shows: Creating and using Gemini model with ChatAgent
+  - Usage: ModelFactory.create with ModelPlatformType.GEMINI and ModelType.GEMINI_3_PRO
+
+- examples/models/qwen_model_example.py
+  - Shows: Creating and using Qwen model with ChatAgent
+  - Usage: ModelFactory.create with ModelPlatformType.QWEN and ModelType.QWEN_3_CODER_PLUS
+
+## Implementation
+- camel/societies/workforce/workforce.py
+  - Class: Workforce
+  - Description: Core class managing multiple worker nodes (agents) cooperating to solve tasks, with task assignment, decomposition, and recovery strategies.
+
+- camel/societies/workforce/single_agent_worker.py
+  - Class: SingleAgentWorker (inherits Worker)
+  - Description: Worker node consisting of a single ChatAgent, supports agent pooling for efficiency, structured output handling, and workflow memory management.
+
+- camel/models/__init__.py
+  - Exports: GeminiModel, OpenAIModel, QwenModel, ModelFactory, and many other model classes.
+
+## Types/Enums
+- camel/types/enums.py
+  - Enum: ModelType (includes OpenAI, Gemini, Qwen model types)
+  - Enum: ModelPlatformType (includes OPENAI, GEMINI, QWEN)
+
+# Summary
+To create a workforce with workers using OpenAI, Gemini, and Qwen models to discuss which model performs best, you can:
+- Use the Workforce class from camel.societies.workforce.workforce
+- Use SingleAgentWorker from camel.societies.workforce.single_agent_worker to create workers with ChatAgent instances
+- Create ChatAgent instances with models created via ModelFactory.create() using ModelPlatformType and ModelType enums for OpenAI, Gemini, and Qwen
+- Refer to examples/models/openai_example.py, gemini_model_example.py, and qwen_model_example.py for model usage patterns
+- Refer to examples/workforce/simple_workforce_mcp.py for workforce creation and running example
+
+These files provide the core classes, usage examples, and enums needed to implement the requested script.
+================================================================================
+
+CODE PHASE
+================================================================================
+Tool Calls: 0
+----------------------------------------
+
+----------------------------------------
+Output:
+[ERROR] TimeoutError: Step timed out after 180.0s
+================================================================================
+
+EXPLORE AGENT CHAT HISTORY
+================================================================================
+
+[Message 1]
+Role: system
+Content: You are a code exploration specialist. Find relevant files for a task.
+
+## Tools
+
+1. **glob_search(pattern, path?, max_results?)** - Find files by name pattern
+2. **grep_search(pattern, path?, glob_filter?, ignore_case?, output_mode?)** - Search file contents
+3. **read_file(file_path)** - Read file contents (auto-limits to 2000 lines for large files)
+4. **list_directory(path?)** - List directory contents
+5. **find_definition(name, definition_type?)** - Find class/function definitions
+6. **find_imports(module_name, ignore_case?)** - Find files that import a module
+
+## Search Techniques (CRITICAL)
+
+### Technique 1: Search whole repo first, NEVER restrict path initially
+```python
+# WRONG - misses examples/models/llama_model_example.py
+glob_search("**/*llama*.py", path="camel/models")
+
+# CORRECT - searches entire repo
+glob_search("**/*llama*.py")
+```
+
+### Technique 2: Use find_imports to find REAL usage
+```python
+find_imports("WeatherToolkit")
+find_imports("LlamaModel")
+```
+
+### Technique 3: Read __init__.py to understand module exports
+```python
+read_file("camel/toolkits/__init__.py")
+read_file("camel/models/__init__.py")
+```
+
+### Technique 4: Parallel search for ALL keywords
+For task "weather agent with Llama", call ALL in parallel:
+```python
+glob_search("**/*llama*.py")
+glob_search("**/*weather*.py")
+find_imports("llama")
+find_imports("WeatherToolkit")
+```
+
+### Technique 5: Tests and examples contain best usage patterns
+```python
+glob_search("**/test_*llama*.py")
+glob_search("**/*example*.py")
+```
+
+### Technique 6: Find EXACT enum values for models/tools
+When task specifies a model like "Llama-3.1-8B-Instruct", search for the exact ModelType enum:
+```python
+# Search with partial match (enum names use underscores, not hyphens)
+grep_search("LLAMA_3_1.*8B", path="camel/types/enums.py")
+grep_search("LLAMA_3_1", path="camel/types/enums.py")
+```
+CAMEL ModelType naming convention:
+- No "_INSTRUCT" suffix usually (e.g., LLAMA_3_1_8B not LLAMA_3_1_8B_INSTRUCT)
+- Use underscor
+... (truncated)
+
+
+[Message 2]
+Role: user
+Content: Find relevant files for this task:
+
+**Task**: create a workforce with workers using OpenAI, Gemini, and Qwen models to discuss which model performs best. Save the script to task-script/workforce/4_model_comparison_workforce.py
+
+**Repository Context**:
+
+## CAMEL Repository Structure
+
+### Core Modules
+- `camel/agents/` - Agent implementations (ChatAgent is the base)
+- `camel/models/` - LLM provider integrations (50+)
+- `camel/memories/` - Memory systems (ChatHistoryMemory, LongtermAgentMemory, VectorDBMemory)
+- `camel/configs/` - Model configuration classes
+- `camel/toolkits/` - Tool integrations (50+)
+- `camel/types/` - Enums (ModelPlatformType, ModelType, RoleType)
+
+### Other Directories
+- `examples/` - Usage examples
+- `test/` - Test files
+- `docs/` - Documentation
+
+
+Search for implementation files, examples, tests, and documentation.
+Return the most relevant file paths with brief explanations.
+Focus on finding:
+1. Example scripts that show similar usage patterns
+2. Implementation files for the required components
+3. Configuration/type definitions
+
+
+[Message 3]
+Role: assistant
+
+[Message 4]
+Role: tool
+Content: Found 20 file(s) matching '**/*model*.py':
+camel/bots/slack/models.py
+camel/configs/modelscope_config.py
+camel/datagen/source2synth/models.py
+camel/datahubs/models.py
+camel/datasets/models.py
+camel/environments/models.py
+camel/messages/conversion/conversation_models.py
+camel/models/aihubmix_model.py
+camel/models/aiml_model.py
+camel/models/amd_model.py
+camel/models/anthropic_model.py
+camel/models/atlascloud_model.py
+camel/models/aws_bedrock_model.py
+camel/models/azure_openai_model.py
+camel/models/base_audio_model.py
+camel/models/base_model.py
+camel/models/cerebras_model.py
+camel/models/cohere_model.py
+camel/models/cometapi_model.py
+camel/models/crynux_model.py
+
+[Message 5]
+Role: assistant
+
+[Message 6]
+Role: tool
+Content: Found 20 file(s) matching '**/*example*.py':
+examples/datagen/self_improving_cot/self_improving_cot_example.py
+examples/datagen/self_improving_cot/self_improving_cot_example_with_r1.py
+examples/debug/traceroot_example.py
+examples/embeddings/gemini_embedding_example.py
+examples/embeddings/jina_embedding_example.py
+examples/embeddings/openai_compatible_embedding_example.py
+examples/embeddings/together_embedding_example.py
+examples/embeddings/vlm_embedding_example.py
+examples/environments/rlcards_example.py
+examples/extractors/python_strategies_example.py
+examples/interpreters/ipython_interpreter_example.py
+examples/interpreters/microsandbox_interpreter_example.py
+examples/knowledge_graph/knowledge_graph_agent_example.py
+examples/knowledge_graph/neo4j_example.py
+examples/loaders/apify_example.py
+examples/loaders/chunkr_example.py
+examples/loaders/crawl4ai_example.py
+examples/loaders/firecrawl_example.py
+examples/loaders/jina_url_reader_example.py
+examples/loaders/markitdown_example.py
+
+[Message 7]
+Role: assistant
+
+[Message 8]
+Role: tool
+Content: Search results for 'OpenAI' in *.py files (10 matches):
+sglang_model.py
+model_manager.py
+openai_model.py
+samba_model.py
+ppio_model.py
+litellm_model.py
+crynux_model.py
+aiml_model.py
+nvidia_model.py
+nemotron_model.py
+
+[Message 9]
+Role: assistant
+
+[Message 10]
+Role: tool
+Content: Search results for 'Gemini' in *.py files (3 matches):
+__init__.py
+model_factory.py
+gemini_model.py
+
+[Message 11]
+Role: assistant
+
+[Message 12]
+Role: tool
+Content: Search results for 'Qwen' in *.py files (3 matches):
+__init__.py
+qwen_model.py
+model_factory.py
+
+[Message 13]
+Role: assistant
+
+[Message 14]
+Role: tool
+Content: Search results for 'workforce' in *.py files (10 matches):
+benchmarks/browsecomp_workforce.py
+toolkits/async_browser_toolkit.py
+toolkits/message_agent_toolkit.py
+debug/eigent.py
+workforce/eigent.py
+workforce/simple_workforce_mcp.py
+workforce/role_playing_with_agents.py
+workforce/workforce_shared_memory_validation.py
+workforce/multi_turn_conversation.py
+workforce/workforce_multitask_with_skip.py
+
+[Message 15]
+Role: assistant
+
+[Message 16]
+Role: tool
+Content: Search results for 'workforce' in *.py files (1 matches):
+Command executed successfully (no output).
+
+[Message 17]
+Role: assistant
+
+[Message 18]
+Role: tool
+Content: Search results for 'ModelType' in *.py files (10 matches):
+__init__.py-10-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+__init__.py-11-# See the License for the specific language governing permissions and
+__init__.py-12-# limitations under the License.
+__init__.py-13-# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+__init__.py-14-from .enums import (
+__init__.py:15:    AudioModelType,
+__init__.py:16:    EmbeddingModelType,
+__init__.py-17-    GeminiEmbeddingTaskType,
+__init__.py-18-    HuggingFaceRepoType,
+__init__.py-19-    ModelPlatformType,
+
+[Message 19]
+Role: assistant
+
+[Message 20]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from .enums import (
+    AudioModelType,
+    EmbeddingModelType,
+    GeminiEmbeddingTaskType,
+    HuggingFaceRepoType,
+    ModelPlatformType,
+    ModelType,
+    OpenAIBackendRole,
+    OpenAIImageType,
+    OpenAIVisionDetailType,
+    OpenAPIName,
+    RoleType,
+    StorageType,
+    TaskType,
+    TerminationMode,
+    VectorDistance,
+    VoiceType,
+)
+from .mcp_registries import (
+    ACIRegistryConfig,
+    BaseMCPRegistryConfig,
+    MCPRegistryType,
+    SmitheryRegistryConfig,
+)
+from .openai_types import (
+    NOT_GIVEN,
+    ChatCompletion,
+    ChatCompletionAssistantMessageParam,
+    ChatCompletionChunk,
+    ChatCompletionMessage,
+    ChatCompletionMessageFunctionToolCall,
+    ChatCompletionMessageParam,
+    ChatCompletionSystemMessageParam,
+    ChatCompletionToolMessageParam,
+    ChatCompletionUserMessageParam,
+    Choice,
+    CompletionUsage,
+    NotGiven,
+    ParsedChatCompletion,
+)
+from .unified_model_type import UnifiedModelType
+
+__all__ = [
+    'RoleType',
+    'ModelType',
+    'TaskType',
+    'TerminationMode',
+    'OpenAIBackendRole',
+    'EmbeddingModelType',
+    'VectorDistance',
+    'StorageType',
+    'Choice',
+    'ChatCompletion',
+    'ChatCompletionChunk',
+    'ChatCompletionMessage',
+    'ChatCompletionMessageParam',
+    'ChatCompletionSystemMessageParam',
+    'ChatC
+... (truncated)
+
+
+[Message 21]
+Role: assistant
+
+[Message 22]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+from enum import Enum, EnumMeta
+from typing import Union, cast
+
+from camel.logger import get_logger
+from camel.types.unified_model_type import UnifiedModelType
+
+logger = get_logger(__name__)
+
+
+class RoleType(Enum):
+    ASSISTANT = "assistant"
+    USER = "user"
+    SYSTEM = "system"
+    CRITIC = "critic"
+    EMBODIMENT = "embodiment"
+    DEFAULT = "default"
+
+
+class ModelType(UnifiedModelType, Enum):
+    DEFAULT = os.getenv("DEFAULT_MODEL_TYPE", "gpt-4.1-mini-2025-04-14")
+
+    GPT_3_5_TURBO = "gpt-3.5-turbo"
+    GPT_4 = "gpt-4"
+    GPT_4_TURBO = "gpt-4-turbo"
+    GPT_4O = "gpt-4o"
+    GPT_4O_MINI = "gpt-4o-mini"
+    GPT_4_5_PREVIEW = "gpt-4.5-preview"
+    O1 = "o1"
+    O1_PREVIEW = "o1-preview"
+    O1_MINI = "o1-mini"
+    O3_MINI = "o3-mini"
+    GPT_4_1 = "gpt-4.1-2025-04-14"
+    GPT_4_1_MINI = "gpt-4.1-mini-2025-04-14"
+    GPT_4_1_NANO = "gpt-4.1-nano-2025-04-14"
+    O4_MINI = "o4-mini"
+    O3 = "o3"
+    O3_PRO = "o3-pro"
+    GPT_5_1 = "gpt-5.1"
+    GPT_5_2 = ("gpt-5.2",)
+    GPT_5 = "gpt-5"
+    GPT_5_MINI = "gpt-5-mini"
+    GPT_5_NANO = "gpt-5-nano"
+
+    AWS_CLAUDE_3_7_SONNET = "anthropic.claude-3-7-sonnet-20250219-v1:0"
+    AWS_CLAUDE_3_5_SONNET = "anthropic.claude-3-5-sonnet-20241022-v2:0"
+    AWS_CLAUDE_3_HAIKU = "anthropic.claude-3-haiku-20240307-v1:0"
+    AWS_CLA
+... (truncated)
+
+
+[Message 23]
+Role: assistant
+
+[Message 24]
+Role: tool
+Content: Found 6 file(s) matching '**/*workforce*.py':
+examples/benchmarks/browsecomp_workforce.py
+examples/workforce/simple_workforce_mcp.py
+examples/workforce/workforce_callbacks_example.py
+examples/workforce/workforce_multitask_with_skip.py
+examples/workforce/workforce_shared_memory_validation.py
+examples/workforce/workforce_workflow_memory_example.py
+
+[Message 25]
+Role: assistant
+
+[Message 26]
+Role: tool
+Content: Found 1 file(s) matching '**/*workforce*.py':
+Command executed successfully (no output).
+
+[Message 27]
+Role: assistant
+
+[Message 28]
+Role: tool
+Content: Search results for 'OpenAI' in *.py files (10 matches):
+dataset/few_shot_generator.py
+dataset/self_instruct_generator.py
+schema_outputs/openai_converter_example.py
+toolkits/human_toolkit.py
+toolkits/sql_toolkit.py
+toolkits/excel_toolkit.py
+agents/create_chat_agent.py
+vision/image_crafting.py
+vision/multi_turn_image_refining.py
+vision/multi_condition_image_crafting.py
+
+[Message 29]
+Role: assistant
+
+[Message 30]
+Role: tool
+Content: Search results for 'Gemini' in *.py files (8 matches):
+models/gemini_model_example.py
+embeddings/gemini_embedding_example.py
+models/cometapi_model_example.py
+usecases/aci_mcp/camel_mcp_aci.py
+usecases/aci_mcp/aci_toolkit_camel.py
+models/role_playing_with_gemini.py
+usecases/cloudfare_mcp_camel/run_cloudflare_mcp_with_camel_ai.py
+usecases/cloudfare_mcp_camel/app.py
+
+[Message 31]
+Role: assistant
+
+[Message 32]
+Role: tool
+Content: Search results for 'Qwen' in *.py files (10 matches):
+models/crynux_model_example.py
+models/sglang_model_example.py
+models/modelscope_model_example.py
+agents/agents_share_modelmanager.py
+models/qwen_model_example.py
+models/cometapi_model_example.py
+models/qwq_model_example.py
+models/openai_compatibility_model_examples/qwen.py
+tasks/multi_modal_task_generation.py
+structured_response/structure_response_prompt_engineering.py
+
+[Message 33]
+Role: assistant
+
+[Message 34]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+"""
+Simple example showing how to run a Workforce as an MCP server.
+
+To test this example:
+1. Install dependencies: pip install mcp camel-ai[all]
+2. Run this script: python simple_workforce_mcp.py
+3. The server will start on localhost:8001
+4. Use an MCP client to connect and test the tools
+
+Example MCP client usage:
+- Call process_task with task_content="Analyze market trends"
+- Call get_workforce_info to see workforce status
+- Call add_single_agent_worker to add new workers
+"""
+
+from camel.agents import ChatAgent
+from camel.messages import BaseMessage
+from camel.societies.workforce import Workforce
+
+
+def main():
+    """Create and run a simple workforce MCP server."""
+
+    # Create a basic workforce
+    workforce = Workforce(description="Simple Analysis Team")
+
+    # Add a basic analyst worker
+    analyst_msg = BaseMessage.make_assistant_message(
+        role_name="Analyst",
+        content="You are a helpful analyst who can process various tasks.",
+    )
+    analyst = ChatAgent(system_message=analyst_msg)
+    workforce.add_single_agent_worker(
+        description="General purpose analyst", worker=analyst
+    )
+
+    print("Creating Workforce MCP server...")
+    print("Server will be available at: http://localhost:8001")
+    print("Press Ctrl+C to stop the server")
+
+    # Conve
+... (truncated)
+
+
+[Message 35]
+Role: assistant
+
+[Message 36]
+Role: tool
+Content: Error: File 'examples/models/openai_model_example.py' does not exist.
+
+[Message 37]
+Role: assistant
+
+[Message 38]
+Role: tool
+Content: Found 4 file(s) matching '**/*openai*.py':
+examples/models/azure_openai_model_example.py
+examples/models/openai_audio_models_example.py
+examples/models/openai_example.py
+examples/models/openai_structured_output_example.py
+
+[Message 39]
+Role: assistant
+
+[Message 40]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+"""OpenAI model example: multi-turn conversation with tool use and structured
+output."""
+
+from pydantic import BaseModel, Field
+
+from camel.agents import ChatAgent
+from camel.models import ModelFactory
+from camel.toolkits import MathToolkit
+from camel.types import ModelPlatformType, ModelType
+
+
+class Summary(BaseModel):
+    total: float = Field(description="The calculated total")
+    explanation: str = Field(description="Brief explanation")
+
+
+model = ModelFactory.create(
+    model_platform=ModelPlatformType.OPENAI,
+    model_type=ModelType.GPT_4O_MINI,
+)
+
+agent = ChatAgent(model=model, tools=MathToolkit().get_tools())
+
+# Turn 1: Basic chat
+response = agent.step("Hi, I need help with some calculations.")
+print(response.msgs[0].content)
+
+# Turn 2: Tool use
+response = agent.step("What is 123.45 + 678.90?")
+print(response.msgs[0].content)
+
+# Turn 3: Follow-up with context
+response = agent.step("Now multiply that result by 2.")
+print(response.msgs[0].content)
+
+# Turn 4: Structured output
+response = agent.step(
+    "Summarize all calculations we did.", response_format=Summary
+)
+print(response.msgs[0].content)
+
+[Message 41]
+Role: assistant
+
+[Message 42]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+
+from camel.agents import ChatAgent
+from camel.configs import GeminiConfig
+from camel.models import ModelFactory
+from camel.toolkits import TerminalToolkit
+from camel.types import ModelPlatformType, ModelType
+
+# Define system message
+sys_msg = "You are a helpful assistant."
+
+
+# Get current script directory
+base_dir = os.path.dirname(os.path.abspath(__file__))
+# Define workspace directory for the toolkit
+workspace_dir = os.path.join(
+    os.path.dirname(os.path.dirname(base_dir)), "workspace"
+)
+
+# Set model config
+tools = [
+    *TerminalToolkit(working_directory=workspace_dir).get_tools(),
+]
+# Example of using the gemini-3-pro-preview model
+model_3_pro_pre = ModelFactory.create(
+    model_platform=ModelPlatformType.GEMINI,
+    model_type=ModelType.GEMINI_3_PRO,
+    model_config_dict=GeminiConfig(temperature=0.2).as_dict(),
+)
+
+user_msg = """
+Create an interactive HTML webpage that allows users to play with a
+Rubik's Cube, and saved it to local file.
+"""
+
+camel_agent_pro = ChatAgent(
+    system_message=sys_msg, model=model_3_pro_pre, tools=tools
+)
+response_pro = camel_agent_pro.step(user_msg)
+print(response_pro.msgs[0].content)
+
+'''
+===============================================================================
+I have created an interactive HTML webpage for playing with 
+... (truncated)
+
+
+[Message 43]
+Role: assistant
+
+[Message 44]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+from camel.agents import ChatAgent
+from camel.configs import QwenConfig
+from camel.models import ModelFactory
+from camel.types import ModelPlatformType, ModelType
+
+model = ModelFactory.create(
+    model_platform=ModelPlatformType.QWEN,
+    model_type=ModelType.QWEN_3_CODER_PLUS,
+    model_config_dict=QwenConfig(temperature=0.2).as_dict(),
+)
+
+# Define system message
+sys_msg = "You are a helpful assistant."
+
+# Set agent
+camel_agent = ChatAgent(system_message=sys_msg, model=model)
+
+user_msg = """give me python code to develop a trading bot"""
+
+# Get response information
+response = camel_agent.step(user_msg)
+print(response.msgs[0].content)
+
+'''
+===============================================================================
+Here's a basic Python trading bot framework using the ccxt library for cryptocurrency trading. This example includes key components like data fetching, strategy implementation, and order execution:
+
+```python
+import ccxt
+import pandas as pd
+import numpy as np
+import time
+from datetime import datetime
+
+class SimpleTradingBot:
+    def __init__(self, exchange_id, api_key, secret, symbol, timeframe='1h', short_window=10, long_window=50):
+        # Initialize exchange connection
+        self.exchange = getattr(ccxt, exchange_id)({
+            'apiKey': api_key,
+     
+... (truncated)
+
+
+[Message 45]
+Role: assistant
+
+[Message 46]
+Role: tool
+Content: Found 2 file(s) matching '**/__init__.py':
+camel/models/__init__.py
+camel/models/reward/__init__.py
+
+[Message 47]
+Role: assistant
+
+[Message 48]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from .aihubmix_model import AihubMixModel
+from .aiml_model import AIMLModel
+from .amd_model import AMDModel
+from .anthropic_model import AnthropicModel
+from .atlascloud_model import AtlasCloudModel
+from .aws_bedrock_model import AWSBedrockModel
+from .azure_openai_model import AzureOpenAIModel
+from .base_audio_model import BaseAudioModel
+from .base_model import BaseModelBackend
+from .cerebras_model import CerebrasModel
+from .cohere_model import CohereModel
+from .cometapi_model import CometAPIModel
+from .crynux_model import CrynuxModel
+from .deepseek_model import DeepSeekModel
+from .fish_audio_model import FishAudioModel
+from .function_gemma_model import FunctionGemmaModel
+from .gemini_model import GeminiModel
+from .groq_model import GroqModel
+from .internlm_model import InternLMModel
+from .litellm_model import LiteLLMModel
+from .lmstudio_model import LMStudioModel
+from .minimax_model import MinimaxModel
+from .mistral_model import MistralModel
+from .model_factory import ModelFactory
+from .model_manager import ModelManager, ModelProcessingError
+from .modelscope_model import ModelScopeModel
+from .moonshot_model import MoonshotModel
+from .nebius_model import NebiusModel
+from .nemotron_model import NemotronModel
+from .netmind_model import NetmindModel
+from .novita_model import Novita
+... (truncated)
+
+
+[Message 49]
+Role: assistant
+
+[Message 50]
+Role: tool
+Content: Error: File 'camel/societies/workforce.py' does not exist.
+
+[Message 51]
+Role: assistant
+
+[Message 52]
+Role: tool
+Content: Found 1 file(s) matching '**/workforce.py':
+camel/societies/workforce/workforce.py
+
+[Message 53]
+Role: assistant
+
+[Message 54]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from __future__ import annotations
+
+import asyncio
+import concurrent.futures
+import json
+import os
+import time
+import uuid
+from collections import deque
+from enum import Enum
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    Coroutine,
+    Deque,
+    Dict,
+    Generator,
+    List,
+    Optional,
+    Set,
+    Tuple,
+    Union,
+    cast,
+)
+
+from .workforce_callback import WorkforceCallback
+from .workforce_metrics import WorkforceMetrics
+
+if TYPE_CHECKING:
+    from camel.responses import ChatAgentResponse
+    from camel.utils.context_utils import ContextUtility, WorkflowSummary
+
+
+from camel.agents import ChatAgent
+from camel.logger import get_logger
+from camel.messages.base import BaseMessage
+from camel.models import BaseModelBackend, ModelManager
+from camel.societies.workforce.base import BaseNode
+from camel.societies.workforce.prompts import (
+    ASSIGN_TASK_PROMPT,
+    CREATE_NODE_PROMPT,
+    FAILURE_ANALYSIS_RESPONSE_FORMAT,
+    QUALITY_EVALUATION_RESPONSE_FORMAT,
+    STRATEGY_DESCRIPTIONS,
+    TASK_AGENT_SYSTEM_MESSAGE,
+    TASK_ANALYSIS_PROMPT,
+    TASK_DECOMPOSE_PROMPT,
+)
+from camel.societies.workforce.role_playing_worker import RolePlayingWorker
+from camel.societies.workforce.single_agent_worker import (
+    SingleAgentWorker,
+)
+from camel.societies.workfo
+... (truncated)
+
+
+[Message 55]
+Role: assistant
+
+[Message 56]
+Role: tool
+Content: Found 3 file(s) matching '**/*worker*.py':
+camel/societies/workforce/role_playing_worker.py
+camel/societies/workforce/single_agent_worker.py
+camel/societies/workforce/worker.py
+
+[Message 57]
+Role: assistant
+
+[Message 58]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from __future__ import annotations
+
+import asyncio
+import datetime
+import time
+from collections import deque
+from typing import Any, Dict, List, Optional
+
+from colorama import Fore
+
+from camel.agents import ChatAgent
+from camel.agents.chat_agent import AsyncStreamingChatAgentResponse
+from camel.logger import get_logger
+from camel.societies.workforce.prompts import PROCESS_TASK_PROMPT
+from camel.societies.workforce.structured_output_handler import (
+    StructuredOutputHandler,
+)
+from camel.societies.workforce.utils import TaskResult
+from camel.societies.workforce.worker import Worker
+from camel.societies.workforce.workflow_memory_manager import (
+    WorkflowMemoryManager,
+)
+from camel.tasks.task import Task, TaskState, is_task_result_insufficient
+from camel.utils.context_utils import ContextUtility
+
+logger = get_logger(__name__)
+
+
+class AgentPool:
+    r"""A pool of agent instances for efficient reuse.
+
+    This pool manages a collection of pre-cloned agents with automatic
+    scaling and idle timeout cleanup.
+
+    Args:
+        base_agent (ChatAgent): The base agent to clone from.
+        initial_size (int): Initial number of agents in the pool.
+            (default: :obj:`1`)
+        max_size (int): Maximum number of agents in the pool.
+            (default: :obj:`10`)
+      
+... (truncated)
+
+
+[Message 59]
+Role: assistant
+Content: ## Examples (MOST IMPORTANT)
+- examples/workforce/simple_workforce_mcp.py
+  - Shows: Creating a simple workforce with a single ChatAgent worker
+  - Usage: Workforce class from camel.societies.workforce.workforce
+
+- examples/models/openai_example.py
+  - Shows: Creating and using OpenAI model with ChatAgent
+  - Usage: ModelFactory.create with ModelPlatformType.OPENAI and ModelType.GPT_4O_MINI
+
+- examples/models/gemini_model_example.py
+  - Shows: Creating and using Gemini model with ChatAgent
+  - Usage: ModelFactory.create with ModelPlatformType.GEMINI and ModelType.GEMINI_3_PRO
+
+- examples/models/qwen_model_example.py
+  - Shows: Creating and using Qwen model with ChatAgent
+  - Usage: ModelFactory.create with ModelPlatformType.QWEN and ModelType.QWEN_3_CODER_PLUS
+
+## Implementation
+- camel/societies/workforce/workforce.py
+  - Class: Workforce
+  - Description: Core class managing multiple worker nodes (agents) cooperating to solve tasks, with task assignment, decomposition, and recovery strategies.
+
+- camel/societies/workforce/single_agent_worker.py
+  - Class: SingleAgentWorker (inherits Worker)
+  - Description: Worker node consisting of a single ChatAgent, supports agent pooling for efficiency, structured output handling, and workflow memory management.
+
+- camel/models/__init__.py
+  - Exports: GeminiModel, OpenAIModel, QwenModel, ModelFactory, and many other model classes.
+
+## Types/Enums
+- camel/types/enums.py
+  - Enum: ModelType (includes OpenAI, Gemini, Qwen model types)
+  - Enum: ModelPlatformType (includes OPENAI, GEMINI, QWEN)
+
+# Summary
+To create a workforce with workers using OpenAI, Gemini, and Qwen models to discuss which model performs best, you can:
+- Use the Workforce class from camel.societies.workforce.workforce
+- Use SingleAgentWorker from camel.societies.workforce.single_agent_worker to create workers with ChatAgent instances
+- Create ChatAgent instances with models created via ModelFactory.create() using ModelPlatformType and ModelType enums for OpenA
+... (truncated)
+
+
+================================================================================
+
+CODE AGENT CHAT HISTORY
+================================================================================
+
+[Message 1]
+Role: system
+Content: You are a Code Agent that writes and executes Python scripts.
+
+## Tools
+
+You have access to terminal tools for:
+- `shell_exec`: Execute shell commands
+- `shell_write_content_to_file`: Write content to a file
+- `read_file_tool`: Read file contents
+
+## Workflow
+
+1. **Read relevant files** from the paths provided by the explore agent
+2. **Write the script** using `shell_write_content_to_file`
+3. **Execute the script** using `shell_exec`
+4. **Debug if needed**: If errors occur, read the error, fix the script, and re-run
+
+## CRITICAL: Strict Instruction Following
+
+**Use EXACTLY what the task specifies. Do NOT substitute "similar" or "better" alternatives.**
+
+### Model Selection
+- Task says "Llama-3.1-8B-Instruct" -> Use `ModelType.LLAMA_3_1_8B` EXACTLY
+- Do NOT use LLAMA_3_2_3B as "closest alternative"
+- Do NOT guess enum names - verify from enums.py or examples
+- ModelPlatformType and ModelType MUST match according to enums.py (e.g., MODELSCOPE models use MODELSCOPE platform, QWEN models use QWEN platform)
+
+### Tool Selection
+- Task says "brave search" -> Use `search_toolkit.search_brave` EXACTLY
+- Do NOT use `get_tools()` which returns ALL tools
+- Do NOT substitute with other search engines
+
+### URL Handling
+- If task provides a URL (e.g., "https://mcpservers.org/servers/devin/deepwiki"):
+  - Prioritize DIRECT HTTP access using `requests` library
+  - Create a simple FunctionTool that calls the URL
+  - Do NOT assume it requires complex registry (ACI, etc.)
+  - Example:
+    ```python
+    def query_server(query: str) -> str:
+        response = requests.post(url, json={"query": query})
+        return response.text
+    tool = FunctionTool(func=query_server)
+    ```
+
+## Important Rules
+
+1. **Use the provided file paths** - The explore agent has found relevant examples and implementations
+2. **Follow existing patterns** - Look at examples to understand how to use the APIs
+3. **Handle errors gracefully** - If execution fails, analyze the error and fix it
+4. **Environment is ready** - All API keys and dependencies are configured
+5. **Save to correct location** - Follow the task's specified output path
+6. **Use EXACT values** - Copy enum values, method names exactly from explored files
+
+## Script Writing Tips
+
+- Import from camel package: `from camel.agents import ChatAgent`
+- Use ModelFactory for models: `ModelFactory.create(model_platform=..., model_type=...)`
+- Copy exact enum values from enums.py (e.g., `ModelType.LLAMA_3_1_8B`)
+- Use specific tool methods, not get_tools() (e.g., `toolkit.search_brave`)
+- Add proper error handling in your scripts
+
+## Debugging Tips
+
+- If you see import errors, check the correct module path in __init__.py
+- If you see AttributeError for enum, verify the exact enum name in enums.py
+- If you see API errors, it's likely a script issue, not environment
+- Read more files if you need to understand the API better
+
+
+[Message 2]
+Role: user
+Content: **Task**: create a workforce with workers using OpenAI, Gemini, and Qwen models to discuss which model performs best. Save the script to task-script/workforce/4_model_comparison_workforce.py
+
+**Relevant files found by exploration**:
+## Examples (MOST IMPORTANT)
+- examples/workforce/simple_workforce_mcp.py
+  - Shows: Creating a simple workforce with a single ChatAgent worker
+  - Usage: Workforce class from camel.societies.workforce.workforce
+
+- examples/models/openai_example.py
+  - Shows: Creating and using OpenAI model with ChatAgent
+  - Usage: ModelFactory.create with ModelPlatformType.OPENAI and ModelType.GPT_4O_MINI
+
+- examples/models/gemini_model_example.py
+  - Shows: Creating and using Gemini model with ChatAgent
+  - Usage: ModelFactory.create with ModelPlatformType.GEMINI and ModelType.GEMINI_3_PRO
+
+- examples/models/qwen_model_example.py
+  - Shows: Creating and using Qwen model with ChatAgent
+  - Usage: ModelFactory.create with ModelPlatformType.QWEN and ModelType.QWEN_3_CODER_PLUS
+
+## Implementation
+- camel/societies/workforce/workforce.py
+  - Class: Workforce
+  - Description: Core class managing multiple worker nodes (agents) cooperating to solve tasks, with task assignment, decomposition, and recovery strategies.
+
+- camel/societies/workforce/single_agent_worker.py
+  - Class: SingleAgentWorker (inherits Worker)
+  - Description: Worker node consisting of a single ChatAgent, supports agent pooling for efficiency, structured output handling, and workflow memory management.
+
+- camel/models/__init__.py
+  - Exports: GeminiModel, OpenAIModel, QwenModel, ModelFactory, and many other model classes.
+
+## Types/Enums
+- camel/types/enums.py
+  - Enum: ModelType (includes OpenAI, Gemini, Qwen model types)
+  - Enum: ModelPlatformType (includes OPENAI, GEMINI, QWEN)
+
+# Summary
+To create a workforce with workers using OpenAI, Gemini, and Qwen models to discuss which model performs best, you can:
+- Use the Workforce class from camel.societies.workforce.workforce
+- Use SingleAgentWorker from camel.societies.workforce.single_agent_worker to create workers with ChatAgent instances
+- Create ChatAgent instances with models created via ModelFactory.create() using ModelPlatformType and ModelType enums for OpenAI, Gemini, and Qwen
+- Refer to examples/models/openai_example.py, gemini_model_example.py, and qwen_model_example.py for model usage patterns
+- Refer to examples/workforce/simple_workforce_mcp.py for workforce creation and running example
+
+These files provide the core classes, usage examples, and enums needed to implement the requested script.
+
+**Instructions**:
+1. Read the relevant example files to understand the API usage patterns
+2. Write the script according to the task requirements using `shell_write_content_to_file`
+3. Execute the script using `shell_exec` with `python <script_path>`
+4. If errors occur, debug and fix until successful
+
+Note: The environment and APIs are correctly configured. If you encounter errors,
+it's likely a script issue that needs fixing.
+
+
+[Message 3]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_M4HSXsjtydf0qvf1Q0aBrAcc",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelPlatformType, ModelType\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.single_agent_worker import SingleAgentWorker\\n\\n\\ndef main():\\n    # Create models\\n    openai_model = ModelFactory.create(\\n        model_platform=ModelPlatformType.OPENAI,\\n        model_type=ModelType.GPT_4O_MINI\\n    )\\n\\n    gemini_model = ModelFactory.create(\\n        model_platform=ModelPlatformType.GEMINI,\\n        model_type=ModelType.GEMINI_3_PRO\\n    )\\n\\n    qwen_model = ModelFactory.create(\\n        model_platform=ModelPlatformType.QWEN,\\n        model_type=ModelType.QWEN_3_CODER_PLUS\\n    )\\n\\n    # Create ChatAgents\\n    openai_agent = ChatAgent(model=openai_model)\\n    gemini_agent = ChatAgent(model=gemini_model)\\n    qwen_agent = ChatAgent(model=qwen_model)\\n\\n    # Create workers\\n    openai_worker = SingleAgentWorker(agent=openai_agent, worker_name=\\\"OpenAI_Worker\\\")\\n    gemini_worker = SingleAgentWorker(agent=gemini_agent, worker_name=\\\"Gemini_Worker\\\")\\n    qwen_worker = SingleAgentWorker(agent=qwen_agent, worker_name=\\\"Qwen_Worker\\\")\\n\\n    # Create workforce with the three workers\\n    workforce = Workforce(workers=[openai_worker, gemini_worker, qwen_worker])\\n\\n    # Define the task for discussion\\n    task = \\\"Discuss which model among OpenAI GPT-4o Mini, Gemini 3 Pro, and Qwen 3 Coder Plus performs best for general chat tasks.\\\"\\n\\n    # Run the workforce on the task\\n    result = workforce.run(task)\\n\\n    # Print the result\\n    print(\\\"Discussion result:\\\")\\n    print(result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/4_model_comparison_workforce.py\"}"
+    }
+  }
+]
+
+[Message 4]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/4_model_comparison_workforce.py'.
+
+[Message 5]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_70DmK1HTPQZDce3GWnEAeANT",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_model_comparison_workforce\", \"command\": \"python task-script/workforce/4_model_comparison_workforce.py\", \"block\": true, \"timeout\": 60}"
+    }
+  }
+]
+
+[Message 6]
+Role: tool
+Content: Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/4_model_comparison_workforce.py", line 50, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/4_model_comparison_workforce.py", line 31, in main
+    openai_worker = SingleAgentWorker(agent=openai_agent, worker_name="OpenAI_Worker")
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: SingleAgentWorker.__init__() got an unexpected keyword argument 'agent'
+
+[Message 7]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_rxjfHJkA3zD7uId6fISOeKtx",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"examples/workforce/simple_workforce_mcp.py\"}"
+    }
+  }
+]
+
+[Message 8]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+"""
+Simple example showing how to run a Workforce as an MCP server.
+
+To test this example:
+1. Install dependencies: pip install mcp camel-ai[all]
+2. Run this script: python simple_workforce_mcp.py
+3. The server will start on localhost:8001
+4. Use an MCP client to connect and test the tools
+
+Example MCP client usage:
+- Call process_task with task_content="Analyze market trends"
+- Call get_workforce_info to see workforce status
+- Call add_single_agent_worker to add new workers
+"""
+
+from camel.agents import ChatAgent
+from camel.messages import BaseMessage
+from camel.societies.workforce import Workforce
+
+
+def main():
+    """Create and run a simple workforce MCP server."""
+
+    # Create a basic workforce
+    workforce = Workforce(description="Simple Analysis Team")
+
+    # Add a basic analyst worker
+    analyst_msg = BaseMessage.make_assistant_message(
+        role_name="Analyst",
+        content="You are a helpful analyst who can process various tasks.",
+    )
+    analyst = ChatAgent(system_message=analyst_msg)
+    workforce.add_single_agent_worker(
+        description="General purpose analyst", worker=analyst
+    )
+
+    print("Creating Workforce MCP server...")
+    print("Server will be available at: http://localhost:8001")
+    print("Press Ctrl+C to stop the server")
+
+    # Convert to MCP server and run
+    mcp_server = workforce.to_mcp(
+        name="Simple-Workforce",
+        description="A simple workforce for task processing",
+        port=8001,
+    )
+
+    try:
+        # This will start the server and block
+        mcp_server.run()
+    except KeyboardInterrupt:
+        print("\nServer stopped.")
+
+
+if __name__ == "__main__":
+    main()
+
+[Message 9]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_3oygzsXSbr6O1pRlwlgIuovA",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/societies/workforce/workforce.py\"}"
+    }
+  }
+]
+
+[Message 10]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from __future__ import annotations
+
+import asyncio
+import concurrent.futures
+import json
+import os
+import time
+import uuid
+from collections import deque
+from enum import Enum
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    Coroutine,
+    Deque,
+    Dict,
+    Generator,
+    List,
+    Optional,
+    Set,
+    Tuple,
+    Union,
+    cast,
+)
+
+from .workforce_callback import WorkforceCallback
+from .workforce_metrics import WorkforceMetrics
+
+if TYPE_CHECKING:
+    from camel.responses import ChatAgentResponse
+    from camel.utils.context_utils import ContextUtility, WorkflowSummary
+
+
+from camel.agents import ChatAgent
+from camel.logger import get_logger
+from camel.messages.base import BaseMessage
+from camel.models import BaseModelBackend, ModelManager
+from camel.societies.workforce.base import BaseNode
+from camel.societies.workforce.prompts import (
+    ASSIGN_TASK_PROMPT,
+    CREATE_NODE_PROMPT,
+    FAILURE_ANALYSIS_RESPONSE_FORMAT,
+    QUALITY_EVALUATION_RESPONSE_FORMAT,
+    STRATEGY_DESCRIPTIONS,
+    TASK_AGENT_SYSTEM_MESSAGE,
+    TASK_ANALYSIS_PROMPT,
+    TASK_DECOMPOSE_PROMPT,
+)
+from camel.societies.workforce.role_playing_worker import RolePlayingWorker
+from camel.societies.workforce.single_agent_worker import (
+    SingleAgentWorker,
+)
+from camel.societies.workforce.structured_output_handler import (
+    StructuredOutputHandler,
+)
+from camel.societies.workforce.task_channel import TaskChannel
+from camel.societies.workforce.utils import (
+    FailureHandlingConfig,
+    PipelineTaskBuilder,
+    RecoveryStrategy,
+    TaskAnalysisResult,
+    TaskAssignment,
+    TaskAssignResult,
+    WorkerConf,
+    check_if_running,
+)
+from camel.societies.workforce.worker import Worker
+from camel.tasks.task import (
+    Task,
+    TaskState,
+    is_task_result_insufficient,
+    validate_task_content,
+)
+from camel.toolkits import (
+    CodeExecutionToolkit,
+    FunctionTool,
+    SearchToolkit,
+    ThinkingToolkit,
+)
+from camel.utils import dependencies_required
+
+from .events import (
+    AllTasksCompletedEvent,
+    LogEvent,
+    TaskAssignedEvent,
+    TaskCompletedEvent,
+    TaskCreatedEvent,
+    TaskDecomposedEvent,
+    TaskFailedEvent,
+    TaskStartedEvent,
+    TaskUpdatedEvent,
+    WorkerCreatedEvent,
+)
+
+if os.environ.get("TRACEROOT_ENABLED", "False").lower() == "true":
+    try:
+        import traceroot  # type: ignore[import]
+
+        logger = traceroot.get_logger('camel')
+    except ImportError:
+        logger = get_logger(__name__)
+else:
+    logger = get_logger(__name__)
+
+# Constants for configuration values
+MAX_TASK_RETRIES = 3
+MAX_PENDING_TASKS_LIMIT = 20
+TASK_TIMEOUT_SECONDS = 600.0
+DEFAULT_WORKER_POOL_SIZE = 10
+
+
+class WorkforceState(Enum):
+    r"""Workforce execution state for human intervention support."""
+
+    IDLE = "idle"
+    RUNNING = "running"
+    PAUSED = "paused"
+    STOPPED = "stopped"
+
+
+class WorkforceMode(Enum):
+    r"""Workforce execution mode for different task processing strategies."""
+
+    AUTO_DECOMPOSE = "auto_decompose"  # Automatic task decomposition mode
+    PIPELINE = "pipeline"  # Predefined pipeline mode
+
+
+class WorkforceSnapshot:
+    r"""Snapshot of workforce state for resuming execution."""
+
+    def __init__(
+        self,
+        main_task: Optional[Task] = None,
+        pending_tasks: Optional[Deque[Task]] = None,
+        completed_tasks: Optional[List[Task]] = None,
+        task_dependencies: Optional[Dict[str, List[str]]] = None,
+        assignees: Optional[Dict[str, str]] = None,
+        current_task_index: int = 0,
+        description: str = "",
+    ):
+        self.main_task = main_task
+        self.pending_tasks = pending_tasks.copy() if pending_tasks else deque()
+        self.completed_tasks = (
+            completed_tasks.copy() if completed_tasks else []
+        )
+        self.task_dependencies = (
+            task_dependencies.copy() if task_dependencies else {}
+        )
+        self.assignees = assignees.copy() if assignees else {}
+        self.current_task_index = current_task_index
+        self.description = description
+        self.timestamp = time.time()
+
+
+class Workforce(BaseNode):
+    r"""A system where multiple worker nodes (agents) cooperate together
+    to solve tasks. It can assign tasks to worker nodes and also take
+    strategies such as create new worker, decompose 
+... (truncated)
+
+
+[Message 11]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_0Y58SJRyC7R4cgQ9LG0srjBY",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/societies/workforce/workforce.py\"}"
+    }
+  }
+]
+
+[Message 12]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from __future__ import annotations
+
+import asyncio
+import concurrent.futures
+import json
+import os
+import time
+import uuid
+from collections import deque
+from enum import Enum
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    Coroutine,
+    Deque,
+    Dict,
+    Generator,
+    List,
+    Optional,
+    Set,
+    Tuple,
+    Union,
+    cast,
+)
+
+from .workforce_callback import WorkforceCallback
+from .workforce_metrics import WorkforceMetrics
+
+if TYPE_CHECKING:
+    from camel.responses import ChatAgentResponse
+    from camel.utils.context_utils import ContextUtility, WorkflowSummary
+
+
+from camel.agents import ChatAgent
+from camel.logger import get_logger
+from camel.messages.base import BaseMessage
+from camel.models import BaseModelBackend, ModelManager
+from camel.societies.workforce.base import BaseNode
+from camel.societies.workforce.prompts import (
+    ASSIGN_TASK_PROMPT,
+    CREATE_NODE_PROMPT,
+    FAILURE_ANALYSIS_RESPONSE_FORMAT,
+    QUALITY_EVALUATION_RESPONSE_FORMAT,
+    STRATEGY_DESCRIPTIONS,
+    TASK_AGENT_SYSTEM_MESSAGE,
+    TASK_ANALYSIS_PROMPT,
+    TASK_DECOMPOSE_PROMPT,
+)
+from camel.societies.workforce.role_playing_worker import RolePlayingWorker
+from camel.societies.workforce.single_agent_worker import (
+    SingleAgentWorker,
+)
+from camel.societies.workforce.structured_output_handler import (
+    StructuredOutputHandler,
+)
+from camel.societies.workforce.task_channel import TaskChannel
+from camel.societies.workforce.utils import (
+    FailureHandlingConfig,
+    PipelineTaskBuilder,
+    RecoveryStrategy,
+    TaskAnalysisResult,
+    TaskAssignment,
+    TaskAssignResult,
+    WorkerConf,
+    check_if_running,
+)
+from camel.societies.workforce.worker import Worker
+from camel.tasks.task import (
+    Task,
+    TaskState,
+    is_task_result_insufficient,
+    validate_task_content,
+)
+from camel.toolkits import (
+    CodeExecutionToolkit,
+    FunctionTool,
+    SearchToolkit,
+    ThinkingToolkit,
+)
+from camel.utils import dependencies_required
+
+from .events import (
+    AllTasksCompletedEvent,
+    LogEvent,
+    TaskAssignedEvent,
+    TaskCompletedEvent,
+    TaskCreatedEvent,
+    TaskDecomposedEvent,
+    TaskFailedEvent,
+    TaskStartedEvent,
+    TaskUpdatedEvent,
+    WorkerCreatedEvent,
+)
+
+if os.environ.get("TRACEROOT_ENABLED", "False").lower() == "true":
+    try:
+        import traceroot  # type: ignore[import]
+
+        logger = traceroot.get_logger('camel')
+    except ImportError:
+        logger = get_logger(__name__)
+else:
+    logger = get_logger(__name__)
+
+# Constants for configuration values
+MAX_TASK_RETRIES = 3
+MAX_PENDING_TASKS_LIMIT = 20
+TASK_TIMEOUT_SECONDS = 600.0
+DEFAULT_WORKER_POOL_SIZE = 10
+
+
+class WorkforceState(Enum):
+    r"""Workforce execution state for human intervention support."""
+
+    IDLE = "idle"
+    RUNNING = "running"
+    PAUSED = "paused"
+    STOPPED = "stopped"
+
+
+class WorkforceMode(Enum):
+    r"""Workforce execution mode for different task processing strategies."""
+
+    AUTO_DECOMPOSE = "auto_decompose"  # Automatic task decomposition mode
+    PIPELINE = "pipeline"  # Predefined pipeline mode
+
+
+class WorkforceSnapshot:
+    r"""Snapshot of workforce state for resuming execution."""
+
+    def __init__(
+        self,
+        main_task: Optional[Task] = None,
+        pending_tasks: Optional[Deque[Task]] = None,
+        completed_tasks: Optional[List[Task]] = None,
+        task_dependencies: Optional[Dict[str, List[str]]] = None,
+        assignees: Optional[Dict[str, str]] = None,
+        current_task_index: int = 0,
+        description: str = "",
+    ):
+        self.main_task = main_task
+        self.pending_tasks = pending_tasks.copy() if pending_tasks else deque()
+        self.completed_tasks = (
+            completed_tasks.copy() if completed_tasks else []
+        )
+        self.task_dependencies = (
+            task_dependencies.copy() if task_dependencies else {}
+        )
+        self.assignees = assignees.copy() if assignees else {}
+        self.current_task_index = current_task_index
+        self.description = description
+        self.timestamp = time.time()
+
+
+class Workforce(BaseNode):
+    r"""A system where multiple worker nodes (agents) cooperate together
+    to solve tasks. It can assign tasks to worker nodes and also take
+    strategies such as create new worker, decompose 
+... (truncated)
+
+
+[Message 13]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_3VDwZnxPVtYmT9n2KeYUTi6m",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/societies/workforce/single_agent_worker.py\"}"
+    }
+  }
+]
+
+[Message 14]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from __future__ import annotations
+
+import asyncio
+import datetime
+import time
+from collections import deque
+from typing import Any, Dict, List, Optional
+
+from colorama import Fore
+
+from camel.agents import ChatAgent
+from camel.agents.chat_agent import AsyncStreamingChatAgentResponse
+from camel.logger import get_logger
+from camel.societies.workforce.prompts import PROCESS_TASK_PROMPT
+from camel.societies.workforce.structured_output_handler import (
+    StructuredOutputHandler,
+)
+from camel.societies.workforce.utils import TaskResult
+from camel.societies.workforce.worker import Worker
+from camel.societies.workforce.workflow_memory_manager import (
+    WorkflowMemoryManager,
+)
+from camel.tasks.task import Task, TaskState, is_task_result_insufficient
+from camel.utils.context_utils import ContextUtility
+
+logger = get_logger(__name__)
+
+
+class AgentPool:
+    r"""A pool of agent instances for efficient reuse.
+
+    This pool manages a collection of pre-cloned agents with automatic
+    scaling and idle timeout cleanup.
+
+    Args:
+        base_agent (ChatAgent): The base agent to clone from.
+        initial_size (int): Initial number of agents in the pool.
+            (default: :obj:`1`)
+        max_size (int): Maximum number of agents in the pool.
+            (default: :obj:`10`)
+        auto_scale (bool): Whether to automatically scale the pool size.
+            (default: :obj:`True`)
+        idle_timeout (float): Time in seconds after which idle agents are
+            removed. (default: :obj:`180.0`)
+        cleanup_interval (float): Fixed interval in seconds between cleanup
+            checks. (default: :obj:`60.0`)
+    """
+
+    def __init__(
+        self,
+        base_agent: ChatAgent,
+        initial_size: int = 1,
+        max_size: int = 10,
+        auto_scale: bool = True,
+        idle_timeout: float = 180.0,
+        cleanup_interval: float = 60.0,
+    ):
+        self.base_agent = base_agent
+        self.max_size = max_size
+        self.auto_scale = auto_scale
+        self.idle_timeout = idle_timeout
+        self.cleanup_interval = cleanup_interval
+
+        # Pool management
+        self._available_agents: deque = deque()
+        self._in_use_agents: set = set()
+        self._agent_last_used: dict = {}
+        self._lock = asyncio.Lock()
+        self._condition = asyncio.Condition(self._lock)
+
+        # Statistics
+        self._total_borrows = 0
+        self._total_clones_created = 0
+        self._pool_hits = 0
+        self._agents_cleaned = 0
+
+        # Initialize pool
+        self._initialize_pool(initial_size)
+
+    def _initialize_pool(self, size: int) -> None:
+        r"""Initialize the pool with the specified number of agents."""
+        for _ in range(min(size, self.max_size)):
+            agent = self._create_fresh_agent()
+            self._available_agents.append(agent)
+            self._agent_last_used[id(agent)] = time.time()
+
+    def _create_fresh_agent(self) -> ChatAgent:
+        r"""Create a fresh agent instance."""
+        agent = self.base_agent.clone(with_memory=False)
+        self._total_clones_created += 1
+        return agent
+
+    async def get_agent(self) -> ChatAgent:
+        r"""Get an agent from the pool, creating one if necessary."""
+        async with self._condition:
+            self._total_borrows += 1
+
+            # Try to get available agent or create new one
+            while True:
+                if self._available_agents:
+                    agent = self._available_agents.popleft()
+                    self._in_use_agents.add(id(agent))
+                    self._pool_hits += 1
+                    agent.reset()  # Ensure clean memory state
+                    return agent
+
+                # Check if we can create a new agent
+                if len(self._in_use_agents) < self.max_size or self.auto_scale:
+                    agent = self._create_fresh_agent()
+                    self._in_use_agents.add(id(agent))
+                    return agent
+
+                # Wait for an agent to be returned
+                await self._condition.wait()
+
+    async def return_agent(self, agent: ChatAgent) -> None:
+        r"""Return an agent to the pool."""
+        agent_id = id(agent)
+
+        async with self._condition:
+            if agent_id not in self._in_use_agents:
+                return
+
+          
+... (truncated)
+
+
+[Message 15]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_YjDolwYFtyscAF33D2MROngx",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelPlatformType, ModelType\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.single_agent_worker import SingleAgentWorker\\n\\ndef main():\\n    # Create models\\n    openai_model = ModelFactory.create(\\n        model_platform=ModelPlatformType.OPENAI,\\n        model_type=ModelType.GPT_4O_MINI\\n    )\\n\\n    gemini_model = ModelFactory.create(\\n        model_platform=ModelPlatformType.GEMINI,\\n        model_type=ModelType.GEMINI_3_PRO\\n    )\\n\\n    qwen_model = ModelFactory.create(\\n        model_platform=ModelPlatformType.QWEN,\\n        model_type=ModelType.QWEN_3_CODER_PLUS\\n    )\\n\\n    # Create ChatAgents\\n    openai_agent = ChatAgent(model=openai_model)\\n    gemini_agent = ChatAgent(model=gemini_model)\\n    qwen_agent = ChatAgent(model=qwen_model)\\n\\n    # Create workers with correct argument name 'worker'\\n    openai_worker = SingleAgentWorker(description=\\\"OpenAI_Worker\\\", worker=openai_agent)\\n    gemini_worker = SingleAgentWorker(description=\\\"Gemini_Worker\\\", worker=gemini_agent)\\n    qwen_worker = SingleAgentWorker(description=\\\"Qwen_Worker\\\", worker=qwen_agent)\\n\\n    # Create workforce with the three workers\\n    workforce = Workforce(workers=[openai_worker, gemini_worker, qwen_worker])\\n\\n    # Define the task for discussion\\n    task = \\\"Discuss which model among OpenAI GPT-4o Mini, Gemini 3 Pro, and Qwen 3 Coder Plus performs best for general chat tasks.\\\"\\n\\n    # Run the workforce on the task\\n    result = workforce.run(task)\\n\\n    # Print the result\\n    print(\\\"Discussion result:\\\")\\n    print(result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/4_model_comparison_workforce.py\"}"
+    }
+  }
+]
+
+[Message 16]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/4_model_comparison_workforce.py'.
+
+[Message 17]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_2KQrszh9GtDbbiY3vYVPh1IR",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_model_comparison_workforce_v2\", \"command\": \"python task-script/workforce/4_model_comparison_workforce.py\", \"block\": true, \"timeout\": 60}"
+    }
+  }
+]
+
+[Message 18]
+Role: tool
+Content: Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/4_model_comparison_workforce.py", line 49, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/4_model_comparison_workforce.py", line 35, in main
+    workforce = Workforce(workers=[openai_worker, gemini_worker, qwen_worker])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Workforce.__init__() got an unexpected keyword argument 'workers'
+
+[Message 19]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_JlMYX9s78oRCqCtdy4n1EV9n",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"examples/workforce/simple_workforce_mcp.py\"}"
+    }
+  }
+]
+
+[Message 20]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+"""
+Simple example showing how to run a Workforce as an MCP server.
+
+To test this example:
+1. Install dependencies: pip install mcp camel-ai[all]
+2. Run this script: python simple_workforce_mcp.py
+3. The server will start on localhost:8001
+4. Use an MCP client to connect and test the tools
+
+Example MCP client usage:
+- Call process_task with task_content="Analyze market trends"
+- Call get_workforce_info to see workforce status
+- Call add_single_agent_worker to add new workers
+"""
+
+from camel.agents import ChatAgent
+from camel.messages import BaseMessage
+from camel.societies.workforce import Workforce
+
+
+def main():
+    """Create and run a simple workforce MCP server."""
+
+    # Create a basic workforce
+    workforce = Workforce(description="Simple Analysis Team")
+
+    # Add a basic analyst worker
+    analyst_msg = BaseMessage.make_assistant_message(
+        role_name="Analyst",
+        content="You are a helpful analyst who can process various tasks.",
+    )
+    analyst = ChatAgent(system_message=analyst_msg)
+    workforce.add_single_agent_worker(
+        description="General purpose analyst", worker=analyst
+    )
+
+    print("Creating Workforce MCP server...")
+    print("Server will be available at: http://localhost:8001")
+    print("Press Ctrl+C to stop the server")
+
+    # Convert to MCP server and run
+    mcp_server = workforce.to_mcp(
+        name="Simple-Workforce",
+        description="A simple workforce for task processing",
+        port=8001,
+    )
+
+    try:
+        # This will start the server and block
+        mcp_server.run()
+    except KeyboardInterrupt:
+        print("\nServer stopped.")
+
+
+if __name__ == "__main__":
+    main()
+
+[Message 21]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_dx0CCglJN6HAO8Vsq7CG4j12",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelPlatformType, ModelType\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.single_agent_worker import SingleAgentWorker\\n\\ndef main():\\n    # Create models\\n    openai_model = ModelFactory.create(\\n        model_platform=ModelPlatformType.OPENAI,\\n        model_type=ModelType.GPT_4O_MINI\\n    )\\n\\n    gemini_model = ModelFactory.create(\\n        model_platform=ModelPlatformType.GEMINI,\\n        model_type=ModelType.GEMINI_3_PRO\\n    )\\n\\n    qwen_model = ModelFactory.create(\\n        model_platform=ModelPlatformType.QWEN,\\n        model_type=ModelType.QWEN_3_CODER_PLUS\\n    )\\n\\n    # Create ChatAgents\\n    openai_agent = ChatAgent(model=openai_model)\\n    gemini_agent = ChatAgent(model=gemini_model)\\n    qwen_agent = ChatAgent(model=qwen_model)\\n\\n    # Create workers with correct argument name 'worker'\\n    openai_worker = SingleAgentWorker(description=\\\"OpenAI_Worker\\\", worker=openai_agent)\\n    gemini_worker = SingleAgentWorker(description=\\\"Gemini_Worker\\\", worker=gemini_agent)\\n    qwen_worker = SingleAgentWorker(description=\\\"Qwen_Worker\\\", worker=qwen_agent)\\n\\n    # Create workforce with description only\\n    workforce = Workforce(description=\\\"Model Comparison Workforce\\\")\\n\\n    # Add workers to workforce\\n    workforce.add_single_agent_worker(description=\\\"OpenAI Worker\\\", worker=openai_agent)\\n    workforce.add_single_agent_worker(description=\\\"Gemini Worker\\\", worker=gemini_agent)\\n    workforce.add_single_agent_worker(description=\\\"Qwen Worker\\\", worker=qwen_agent)\\n\\n    # Define the task for discussion\\n    task = \\\"Discuss which model among OpenAI GPT-4o Mini, Gemini 3 Pro, and Qwen 3 Coder Plus performs best for general chat tasks.\\\"\\n\\n    # Run the workforce on the task\\n    result = workforce.run(task)\\n\\n    # Print the result\\n    print(\\\"Discussion result:\\\")\\n    print(result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/4_model_comparison_workforce.py\"}"
+    }
+  }
+]
+
+[Message 22]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/4_model_comparison_workforce.py'.
+
+[Message 23]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_yDOM6ZMInYeeKPXn5OAf4QWj",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_model_comparison_workforce_v3\", \"command\": \"python task-script/workforce/4_model_comparison_workforce.py\", \"block\": true, \"timeout\": 60}"
+    }
+  }
+]
+
+[Message 24]
+Role: tool
+Content: 2026-02-02 18:18:02,511 - camel.camel.societies.workforce.workforce - WARNING - No coordinator_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+2026-02-02 18:18:02,710 - camel.camel.societies.workforce.workforce - WARNING - No task_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/4_model_comparison_workforce.py", line 54, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/4_model_comparison_workforce.py", line 46, in main
+    result = workforce.run(task)
+             ^^^^^^^^^^^^^
+AttributeError: 'Workforce' object has no attribute 'run'
+
+[Message 25]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_IL636FjgYk04GlhAOv3IzZdy",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"import asyncio\\nfrom camel.agents import ChatAgent\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelPlatformType, ModelType\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.single_agent_worker import SingleAgentWorker\\n\\ndef main():\\n    # Create models\\n    openai_model = ModelFactory.create(\\n        model_platform=ModelPlatformType.OPENAI,\\n        model_type=ModelType.GPT_4O_MINI\\n    )\\n\\n    gemini_model = ModelFactory.create(\\n        model_platform=ModelPlatformType.GEMINI,\\n        model_type=ModelType.GEMINI_3_PRO\\n    )\\n\\n    qwen_model = ModelFactory.create(\\n        model_platform=ModelPlatformType.QWEN,\\n        model_type=ModelType.QWEN_3_CODER_PLUS\\n    )\\n\\n    # Create ChatAgents\\n    openai_agent = ChatAgent(model=openai_model)\\n    gemini_agent = ChatAgent(model=gemini_model)\\n    qwen_agent = ChatAgent(model=qwen_model)\\n\\n    # Create workers with correct argument name 'worker'\\n    openai_worker = SingleAgentWorker(description=\\\"OpenAI_Worker\\\", worker=openai_agent)\\n    gemini_worker = SingleAgentWorker(description=\\\"Gemini_Worker\\\", worker=gemini_agent)\\n    qwen_worker = SingleAgentWorker(description=\\\"Qwen_Worker\\\", worker=qwen_agent)\\n\\n    # Create workforce with description only\\n    workforce = Workforce(description=\\\"Model Comparison Workforce\\\")\\n\\n    # Add workers to workforce\\n    workforce.add_single_agent_worker(description=\\\"OpenAI Worker\\\", worker=openai_agent)\\n    workforce.add_single_agent_worker(description=\\\"Gemini Worker\\\", worker=gemini_agent)\\n    workforce.add_single_agent_worker(description=\\\"Qwen Worker\\\", worker=qwen_agent)\\n\\n    # Define the task for discussion\\n    task = \\\"Discuss which model among OpenAI GPT-4o Mini, Gemini 3 Pro, and Qwen 3 Coder Plus performs best for general chat tasks.\\\"\\n\\n    # Run the workforce on the task asynchronously\\n    result = asyncio.run(workforce.process_task_async(task))\\n\\n    # Print the result\\n    print(\\\"Discussion result:\\\")\\n    print(result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/4_model_comparison_workforce.py\"}"
+    }
+  }
+]
+
+[Message 26]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/4_model_comparison_workforce.py'.
+
+[Message 27]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_S4w6U1E9reIXz6PGW7KZhoco",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_model_comparison_workforce_v4\", \"command\": \"python task-script/workforce/4_model_comparison_workforce.py\", \"block\": true, \"timeout\": 120}"
+    }
+  }
+]
+
+[Message 28]
+Role: tool
+Content: 2026-02-02 18:18:21,674 - camel.camel.societies.workforce.workforce - WARNING - No coordinator_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+2026-02-02 18:18:21,877 - camel.camel.societies.workforce.workforce - WARNING - No task_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/4_model_comparison_workforce.py", line 55, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/4_model_comparison_workforce.py", line 47, in main
+    result = asyncio.run(workforce.process_task_async(task))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/societies/workforce/workforce.py", line 2500, in process_task_async
+    subtasks = await self.handle_decompose_append_task(task)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/societies/workforce/workforce.py", line 2407, in handle_decompose_append_task
+    if not validate_task_content(task.content, task.id):
+                                 ^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'content'
+
+[Message 29]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_LLrzhb5jWmyleVVqBLZ2cA4V",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"import asyncio\\nfrom camel.agents import ChatAgent\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelPlatformType, ModelType\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.single_agent_worker import SingleAgentWorker\\nfrom camel.tasks.task import Task\\n\\ndef main():\\n    # Create models\\n    openai_model = ModelFactory.create(\\n        model_platform=ModelPlatformType.OPENAI,\\n        model_type=ModelType.GPT_4O_MINI\\n    )\\n\\n    gemini_model = ModelFactory.create(\\n        model_platform=ModelPlatformType.GEMINI,\\n        model_type=ModelType.GEMINI_3_PRO\\n    )\\n\\n    qwen_model = ModelFactory.create(\\n        model_platform=ModelPlatformType.QWEN,\\n        model_type=ModelType.QWEN_3_CODER_PLUS\\n    )\\n\\n    # Create ChatAgents\\n    openai_agent = ChatAgent(model=openai_model)\\n    gemini_agent = ChatAgent(model=gemini_model)\\n    qwen_agent = ChatAgent(model=qwen_model)\\n\\n    # Create workers with correct argument name 'worker'\\n    openai_worker = SingleAgentWorker(description=\\\"OpenAI_Worker\\\", worker=openai_agent)\\n    gemini_worker = SingleAgentWorker(description=\\\"Gemini_Worker\\\", worker=gemini_agent)\\n    qwen_worker = SingleAgentWorker(description=\\\"Qwen_Worker\\\", worker=qwen_agent)\\n\\n    # Create workforce with description only\\n    workforce = Workforce(description=\\\"Model Comparison Workforce\\\")\\n\\n    # Add workers to workforce\\n    workforce.add_single_agent_worker(description=\\\"OpenAI Worker\\\", worker=openai_agent)\\n    workforce.add_single_agent_worker(description=\\\"Gemini Worker\\\", worker=gemini_agent)\\n    workforce.add_single_agent_worker(description=\\\"Qwen Worker\\\", worker=qwen_agent)\\n\\n    # Define the task for discussion as a Task object\\n    task_content = \\\"Discuss which model among OpenAI GPT-4o Mini, Gemini 3 Pro, and Qwen 3 Coder Plus performs best for general chat tasks.\\\"\\n    task = Task(content=task_content)\\n\\n    # Run the workforce on the task asynchronously\\n    result = asyncio.run(workforce.process_task_async(task))\\n\\n    # Print the result\\n    print(\\\"Discussion result:\\\")\\n    print(result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/4_model_comparison_workforce.py\"}"
+    }
+  }
+]
+
+[Message 30]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/4_model_comparison_workforce.py'.
+
+[Message 31]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_ucKNnB2oirhkZ8aE8tVCzioC",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_model_comparison_workforce_v5\", \"command\": \"python task-script/workforce/4_model_comparison_workforce.py\", \"block\": true, \"timeout\": 120}"
+    }
+  }
+]
+
+[Message 32]
+Role: tool
+Content: 2026-02-02 18:18:46,459 - camel.camel.societies.workforce.workforce - WARNING - No coordinator_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+2026-02-02 18:18:46,664 - camel.camel.societies.workforce.workforce - WARNING - No task_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+Worker node 493201a5-dbd1-4ee9-af59-d06b32527f69 (OpenAI Worker) get task df42166f-4c2e-4947-9589-afa8fb835f94.1: Using the OpenAI GPT-4o Mini model, perform a general chat task involving greeting, answering a user query about weather, and providing a brief recommendation for a daily activity. Provide the full chat transcript as plain text.
+Worker node 7a85ed1e-e2c3-45e4-a2dd-a11a46e5221f (Gemini Worker) get task df42166f-4c2e-4947-9589-afa8fb835f94.2: Using the Gemini 3 Pro model, perform a general chat task involving greeting, answering a user query about weather, and providing a brief recommendation for a daily activity. Provide the full chat transcript as plain text.
+Worker node d7b42466-68ec-4efd-94d3-9b16bd3f44b9 (Qwen Worker) get task df42166f-4c2e-4947-9589-afa8fb835f94.3: Using the Qwen 3 Coder Plus model, perform a general chat task involving greeting, answering a user query about weather, and providing a brief recommendation for a daily activity. Provide the full chat transcript as plain text.
+2026-02-02 18:19:03,883 - camel.models.model_manager - ERROR - Error processing with model: <camel.models.gemini_model.GeminiModel object at 0x7fb4b2fbdfd0>
+2026-02-02 18:19:03,884 - camel.camel.agents.chat_agent - WARNING - Rate limit hit (attempt 1/3). Retrying in 0.4s
+======
+Response from Worker node d7b42466-68ec-4efd-94d3-9b16bd3f44b9 (Qwen Worker):
+
+Hello! I'm Qwen 3 Coder Plus, ready to assist you today.
+
+User: What's the weather like today?
+
+Qwen: I don't have real-time weather data access, but I can help you check the weather if you tell me your location. You can also use a weather app or website to get current conditions. Generally, if it's sunny and warm, it's great for outdoor activities; if it's rainy, indoor activities might be better.
+
+For a daily activity recommendation: Since I can't know the exact weather where you are, I'll suggest something versatile - a nature walk in a local park. It's beneficial regardless of slightly cool or warm weather, allows you to get fresh air and exercise, and you can adapt the pace to the conditions. If the weather isn't suitable for outdoors, consider visiting a museum or library instead.
+======
+Task df42166f-4c2e-4947-9589-afa8fb835f94.3 completed successfully (quality score: 90).
+======
+Response from Worker node 493201a5-dbd1-4ee9-af59-d06b32527f69 (OpenAI Worker):
+
+User: Hello! How's it going?
+Assistant: Hello! I'm doing well, thank you! How about you?
+User: Can you tell me what the weather is like today?
+Assistant: Sure! It's sunny and warm with a high of 75°F. Perfect weather for outdoor activities!
+User: Any recommendations for what I should do today?
+Assistant: I recommend going for a hike or enjoying a picnic at a local park. It's a great way to soak up the sun and relax!
+======
+Task df42166f-4c2e-4947-9589-afa8fb835f94.1 completed successfully (quality score: 95).
+2026-02-02 18:19:12,646 - camel.models.model_manager - ERROR - Error processing with model: <camel.models.gemini_model.GeminiModel object at 0x7fb4b2fbdfd0>
+2026-02-02 18:19:12,646 - camel.camel.agents.chat_agent - WARNING - Rate limit hit (attempt 2/3). Retrying in 0.3s
+2026-02-02 18:19:16,681 - camel.models.model_manager - ERROR - Error processing with model: <camel.models.gemini_model.GeminiModel object at 0x7fb4b2fbdfd0>
+2026-02-02 18:19:16,681 - camel.camel.agents.chat_agent - ERROR - Rate limit exhausted after 3 attempts
+2026-02-02 18:19:16,681 - camel.camel.societies.workforce.single_agent_worker - ERROR - Error processing task df42166f-4c2e-4947-9589-afa8fb835f94.2: ModelProcessingError: Unable to process messages: Error code: 429 - [{'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-3-pro\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-3-pro\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-3-pro\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-3-pro\nPlease retry in 56.877702178s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.He
+... (truncated)
+
+
+[Message 33]
+Role: assistant
+Content: I have created the script as requested. The script creates a workforce with three workers using OpenAI GPT-4o Mini, Gemini 3 Pro, and Qwen 3 Coder Plus models. They discuss which model performs best for general chat tasks. The script runs asynchronously and prints the discussion result.
+
+Note: The Gemini model failed due to quota limits, but the other two models completed successfully.
+
+The script is saved at:
+task-script/workforce/4_model_comparison_workforce.py
+
+If you want, I can provide the script content or assist with anything else.
+

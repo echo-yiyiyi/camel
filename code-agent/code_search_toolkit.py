@@ -78,8 +78,8 @@ class CodeSearchToolkit:
         args = []
         for excl in self.exclude_dirs:
             if tool == 'fd':
-                # No quotes needed - fd handles patterns directly
-                args.append(f'-E {excl}')
+                # Quotes needed to prevent shell expansion of glob patterns
+                args.append(f"-E '{excl}'")
             else:  # rg
                 args.append(f"--glob '!{excl}' --glob '!**/{excl}/**'")
         return ' '.join(args)
@@ -129,12 +129,19 @@ class CodeSearchToolkit:
         elif file_type == 'dir':
             type_flag = '-t d'
 
-        # Try fd first, fall back to find
+        # Build find exclude args (for fallback)
+        find_exclude_args = ' '.join(
+            f"-not -path '*/{excl}/*'" for excl in self.exclude_dirs
+        )
+
+        # Try fd/fdfind first (fdfind is the name on Debian/Ubuntu), fall back to find
         command = f'''
 if command -v fd &> /dev/null; then
     fd {type_flag} {exclude_args} "{fd_pattern}" "{search_dir}" 2>/dev/null | head -n {limit}
+elif command -v fdfind &> /dev/null; then
+    fdfind {type_flag} {exclude_args} "{fd_pattern}" "{search_dir}" 2>/dev/null | head -n {limit}
 else
-    find "{search_dir}" -name "{pattern.replace('**/', '')}" {"-type f" if file_type == "file" else "-type d" if file_type == "dir" else ""} 2>/dev/null | head -n {limit}
+    find "{search_dir}" -name "{pattern.replace('**/', '')}" {"-type f" if file_type == "file" else "-type d" if file_type == "dir" else ""} {find_exclude_args} 2>/dev/null | head -n {limit}
 fi
 '''
 

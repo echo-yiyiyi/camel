@@ -1,34 +1,35 @@
 from camel.agents import ChatAgent
 from camel.models import ModelFactory
-from camel.types.enums import ModelType, ModelPlatformType
+from camel.configs import QwenConfig
 from camel.toolkits.weather_toolkit import WeatherToolkit
+from camel.types.enums import ModelPlatformType, ModelType
 
 
 def main():
-    # System message for the agent
-    sys_msg = "You are a helpful agent with the weather tool to answer weather questions."
-
-    # Create the weather toolkit and get its tools
-    weather_tools = WeatherToolkit().get_tools()
-
-    # Create the Qwen2.5-14B-Instruct model using the correct enum
+    # Create Qwen model with Qwen2.5-14B-Instruct
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.MODELSCOPE,
-        model_type=ModelType.MODELSCOPE_QWEN_2_5_14B_INSTRUCT
+        model_platform=ModelPlatformType.QWEN,
+        model_type=ModelType.QWEN_2_5_14B,
+        model_config_dict=QwenConfig().as_dict()
     )
 
-    # Create the chat agent with the model and the weather tools
+    # Get weather tools
+    weather_toolkit = WeatherToolkit()
+    tools = weather_toolkit.get_tools()
+
+    # Create ChatAgent with weather tools
     agent = ChatAgent(
-        system_message=sys_msg,
+        system_message="You are a helpful assistant that can answer questions about the weather.",
         model=model,
-        tools=weather_tools
+        tools=tools
     )
 
     # Example question about weather
-    question = "What's the weather like in New York today?"
+    question = "What is the weather like in New York today?"
     response = agent.step(question)
-    print(f"Q: {question}\nA: {response.msg.content}")
+    print("Question:", question)
+    print("Answer:", response.msgs[0].content)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

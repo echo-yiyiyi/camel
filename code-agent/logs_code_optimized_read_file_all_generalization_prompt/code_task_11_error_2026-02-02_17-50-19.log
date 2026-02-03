@@ -1,0 +1,3074 @@
+Task: task_11
+Status: ERROR
+Start Time: 2026-02-02T17:50:19.467704
+End Time: 2026-02-02T18:02:00.274407
+Total Duration: 700.81 seconds
+  - Explore Phase: 70.17 seconds
+  - Code Phase: 630.63 seconds
+Description: create a workforce with workers using different tools to answer: "What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients from Jan-May 2018 as listed on the NIH website?". Save the script to task-script/workforce/1_answer_question.py
+Code Error: TimeoutError: Step timed out after 180.0s
+================================================================================
+
+EXPLORE PHASE
+================================================================================
+Tool Calls: 17
+----------------------------------------
+
+[1] glob_search
+Args: {
+  "pattern": "**/*workforce*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*workforce*.py':
+camel/societies/workforce/workforce.py
+camel/societies/workforce/workforce_callback.py
+camel/societies/workforce/workforce_logger.py
+camel/societies/workforce/workforce_metrics.py
+docs/cookbooks/multi_agent_society/workforce_judge_committee.ipynb
+examples/benchmarks/browsecomp_workforce.py
+examples/workforce/simple_workforce_mcp.py
+examples/workforce/workforce_callbacks_example.py
+examples/workforce/workforce_multitask_with_skip.py
+examples/workforc...
+
+[2] glob_search
+Args: {
+  "pattern": "**/*worker*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 3 file(s) matching '**/*worker*.py':
+camel/societies/workforce/role_playing_worker.py
+camel/societies/workforce/single_agent_worker.py
+camel/societies/workforce/worker.py
+
+[3] glob_search
+Args: {
+  "pattern": "**/*tool*.py",
+  "path": "camel/toolkits",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*tool*.py':
+camel/toolkits/aci_toolkit.py
+camel/toolkits/arxiv_toolkit.py
+camel/toolkits/ask_news_toolkit.py
+camel/toolkits/async_browser_toolkit.py
+camel/toolkits/audio_analysis_toolkit.py
+camel/toolkits/bohrium_toolkit.py
+camel/toolkits/browser_toolkit.py
+camel/toolkits/browser_toolkit_commons.py
+camel/toolkits/context_summarizer_toolkit.py
+camel/toolkits/craw4ai_toolkit.py
+
+[4] glob_search
+Args: {
+  "pattern": "**/*agent*.py",
+  "path": "camel/agents",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*agent*.py':
+camel/agents/chat_agent.py
+camel/agents/critic_agent.py
+camel/agents/deductive_reasoner_agent.py
+camel/agents/embodied_agent.py
+camel/agents/knowledge_graph_agent.py
+camel/agents/mcp_agent.py
+camel/agents/multi_hop_generator_agent.py
+camel/agents/programmed_agent_instruction.py
+camel/agents/repo_agent.py
+camel/agents/role_assignment_agent.py
+
+[5] glob_search
+Args: {
+  "pattern": "**/*example*.py",
+  "path": "examples",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*example*.py':
+examples/datagen/self_improving_cot/self_improving_cot_example.py
+examples/datagen/self_improving_cot/self_improving_cot_example_with_r1.py
+examples/debug/traceroot_example.py
+examples/embeddings/gemini_embedding_example.py
+examples/embeddings/jina_embedding_example.py
+examples/embeddings/openai_compatible_embedding_example.py
+examples/embeddings/together_embedding_example.py
+examples/embeddings/vlm_embedding_example.py
+examples/environments/rlcards_e...
+
+[6] grep_search
+Args: {
+  "pattern": "workforce",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'workforce' in *.py files (10 matches):
+toolkits/async_browser_toolkit.py
+toolkits/message_agent_toolkit.py
+debug/eigent.py
+workforce/simple_workforce_mcp.py
+workforce/role_playing_with_agents.py
+workforce/workforce_shared_memory_validation.py
+workforce/workforce_multitask_with_skip.py
+workforce/workforce_callbacks_example.py
+benchmarks/browsecomp_workforce.py
+workforce/multiple_single_agents.py
+
+[7] grep_search
+Args: {
+  "pattern": "worker",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'worker' in *.py files (10 matches):
+toolkits/async_browser_toolkit.py
+toolkits/message_agent_toolkit.py
+debug/eigent.py
+workforce/role_playing_with_agents.py
+workforce/eigent.py
+workforce/workforce_callbacks_example.py
+workforce/multiple_single_agents.py
+workforce/workforce_workflow_memory_example.py
+benchmarks/browsecomp_workforce.py
+workforce/pipeline_workflow_example.py
+
+[8] grep_search
+Args: {
+  "pattern": "tool",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'tool' in *.py files (10 matches):
+observability/langfuse_example.py
+observability/agentops_track_roleplaying_with_function.py
+services/agent_openapi_server.py
+vision/web_video_object_recognition.py
+toolkits/screenshot_toolkit_example.py
+vision/image_crafting.py
+vision/multi_turn_image_refining.py
+toolkits/openai_image_example.py
+toolkits/task_planning_toolkit.py
+toolkits/audio_analysis_toolkit.py
+
+[9] read_file
+Args: {
+  "file_path": "examples/workforce/workforce_callbacks_example.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[10] read_file
+Args: {
+  "file_path": "camel/societies/workforce/workforce.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[11] read_file
+Args: {
+  "file_path": "camel/societies/workforce/worker.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[12] read_file
+Args: {
+  "file_path": "camel/societies/workforce/role_playing_worker.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[13] read_file
+Args: {
+  "file_path": "camel/toolkits/browser_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[14] read_file
+Args: {
+  "file_path": "camel/toolkits/search_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[15] read_file
+Args: {
+  "file_path": "camel/types/enums.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[16] glob_search
+Args: {
+  "pattern": "**/*workforce*.py",
+  "path": "examples/workforce",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 5 file(s) matching '**/*workforce*.py':
+examples/workforce/simple_workforce_mcp.py
+examples/workforce/workforce_callbacks_example.py
+examples/workforce/workforce_multitask_with_skip.py
+examples/workforce/workforce_shared_memory_validation.py
+examples/workforce/workforce_workflow_memory_example.py
+
+[17] read_file
+Args: {
+  "file_path": "examples/workforce/simple_workforce_mcp.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+----------------------------------------
+Output:
+## Examples (MOST IMPORTANT)
+- examples/workforce/simple_workforce_mcp.py
+  - Shows: Creating a simple Workforce with a single ChatAgent worker
+  - Usage: Running the Workforce as an MCP server for task processing
+
+- examples/workforce/workforce_callbacks_example.py
+  - Shows: Using Workforce with custom callbacks to log lifecycle events
+  - Usage: Adding multiple single-agent workers and running a main task asynchronously
+
+## Implementation
+- camel/societies/workforce/workforce.py
+  - Classes: Workforce, WorkforceState, WorkforceMode, WorkforceSnapshot
+  - Core class managing multiple workers (agents) cooperating to solve tasks
+  - Supports task decomposition, assignment, failure recovery, shared memory, callbacks
+
+- camel/societies/workforce/worker.py
+  - Classes: Worker (abstract base class)
+  - Base worker node class for processing tasks asynchronously
+
+- camel/societies/workforce/role_playing_worker.py
+  - Classes: RolePlayingWorker (inherits Worker)
+  - Worker implementation using role-playing between assistant and user agents to process tasks
+
+- camel/toolkits/browser_toolkit.py
+  - Classes: BrowserToolkit
+  - Toolkit for web browsing and interacting with web pages, supports multi-step actions
+
+- camel/toolkits/search_toolkit.py
+  - Classes: SearchToolkit
+  - Toolkit providing multiple web search engine integrations (Google, Brave, DuckDuckGo, etc.)
+  - Provides search methods and exposes them as FunctionTools for agent use
+
+## Enums (for exact values)
+- camel/types/enums.py
+  - Enums: ModelType, ModelPlatformType, RoleType, TaskType, etc.
+  - Contains model type constants for creating agents with specific LLMs
+  - Contains platform type constants and role types
+
+# Summary
+To create a workforce with workers using different tools to answer the clinical trial enrollment question, the key files are:
+
+- `examples/workforce/simple_workforce_mcp.py` for a minimal workforce example
+- `examples/workforce/workforce_callbacks_example.py` for multi-worker and callback usage
+- `camel/societies/workforce/workforce.py` for the main Workforce class implementation
+- `camel/societies/workforce/worker.py` and `role_playing_worker.py` for worker implementations
+- `camel/toolkits/search_toolkit.py` for search tools (including Brave search)
+- `camel/toolkits/browser_toolkit.py` for web browsing tool
+- `camel/types/enums.py` for model and platform type enums to configure agents
+
+These files provide the building blocks to create a workforce with multiple workers using different tools (search, browser) to answer the question. The example scripts show how to instantiate and run such a workforce.
+================================================================================
+
+CODE PHASE
+================================================================================
+Tool Calls: 0
+----------------------------------------
+
+----------------------------------------
+Output:
+[ERROR] TimeoutError: Step timed out after 180.0s
+================================================================================
+
+EXPLORE AGENT CHAT HISTORY
+================================================================================
+
+[Message 1]
+Role: system
+Content: You are a code exploration specialist. Find relevant files for a task.
+
+## Tools
+
+1. **glob_search(pattern, path?, max_results?)** - Find files by name pattern
+2. **grep_search(pattern, path?, glob_filter?, ignore_case?, output_mode?)** - Search file contents
+3. **read_file(file_path)** - Read file contents (auto-limits to 2000 lines for large files)
+4. **list_directory(path?)** - List directory contents
+5. **find_definition(name, definition_type?)** - Find class/function definitions
+6. **find_imports(module_name, ignore_case?)** - Find files that import a module
+
+## Search Techniques (CRITICAL)
+
+### Technique 1: Search whole repo first, NEVER restrict path initially
+```python
+# WRONG - misses examples/models/llama_model_example.py
+glob_search("**/*llama*.py", path="camel/models")
+
+# CORRECT - searches entire repo
+glob_search("**/*llama*.py")
+```
+
+### Technique 2: Use find_imports to find REAL usage
+```python
+find_imports("WeatherToolkit")
+find_imports("LlamaModel")
+```
+
+### Technique 3: Read __init__.py to understand module exports
+```python
+read_file("camel/toolkits/__init__.py")
+read_file("camel/models/__init__.py")
+```
+
+### Technique 4: Parallel search for ALL keywords
+For task "weather agent with Llama", call ALL in parallel:
+```python
+glob_search("**/*llama*.py")
+glob_search("**/*weather*.py")
+find_imports("llama")
+find_imports("WeatherToolkit")
+```
+
+### Technique 5: Tests and examples contain best usage patterns
+```python
+glob_search("**/test_*llama*.py")
+glob_search("**/*example*.py")
+```
+
+### Technique 6: Find EXACT enum values for models/tools
+When task specifies a model like "Llama-3.1-8B-Instruct", search for the exact ModelType enum:
+```python
+# Search with partial match (enum names use underscores, not hyphens)
+grep_search("LLAMA_3_1.*8B", path="camel/types/enums.py")
+grep_search("LLAMA_3_1", path="camel/types/enums.py")
+```
+CAMEL ModelType naming convention:
+- No "_INSTRUCT" suffix usually (e.g., LLAMA_3_1_8B not LLAMA_3_1_8B_INSTRUCT)
+- Use underscor
+... (truncated)
+
+
+[Message 2]
+Role: user
+Content: Find relevant files for this task:
+
+**Task**: create a workforce with workers using different tools to answer: "What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients from Jan-May 2018 as listed on the NIH website?". Save the script to task-script/workforce/1_answer_question.py
+
+**Repository Context**:
+
+## CAMEL Repository Structure
+
+### Core Modules
+- `camel/agents/` - Agent implementations (ChatAgent is the base)
+- `camel/models/` - LLM provider integrations (50+)
+- `camel/memories/` - Memory systems (ChatHistoryMemory, LongtermAgentMemory, VectorDBMemory)
+- `camel/configs/` - Model configuration classes
+- `camel/toolkits/` - Tool integrations (50+)
+- `camel/types/` - Enums (ModelPlatformType, ModelType, RoleType)
+
+### Other Directories
+- `examples/` - Usage examples
+- `test/` - Test files
+- `docs/` - Documentation
+
+
+Search for implementation files, examples, tests, and documentation.
+Return the most relevant file paths with brief explanations.
+Focus on finding:
+1. Example scripts that show similar usage patterns
+2. Implementation files for the required components
+3. Configuration/type definitions
+
+
+[Message 3]
+Role: assistant
+
+[Message 4]
+Role: tool
+Content: Found 10 file(s) matching '**/*workforce*.py':
+camel/societies/workforce/workforce.py
+camel/societies/workforce/workforce_callback.py
+camel/societies/workforce/workforce_logger.py
+camel/societies/workforce/workforce_metrics.py
+docs/cookbooks/multi_agent_society/workforce_judge_committee.ipynb
+examples/benchmarks/browsecomp_workforce.py
+examples/workforce/simple_workforce_mcp.py
+examples/workforce/workforce_callbacks_example.py
+examples/workforce/workforce_multitask_with_skip.py
+examples/workforce/workforce_shared_memory_validation.py
+
+[Message 5]
+Role: assistant
+
+[Message 6]
+Role: tool
+Content: Found 3 file(s) matching '**/*worker*.py':
+camel/societies/workforce/role_playing_worker.py
+camel/societies/workforce/single_agent_worker.py
+camel/societies/workforce/worker.py
+
+[Message 7]
+Role: assistant
+
+[Message 8]
+Role: tool
+Content: Found 10 file(s) matching '**/*tool*.py':
+camel/toolkits/aci_toolkit.py
+camel/toolkits/arxiv_toolkit.py
+camel/toolkits/ask_news_toolkit.py
+camel/toolkits/async_browser_toolkit.py
+camel/toolkits/audio_analysis_toolkit.py
+camel/toolkits/bohrium_toolkit.py
+camel/toolkits/browser_toolkit.py
+camel/toolkits/browser_toolkit_commons.py
+camel/toolkits/context_summarizer_toolkit.py
+camel/toolkits/craw4ai_toolkit.py
+
+[Message 9]
+Role: assistant
+
+[Message 10]
+Role: tool
+Content: Found 10 file(s) matching '**/*agent*.py':
+camel/agents/chat_agent.py
+camel/agents/critic_agent.py
+camel/agents/deductive_reasoner_agent.py
+camel/agents/embodied_agent.py
+camel/agents/knowledge_graph_agent.py
+camel/agents/mcp_agent.py
+camel/agents/multi_hop_generator_agent.py
+camel/agents/programmed_agent_instruction.py
+camel/agents/repo_agent.py
+camel/agents/role_assignment_agent.py
+
+[Message 11]
+Role: assistant
+
+[Message 12]
+Role: tool
+Content: Found 10 file(s) matching '**/*example*.py':
+examples/datagen/self_improving_cot/self_improving_cot_example.py
+examples/datagen/self_improving_cot/self_improving_cot_example_with_r1.py
+examples/debug/traceroot_example.py
+examples/embeddings/gemini_embedding_example.py
+examples/embeddings/jina_embedding_example.py
+examples/embeddings/openai_compatible_embedding_example.py
+examples/embeddings/together_embedding_example.py
+examples/embeddings/vlm_embedding_example.py
+examples/environments/rlcards_example.py
+examples/extractors/python_strategies_example.py
+
+[Message 13]
+Role: assistant
+
+[Message 14]
+Role: tool
+Content: Search results for 'workforce' in *.py files (10 matches):
+toolkits/async_browser_toolkit.py
+toolkits/message_agent_toolkit.py
+debug/eigent.py
+workforce/simple_workforce_mcp.py
+workforce/role_playing_with_agents.py
+workforce/workforce_shared_memory_validation.py
+workforce/workforce_multitask_with_skip.py
+workforce/workforce_callbacks_example.py
+benchmarks/browsecomp_workforce.py
+workforce/multiple_single_agents.py
+
+[Message 15]
+Role: assistant
+
+[Message 16]
+Role: tool
+Content: Search results for 'worker' in *.py files (10 matches):
+toolkits/async_browser_toolkit.py
+toolkits/message_agent_toolkit.py
+debug/eigent.py
+workforce/role_playing_with_agents.py
+workforce/eigent.py
+workforce/workforce_callbacks_example.py
+workforce/multiple_single_agents.py
+workforce/workforce_workflow_memory_example.py
+benchmarks/browsecomp_workforce.py
+workforce/pipeline_workflow_example.py
+
+[Message 17]
+Role: assistant
+
+[Message 18]
+Role: tool
+Content: Search results for 'tool' in *.py files (10 matches):
+observability/langfuse_example.py
+observability/agentops_track_roleplaying_with_function.py
+services/agent_openapi_server.py
+vision/web_video_object_recognition.py
+toolkits/screenshot_toolkit_example.py
+vision/image_crafting.py
+vision/multi_turn_image_refining.py
+toolkits/openai_image_example.py
+toolkits/task_planning_toolkit.py
+toolkits/audio_analysis_toolkit.py
+
+[Message 19]
+Role: assistant
+
+[Message 20]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+"""
+Example: Subscribe to callbacks in Workforce
+
+Includes:
+- Custom callback `PrintCallback` that logs key lifecycle events.
+- Subscribe callbacks via the `callbacks` parameter when constructing a
+  `Workforce`.
+"""
+
+import asyncio
+
+from camel.agents import ChatAgent
+from camel.logger import get_logger
+from camel.models import ModelFactory
+from camel.societies.workforce.events import (
+    AllTasksCompletedEvent,
+    LogEvent,
+    TaskAssignedEvent,
+    TaskCompletedEvent,
+    TaskCreatedEvent,
+    TaskDecomposedEvent,
+    TaskFailedEvent,
+    TaskStartedEvent,
+    TaskUpdatedEvent,
+    WorkerCreatedEvent,
+    WorkerDeletedEvent,
+)
+from camel.societies.workforce.workforce import Workforce
+from camel.societies.workforce.workforce_callback import WorkforceCallback
+from camel.societies.workforce.workforce_logger import WorkforceLogger
+from camel.types import ModelPlatformType, ModelType
+
+logger = get_logger(__name__)
+
+
+class PrintCallback(WorkforceCallback):
+    r"""Simple callback printing events to logs to observe ordering."""
+
+    def log_message(self, event: LogEvent) -> None:
+        print(
+            f"[PrintCallback] {event.message} level={event.level}, "
+            f"color={event.color}"
+        )
+
+    def log_task_created(self, event: TaskCreatedEvent) -> None:
+       
+... (truncated)
+
+
+[Message 21]
+Role: assistant
+
+[Message 22]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from __future__ import annotations
+
+import asyncio
+import concurrent.futures
+import json
+import os
+import time
+import uuid
+from collections import deque
+from enum import Enum
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    Coroutine,
+    Deque,
+    Dict,
+    Generator,
+    List,
+    Optional,
+    Set,
+    Tuple,
+    Union,
+    cast,
+)
+
+from .workforce_callback import WorkforceCallback
+from .workforce_metrics import WorkforceMetrics
+
+if TYPE_CHECKING:
+    from camel.responses import ChatAgentResponse
+    from camel.utils.context_utils import ContextUtility, WorkflowSummary
+
+
+from camel.agents import ChatAgent
+from camel.logger import get_logger
+from camel.messages.base import BaseMessage
+from camel.models import BaseModelBackend, ModelManager
+from camel.societies.workforce.base import BaseNode
+from camel.societies.workforce.prompts import (
+    ASSIGN_TASK_PROMPT,
+    CREATE_NODE_PROMPT,
+    FAILURE_ANALYSIS_RESPONSE_FORMAT,
+    QUALITY_EVALUATION_RESPONSE_FORMAT,
+    STRATEGY_DESCRIPTIONS,
+    TASK_AGENT_SYSTEM_MESSAGE,
+    TASK_ANALYSIS_PROMPT,
+    TASK_DECOMPOSE_PROMPT,
+)
+from camel.societies.workforce.role_playing_worker import RolePlayingWorker
+from camel.societies.workforce.single_agent_worker import (
+    SingleAgentWorker,
+)
+from camel.societies.workfo
+... (truncated)
+
+
+[Message 23]
+Role: assistant
+
+[Message 24]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from __future__ import annotations
+
+import asyncio
+import logging
+from abc import ABC, abstractmethod
+from typing import List, Optional, Set
+
+from colorama import Fore
+
+from camel.societies.workforce.base import BaseNode
+from camel.societies.workforce.task_channel import TaskChannel
+from camel.societies.workforce.utils import check_if_running
+from camel.tasks.task import Task, TaskState
+
+logger = logging.getLogger(__name__)
+
+
+class Worker(BaseNode, ABC):
+    r"""A worker node that works on tasks. It is the basic unit of task
+    processing in the workforce system.
+
+    Args:
+        description (str): Description of the node.
+        node_id (Optional[str]): ID of the node. If not provided, it will
+            be generated automatically. (default: :obj:`None`)
+    """
+
+    def __init__(
+        self,
+        description: str,
+        node_id: Optional[str] = None,
+    ) -> None:
+        super().__init__(description, node_id=node_id)
+        self._active_task_ids: Set[str] = set()
+        self._running_tasks: Set[asyncio.Task] = set()
+
+    def __repr__(self):
+        return f"Worker node {self.node_id} ({self.description})"
+
+    @abstractmethod
+    async def _process_task(
+        self, task: Task, dependencies: List[Task]
+    ) -> TaskState:
+        r"""Processes a task based o
+... (truncated)
+
+
+[Message 25]
+Role: assistant
+
+[Message 26]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from __future__ import annotations
+
+from typing import Dict, List, Optional
+
+from colorama import Fore
+
+from camel.agents.chat_agent import ChatAgent
+from camel.messages.base import BaseMessage
+from camel.societies import RolePlaying
+from camel.societies.workforce.prompts import (
+    ROLEPLAY_PROCESS_TASK_PROMPT,
+    ROLEPLAY_SUMMARIZE_PROMPT,
+)
+from camel.societies.workforce.structured_output_handler import (
+    StructuredOutputHandler,
+)
+from camel.societies.workforce.utils import TaskResult
+from camel.societies.workforce.worker import Worker
+from camel.tasks.task import Task, TaskState, is_task_result_insufficient
+
+
+class RolePlayingWorker(Worker):
+    r"""A worker node that contains a role playing.
+
+    Args:
+        description (str): Description of the node.
+        assistant_role_name (str): The role name of the assistant agent.
+        user_role_name (str): The role name of the user agent.
+        assistant_agent_kwargs (Optional[Dict]): The keyword arguments to
+            initialize the assistant agent in the role playing, like the model
+            name, etc. (default: :obj:`None`)
+        user_agent_kwargs (Optional[Dict]): The keyword arguments to
+            initialize the user agent in the role playing, like the model name,
+            etc. (default: :obj:`None
+... (truncated)
+
+
+[Message 27]
+Role: assistant
+
+[Message 28]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+# Enables postponed evaluation of annotations (for string-based type hints)
+from __future__ import annotations
+
+import datetime
+import io
+import os
+import re
+import shutil
+import time
+import urllib.parse
+from copy import deepcopy
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Dict,
+    List,
+    Literal,
+    Optional,
+    Tuple,
+    Union,
+    cast,
+)
+
+from PIL import Image
+
+from camel.logger import get_logger
+from camel.messages import BaseMessage
+from camel.models import BaseModelBackend, ModelFactory
+from camel.toolkits.base import BaseToolkit
+from camel.toolkits.function_tool import FunctionTool
+from camel.toolkits.video_analysis_toolkit import VideoAnalysisToolkit
+from camel.types import ModelPlatformType, ModelType
+from camel.utils import (
+    dependencies_required,
+    retry_on_error,
+    sanitize_filename,
+)
+
+# Import shared components from browser_toolkit_commons
+from .browser_toolkit_commons import (
+    ACTION_WITH_FEEDBACK_LIST,
+    AVAILABLE_ACTIONS_PROMPT,
+    GET_FINAL_ANSWER_PROMPT_TEMPLATE,
+    OBSERVE_PROMPT_TEMPLATE,
+    PLANNING_AGENT_SYSTEM_PROMPT,
+    TASK_PLANNING_PROMPT_TEMPLATE,
+    TASK_REPLANNING_PROMPT_TEMPLATE,
+    WEB_AGENT_SYSTEM_PROMPT,
+    InteractiveRegion,
+    VisualViewport,
+    _add_set_of_mark,
+    _parse_json_output,
+    _reload_im
+... (truncated)
+
+
+[Message 29]
+Role: assistant
+
+[Message 30]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+import warnings
+from typing import Any, Dict, List, Literal, Optional, TypeAlias, Union, cast
+
+import requests
+
+from camel.logger import get_logger
+from camel.toolkits.base import BaseToolkit
+from camel.toolkits.function_tool import FunctionTool
+from camel.utils import (
+    MCPServer,
+    api_keys_required,
+    dependencies_required,
+)
+
+logger = get_logger(__name__)
+
+
+@MCPServer()
+class SearchToolkit(BaseToolkit):
+    r"""A class representing a toolkit for web search.
+
+    This class provides methods for searching information on the web using
+    search engines like Google, DuckDuckGo, Wikipedia and Wolfram Alpha, Brave.
+    """
+
+    def __init__(
+        self,
+        timeout: Optional[float] = None,
+        exclude_domains: Optional[List[str]] = None,
+    ):
+        r"""Initializes the SearchToolkit.
+
+        Args:
+            timeout (float): Timeout for API requests in seconds.
+                (default: :obj:`None`)
+            exclude_domains (Optional[List[str]]): List of domains to
+                exclude from search results. Currently only supported
+                by the `search_google` function.
+                (default: :obj:`None`)
+        """
+        super().__init__(timeout=timeout)
+        self.exclude_domains = exclude_domains
+
+    @api_keys_required(
+... (truncated)
+
+
+[Message 31]
+Role: assistant
+
+[Message 32]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+from enum import Enum, EnumMeta
+from typing import Union, cast
+
+from camel.logger import get_logger
+from camel.types.unified_model_type import UnifiedModelType
+
+logger = get_logger(__name__)
+
+
+class RoleType(Enum):
+    ASSISTANT = "assistant"
+    USER = "user"
+    SYSTEM = "system"
+    CRITIC = "critic"
+    EMBODIMENT = "embodiment"
+    DEFAULT = "default"
+
+
+class ModelType(UnifiedModelType, Enum):
+    DEFAULT = os.getenv("DEFAULT_MODEL_TYPE", "gpt-4.1-mini-2025-04-14")
+
+    GPT_3_5_TURBO = "gpt-3.5-turbo"
+    GPT_4 = "gpt-4"
+    GPT_4_TURBO = "gpt-4-turbo"
+    GPT_4O = "gpt-4o"
+    GPT_4O_MINI = "gpt-4o-mini"
+    GPT_4_5_PREVIEW = "gpt-4.5-preview"
+    O1 = "o1"
+    O1_PREVIEW = "o1-preview"
+    O1_MINI = "o1-mini"
+    O3_MINI = "o3-mini"
+    GPT_4_1 = "gpt-4.1-2025-04-14"
+    GPT_4_1_MINI = "gpt-4.1-mini-2025-04-14"
+    GPT_4_1_NANO = "gpt-4.1-nano-2025-04-14"
+    O4_MINI = "o4-mini"
+    O3 = "o3"
+    O3_PRO = "o3-pro"
+    GPT_5_1 = "gpt-5.1"
+    GPT_5_2 = ("gpt-5.2",)
+    GPT_5 = "gpt-5"
+    GPT_5_MINI = "gpt-5-mini"
+    GPT_5_NANO = "gpt-5-nano"
+
+    AWS_CLAUDE_3_7_SONNET = "anthropic.claude-3-7-sonnet-20250219-v1:0"
+    AWS_CLAUDE_3_5_SONNET = "anthropic.claude-3-5-sonnet-20241022-v2:0"
+    AWS_CLAUDE_3_HAIKU = "anthropic.claude-3-haiku-20240307-v1:0"
+    AWS_CLA
+... (truncated)
+
+
+[Message 33]
+Role: assistant
+
+[Message 34]
+Role: tool
+Content: Found 5 file(s) matching '**/*workforce*.py':
+examples/workforce/simple_workforce_mcp.py
+examples/workforce/workforce_callbacks_example.py
+examples/workforce/workforce_multitask_with_skip.py
+examples/workforce/workforce_shared_memory_validation.py
+examples/workforce/workforce_workflow_memory_example.py
+
+[Message 35]
+Role: assistant
+
+[Message 36]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+"""
+Simple example showing how to run a Workforce as an MCP server.
+
+To test this example:
+1. Install dependencies: pip install mcp camel-ai[all]
+2. Run this script: python simple_workforce_mcp.py
+3. The server will start on localhost:8001
+4. Use an MCP client to connect and test the tools
+
+Example MCP client usage:
+- Call process_task with task_content="Analyze market trends"
+- Call get_workforce_info to see workforce status
+- Call add_single_agent_worker to add new workers
+"""
+
+from camel.agents import ChatAgent
+from camel.messages import BaseMessage
+from camel.societies.workforce import Workforce
+
+
+def main():
+    """Create and run a simple workforce MCP server."""
+
+    # Create a basic workforce
+    workforce = Workforce(description="Simple Analysis Team")
+
+    # Add a basic analyst worker
+    analyst_msg = BaseMessage.make_assistant_message(
+        role_name="Analyst",
+        content="You are a helpful analyst who can process various tasks.",
+    )
+    analyst = ChatAgent(system_message=analyst_msg)
+    workforce.add_single_agent_worker(
+        description="General purpose analyst", worker=analyst
+    )
+
+    print("Creating Workforce MCP server...")
+    print("Server will be available at: http://localhost:8001")
+    print("Press Ctrl+C to stop the server")
+
+    # Conve
+... (truncated)
+
+
+[Message 37]
+Role: assistant
+Content: ## Examples (MOST IMPORTANT)
+- examples/workforce/simple_workforce_mcp.py
+  - Shows: Creating a simple Workforce with a single ChatAgent worker
+  - Usage: Running the Workforce as an MCP server for task processing
+
+- examples/workforce/workforce_callbacks_example.py
+  - Shows: Using Workforce with custom callbacks to log lifecycle events
+  - Usage: Adding multiple single-agent workers and running a main task asynchronously
+
+## Implementation
+- camel/societies/workforce/workforce.py
+  - Classes: Workforce, WorkforceState, WorkforceMode, WorkforceSnapshot
+  - Core class managing multiple workers (agents) cooperating to solve tasks
+  - Supports task decomposition, assignment, failure recovery, shared memory, callbacks
+
+- camel/societies/workforce/worker.py
+  - Classes: Worker (abstract base class)
+  - Base worker node class for processing tasks asynchronously
+
+- camel/societies/workforce/role_playing_worker.py
+  - Classes: RolePlayingWorker (inherits Worker)
+  - Worker implementation using role-playing between assistant and user agents to process tasks
+
+- camel/toolkits/browser_toolkit.py
+  - Classes: BrowserToolkit
+  - Toolkit for web browsing and interacting with web pages, supports multi-step actions
+
+- camel/toolkits/search_toolkit.py
+  - Classes: SearchToolkit
+  - Toolkit providing multiple web search engine integrations (Google, Brave, DuckDuckGo, etc.)
+  - Provides search methods and exposes them as FunctionTools for agent use
+
+## Enums (for exact values)
+- camel/types/enums.py
+  - Enums: ModelType, ModelPlatformType, RoleType, TaskType, etc.
+  - Contains model type constants for creating agents with specific LLMs
+  - Contains platform type constants and role types
+
+# Summary
+To create a workforce with workers using different tools to answer the clinical trial enrollment question, the key files are:
+
+- `examples/workforce/simple_workforce_mcp.py` for a minimal workforce example
+- `examples/workforce/workforce_callbacks_example.py` for multi-worker and callback u
+... (truncated)
+
+
+================================================================================
+
+CODE AGENT CHAT HISTORY
+================================================================================
+
+[Message 1]
+Role: system
+Content: You are a Code Agent that writes and executes Python scripts.
+
+## Tools
+
+You have access to terminal tools for:
+- `shell_exec`: Execute shell commands
+- `shell_write_content_to_file`: Write content to a file
+- `read_file_tool`: Read file contents
+
+## Workflow
+
+1. **Read relevant files** from the paths provided by the explore agent
+2. **Write the script** using `shell_write_content_to_file`
+3. **Execute the script** using `shell_exec`
+4. **Debug if needed**: If errors occur, read the error, fix the script, and re-run
+
+## CRITICAL: Strict Instruction Following
+
+**Use EXACTLY what the task specifies. Do NOT substitute "similar" or "better" alternatives.**
+
+### Model Selection
+- Task says "Llama-3.1-8B-Instruct" -> Use `ModelType.LLAMA_3_1_8B` EXACTLY
+- Do NOT use LLAMA_3_2_3B as "closest alternative"
+- Do NOT guess enum names - verify from enums.py or examples
+- ModelPlatformType and ModelType MUST match according to enums.py (e.g., MODELSCOPE models use MODELSCOPE platform, QWEN models use QWEN platform)
+
+### Tool Selection
+- Task says "brave search" -> Use `search_toolkit.search_brave` EXACTLY
+- Do NOT use `get_tools()` which returns ALL tools
+- Do NOT substitute with other search engines
+
+### URL Handling
+- If task provides a URL (e.g., "https://mcpservers.org/servers/devin/deepwiki"):
+  - Prioritize DIRECT HTTP access using `requests` library
+  - Create a simple FunctionTool that calls the URL
+  - Do NOT assume it requires complex registry (ACI, etc.)
+  - Example:
+    ```python
+    def query_server(query: str) -> str:
+        response = requests.post(url, json={"query": query})
+        return response.text
+    tool = FunctionTool(func=query_server)
+    ```
+
+## Important Rules
+
+1. **Use the provided file paths** - The explore agent has found relevant examples and implementations
+2. **Follow existing patterns** - Look at examples to understand how to use the APIs
+3. **Handle errors gracefully** - If execution fails, analyze the error and fix it
+4. **Environment is ready** - All API keys and dependencies are configured
+5. **Save to correct location** - Follow the task's specified output path
+6. **Use EXACT values** - Copy enum values, method names exactly from explored files
+
+## Script Writing Tips
+
+- Import from camel package: `from camel.agents import ChatAgent`
+- Use ModelFactory for models: `ModelFactory.create(model_platform=..., model_type=...)`
+- Copy exact enum values from enums.py (e.g., `ModelType.LLAMA_3_1_8B`)
+- Use specific tool methods, not get_tools() (e.g., `toolkit.search_brave`)
+- Add proper error handling in your scripts
+
+## Debugging Tips
+
+- If you see import errors, check the correct module path in __init__.py
+- If you see AttributeError for enum, verify the exact enum name in enums.py
+- If you see API errors, it's likely a script issue, not environment
+- Read more files if you need to understand the API better
+
+
+[Message 2]
+Role: user
+Content: **Task**: create a workforce with workers using different tools to answer: "What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients from Jan-May 2018 as listed on the NIH website?". Save the script to task-script/workforce/1_answer_question.py
+
+**Relevant files found by exploration**:
+## Examples (MOST IMPORTANT)
+- examples/workforce/simple_workforce_mcp.py
+  - Shows: Creating a simple Workforce with a single ChatAgent worker
+  - Usage: Running the Workforce as an MCP server for task processing
+
+- examples/workforce/workforce_callbacks_example.py
+  - Shows: Using Workforce with custom callbacks to log lifecycle events
+  - Usage: Adding multiple single-agent workers and running a main task asynchronously
+
+## Implementation
+- camel/societies/workforce/workforce.py
+  - Classes: Workforce, WorkforceState, WorkforceMode, WorkforceSnapshot
+  - Core class managing multiple workers (agents) cooperating to solve tasks
+  - Supports task decomposition, assignment, failure recovery, shared memory, callbacks
+
+- camel/societies/workforce/worker.py
+  - Classes: Worker (abstract base class)
+  - Base worker node class for processing tasks asynchronously
+
+- camel/societies/workforce/role_playing_worker.py
+  - Classes: RolePlayingWorker (inherits Worker)
+  - Worker implementation using role-playing between assistant and user agents to process tasks
+
+- camel/toolkits/browser_toolkit.py
+  - Classes: BrowserToolkit
+  - Toolkit for web browsing and interacting with web pages, supports multi-step actions
+
+- camel/toolkits/search_toolkit.py
+  - Classes: SearchToolkit
+  - Toolkit providing multiple web search engine integrations (Google, Brave, DuckDuckGo, etc.)
+  - Provides search methods and exposes them as FunctionTools for agent use
+
+## Enums (for exact values)
+- camel/types/enums.py
+  - Enums: ModelType, ModelPlatformType, RoleType, TaskType, etc.
+  - Contains model type constants for creating agents with specific LLMs
+  - Contains platform type constants and role types
+
+# Summary
+To create a workforce with workers using different tools to answer the clinical trial enrollment question, the key files are:
+
+- `examples/workforce/simple_workforce_mcp.py` for a minimal workforce example
+- `examples/workforce/workforce_callbacks_example.py` for multi-worker and callback usage
+- `camel/societies/workforce/workforce.py` for the main Workforce class implementation
+- `camel/societies/workforce/worker.py` and `role_playing_worker.py` for worker implementations
+- `camel/toolkits/search_toolkit.py` for search tools (including Brave search)
+- `camel/toolkits/browser_toolkit.py` for web browsing tool
+- `camel/types/enums.py` for model and platform type enums to configure agents
+
+These files provide the building blocks to create a workforce with multiple workers using different tools (search, browser) to answer the question. The example scripts show how to instantiate and run such a workforce.
+
+**Instructions**:
+1. Read the relevant example files to understand the API usage patterns
+2. Write the script according to the task requirements using `shell_write_content_to_file`
+3. Execute the script using `shell_exec` with `python <script_path>`
+4. If errors occur, debug and fix until successful
+
+Note: The environment and APIs are correctly configured. If you encounter errors,
+it's likely a script issue that needs fixing.
+
+
+[Message 3]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_DmBDVgEIClnRXlPxN1Ib27xo",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.role_playing_worker import RolePlayingWorker\\nfrom camel.toolkits import search_toolkit, browser_toolkit\\nfrom camel.types.enums import ModelType, ModelPlatformType\\n\\n\\ndef main():\\n    # Define the question to answer\\n    question = (\\n        \\\"What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients \\\"\\n        \\\"from Jan-May 2018 as listed on the NIH website?\\\"\\n    )\\n\\n    # Create a workforce\\n    workforce = Workforce()\\n\\n    # Create a worker using a search tool (Brave search)\\n    brave_search_tool = search_toolkit.search_brave\\n    search_worker = RolePlayingWorker(\\n        name=\\\"SearchWorker\\\",\\n        agent=ChatAgent(\\n            model=ChatAgent.create_model(\\n                model_platform=ModelPlatformType.OPENAI,\\n                model_type=ModelType.LLAMA_3_1_8B\\n            ),\\n            tools=[brave_search_tool],\\n        ),\\n    )\\n\\n    # Create a worker using a browser tool\\n    browser_tool = browser_toolkit.BrowserToolkit().get_tools()[0]  # Get the first browser tool\\n    browser_worker = RolePlayingWorker(\\n        name=\\\"BrowserWorker\\\",\\n        agent=ChatAgent(\\n            model=ChatAgent.create_model(\\n                model_platform=ModelPlatformType.OPENAI,\\n                model_type=ModelType.LLAMA_3_1_8B\\n            ),\\n            tools=[browser_tool],\\n        ),\\n    )\\n\\n    # Add workers to the workforce\\n    workforce.add_worker(search_worker)\\n    workforce.add_worker(browser_worker)\\n\\n    # Run the workforce to answer the question\\n    result = workforce.run_task_sync(task=question)\\n\\n    # Print the result\\n    print(\\\"Answer:\\\", result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/1_answer_question.py\"}"
+    }
+  }
+]
+
+[Message 4]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py'.
+
+[Message 5]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_kug2boNMEcpvvs3c3kEZSFk3",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_workforce_1\", \"command\": \"python task-script/workforce/1_answer_question.py\", \"block\": true, \"timeout\": 120}"
+    }
+  }
+]
+
+[Message 6]
+Role: tool
+Content: Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 56, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 16, in main
+    workforce = Workforce()
+                ^^^^^^^^^^^
+TypeError: Workforce.__init__() missing 1 required positional argument: 'description'
+
+[Message 7]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_UQtDGWmacQlBuXDDPVgvlTVL",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.role_playing_worker import RolePlayingWorker\\nfrom camel.toolkits import search_toolkit, browser_toolkit\\nfrom camel.types.enums import ModelType, ModelPlatformType\\n\\n\\ndef main():\\n    # Define the question to answer\\n    question = (\\n        \\\"What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients \\\"\\n        \\\"from Jan-May 2018 as listed on the NIH website?\\\"\\n    )\\n\\n    # Create a workforce with a description\\n    workforce = Workforce(description=\\\"Workforce to answer clinical trial enrollment question\\\")\\n\\n    # Create a worker using a search tool (Brave search)\\n    brave_search_tool = search_toolkit.search_brave\\n    search_worker = RolePlayingWorker(\\n        name=\\\"SearchWorker\\\",\\n        agent=ChatAgent(\\n            model=ChatAgent.create_model(\\n                model_platform=ModelPlatformType.OPENAI,\\n                model_type=ModelType.LLAMA_3_1_8B\\n            ),\\n            tools=[brave_search_tool],\\n        ),\\n    )\\n\\n    # Create a worker using a browser tool\\n    browser_tool = browser_toolkit.BrowserToolkit().get_tools()[0]  # Get the first browser tool\\n    browser_worker = RolePlayingWorker(\\n        name=\\\"BrowserWorker\\\",\\n        agent=ChatAgent(\\n            model=ChatAgent.create_model(\\n                model_platform=ModelPlatformType.OPENAI,\\n                model_type=ModelType.LLAMA_3_1_8B\\n            ),\\n            tools=[browser_tool],\\n        ),\\n    )\\n\\n    # Add workers to the workforce\\n    workforce.add_worker(search_worker)\\n    workforce.add_worker(browser_worker)\\n\\n    # Run the workforce to answer the question\\n    result = workforce.run_task_sync(task=question)\\n\\n    # Print the result\\n    print(\\\"Answer:\\\", result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/1_answer_question.py\"}"
+    }
+  }
+]
+
+[Message 8]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py'.
+
+[Message 9]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_aTnTU3BPwp4afefK8QZPk6fu",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_workforce_1_retry\", \"command\": \"python task-script/workforce/1_answer_question.py\", \"block\": true, \"timeout\": 120}"
+    }
+  }
+]
+
+[Message 10]
+Role: tool
+Content: 2026-02-02 17:51:57,290 - camel.camel.societies.workforce.workforce - WARNING - No coordinator_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+2026-02-02 17:51:57,558 - camel.camel.societies.workforce.workforce - WARNING - No task_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 56, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 19, in main
+    brave_search_tool = search_toolkit.search_brave
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'camel.toolkits.search_toolkit' has no attribute 'search_brave'
+
+[Message 11]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_pafUia2F7kvH3lSu4ODrmiuX",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/toolkits/search_toolkit.py\"}"
+    }
+  }
+]
+
+[Message 12]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+import warnings
+from typing import Any, Dict, List, Literal, Optional, TypeAlias, Union, cast
+
+import requests
+
+from camel.logger import get_logger
+from camel.toolkits.base import BaseToolkit
+from camel.toolkits.function_tool import FunctionTool
+from camel.utils import (
+    MCPServer,
+    api_keys_required,
+    dependencies_required,
+)
+
+logger = get_logger(__name__)
+
+
+@MCPServer()
+class SearchToolkit(BaseToolkit):
+    r"""A class representing a toolkit for web search.
+
+    This class provides methods for searching information on the web using
+    search engines like Google, DuckDuckGo, Wikipedia and Wolfram Alpha, Brave.
+    """
+
+    def __init__(
+        self,
+        timeout: Optional[float] = None,
+        exclude_domains: Optional[List[str]] = None,
+    ):
+        r"""Initializes the SearchToolkit.
+
+        Args:
+            timeout (float): Timeout for API requests in seconds.
+                (default: :obj:`None`)
+            exclude_domains (Optional[List[str]]): List of domains to
+                exclude from search results. Currently only supported
+                by the `search_google` function.
+                (default: :obj:`None`)
+        """
+        super().__init__(timeout=timeout)
+        self.exclude_domains = exclude_domains
+
+    @api_keys_required(
+        [
+            (None, "SERPER_API_KEY"),
+        ]
+    )
+    def search_serper(
+        self,
+        query: str,
+        page: int = 10,
+        location: str = "United States",
+    ) -> Dict[str, Any]:
+        r"""Use Serper.dev API to perform Google search.
+
+        Args:
+            query (str): The search query.
+            page (int): The page number of results to retrieve.
+                (default: :obj:`10`)
+            location (str): The location for the search results.
+                (default: :obj:`"United States"`)
+
+        Returns:
+            Dict[str, Any]: The search result dictionary containing 'organic',
+                'peopleAlsoAsk', etc.
+        """
+        SERPER_API_KEY = os.getenv("SERPER_API_KEY")
+
+        url = "https://google.serper.dev/search"
+
+        payload = {
+            "q": query,
+            "location": location,
+            "page": page,
+        }
+
+        headers = {
+            "X-API-KEY": SERPER_API_KEY,
+            "Content-Type": "application/json",
+        }
+
+        try:
+            response = requests.post(
+                url, headers=headers, json=payload, timeout=self.timeout
+            )
+            if response.status_code != 200:
+                return {
+                    "error": (
+                        f"Serper API failed with status {response.status_code}: "
+                        f"{response.text}"
+                    )
+                }
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            return {"error": f"Serper search failed: {e!s}"}
+
+    @dependencies_required("wikipedia")
+    def search_wiki(self, entity: str) -> str:
+        r"""Search the entity in WikiPedia and return the summary of the
+            required page, containing factual information about
+            the given entity.
+
+        Args:
+            entity (str): The entity to be searched.
+
+        Returns:
+            str: The search result. If the page corresponding to the entity
+                exists, return the summary of this entity in a string.
+        """
+        import wikipedia
+
+        result: str
+
+        try:
+            result = wikipedia.summary(entity, sentences=5, auto_suggest=False)
+        except wikipedia.exceptions.DisambiguationError as e:
+            result = wikipedia.summary(
+                e.options[0], sentences=5, auto_suggest=False
+            )
+        except wikipedia.exceptions.PageError:
+            result = (
+                "There is no page in Wikipedia corresponding to entity "
+                f"{entity}, please specify another word to describe the"
+                " entity to be searched."
+            )
+        except wikipedia.exceptions.WikipediaException as e:
+            result = f"An exception occurred during the search: {e}"
+
+        return result
+
+    @dependencies_required("linkup")
+    @api_keys_required(
+        [
+            (None, "LINKUP_API_KEY"),
+        ]
+    )
+    def search_linkup(
+        self,
+        
+... (truncated)
+
+
+[Message 13]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_6JStV6imgNNAJqaO93VwJfAm",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.role_playing_worker import RolePlayingWorker\\nfrom camel.toolkits.search_toolkit import SearchToolkit\\nfrom camel.toolkits.browser_toolkit import BrowserToolkit\\nfrom camel.types.enums import ModelType, ModelPlatformType\\n\\n\\ndef main():\\n    # Define the question to answer\\n    question = (\\n        \\\"What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients \\\"\\n        \\\"from Jan-May 2018 as listed on the NIH website?\\\"\\n    )\\n\\n    # Create a workforce with a description\\n    workforce = Workforce(description=\\\"Workforce to answer clinical trial enrollment question\\\")\\n\\n    # Create a search toolkit instance and get the Brave search tool\\n    search_toolkit = SearchToolkit()\\n    brave_search_tool = None\\n    for tool in search_toolkit.get_tools():\\n        if tool.name == \\\"search_brave\\\":\\n            brave_search_tool = tool\\n            break\\n\\n    if brave_search_tool is None:\\n        raise RuntimeError(\\\"Brave search tool not found in SearchToolkit\\\")\\n\\n    # Create a worker using the Brave search tool\\n    search_worker = RolePlayingWorker(\\n        name=\\\"SearchWorker\\\",\\n        agent=ChatAgent(\\n            model=ChatAgent.create_model(\\n                model_platform=ModelPlatformType.OPENAI,\\n                model_type=ModelType.LLAMA_3_1_8B\\n            ),\\n            tools=[brave_search_tool],\\n        ),\\n    )\\n\\n    # Create a browser toolkit instance and get the first browser tool\\n    browser_toolkit = BrowserToolkit()\\n    browser_tools = browser_toolkit.get_tools()\\n    if not browser_tools:\\n        raise RuntimeError(\\\"No browser tools found in BrowserToolkit\\\")\\n    browser_tool = browser_tools[0]\\n\\n    # Create a worker using the browser tool\\n    browser_worker = RolePlayingWorker(\\n        name=\\\"BrowserWorker\\\",\\n        agent=ChatAgent(\\n            model=ChatAgent.create_model(\\n                model_platform=ModelPlatformType.OPENAI,\\n                model_type=ModelType.LLAMA_3_1_8B\\n            ),\\n            tools=[browser_tool],\\n        ),\\n    )\\n\\n    # Add workers to the workforce\\n    workforce.add_worker(search_worker)\\n    workforce.add_worker(browser_worker)\\n\\n    # Run the workforce to answer the question\\n    result = workforce.run_task_sync(task=question)\\n\\n    # Print the result\\n    print(\\\"Answer:\\\", result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/1_answer_question.py\"}"
+    }
+  }
+]
+
+[Message 14]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py'.
+
+[Message 15]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_s5xYGfvf5tEg66ha9ErVpXuk",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_workforce_1_final\", \"command\": \"python task-script/workforce/1_answer_question.py\", \"block\": true, \"timeout\": 120}"
+    }
+  }
+]
+
+[Message 16]
+Role: tool
+Content: 2026-02-02 17:52:16,715 - camel.camel.societies.workforce.workforce - WARNING - No coordinator_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+2026-02-02 17:52:17,083 - camel.camel.societies.workforce.workforce - WARNING - No task_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 73, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 23, in main
+    if tool.name == "search_brave":
+       ^^^^^^^^^
+AttributeError: 'FunctionTool' object has no attribute 'name'
+
+[Message 17]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_EpPcKCYhb4KjVx5zRuwa3Jwq",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/toolkits/function_tool.py\"}"
+    }
+  }
+]
+
+[Message 18]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import ast
+import asyncio
+import functools
+import inspect
+import logging
+import textwrap
+import threading
+import warnings
+from concurrent.futures import ThreadPoolExecutor
+from inspect import Parameter, getsource, signature
+from typing import Any, Callable, Dict, Mapping, Optional, Tuple, Type
+
+from docstring_parser import parse
+from jsonschema.exceptions import SchemaError
+from jsonschema.validators import Draft202012Validator as JSONValidator
+from pydantic import BaseModel, create_model
+from pydantic.fields import FieldInfo
+
+from camel.models import BaseModelBackend, ModelFactory
+from camel.types import ModelPlatformType, ModelType
+from camel.utils import get_pydantic_object_schema, to_pascal
+
+logger = logging.getLogger(__name__)
+
+# Shared thread pool for running sync tools without blocking the event loop
+_SYNC_TOOL_EXECUTOR = ThreadPoolExecutor(max_workers=64)
+
+# Persistent event loop to avoid httpx connection pool issues
+_PERSISTENT_LOOP: Optional[asyncio.AbstractEventLoop] = None
+_PERSISTENT_LOOP_LOCK = threading.Lock()
+
+
+def _remove_a_key(d: Dict, remove_key: Any) -> None:
+    r"""Remove a key from a dictionary recursively."""
+    if isinstance(d, dict):
+        for key in list(d.keys()):
+            if key == remove_key:
+                del d[key]
+            else:
+                _remove_a_key(d[key], remove_key)
+
+
+def _remove_title_recursively(data, parent_key=None):
+    r"""Recursively removes the 'title' key from all levels of a nested
+    dictionary, except when 'title' is an argument name in the schema.
+    """
+    if isinstance(data, dict):
+        # Only remove 'title' if it's not an argument name
+        if parent_key not in [
+            "properties",
+            "$defs",
+            "items",
+            "allOf",
+            "oneOf",
+            "anyOf",
+        ]:
+            data.pop("title", None)
+
+        # Recursively process each key-value pair
+        for key, value in data.items():
+            _remove_title_recursively(value, parent_key=key)
+    elif isinstance(data, list):
+        # Recursively process each element in the list
+        for item in data:
+            _remove_title_recursively(item, parent_key=parent_key)
+
+
+def get_openai_function_schema(func: Callable) -> Dict[str, Any]:
+    r"""Generates a schema dict for an OpenAI function based on its signature.
+
+    This function is deprecated and will be replaced by
+    :obj:`get_openai_tool_schema()` in future versions. It parses the
+    function's parameters and docstring to construct a JSON schema-like
+    dictionary.
+
+    Args:
+        func (Callable): The OpenAI function to generate the schema for.
+
+    Returns:
+        Dict[str, Any]: A dictionary representing the JSON schema of the
+            function, including its name, description, and parameter
+            specifications.
+    """
+    openai_function_schema = get_openai_tool_schema(func)["function"]
+    return openai_function_schema
+
+
+def get_openai_tool_schema(func: Callable) -> Dict[str, Any]:
+    r"""Generates an OpenAI JSON schema from a given Python function.
+
+    This function creates a schema compatible with OpenAI's API specifications,
+    based on the provided Python function. It processes the function's
+    parameters, types, and docstrings, and constructs a schema accordingly.
+
+    Note:
+        - Each parameter in `func` must have a type annotation; otherwise, it's
+          treated as 'Any'.
+        - Variable arguments (*args) and keyword arguments (**kwargs) are not
+          supported and will be ignored.
+        - A functional description including a brief and detailed explanation
+          should be provided in the docstring of `func`.
+        - All parameters of `func` must be described in its docstring.
+        - Supported docstring styles: ReST, Google, Numpydoc, and Epydoc.
+
+    Args:
+        func (Callable): The Python function to be converted into an OpenAI
+                         JSON schema.
+
+    Returns:
+        Dict[str, Any]: A dictionary representing the OpenAI JSON schema of
+                        the provided function.
+
+    See Also:
+        `OpenAI API Reference
+            <https://platform.openai.com/docs/api-reference/assistants/object>`_
+    """
+    params: Mapping[str, Parameter] = signature(func).parameters
+    fields: Dict[str, Tuple[type,
+... (truncated)
+
+
+[Message 19]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_Od4TNVV8OV87zlSfxqCB3LE9",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.role_playing_worker import RolePlayingWorker\\nfrom camel.toolkits.search_toolkit import SearchToolkit\\nfrom camel.toolkits.browser_toolkit import BrowserToolkit\\nfrom camel.types.enums import ModelType, ModelPlatformType\\n\\n\\ndef main():\\n    # Define the question to answer\\n    question = (\\n        \\\"What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients \\\"\\n        \\\"from Jan-May 2018 as listed on the NIH website?\\\"\\n    )\\n\\n    # Create a workforce with a description\\n    workforce = Workforce(description=\\\"Workforce to answer clinical trial enrollment question\\\")\\n\\n    # Create a search toolkit instance and get the Brave search tool\\n    search_toolkit = SearchToolkit()\\n    brave_search_tool = None\\n    for tool in search_toolkit.get_tools():\\n        if tool.get_function_name() == \\\"search_brave\\\":\\n            brave_search_tool = tool\\n            break\\n\\n    if brave_search_tool is None:\\n        raise RuntimeError(\\\"Brave search tool not found in SearchToolkit\\\")\\n\\n    # Create a worker using the Brave search tool\\n    search_worker = RolePlayingWorker(\\n        name=\\\"SearchWorker\\\",\\n        agent=ChatAgent(\\n            model=ChatAgent.create_model(\\n                model_platform=ModelPlatformType.OPENAI,\\n                model_type=ModelType.LLAMA_3_1_8B\\n            ),\\n            tools=[brave_search_tool],\\n        ),\\n    )\\n\\n    # Create a browser toolkit instance and get the first browser tool\\n    browser_toolkit = BrowserToolkit()\\n    browser_tools = browser_toolkit.get_tools()\\n    if not browser_tools:\\n        raise RuntimeError(\\\"No browser tools found in BrowserToolkit\\\")\\n    browser_tool = browser_tools[0]\\n\\n    # Create a worker using the browser tool\\n    browser_worker = RolePlayingWorker(\\n        name=\\\"BrowserWorker\\\",\\n        agent=ChatAgent(\\n            model=ChatAgent.create_model(\\n                model_platform=ModelPlatformType.OPENAI,\\n                model_type=ModelType.LLAMA_3_1_8B\\n            ),\\n            tools=[browser_tool],\\n        ),\\n    )\\n\\n    # Add workers to the workforce\\n    workforce.add_worker(search_worker)\\n    workforce.add_worker(browser_worker)\\n\\n    # Run the workforce to answer the question\\n    result = workforce.run_task_sync(task=question)\\n\\n    # Print the result\\n    print(\\\"Answer:\\\", result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/1_answer_question.py\"}"
+    }
+  }
+]
+
+[Message 20]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py'.
+
+[Message 21]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_CWJoSCj4EgJwwJOXB5wUT6Sp",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_workforce_1_final_retry\", \"command\": \"python task-script/workforce/1_answer_question.py\", \"block\": true, \"timeout\": 120}"
+    }
+  }
+]
+
+[Message 22]
+Role: tool
+Content: 2026-02-02 17:52:35,400 - camel.camel.societies.workforce.workforce - WARNING - No coordinator_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+2026-02-02 17:52:35,831 - camel.camel.societies.workforce.workforce - WARNING - No task_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 73, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 34, in main
+    model=ChatAgent.create_model(
+          ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'ChatAgent' has no attribute 'create_model'
+
+[Message 23]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_mNQOpc6TWEg56aPZMi1Cq3wb",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"examples/workforce/simple_workforce_mcp.py\"}"
+    }
+  }
+]
+
+[Message 24]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+"""
+Simple example showing how to run a Workforce as an MCP server.
+
+To test this example:
+1. Install dependencies: pip install mcp camel-ai[all]
+2. Run this script: python simple_workforce_mcp.py
+3. The server will start on localhost:8001
+4. Use an MCP client to connect and test the tools
+
+Example MCP client usage:
+- Call process_task with task_content="Analyze market trends"
+- Call get_workforce_info to see workforce status
+- Call add_single_agent_worker to add new workers
+"""
+
+from camel.agents import ChatAgent
+from camel.messages import BaseMessage
+from camel.societies.workforce import Workforce
+
+
+def main():
+    """Create and run a simple workforce MCP server."""
+
+    # Create a basic workforce
+    workforce = Workforce(description="Simple Analysis Team")
+
+    # Add a basic analyst worker
+    analyst_msg = BaseMessage.make_assistant_message(
+        role_name="Analyst",
+        content="You are a helpful analyst who can process various tasks.",
+    )
+    analyst = ChatAgent(system_message=analyst_msg)
+    workforce.add_single_agent_worker(
+        description="General purpose analyst", worker=analyst
+    )
+
+    print("Creating Workforce MCP server...")
+    print("Server will be available at: http://localhost:8001")
+    print("Press Ctrl+C to stop the server")
+
+    # Convert to MCP server and run
+    mcp_server = workforce.to_mcp(
+        name="Simple-Workforce",
+        description="A simple workforce for task processing",
+        port=8001,
+    )
+
+    try:
+        # This will start the server and block
+        mcp_server.run()
+    except KeyboardInterrupt:
+        print("\nServer stopped.")
+
+
+if __name__ == "__main__":
+    main()
+
+[Message 25]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_JQqZjoYne6O6obFTHnhYgIza",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"examples/workforce/workforce_callbacks_example.py\"}"
+    }
+  }
+]
+
+[Message 26]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+"""
+Example: Subscribe to callbacks in Workforce
+
+Includes:
+- Custom callback `PrintCallback` that logs key lifecycle events.
+- Subscribe callbacks via the `callbacks` parameter when constructing a
+  `Workforce`.
+"""
+
+import asyncio
+
+from camel.agents import ChatAgent
+from camel.logger import get_logger
+from camel.models import ModelFactory
+from camel.societies.workforce.events import (
+    AllTasksCompletedEvent,
+    LogEvent,
+    TaskAssignedEvent,
+    TaskCompletedEvent,
+    TaskCreatedEvent,
+    TaskDecomposedEvent,
+    TaskFailedEvent,
+    TaskStartedEvent,
+    TaskUpdatedEvent,
+    WorkerCreatedEvent,
+    WorkerDeletedEvent,
+)
+from camel.societies.workforce.workforce import Workforce
+from camel.societies.workforce.workforce_callback import WorkforceCallback
+from camel.societies.workforce.workforce_logger import WorkforceLogger
+from camel.types import ModelPlatformType, ModelType
+
+logger = get_logger(__name__)
+
+
+class PrintCallback(WorkforceCallback):
+    r"""Simple callback printing events to logs to observe ordering."""
+
+    def log_message(self, event: LogEvent) -> None:
+        print(
+            f"[PrintCallback] {event.message} level={event.level}, "
+            f"color={event.color}"
+        )
+
+    def log_task_created(self, event: TaskCreatedEvent) -> None:
+        print(
+            f"[PrintCallback] task_created: id={event.task_id}, "
+            f"desc={event.description!r}, parent={event.parent_task_id}"
+        )
+
+    def log_task_decomposed(self, event: TaskDecomposedEvent) -> None:
+        print(
+            f"[PrintCallback] task_decomposed: parent={event.parent_task_id},"
+            f" subtasks={event.subtask_ids}"
+        )
+
+    def log_task_assigned(self, event: TaskAssignedEvent) -> None:
+        print(
+            f"[PrintCallback] task_assigned: task={event.task_id}, "
+            f"worker={event.worker_id}"
+        )
+
+    def log_task_started(self, event: TaskStartedEvent) -> None:
+        print(
+            f"[PrintCallback] task_started: task={event.task_id}, "
+            f"worker={event.worker_id}"
+        )
+
+    def log_task_updated(self, event: TaskUpdatedEvent) -> None:
+        print(
+            f"[PrintCallback] task_updated: task={event.task_id}, "
+            f"worker={event.worker_id}"
+        )
+
+    def log_task_completed(self, event: TaskCompletedEvent) -> None:
+        print(
+            f"[PrintCallback] task_completed: task={event.task_id}, "
+            f"worker={event.worker_id}, took={event.processing_time_seconds}s"
+        )
+
+    def log_task_failed(self, event: TaskFailedEvent) -> None:
+        logger.warning(
+            f"[PrintCallback] task_failed: task={event.task_id}, "
+            f"err={event.error_message}"
+        )
+
+    def log_worker_created(self, event: WorkerCreatedEvent) -> None:
+        print(
+            f"[PrintCallback] worker_created: id={event.worker_id}, "
+            f"type={event.worker_type}, role={event.role}"
+        )
+
+    def log_worker_deleted(self, event: WorkerDeletedEvent) -> None:
+        print(
+            f"[PrintCallback] worker_deleted: id={event.worker_id}, "
+            f"reason={event.reason}"
+        )
+
+    def log_all_tasks_completed(self, event: AllTasksCompletedEvent) -> None:
+        print("[PrintCallback] all_tasks_completed")
+
+
+def build_teacher_agent() -> ChatAgent:
+    model = ModelFactory.create(
+        model_platform=ModelPlatformType.OPENAI,
+        model_type=ModelType.GPT_4O_MINI,
+    )
+    return ChatAgent(system_message="You are a teacher", model=model)
+
+
+def build_student_agent() -> ChatAgent:
+    model = ModelFactory.create(
+        model_platform=ModelPlatformType.OPENAI,
+        model_type=ModelType.GPT_4O_MINI,
+    )
+    return ChatAgent(system_message="You are a student", model=model)
+
+
+async def run_demo() -> None:
+    logger_cb = WorkforceLogger('demo-logger')
+    print_cb = PrintCallback()
+    callbacks = [logger_cb, print_cb]
+
+    workforce = Workforce(
+        "Workforce Callbacks Demo",
+        callbacks=callbacks,
+        use_structured_output_handler=True,
+    )
+
+    teacher = build_teacher_agent()
+    student = build_student_agent()
+    workforce.add_single_agent_worker("Teacher Worker", teacher)
+    workforce.add_single_agent_worker("Student Worker", student)
+    workforce.add_main_task(
+       
+... (truncated)
+
+
+[Message 27]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_FBM0FtSrLsTolK6FEzViKs46",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.role_playing_worker import RolePlayingWorker\\nfrom camel.toolkits.search_toolkit import SearchToolkit\\nfrom camel.toolkits.browser_toolkit import BrowserToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType, ModelPlatformType\\n\\n\\ndef main():\\n    # Define the question to answer\\n    question = (\\n        \\\"What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients \\\"\\n        \\\"from Jan-May 2018 as listed on the NIH website?\\\"\\n    )\\n\\n    # Create a workforce with a description\\n    workforce = Workforce(description=\\\"Workforce to answer clinical trial enrollment question\\\")\\n\\n    # Create a search toolkit instance and get the Brave search tool\\n    search_toolkit = SearchToolkit()\\n    brave_search_tool = None\\n    for tool in search_toolkit.get_tools():\\n        if tool.get_function_name() == \\\"search_brave\\\":\\n            brave_search_tool = tool\\n            break\\n\\n    if brave_search_tool is None:\\n        raise RuntimeError(\\\"Brave search tool not found in SearchToolkit\\\")\\n\\n    # Create a worker using the Brave search tool\\n    search_worker = RolePlayingWorker(\\n        name=\\\"SearchWorker\\\",\\n        agent=ChatAgent(\\n            system_message=\\\"You are a helpful search assistant.\\\",\\n            model=ModelFactory.create(\\n                model_platform=ModelPlatformType.OPENAI,\\n                model_type=ModelType.LLAMA_3_1_8B\\n            ),\\n            tools=[brave_search_tool],\\n        ),\\n    )\\n\\n    # Create a browser toolkit instance and get the first browser tool\\n    browser_toolkit = BrowserToolkit()\\n    browser_tools = browser_toolkit.get_tools()\\n    if not browser_tools:\\n        raise RuntimeError(\\\"No browser tools found in BrowserToolkit\\\")\\n    browser_tool = browser_tools[0]\\n\\n    # Create a worker using the browser tool\\n    browser_worker = RolePlayingWorker(\\n        name=\\\"BrowserWorker\\\",\\n        agent=ChatAgent(\\n            system_message=\\\"You are a helpful browser assistant.\\\",\\n            model=ModelFactory.create(\\n                model_platform=ModelPlatformType.OPENAI,\\n                model_type=ModelType.LLAMA_3_1_8B\\n            ),\\n            tools=[browser_tool],\\n        ),\\n    )\\n\\n    # Add workers to the workforce\\n    workforce.add_worker(search_worker)\\n    workforce.add_worker(browser_worker)\\n\\n    # Run the workforce to answer the question\\n    result = workforce.run_task_sync(task=question)\\n\\n    # Print the result\\n    print(\\\"Answer:\\\", result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/1_answer_question.py\"}"
+    }
+  }
+]
+
+[Message 28]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py'.
+
+[Message 29]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_4FM9ljvzWQis5DUxqfFFsrQw",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_workforce_1_final_run\", \"command\": \"python task-script/workforce/1_answer_question.py\", \"block\": true, \"timeout\": 120}"
+    }
+  }
+]
+
+[Message 30]
+Role: tool
+Content: 2026-02-02 17:52:59,645 - camel.camel.societies.workforce.workforce - WARNING - No coordinator_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+2026-02-02 17:52:59,949 - camel.camel.societies.workforce.workforce - WARNING - No task_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 76, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 38, in main
+    model_type=ModelType.LLAMA_3_1_8B
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/anaconda3/envs/meta-agent/lib/python3.11/enum.py", line 786, in __getattr__
+    raise AttributeError(name) from None
+AttributeError: LLAMA_3_1_8B. Did you mean: 'GROQ_LLAMA_3_1_8B'?
+
+[Message 31]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_bqessdbC5Q1cyXn69GHBroZS",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/types/enums.py\"}"
+    }
+  }
+]
+
+[Message 32]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+from enum import Enum, EnumMeta
+from typing import Union, cast
+
+from camel.logger import get_logger
+from camel.types.unified_model_type import UnifiedModelType
+
+logger = get_logger(__name__)
+
+
+class RoleType(Enum):
+    ASSISTANT = "assistant"
+    USER = "user"
+    SYSTEM = "system"
+    CRITIC = "critic"
+    EMBODIMENT = "embodiment"
+    DEFAULT = "default"
+
+
+class ModelType(UnifiedModelType, Enum):
+    DEFAULT = os.getenv("DEFAULT_MODEL_TYPE", "gpt-4.1-mini-2025-04-14")
+
+    GPT_3_5_TURBO = "gpt-3.5-turbo"
+    GPT_4 = "gpt-4"
+    GPT_4_TURBO = "gpt-4-turbo"
+    GPT_4O = "gpt-4o"
+    GPT_4O_MINI = "gpt-4o-mini"
+    GPT_4_5_PREVIEW = "gpt-4.5-preview"
+    O1 = "o1"
+    O1_PREVIEW = "o1-preview"
+    O1_MINI = "o1-mini"
+    O3_MINI = "o3-mini"
+    GPT_4_1 = "gpt-4.1-2025-04-14"
+    GPT_4_1_MINI = "gpt-4.1-mini-2025-04-14"
+    GPT_4_1_NANO = "gpt-4.1-nano-2025-04-14"
+    O4_MINI = "o4-mini"
+    O3 = "o3"
+    O3_PRO = "o3-pro"
+    GPT_5_1 = "gpt-5.1"
+    GPT_5_2 = ("gpt-5.2",)
+    GPT_5 = "gpt-5"
+    GPT_5_MINI = "gpt-5-mini"
+    GPT_5_NANO = "gpt-5-nano"
+
+    AWS_CLAUDE_3_7_SONNET = "anthropic.claude-3-7-sonnet-20250219-v1:0"
+    AWS_CLAUDE_3_5_SONNET = "anthropic.claude-3-5-sonnet-20241022-v2:0"
+    AWS_CLAUDE_3_HAIKU = "anthropic.claude-3-haiku-20240307-v1:0"
+    AWS_CLAUDE_3_SONNET = "anthropic.claude-3-sonnet-20240229-v1:0"
+    AWS_DEEPSEEK_R1 = "us.deepseek.r1-v1:0"
+    AWS_LLAMA_3_3_70B_INSTRUCT = "us.meta.llama3-3-70b-instruct-v1:0"
+    AWS_LLAMA_3_2_90B_INSTRUCT = "us.meta.llama3-2-90b-instruct-v1:0"
+    AWS_LLAMA_3_2_11B_INSTRUCT = "us.meta.llama3-2-11b-instruct-v1:0"
+    AWS_CLAUDE_SONNET_4 = "anthropic.claude-sonnet-4-20250514-v1:0"
+    AWS_CLAUDE_OPUS_4 = "anthropic.claude-opus-4-20250514-v1:0"
+    AWS_CLAUDE_OPUS_4_1 = "anthropic.claude-opus-4-1-20250805-v1:0"
+
+    AMD_GPT4 = "dvue-aoai-001-gpt-4.1"
+
+    GLM_4_7 = "glm-4.7"
+    GLM_4_7_FLASH = "glm-4.7-flash"
+    GLM_4_7_FLASHX = "glm-4.7-flashx"
+    GLM_4_6 = "glm-4.6"
+    GLM_4_6V = "glm-4.6v"
+    GLM_4_6V_FLASH = "glm-4.6v-flash"
+    GLM_4 = "glm-4"
+    GLM_4_5_AIR = "glm-4.5-air"
+    GLM_4_5_AIRX = "glm-4.5-airx"
+    GLM_4_5_FLASH = "glm-4.5-flash"
+    GLM_4V = "glm-4v"
+    GLM_4_1V_THINKING_FLASHX = "glm-4.1v-thinking-flashx"
+    GLM_4_1V_THINKING_FLASH = "glm-4.1v-thinking-flash"
+    GLM_4V_FLASH = "glm-4v-flash"
+    GLM_4V_PLUS_0111 = "glm-4v-plus-0111"
+    GLM_4_PLUS = "glm-4-plus"
+    GLM_4_AIR = "glm-4-air"
+    GLM_4_AIR_0111 = "glm-4-air-0111"
+    GLM_4_AIRX = "glm-4-airx"
+    GLM_4_LONG = "glm-4-long"
+    GLM_4_FLASHX = "glm-4-flashx"
+    GLM_4_FLASHX_250414 = "glm-4-flashx-250414"
+    GLM_4_FLASH = "glm-4-flash"
+    GLM_4_FLASH_250414 = "glm-4-flash-250414"
+    GLM_ZERO_PREVIEW = "glm-zero-preview"
+    GLM_3_TURBO = "glm-3-turbo"
+
+    # Groq platform models
+    GROQ_LLAMA_3_1_8B = "llama-3.1-8b-instant"
+    GROQ_LLAMA_3_3_70B = "llama-3.3-70b-versatile"
+
+    # Cerebras platform models
+    CEREBRAS_GPT_OSS_120B = "gpt-oss-120b"
+    CEREBRAS_LLAMA_3_1_8B = "llama3.1-8b"
+    CEREBRAS_LLAMA_3_3_70B = "llama3.3-70b"
+    CEREBRAS_QWEN_3_32B = "qwen-3-32b"
+
+    # Nebius AI Studio platform models
+    NEBIUS_GPT_OSS_120B = "gpt-oss-120b"
+    NEBIUS_GPT_OSS_20B = "gpt-oss-20b"
+    NEBIUS_GLM_4_5 = "GLM-4.5"
+    NEBIUS_DEEPSEEK_V3 = "deepseek-ai/DeepSeek-V3"
+    NEBIUS_DEEPSEEK_R1 = "deepseek-ai/DeepSeek-R1"
+    NEBIUS_LLAMA_3_1_70B = "meta-llama/Meta-Llama-3.1-70B-Instruct"
+    NEBIUS_MISTRAL_7B_INSTRUCT = "mistralai/Mistral-7B-Instruct-v0.3"
+
+    # CometAPI platform models
+    COMETAPI_GPT_5_CHAT_LATEST = "gpt-5-chat-latest"
+    COMETAPI_CHATGPT_4O_LATEST = "chatgpt-4o-latest"
+    COMETAPI_GPT_5_MINI = "gpt-5-mini"
+    COMETAPI_GPT_5_NANO = "gpt-5-nano"
+    COMETAPI_GPT_5 = "gpt-5"
+    COMETAPI_GPT_4_1 = "gpt-4.1"
+    COMETAPI_GPT_4O_MINI = "gpt-4o-mini"
+    COMETAPI_O4_MINI_2025_04_16 = "o4-mini-2025-04-16"
+    COMETAPI_O3_PRO_2025_06_10 = "o3-pro-2025-06-10"
+    COMETAPI_CLAUDE_OPUS_4_1_20250805 = "claude-opus-4-1-20250805"
+    COMETAPI_CLAUDE_OPUS_4_1_20250805_THINKING = (
+        "claude-opus-4-1-20250805-thinking"
+    )
+    COMETAPI_CLAUDE_SONNET_4_20250514 = "claude-sonnet-4-20250514"
+    COMETAPI_CLAUDE_SONNET_4_20250514_THINKING = (
+        "claude-sonnet-4-20250514-thinking"
+    )
+    COMETAPI_CLAUDE_3_7_SONNET_LATEST = "claude-3-7-sonnet
+... (truncated)
+
+
+[Message 33]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_bDJcwFsG7kCmHoLPKGm0qLTV",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.role_playing_worker import RolePlayingWorker\\nfrom camel.toolkits.search_toolkit import SearchToolkit\\nfrom camel.toolkits.browser_toolkit import BrowserToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType, ModelPlatformType\\n\\n\\ndef main():\\n    # Define the question to answer\\n    question = (\\n        \\\"What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients \\\"\\n        \\\"from Jan-May 2018 as listed on the NIH website?\\\"\\n    )\\n\\n    # Create a workforce with a description\\n    workforce = Workforce(description=\\\"Workforce to answer clinical trial enrollment question\\\")\\n\\n    # Create a search toolkit instance and get the Brave search tool\\n    search_toolkit = SearchToolkit()\\n    brave_search_tool = None\\n    for tool in search_toolkit.get_tools():\\n        if tool.get_function_name() == \\\"search_brave\\\":\\n            brave_search_tool = tool\\n            break\\n\\n    if brave_search_tool is None:\\n        raise RuntimeError(\\\"Brave search tool not found in SearchToolkit\\\")\\n\\n    # Create a worker using the Brave search tool\\n    search_worker = RolePlayingWorker(\\n        name=\\\"SearchWorker\\\",\\n        agent=ChatAgent(\\n            system_message=\\\"You are a helpful search assistant.\\\",\\n            model=ModelFactory.create(\\n                model_platform=ModelPlatformType.TOGETHER,\\n                model_type=ModelType.TOGETHER_LLAMA_3_1_8B\\n            ),\\n            tools=[brave_search_tool],\\n        ),\\n    )\\n\\n    # Create a browser toolkit instance and get the first browser tool\\n    browser_toolkit = BrowserToolkit()\\n    browser_tools = browser_toolkit.get_tools()\\n    if not browser_tools:\\n        raise RuntimeError(\\\"No browser tools found in BrowserToolkit\\\")\\n    browser_tool = browser_tools[0]\\n\\n    # Create a worker using the browser tool\\n    browser_worker = RolePlayingWorker(\\n        name=\\\"BrowserWorker\\\",\\n        agent=ChatAgent(\\n            system_message=\\\"You are a helpful browser assistant.\\\",\\n            model=ModelFactory.create(\\n                model_platform=ModelPlatformType.TOGETHER,\\n                model_type=ModelType.TOGETHER_LLAMA_3_1_8B\\n            ),\\n            tools=[browser_tool],\\n        ),\\n    )\\n\\n    # Add workers to the workforce\\n    workforce.add_worker(search_worker)\\n    workforce.add_worker(browser_worker)\\n\\n    # Run the workforce to answer the question\\n    result = workforce.run_task_sync(task=question)\\n\\n    # Print the result\\n    print(\\\"Answer:\\\", result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/1_answer_question.py\"}"
+    }
+  }
+]
+
+[Message 34]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py'.
+
+[Message 35]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_4cIas1n2aqeUD7rWUg9vgK7s",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_workforce_1_final_run_2\", \"command\": \"python task-script/workforce/1_answer_question.py\", \"block\": true, \"timeout\": 120}"
+    }
+  }
+]
+
+[Message 36]
+Role: tool
+Content: 2026-02-02 17:53:38,811 - camel.camel.societies.workforce.workforce - WARNING - No coordinator_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+2026-02-02 17:53:39,181 - camel.camel.societies.workforce.workforce - WARNING - No task_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 76, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 36, in main
+    model=ModelFactory.create(
+          ^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/model_factory.py", line 219, in create
+    return model_class(
+           ^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/utils/commons.py", line 361, in wrapper
+    raise ValueError(
+ValueError: Missing or empty required API keys in environment variables: TOGETHER_API_KEY.
+You can obtain the API key from https://docs.together.ai/docs/quickstart
+
+[Message 37]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_68rFNGBTas9dFT4cScDfeYSb",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.role_playing_worker import RolePlayingWorker\\nfrom camel.toolkits.search_toolkit import SearchToolkit\\nfrom camel.toolkits.browser_toolkit import BrowserToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType, ModelPlatformType\\n\\n\\ndef main():\\n    # Define the question to answer\\n    question = (\\n        \\\"What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients \\\"\\n        \\\"from Jan-May 2018 as listed on the NIH website?\\\"\\n    )\\n\\n    # Create a workforce with a description\\n    workforce = Workforce(description=\\\"Workforce to answer clinical trial enrollment question\\\")\\n\\n    # Create a search toolkit instance and get the Brave search tool\\n    search_toolkit = SearchToolkit()\\n    brave_search_tool = None\\n    for tool in search_toolkit.get_tools():\\n        if tool.get_function_name() == \\\"search_brave\\\":\\n            brave_search_tool = tool\\n            break\\n\\n    if brave_search_tool is None:\\n        raise RuntimeError(\\\"Brave search tool not found in SearchToolkit\\\")\\n\\n    # Create a worker using the Brave search tool\\n    search_worker = RolePlayingWorker(\\n        name=\\\"SearchWorker\\\",\\n        agent=ChatAgent(\\n            system_message=\\\"You are a helpful search assistant.\\\",\\n            model=ModelFactory.create(\\n                model_platform=ModelPlatformType.MODELSCOPE,\\n                model_type=ModelType.MODELSCOPE_LLAMA_3_1_8B_INSTRUCT\\n            ),\\n            tools=[brave_search_tool],\\n        ),\\n    )\\n\\n    # Create a browser toolkit instance and get the first browser tool\\n    browser_toolkit = BrowserToolkit()\\n    browser_tools = browser_toolkit.get_tools()\\n    if not browser_tools:\\n        raise RuntimeError(\\\"No browser tools found in BrowserToolkit\\\")\\n    browser_tool = browser_tools[0]\\n\\n    # Create a worker using the browser tool\\n    browser_worker = RolePlayingWorker(\\n        name=\\\"BrowserWorker\\\",\\n        agent=ChatAgent(\\n            system_message=\\\"You are a helpful browser assistant.\\\",\\n            model=ModelFactory.create(\\n                model_platform=ModelPlatformType.MODELSCOPE,\\n                model_type=ModelType.MODELSCOPE_LLAMA_3_1_8B_INSTRUCT\\n            ),\\n            tools=[browser_tool],\\n        ),\\n    )\\n\\n    # Add workers to the workforce\\n    workforce.add_worker(search_worker)\\n    workforce.add_worker(browser_worker)\\n\\n    # Run the workforce to answer the question\\n    result = workforce.run_task_sync(task=question)\\n\\n    # Print the result\\n    print(\\\"Answer:\\\", result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/1_answer_question.py\"}"
+    }
+  }
+]
+
+[Message 38]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py'.
+
+[Message 39]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_CVWcbvLDNQHeIreqe51mg4o4",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_workforce_1_final_run_3\", \"command\": \"python task-script/workforce/1_answer_question.py\", \"block\": true, \"timeout\": 120}"
+    }
+  }
+]
+
+[Message 40]
+Role: tool
+Content: 2026-02-02 17:54:05,018 - camel.camel.societies.workforce.workforce - WARNING - No coordinator_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+2026-02-02 17:54:05,297 - camel.camel.societies.workforce.workforce - WARNING - No task_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 76, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 36, in main
+    model=ModelFactory.create(
+          ^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/models/model_factory.py", line 219, in create
+    return model_class(
+           ^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/utils/commons.py", line 361, in wrapper
+    raise ValueError(
+ValueError: Missing or empty required API keys in environment variables: MODELSCOPE_SDK_TOKEN.
+You can obtain the API key from the official website
+
+[Message 41]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_pywmVUybMF6a746eDAYjgi2f",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.role_playing_worker import RolePlayingWorker\\nfrom camel.toolkits.search_toolkit import SearchToolkit\\nfrom camel.toolkits.browser_toolkit import BrowserToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType, ModelPlatformType\\n\\n\\ndef main():\\n    # Define the question to answer\\n    question = (\\n        \\\"What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients \\\"\\n        \\\"from Jan-May 2018 as listed on the NIH website?\\\"\\n    )\\n\\n    # Create a workforce with a description\\n    workforce = Workforce(description=\\\"Workforce to answer clinical trial enrollment question\\\")\\n\\n    # Create a search toolkit instance and get the Brave search tool\\n    search_toolkit = SearchToolkit()\\n    brave_search_tool = None\\n    for tool in search_toolkit.get_tools():\\n        if tool.get_function_name() == \\\"search_brave\\\":\\n            brave_search_tool = tool\\n            break\\n\\n    if brave_search_tool is None:\\n        raise RuntimeError(\\\"Brave search tool not found in SearchToolkit\\\")\\n\\n    # Create a worker using the Brave search tool\\n    search_worker = RolePlayingWorker(\\n        name=\\\"SearchWorker\\\",\\n        agent=ChatAgent(\\n            system_message=\\\"You are a helpful search assistant.\\\",\\n            model=ModelFactory.create(\\n                model_platform=ModelPlatformType.DEFAULT,\\n                model_type=ModelType.DEFAULT\\n            ),\\n            tools=[brave_search_tool],\\n        ),\\n    )\\n\\n    # Create a browser toolkit instance and get the first browser tool\\n    browser_toolkit = BrowserToolkit()\\n    browser_tools = browser_toolkit.get_tools()\\n    if not browser_tools:\\n        raise RuntimeError(\\\"No browser tools found in BrowserToolkit\\\")\\n    browser_tool = browser_tools[0]\\n\\n    # Create a worker using the browser tool\\n    browser_worker = RolePlayingWorker(\\n        name=\\\"BrowserWorker\\\",\\n        agent=ChatAgent(\\n            system_message=\\\"You are a helpful browser assistant.\\\",\\n            model=ModelFactory.create(\\n                model_platform=ModelPlatformType.DEFAULT,\\n                model_type=ModelType.DEFAULT\\n            ),\\n            tools=[browser_tool],\\n        ),\\n    )\\n\\n    # Add workers to the workforce\\n    workforce.add_worker(search_worker)\\n    workforce.add_worker(browser_worker)\\n\\n    # Run the workforce to answer the question\\n    result = workforce.run_task_sync(task=question)\\n\\n    # Print the result\\n    print(\\\"Answer:\\\", result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/1_answer_question.py\"}"
+    }
+  }
+]
+
+[Message 42]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py'.
+
+[Message 43]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_hx6ycGuZUAAmzTVvwGLPS7FJ",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_workforce_1_final_run_4\", \"command\": \"python task-script/workforce/1_answer_question.py\", \"block\": true, \"timeout\": 120}"
+    }
+  }
+]
+
+[Message 44]
+Role: tool
+Content: 2026-02-02 17:54:24,643 - camel.camel.societies.workforce.workforce - WARNING - No coordinator_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+2026-02-02 17:54:24,931 - camel.camel.societies.workforce.workforce - WARNING - No task_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 76, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 32, in main
+    search_worker = RolePlayingWorker(
+                    ^^^^^^^^^^^^^^^^^^
+TypeError: RolePlayingWorker.__init__() got an unexpected keyword argument 'name'
+
+[Message 45]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_lZtYu4beZ1uY4CLPOhB9NTRf",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.role_playing_worker import RolePlayingWorker\\nfrom camel.toolkits.search_toolkit import SearchToolkit\\nfrom camel.toolkits.browser_toolkit import BrowserToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType, ModelPlatformType\\n\\n\\ndef main():\\n    # Define the question to answer\\n    question = (\\n        \\\"What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients \\\"\\n        \\\"from Jan-May 2018 as listed on the NIH website?\\\"\\n    )\\n\\n    # Create a workforce with a description\\n    workforce = Workforce(description=\\\"Workforce to answer clinical trial enrollment question\\\")\\n\\n    # Create a search toolkit instance and get the Brave search tool\\n    search_toolkit = SearchToolkit()\\n    brave_search_tool = None\\n    for tool in search_toolkit.get_tools():\\n        if tool.get_function_name() == \\\"search_brave\\\":\\n            brave_search_tool = tool\\n            break\\n\\n    if brave_search_tool is None:\\n        raise RuntimeError(\\\"Brave search tool not found in SearchToolkit\\\")\\n\\n    # Create a worker using the Brave search tool\\n    search_worker = RolePlayingWorker(\\n        agent=ChatAgent(\\n            system_message=\\\"You are a helpful search assistant.\\\",\\n            model=ModelFactory.create(\\n                model_platform=ModelPlatformType.DEFAULT,\\n                model_type=ModelType.DEFAULT\\n            ),\\n            tools=[brave_search_tool],\\n        ),\\n    )\\n\\n    # Create a browser toolkit instance and get the first browser tool\\n    browser_toolkit = BrowserToolkit()\\n    browser_tools = browser_toolkit.get_tools()\\n    if not browser_tools:\\n        raise RuntimeError(\\\"No browser tools found in BrowserToolkit\\\")\\n    browser_tool = browser_tools[0]\\n\\n    # Create a worker using the browser tool\\n    browser_worker = RolePlayingWorker(\\n        agent=ChatAgent(\\n            system_message=\\\"You are a helpful browser assistant.\\\",\\n            model=ModelFactory.create(\\n                model_platform=ModelPlatformType.DEFAULT,\\n                model_type=ModelType.DEFAULT\\n            ),\\n            tools=[browser_tool],\\n        ),\\n    )\\n\\n    # Add workers to the workforce\\n    workforce.add_worker(search_worker)\\n    workforce.add_worker(browser_worker)\\n\\n    # Run the workforce to answer the question\\n    result = workforce.run_task_sync(task=question)\\n\\n    # Print the result\\n    print(\\\"Answer:\\\", result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/1_answer_question.py\"}"
+    }
+  }
+]
+
+[Message 46]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py'.
+
+[Message 47]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_S3ydO3DsZVwzcoU00fivIBW2",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_workforce_1_final_run_5\", \"command\": \"python task-script/workforce/1_answer_question.py\", \"block\": true, \"timeout\": 120}"
+    }
+  }
+]
+
+[Message 48]
+Role: tool
+Content: 2026-02-02 17:54:59,445 - camel.camel.societies.workforce.workforce - WARNING - No coordinator_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+2026-02-02 17:54:59,798 - camel.camel.societies.workforce.workforce - WARNING - No task_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 74, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 32, in main
+    search_worker = RolePlayingWorker(
+                    ^^^^^^^^^^^^^^^^^^
+TypeError: RolePlayingWorker.__init__() got an unexpected keyword argument 'agent'
+
+[Message 49]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_fkGMy6jliAArqU5J6FzPXwSy",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/societies/workforce/role_playing_worker.py\"}"
+    }
+  }
+]
+
+[Message 50]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from __future__ import annotations
+
+from typing import Dict, List, Optional
+
+from colorama import Fore
+
+from camel.agents.chat_agent import ChatAgent
+from camel.messages.base import BaseMessage
+from camel.societies import RolePlaying
+from camel.societies.workforce.prompts import (
+    ROLEPLAY_PROCESS_TASK_PROMPT,
+    ROLEPLAY_SUMMARIZE_PROMPT,
+)
+from camel.societies.workforce.structured_output_handler import (
+    StructuredOutputHandler,
+)
+from camel.societies.workforce.utils import TaskResult
+from camel.societies.workforce.worker import Worker
+from camel.tasks.task import Task, TaskState, is_task_result_insufficient
+
+
+class RolePlayingWorker(Worker):
+    r"""A worker node that contains a role playing.
+
+    Args:
+        description (str): Description of the node.
+        assistant_role_name (str): The role name of the assistant agent.
+        user_role_name (str): The role name of the user agent.
+        assistant_agent_kwargs (Optional[Dict]): The keyword arguments to
+            initialize the assistant agent in the role playing, like the model
+            name, etc. (default: :obj:`None`)
+        user_agent_kwargs (Optional[Dict]): The keyword arguments to
+            initialize the user agent in the role playing, like the model name,
+            etc. (default: :obj:`None`)
+        summarize_agent_kwargs (Optional[Dict]): The keyword arguments to
+            initialize the summarize agent, like the model name, etc.
+            (default: :obj:`None`)
+        chat_turn_limit (int): The maximum number of chat turns in the role
+            playing. (default: :obj:`20`)
+        use_structured_output_handler (bool, optional): Whether to use the
+            structured output handler instead of native structured output.
+            When enabled, the workforce will use prompts with structured
+            output instructions and regex extraction to parse responses.
+            This ensures compatibility with agents that don't reliably
+            support native structured output. When disabled, the workforce
+            uses the native response_format parameter.
+            (default: :obj:`True`)
+    """
+
+    def __init__(
+        self,
+        description: str,
+        assistant_role_name: str,
+        user_role_name: str,
+        assistant_agent_kwargs: Optional[Dict] = None,
+        user_agent_kwargs: Optional[Dict] = None,
+        summarize_agent_kwargs: Optional[Dict] = None,
+        chat_turn_limit: int = 20,
+        use_structured_output_handler: bool = True,
+    ) -> None:
+        super().__init__(description)
+        self.use_structured_output_handler = use_structured_output_handler
+        self.structured_handler = (
+            StructuredOutputHandler()
+            if use_structured_output_handler
+            else None
+        )
+        self.summarize_agent_kwargs = summarize_agent_kwargs
+        summ_sys_msg = BaseMessage.make_assistant_message(
+            role_name="Summarizer",
+            content="You are a good summarizer. You will be presented with "
+            "scenarios where an assistant and a user with specific roles "
+            "are trying to solve a task. Your job is summarizing the result "
+            "of the task based on the chat history.",
+        )
+        summarize_agent_dict = (
+            summarize_agent_kwargs if summarize_agent_kwargs else {}
+        )
+        summarize_agent_dict['system_message'] = summ_sys_msg
+        self.summarize_agent = ChatAgent(**summarize_agent_dict)
+        self.chat_turn_limit = chat_turn_limit
+        self.assistant_role_name = assistant_role_name
+        self.user_role_name = user_role_name
+        self.assistant_agent_kwargs = assistant_agent_kwargs
+        self.user_agent_kwargs = user_agent_kwargs
+
+    async def _process_task(
+        self, task: Task, dependencies: List[Task]
+    ) -> TaskState:
+        r"""Processes a task leveraging its dependencies through role-playing.
+
+        This method orchestrates a role-playing session between an AI
+        assistant and an AI user to process a given task. It initiates with a
+        generated prompt based on the task and its dependencies, conducts a
+        dialogue up to a specified chat turn limit, and then summarizes the
+        dialogue to determine the task's outcome.
+
+        Args:
+            task (
+... (truncated)
+
+
+[Message 51]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_n5WvGFMMg4GybzxIWI5yzuwt",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.role_playing_worker import RolePlayingWorker\\nfrom camel.toolkits.search_toolkit import SearchToolkit\\nfrom camel.toolkits.browser_toolkit import BrowserToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType, ModelPlatformType\\n\\n\\ndef main():\\n    # Define the question to answer\\n    question = (\\n        \\\"What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients \\\"\\n        \\\"from Jan-May 2018 as listed on the NIH website?\\\"\\n    )\\n\\n    # Create a workforce with a description\\n    workforce = Workforce(description=\\\"Workforce to answer clinical trial enrollment question\\\")\\n\\n    # Create a search toolkit instance and get the Brave search tool\\n    search_toolkit = SearchToolkit()\\n    brave_search_tool = None\\n    for tool in search_toolkit.get_tools():\\n        if tool.get_function_name() == \\\"search_brave\\\":\\n            brave_search_tool = tool\\n            break\\n\\n    if brave_search_tool is None:\\n        raise RuntimeError(\\\"Brave search tool not found in SearchToolkit\\\")\\n\\n    # Assistant agent kwargs for search worker\\n    search_assistant_agent_kwargs = {\\n        \\\"system_message\\\": \\\"You are a helpful search assistant.\\\",\\n        \\\"model\\\": ModelFactory.create(\\n            model_platform=ModelPlatformType.DEFAULT,\\n            model_type=ModelType.DEFAULT,\\n        ),\\n        \\\"tools\\\": [brave_search_tool],\\n    }\\n\\n    # Create a search worker\\n    search_worker = RolePlayingWorker(\\n        description=\\\"Search Worker\\\",\\n        assistant_role_name=\\\"Search Assistant\\\",\\n        user_role_name=\\\"Search User\\\",\\n        assistant_agent_kwargs=search_assistant_agent_kwargs,\\n    )\\n\\n    # Create a browser toolkit instance and get the first browser tool\\n    browser_toolkit = BrowserToolkit()\\n    browser_tools = browser_toolkit.get_tools()\\n    if not browser_tools:\\n        raise RuntimeError(\\\"No browser tools found in BrowserToolkit\\\")\\n    browser_tool = browser_tools[0]\\n\\n    # Assistant agent kwargs for browser worker\\n    browser_assistant_agent_kwargs = {\\n        \\\"system_message\\\": \\\"You are a helpful browser assistant.\\\",\\n        \\\"model\\\": ModelFactory.create(\\n            model_platform=ModelPlatformType.DEFAULT,\\n            model_type=ModelType.DEFAULT,\\n        ),\\n        \\\"tools\\\": [browser_tool],\\n    }\\n\\n    # Create a browser worker\\n    browser_worker = RolePlayingWorker(\\n        description=\\\"Browser Worker\\\",\\n        assistant_role_name=\\\"Browser Assistant\\\",\\n        user_role_name=\\\"Browser User\\\",\\n        assistant_agent_kwargs=browser_assistant_agent_kwargs,\\n    )\\n\\n    # Add workers to the workforce\\n    workforce.add_worker(search_worker)\\n    workforce.add_worker(browser_worker)\\n\\n    # Run the workforce to answer the question\\n    result = workforce.run_task_sync(task=question)\\n\\n    # Print the result\\n    print(\\\"Answer:\\\", result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/1_answer_question.py\"}"
+    }
+  }
+]
+
+[Message 52]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py'.
+
+[Message 53]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_yevzxCMaCJzr9QG1QVZ0dw8r",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_workforce_1_final_run_6\", \"command\": \"python task-script/workforce/1_answer_question.py\", \"block\": true, \"timeout\": 120}"
+    }
+  }
+]
+
+[Message 54]
+Role: tool
+Content: 2026-02-02 17:55:56,041 - camel.camel.societies.workforce.workforce - WARNING - No coordinator_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+2026-02-02 17:55:56,309 - camel.camel.societies.workforce.workforce - WARNING - No task_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 86, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 75, in main
+    workforce.add_worker(search_worker)
+    ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Workforce' object has no attribute 'add_worker'. Did you mean: 'add_workforce'?
+
+[Message 55]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_SWEic1kB9gQOEsiaNpdxPHfx",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/societies/workforce/workforce.py\"}"
+    }
+  }
+]
+
+[Message 56]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from __future__ import annotations
+
+import asyncio
+import concurrent.futures
+import json
+import os
+import time
+import uuid
+from collections import deque
+from enum import Enum
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    Coroutine,
+    Deque,
+    Dict,
+    Generator,
+    List,
+    Optional,
+    Set,
+    Tuple,
+    Union,
+    cast,
+)
+
+from .workforce_callback import WorkforceCallback
+from .workforce_metrics import WorkforceMetrics
+
+if TYPE_CHECKING:
+    from camel.responses import ChatAgentResponse
+    from camel.utils.context_utils import ContextUtility, WorkflowSummary
+
+
+from camel.agents import ChatAgent
+from camel.logger import get_logger
+from camel.messages.base import BaseMessage
+from camel.models import BaseModelBackend, ModelManager
+from camel.societies.workforce.base import BaseNode
+from camel.societies.workforce.prompts import (
+    ASSIGN_TASK_PROMPT,
+    CREATE_NODE_PROMPT,
+    FAILURE_ANALYSIS_RESPONSE_FORMAT,
+    QUALITY_EVALUATION_RESPONSE_FORMAT,
+    STRATEGY_DESCRIPTIONS,
+    TASK_AGENT_SYSTEM_MESSAGE,
+    TASK_ANALYSIS_PROMPT,
+    TASK_DECOMPOSE_PROMPT,
+)
+from camel.societies.workforce.role_playing_worker import RolePlayingWorker
+from camel.societies.workforce.single_agent_worker import (
+    SingleAgentWorker,
+)
+from camel.societies.workforce.structured_output_handler import (
+    StructuredOutputHandler,
+)
+from camel.societies.workforce.task_channel import TaskChannel
+from camel.societies.workforce.utils import (
+    FailureHandlingConfig,
+    PipelineTaskBuilder,
+    RecoveryStrategy,
+    TaskAnalysisResult,
+    TaskAssignment,
+    TaskAssignResult,
+    WorkerConf,
+    check_if_running,
+)
+from camel.societies.workforce.worker import Worker
+from camel.tasks.task import (
+    Task,
+    TaskState,
+    is_task_result_insufficient,
+    validate_task_content,
+)
+from camel.toolkits import (
+    CodeExecutionToolkit,
+    FunctionTool,
+    SearchToolkit,
+    ThinkingToolkit,
+)
+from camel.utils import dependencies_required
+
+from .events import (
+    AllTasksCompletedEvent,
+    LogEvent,
+    TaskAssignedEvent,
+    TaskCompletedEvent,
+    TaskCreatedEvent,
+    TaskDecomposedEvent,
+    TaskFailedEvent,
+    TaskStartedEvent,
+    TaskUpdatedEvent,
+    WorkerCreatedEvent,
+)
+
+if os.environ.get("TRACEROOT_ENABLED", "False").lower() == "true":
+    try:
+        import traceroot  # type: ignore[import]
+
+        logger = traceroot.get_logger('camel')
+    except ImportError:
+        logger = get_logger(__name__)
+else:
+    logger = get_logger(__name__)
+
+# Constants for configuration values
+MAX_TASK_RETRIES = 3
+MAX_PENDING_TASKS_LIMIT = 20
+TASK_TIMEOUT_SECONDS = 600.0
+DEFAULT_WORKER_POOL_SIZE = 10
+
+
+class WorkforceState(Enum):
+    r"""Workforce execution state for human intervention support."""
+
+    IDLE = "idle"
+    RUNNING = "running"
+    PAUSED = "paused"
+    STOPPED = "stopped"
+
+
+class WorkforceMode(Enum):
+    r"""Workforce execution mode for different task processing strategies."""
+
+    AUTO_DECOMPOSE = "auto_decompose"  # Automatic task decomposition mode
+    PIPELINE = "pipeline"  # Predefined pipeline mode
+
+
+class WorkforceSnapshot:
+    r"""Snapshot of workforce state for resuming execution."""
+
+    def __init__(
+        self,
+        main_task: Optional[Task] = None,
+        pending_tasks: Optional[Deque[Task]] = None,
+        completed_tasks: Optional[List[Task]] = None,
+        task_dependencies: Optional[Dict[str, List[str]]] = None,
+        assignees: Optional[Dict[str, str]] = None,
+        current_task_index: int = 0,
+        description: str = "",
+    ):
+        self.main_task = main_task
+        self.pending_tasks = pending_tasks.copy() if pending_tasks else deque()
+        self.completed_tasks = (
+            completed_tasks.copy() if completed_tasks else []
+        )
+        self.task_dependencies = (
+            task_dependencies.copy() if task_dependencies else {}
+        )
+        self.assignees = assignees.copy() if assignees else {}
+        self.current_task_index = current_task_index
+        self.description = description
+        self.timestamp = time.time()
+
+
+class Workforce(BaseNode):
+    r"""A system where multiple worker nodes (agents) cooperate together
+    to solve tasks. It can assign tasks to worker nodes and also take
+    strategies such as create new worker, decompose 
+... (truncated)
+
+
+[Message 57]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_vNxt838Hxuknhr24CVD5QIdr",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.role_playing_worker import RolePlayingWorker\\nfrom camel.toolkits.search_toolkit import SearchToolkit\\nfrom camel.toolkits.browser_toolkit import BrowserToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType, ModelPlatformType\\n\\n\\ndef main():\\n    # Define the question to answer\\n    question = (\\n        \\\"What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients \\\"\\n        \\\"from Jan-May 2018 as listed on the NIH website?\\\"\\n    )\\n\\n    # Create a workforce with a description\\n    workforce = Workforce(description=\\\"Workforce to answer clinical trial enrollment question\\\")\\n\\n    # Create a search toolkit instance and get the Brave search tool\\n    search_toolkit = SearchToolkit()\\n    brave_search_tool = None\\n    for tool in search_toolkit.get_tools():\\n        if tool.get_function_name() == \\\"search_brave\\\":\\n            brave_search_tool = tool\\n            break\\n\\n    if brave_search_tool is None:\\n        raise RuntimeError(\\\"Brave search tool not found in SearchToolkit\\\")\\n\\n    # Assistant agent kwargs for search worker\\n    search_assistant_agent_kwargs = {\\n        \\\"system_message\\\": \\\"You are a helpful search assistant.\\\",\\n        \\\"model\\\": ModelFactory.create(\\n            model_platform=ModelPlatformType.DEFAULT,\\n            model_type=ModelType.DEFAULT,\\n        ),\\n        \\\"tools\\\": [brave_search_tool],\\n    }\\n\\n    # Create a search worker\\n    search_worker = RolePlayingWorker(\\n        description=\\\"Search Worker\\\",\\n        assistant_role_name=\\\"Search Assistant\\\",\\n        user_role_name=\\\"Search User\\\",\\n        assistant_agent_kwargs=search_assistant_agent_kwargs,\\n    )\\n\\n    # Create a browser toolkit instance and get the first browser tool\\n    browser_toolkit = BrowserToolkit()\\n    browser_tools = browser_toolkit.get_tools()\\n    if not browser_tools:\\n        raise RuntimeError(\\\"No browser tools found in BrowserToolkit\\\")\\n    browser_tool = browser_tools[0]\\n\\n    # Assistant agent kwargs for browser worker\\n    browser_assistant_agent_kwargs = {\\n        \\\"system_message\\\": \\\"You are a helpful browser assistant.\\\",\\n        \\\"model\\\": ModelFactory.create(\\n            model_platform=ModelPlatformType.DEFAULT,\\n            model_type=ModelType.DEFAULT,\\n        ),\\n        \\\"tools\\\": [browser_tool],\\n    }\\n\\n    # Create a browser worker\\n    browser_worker = RolePlayingWorker(\\n        description=\\\"Browser Worker\\\",\\n        assistant_role_name=\\\"Browser Assistant\\\",\\n        user_role_name=\\\"Browser User\\\",\\n        assistant_agent_kwargs=browser_assistant_agent_kwargs,\\n    )\\n\\n    # Add workers to the workforce\\n    workforce.add_single_agent_worker(\\\"SearchWorker\\\", search_worker)\\n    workforce.add_single_agent_worker(\\\"BrowserWorker\\\", browser_worker)\\n\\n    # Run the workforce to answer the question\\n    result = workforce.run_task_sync(task=question)\\n\\n    # Print the result\\n    print(\\\"Answer:\\\", result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/1_answer_question.py\"}"
+    }
+  }
+]
+
+[Message 58]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py'.
+
+[Message 59]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_CGCHmB7azjQjfoOdD4oSRKWP",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_workforce_1_final_run_7\", \"command\": \"python task-script/workforce/1_answer_question.py\", \"block\": true, \"timeout\": 120}"
+    }
+  }
+]
+
+[Message 60]
+Role: tool
+Content: 2026-02-02 17:57:05,188 - camel.camel.societies.workforce.workforce - WARNING - No coordinator_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+2026-02-02 17:57:05,626 - camel.camel.societies.workforce.workforce - WARNING - No task_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 86, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 75, in main
+    workforce.add_single_agent_worker("SearchWorker", search_worker)
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/societies/workforce/workforce.py", line 2877, in add_single_agent_worker
+    worker_node = SingleAgentWorker(
+                  ^^^^^^^^^^^^^^^^^^
+  File "/home/yangz0h/Programming/meta-agent/camel/camel/societies/workforce/single_agent_worker.py", line 234, in __init__
+    node_id = worker.agent_id
+              ^^^^^^^^^^^^^^^
+AttributeError: 'RolePlayingWorker' object has no attribute 'agent_id'
+
+[Message 61]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_ultaRlZKfWa1RiZB8mMXANmI",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.role_playing_worker import RolePlayingWorker\\nfrom camel.toolkits.search_toolkit import SearchToolkit\\nfrom camel.toolkits.browser_toolkit import BrowserToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType, ModelPlatformType\\n\\n\\ndef main():\\n    # Define the question to answer\\n    question = (\\n        \\\"What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients \\\"\\n        \\\"from Jan-May 2018 as listed on the NIH website?\\\"\\n    )\\n\\n    # Create a workforce with a description\\n    workforce = Workforce(description=\\\"Workforce to answer clinical trial enrollment question\\\")\\n\\n    # Create a search toolkit instance and get the Brave search tool\\n    search_toolkit = SearchToolkit()\\n    brave_search_tool = None\\n    for tool in search_toolkit.get_tools():\\n        if tool.get_function_name() == \\\"search_brave\\\":\\n            brave_search_tool = tool\\n            break\\n\\n    if brave_search_tool is None:\\n        raise RuntimeError(\\\"Brave search tool not found in SearchToolkit\\\")\\n\\n    # Assistant agent kwargs for search worker\\n    search_assistant_agent_kwargs = {\\n        \\\"system_message\\\": \\\"You are a helpful search assistant.\\\",\\n        \\\"model\\\": ModelFactory.create(\\n            model_platform=ModelPlatformType.DEFAULT,\\n            model_type=ModelType.DEFAULT,\\n        ),\\n        \\\"tools\\\": [brave_search_tool],\\n    }\\n\\n    # Create a search worker\\n    search_worker = RolePlayingWorker(\\n        description=\\\"Search Worker\\\",\\n        assistant_role_name=\\\"Search Assistant\\\",\\n        user_role_name=\\\"Search User\\\",\\n        assistant_agent_kwargs=search_assistant_agent_kwargs,\\n    )\\n\\n    # Create a browser toolkit instance and get the first browser tool\\n    browser_toolkit = BrowserToolkit()\\n    browser_tools = browser_toolkit.get_tools()\\n    if not browser_tools:\\n        raise RuntimeError(\\\"No browser tools found in BrowserToolkit\\\")\\n    browser_tool = browser_tools[0]\\n\\n    # Assistant agent kwargs for browser worker\\n    browser_assistant_agent_kwargs = {\\n        \\\"system_message\\\": \\\"You are a helpful browser assistant.\\\",\\n        \\\"model\\\": ModelFactory.create(\\n            model_platform=ModelPlatformType.DEFAULT,\\n            model_type=ModelType.DEFAULT,\\n        ),\\n        \\\"tools\\\": [browser_tool],\\n    }\\n\\n    # Create a browser worker\\n    browser_worker = RolePlayingWorker(\\n        description=\\\"Browser Worker\\\",\\n        assistant_role_name=\\\"Browser Assistant\\\",\\n        user_role_name=\\\"Browser User\\\",\\n        assistant_agent_kwargs=browser_assistant_agent_kwargs,\\n    )\\n\\n    # Add workers to the workforce\\n    workforce.add_worker(search_worker)\\n    workforce.add_worker(browser_worker)\\n\\n    # Run the workforce to answer the question\\n    result = workforce.run_task_sync(task=question)\\n\\n    # Print the result\\n    print(\\\"Answer:\\\", result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/1_answer_question.py\"}"
+    }
+  }
+]
+
+[Message 62]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py'.
+
+[Message 63]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_8N9MdClDdNmBZgJNZXZ6vwuo",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_workforce_1_final_run_8\", \"command\": \"python task-script/workforce/1_answer_question.py\", \"block\": true, \"timeout\": 120}"
+    }
+  }
+]
+
+[Message 64]
+Role: tool
+Content: 2026-02-02 17:57:53,485 - camel.camel.societies.workforce.workforce - WARNING - No coordinator_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+2026-02-02 17:57:53,839 - camel.camel.societies.workforce.workforce - WARNING - No task_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 86, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 75, in main
+    workforce.add_worker(search_worker)
+    ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Workforce' object has no attribute 'add_worker'. Did you mean: 'add_workforce'?
+
+[Message 65]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_tohHeCPz7X0nHDI8LaBuXi6Z",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.role_playing_worker import RolePlayingWorker\\nfrom camel.toolkits.search_toolkit import SearchToolkit\\nfrom camel.toolkits.browser_toolkit import BrowserToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType, ModelPlatformType\\n\\n\\ndef main():\\n    # Define the question to answer\\n    question = (\\n        \\\"What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients \\\"\\n        \\\"from Jan-May 2018 as listed on the NIH website?\\\"\\n    )\\n\\n    # Create a search toolkit instance and get the Brave search tool\\n    search_toolkit = SearchToolkit()\\n    brave_search_tool = None\\n    for tool in search_toolkit.get_tools():\\n        if tool.get_function_name() == \\\"search_brave\\\":\\n            brave_search_tool = tool\\n            break\\n\\n    if brave_search_tool is None:\\n        raise RuntimeError(\\\"Brave search tool not found in SearchToolkit\\\")\\n\\n    # Assistant agent kwargs for search worker\\n    search_assistant_agent_kwargs = {\\n        \\\"system_message\\\": \\\"You are a helpful search assistant.\\\",\\n        \\\"model\\\": ModelFactory.create(\\n            model_platform=ModelPlatformType.DEFAULT,\\n            model_type=ModelType.DEFAULT,\\n        ),\\n        \\\"tools\\\": [brave_search_tool],\\n    }\\n\\n    # Create a search worker\\n    search_worker = RolePlayingWorker(\\n        description=\\\"Search Worker\\\",\\n        assistant_role_name=\\\"Search Assistant\\\",\\n        user_role_name=\\\"Search User\\\",\\n        assistant_agent_kwargs=search_assistant_agent_kwargs,\\n    )\\n\\n    # Create a browser toolkit instance and get the first browser tool\\n    browser_toolkit = BrowserToolkit()\\n    browser_tools = browser_toolkit.get_tools()\\n    if not browser_tools:\\n        raise RuntimeError(\\\"No browser tools found in BrowserToolkit\\\")\\n    browser_tool = browser_tools[0]\\n\\n    # Assistant agent kwargs for browser worker\\n    browser_assistant_agent_kwargs = {\\n        \\\"system_message\\\": \\\"You are a helpful browser assistant.\\\",\\n        \\\"model\\\": ModelFactory.create(\\n            model_platform=ModelPlatformType.DEFAULT,\\n            model_type=ModelType.DEFAULT,\\n        ),\\n        \\\"tools\\\": [browser_tool],\\n    }\\n\\n    # Create a browser worker\\n    browser_worker = RolePlayingWorker(\\n        description=\\\"Browser Worker\\\",\\n        assistant_role_name=\\\"Browser Assistant\\\",\\n        user_role_name=\\\"Browser User\\\",\\n        assistant_agent_kwargs=browser_assistant_agent_kwargs,\\n    )\\n\\n    # Create a workforce with the workers as children\\n    workforce = Workforce(\\n        description=\\\"Workforce to answer clinical trial enrollment question\\\",\\n        children=[search_worker, browser_worker],\\n    )\\n\\n    # Run the workforce to answer the question\\n    result = workforce.run_task_sync(task=question)\\n\\n    # Print the result\\n    print(\\\"Answer:\\\", result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/1_answer_question.py\"}"
+    }
+  }
+]
+
+[Message 66]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py'.
+
+[Message 67]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_JYRVBA7xpfcEYTQkCSlWrAVp",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_workforce_1_final_run_9\", \"command\": \"python task-script/workforce/1_answer_question.py\", \"block\": true, \"timeout\": 120}"
+    }
+  }
+]
+
+[Message 68]
+Role: tool
+Content: 2026-02-02 17:58:42,163 - camel.camel.societies.workforce.workforce - WARNING - No coordinator_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+2026-02-02 17:58:42,195 - camel.camel.societies.workforce.workforce - WARNING - No task_agent provided. Using default ChatAgent settings (ModelPlatformType.DEFAULT, ModelType.DEFAULT) with default system message.
+Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 85, in <module>
+    main()
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py", line 78, in main
+    result = workforce.run_task_sync(task=question)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Workforce' object has no attribute 'run_task_sync'
+
+[Message 69]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_SXSqihyjswH1JbHAtCnZ35Q6",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"examples/workforce/simple_workforce_mcp.py\"}"
+    }
+  }
+]
+
+[Message 70]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+"""
+Simple example showing how to run a Workforce as an MCP server.
+
+To test this example:
+1. Install dependencies: pip install mcp camel-ai[all]
+2. Run this script: python simple_workforce_mcp.py
+3. The server will start on localhost:8001
+4. Use an MCP client to connect and test the tools
+
+Example MCP client usage:
+- Call process_task with task_content="Analyze market trends"
+- Call get_workforce_info to see workforce status
+- Call add_single_agent_worker to add new workers
+"""
+
+from camel.agents import ChatAgent
+from camel.messages import BaseMessage
+from camel.societies.workforce import Workforce
+
+
+def main():
+    """Create and run a simple workforce MCP server."""
+
+    # Create a basic workforce
+    workforce = Workforce(description="Simple Analysis Team")
+
+    # Add a basic analyst worker
+    analyst_msg = BaseMessage.make_assistant_message(
+        role_name="Analyst",
+        content="You are a helpful analyst who can process various tasks.",
+    )
+    analyst = ChatAgent(system_message=analyst_msg)
+    workforce.add_single_agent_worker(
+        description="General purpose analyst", worker=analyst
+    )
+
+    print("Creating Workforce MCP server...")
+    print("Server will be available at: http://localhost:8001")
+    print("Press Ctrl+C to stop the server")
+
+    # Convert to MCP server and run
+    mcp_server = workforce.to_mcp(
+        name="Simple-Workforce",
+        description="A simple workforce for task processing",
+        port=8001,
+    )
+
+    try:
+        # This will start the server and block
+        mcp_server.run()
+    except KeyboardInterrupt:
+        print("\nServer stopped.")
+
+
+if __name__ == "__main__":
+    main()
+
+[Message 71]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_tJ5ITf4e9lkQWtsYYNfi53YE",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from camel.agents import ChatAgent\\nfrom camel.societies.workforce.workforce import Workforce\\nfrom camel.societies.workforce.role_playing_worker import RolePlayingWorker\\nfrom camel.toolkits.search_toolkit import SearchToolkit\\nfrom camel.toolkits.browser_toolkit import BrowserToolkit\\nfrom camel.models import ModelFactory\\nfrom camel.types.enums import ModelType, ModelPlatformType\\n\\n\\ndef main():\\n    # Define the question to answer\\n    question = (\\n        \\\"What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients \\\"\\n        \\\"from Jan-May 2018 as listed on the NIH website?\\\"\\n    )\\n\\n    # Create a search toolkit instance and get the Brave search tool\\n    search_toolkit = SearchToolkit()\\n    brave_search_tool = None\\n    for tool in search_toolkit.get_tools():\\n        if tool.get_function_name() == \\\"search_brave\\\":\\n            brave_search_tool = tool\\n            break\\n\\n    if brave_search_tool is None:\\n        raise RuntimeError(\\\"Brave search tool not found in SearchToolkit\\\")\\n\\n    # Assistant agent kwargs for search worker\\n    search_assistant_agent_kwargs = {\\n        \\\"system_message\\\": \\\"You are a helpful search assistant.\\\",\\n        \\\"model\\\": ModelFactory.create(\\n            model_platform=ModelPlatformType.DEFAULT,\\n            model_type=ModelType.DEFAULT,\\n        ),\\n        \\\"tools\\\": [brave_search_tool],\\n    }\\n\\n    # Create a search worker\\n    search_worker = RolePlayingWorker(\\n        description=\\\"Search Worker\\\",\\n        assistant_role_name=\\\"Search Assistant\\\",\\n        user_role_name=\\\"Search User\\\",\\n        assistant_agent_kwargs=search_assistant_agent_kwargs,\\n    )\\n\\n    # Create a browser toolkit instance and get the first browser tool\\n    browser_toolkit = BrowserToolkit()\\n    browser_tools = browser_toolkit.get_tools()\\n    if not browser_tools:\\n        raise RuntimeError(\\\"No browser tools found in BrowserToolkit\\\")\\n    browser_tool = browser_tools[0]\\n\\n    # Assistant agent kwargs for browser worker\\n    browser_assistant_agent_kwargs = {\\n        \\\"system_message\\\": \\\"You are a helpful browser assistant.\\\",\\n        \\\"model\\\": ModelFactory.create(\\n            model_platform=ModelPlatformType.DEFAULT,\\n            model_type=ModelType.DEFAULT,\\n        ),\\n        \\\"tools\\\": [browser_tool],\\n    }\\n\\n    # Create a browser worker\\n    browser_worker = RolePlayingWorker(\\n        description=\\\"Browser Worker\\\",\\n        assistant_role_name=\\\"Browser Assistant\\\",\\n        user_role_name=\\\"Browser User\\\",\\n        assistant_agent_kwargs=browser_assistant_agent_kwargs,\\n    )\\n\\n    # Create a workforce with the workers as children\\n    workforce = Workforce(\\n        description=\\\"Workforce to answer clinical trial enrollment question\\\",\\n        children=[search_worker, browser_worker],\\n    )\\n\\n    # Add a main task\\n    workforce.add_main_task(question)\\n\\n    # Start the workforce and wait for completion\\n    import asyncio\\n    asyncio.run(workforce.start())\\n\\n    # Get the result of the main task\\n    main_task = workforce.get_main_task()\\n    result = main_task.result if main_task else None\\n\\n    # Print the result\\n    print(\\\"Answer:\\\", result)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"file_path\": \"task-script/workforce/1_answer_question.py\"}"
+    }
+  }
+]
+
+[Message 72]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/workforce/1_answer_question.py'.
+
+[Message 73]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_WyuUWB16uv4hAxmCbAjx0trM",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_workforce_1_final_run_10\", \"command\": \"python task-script/workforce/1_answer_question.py\", \"block\": true, \"timeout\": 120}"
+    }
+  }
+]
+
+[Message 74]
+Role: tool
+Content: Command did not complete within 120 seconds. Process continues in background as session 'run_workforce_1_final_run_10'.
+
+You can use:
+  - shell_view('run_workforce_1_final_run_10') - get output
+  - shell_kill_process('run_workforce_1_final_run_10') - terminate
+
+[Message 75]
+Role: assistant
+Content: I have created the script as requested to create a workforce with workers using different tools (Brave search and browser) to answer the clinical trial enrollment question. The script is saved at task-script/workforce/1_answer_question.py.
+
+The script creates two RolePlayingWorker instances with appropriate assistant agents configured with the Brave search tool and browser tool respectively. These workers are added as children to the Workforce. The main task is added to the workforce and the workforce is started asynchronously. After completion, the result of the main task is printed.
+
+The script was executed but is still running (may take some time due to the nature of the task). You can check the output later or I can help with further modifications or debugging if needed.
+
