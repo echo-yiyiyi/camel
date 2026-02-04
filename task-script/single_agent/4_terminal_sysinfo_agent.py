@@ -5,21 +5,15 @@ from camel.models import ModelFactory
 from camel.toolkits import TerminalToolkit, CodeExecutionToolkit
 from camel.types import ModelPlatformType, ModelType
 
-# Define system message
-system_message = (
-    "You are an assistant with access to terminal and code execution tools. "
-    "Retrieve system information using terminal commands and print it in a Python interpreter."
-)
+# Define working directory for terminal toolkit
+working_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "workspace")
 
-# Setup working directory
-working_directory = os.getcwd()
-
-# Create toolkits
-terminal_toolkit = TerminalToolkit(working_directory=working_directory)
-code_exec_toolkit = CodeExecutionToolkit(sandbox="internal_python")
-
-# Get tools from toolkits
+# Create terminal toolkit and get tools
+terminal_toolkit = TerminalToolkit(working_directory=working_dir)
 terminal_tools = terminal_toolkit.get_tools()
+
+# Create code execution toolkit and get tools
+code_exec_toolkit = CodeExecutionToolkit()
 code_exec_tools = code_exec_toolkit.get_tools()
 
 # Combine tools
@@ -31,23 +25,31 @@ model = ModelFactory.create(
     model_type=ModelType.DEFAULT,
 )
 
+# System message for the agent
+system_message = (
+    "You are a system information assistant. "
+    "You have access to terminal tools to retrieve system information, "
+    "and code execution tools to process and print the information in Python."
+)
+
 # Create agent
 agent = ChatAgent(
     system_message=system_message,
     model=model,
     tools=tools,
 )
-
 agent.reset()
 
-# User prompt to retrieve system info and print it in Python interpreter
+# User prompt to retrieve system info and print it in Python
 user_prompt = (
-    "Retrieve system information such as OS details, CPU info, and memory usage "
-    "using terminal commands. Then print the retrieved information in a Python interpreter."
+    "Use terminal tools to get detailed system information (e.g., uname -a, cat /etc/os-release). "
+    "Then use code execution tools to print the retrieved information in a Python interpreter. "
+    "Show the output clearly."
 )
 
-# Step the agent
+# Get response
 response = agent.step(user_prompt)
 
-# Print the final response content
-print(response.msg.content)
+# Print all agent messages
+for msg in response.msgs:
+    print(msg.content)

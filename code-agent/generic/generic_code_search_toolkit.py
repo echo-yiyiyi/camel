@@ -13,8 +13,9 @@
 # ========= Copyright 2023-2025 @ CAMEL-AI.org. All Rights Reserved. =========
 
 """
-Optimized code search toolkit for fast and precise file exploration.
+Generic code search toolkit for fast and precise file exploration.
 All operations use TerminalToolkit shell commands for consistency.
+This is a framework-agnostic version that can be used with any codebase.
 """
 
 from pathlib import Path
@@ -22,7 +23,7 @@ from typing import List, Optional, Literal
 from camel.toolkits import FunctionTool, TerminalToolkit
 
 
-class CodeSearchToolkit:
+class GenericCodeSearchToolkit:
     """A toolkit optimized for fast code exploration and file search.
 
     This toolkit provides core capabilities using shell commands:
@@ -36,6 +37,7 @@ class CodeSearchToolkit:
     - Uses fast tools: fd for glob, rg for grep
     - Structured output for LLM consumption
     - Built-in exclusion of common noise directories
+    - Framework-agnostic: works with any codebase
     """
 
     # Directories to always exclude from search
@@ -52,7 +54,7 @@ class CodeSearchToolkit:
         exclude_dirs: Optional[set] = None,
         max_results: int = 100,
     ):
-        """Initialize the CodeSearchToolkit.
+        """Initialize the GenericCodeSearchToolkit.
 
         Args:
             working_directory: The root directory for all searches.
@@ -108,7 +110,7 @@ class CodeSearchToolkit:
         Examples:
             - glob_search("**/*.py") - Find all Python files
             - glob_search("**/test_*.py") - Find all test files
-            - glob_search("**/*agent*.py") - Find files with 'agent' in name
+            - glob_search("**/*config*.json") - Find config files
             - glob_search("*.md", path="docs") - Find markdown in docs/
         """
         search_dir = str(self.working_dir)
@@ -213,9 +215,9 @@ fi
             Formatted search results based on output_mode.
 
         Examples:
-            - grep_search("class.*Agent") - Find class definitions
-            - grep_search("def search", glob_filter="*.py") - Find search functions
-            - grep_search("import re", output_mode="files") - Files importing re
+            - grep_search("class.*Handler") - Find class definitions
+            - grep_search("def process", glob_filter="*.py") - Find process functions
+            - grep_search("import os", output_mode="files") - Files importing os
             - grep_search("TODO", output_mode="content", context_lines=2)
         """
         search_dir = str(self.working_dir)
@@ -304,7 +306,7 @@ fi
             File contents, or error message.
 
         Examples:
-            - read_file("camel/agents/chat_agent.py") - Read file
+            - read_file("src/main.py") - Read source file
             - read_file("README.md") - Read markdown file
         """
         # Resolve path
@@ -398,15 +400,15 @@ fi
         Searches for both 'from X import' and 'import X' patterns.
 
         Args:
-            module_name: Module or class name to search for (e.g., 'weather', 'LlamaModel').
+            module_name: Module or class name to search for.
             ignore_case: Whether to ignore case in matching.
 
         Returns:
             List of files that import the specified module.
 
         Examples:
-            - find_imports("WeatherToolkit") - Find files using WeatherToolkit
-            - find_imports("llama") - Find files importing anything with 'llama'
+            - find_imports("requests") - Find files using requests library
+            - find_imports("json") - Find files importing json
         """
         # Build regex pattern for import statements
         pattern = f"(from\\s+\\S*{module_name}\\S*\\s+import|import\\s+\\S*{module_name})"
@@ -438,8 +440,8 @@ fi
             File paths and line numbers where definition is found.
 
         Examples:
-            - find_definition("ChatAgent") - Find ChatAgent class
-            - find_definition("search", definition_type="function") - Find search functions
+            - find_definition("UserHandler") - Find UserHandler class
+            - find_definition("process", definition_type="function") - Find process functions
         """
         if definition_type == 'class':
             pattern = f"^class\\s+{name}"
@@ -473,23 +475,23 @@ fi
 
 # Example usage and quick test
 if __name__ == "__main__":
-    # Use parent directory of this script as working directory
-    script_dir = Path(__file__).parent
-    camel_dir = script_dir.parent
+    # Use current directory as working directory
+    import sys
+    working_dir = sys.argv[1] if len(sys.argv) > 1 else "."
 
-    toolkit = CodeSearchToolkit(working_directory=str(camel_dir))
+    toolkit = GenericCodeSearchToolkit(working_directory=working_dir)
 
     print("=== Testing glob_search ===")
-    print(toolkit.glob_search("**/*agent*.py", max_results=10))
+    print(toolkit.glob_search("**/*.py", max_results=10))
     print()
 
     print("=== Testing grep_search ===")
-    print(toolkit.grep_search("class.*Agent", glob_filter="*.py", output_mode='files', max_results=10))
+    print(toolkit.grep_search("class.*", glob_filter="*.py", output_mode='files', max_results=10))
     print()
 
     print("=== Testing find_definition ===")
-    print(toolkit.find_definition("ChatAgent", definition_type='class'))
+    print(toolkit.find_definition("main", definition_type='function'))
     print()
 
     print("=== Testing list_directory ===")
-    print(toolkit.list_directory("camel"))
+    print(toolkit.list_directory())

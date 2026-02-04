@@ -11,11 +11,11 @@ model = ModelFactory.create(
     model_config_dict=QwenConfig(temperature=0.2).as_dict(),
 )
 
-# Create the weather toolkit instance
+# Create the weather toolkit
 weather_toolkit = WeatherToolkit()
 
 # Create the agent with system message and weather tools
-system_message = "You are a helpful assistant that can answer questions about the weather."
+system_message = "You are a helpful assistant with access to weather information."
 agent = ChatAgent(
     system_message=system_message,
     model=model,
@@ -23,7 +23,14 @@ agent = ChatAgent(
 )
 
 # Example usage function
-if __name__ == '__main__':
-    question = "What's the weather like in New York today?"
+
+def ask_weather_question(question: str) -> str:
     response = agent.step(question)
-    print(response.msg.content)
+    return response.msgs[0].content
+
+
+if __name__ == "__main__":
+    # Example question
+    question = "What's the weather like in New York today?"
+    answer = ask_weather_question(question)
+    print(answer)
