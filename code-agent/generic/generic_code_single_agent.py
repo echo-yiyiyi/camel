@@ -187,6 +187,7 @@ class GenericCodeSingleAgent:
             system_message=system_prompt,
             model=self.model,
             tools=all_tools,
+            step_timeout=self.step_timeout,
         )
 
     def _run_step(
@@ -212,7 +213,7 @@ class GenericCodeSingleAgent:
         error = None
 
         try:
-            response = self.agent.step(prompt, timeout=self.step_timeout)
+            response = self.agent.step(prompt)
             final_output = response.msgs[0].content if response and response.msgs else ""
             tool_calls = response.info.get("tool_calls", []) if hasattr(response, "info") else []
             all_tool_calls.extend(tool_calls)
@@ -232,7 +233,7 @@ class GenericCodeSingleAgent:
                 ]):
                     break
 
-                response = self.agent.step("Continue.", timeout=self.step_timeout)
+                response = self.agent.step("Continue.")
                 final_output = response.msgs[0].content if response and response.msgs else ""
                 tool_calls = response.info.get("tool_calls", []) if hasattr(response, "info") else []
                 all_tool_calls.extend(tool_calls)

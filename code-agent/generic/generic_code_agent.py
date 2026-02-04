@@ -309,6 +309,9 @@ class GenericCodeAgent:
         explore_prompt = GENERIC_EXPLORE_SYSTEM_PROMPT
         if self.project_context:
             explore_prompt += f"\n\n## Project-Specific Context\n\n{self.project_context}"
+        
+        # print(f"explore_prompt: {explore_prompt}")
+        # exit()
 
         self.explore_agent = ChatAgent(
             system_message=explore_prompt,

@@ -1,0 +1,12 @@
+{
+  "servers": [
+    {
+      "name": "DeepWiki",
+      "url": "https://mcpservers.org/servers/devin/deepwiki",
+      "description": "DeepWiki MCP server for camel-ai/oasis repository",
+      "auth": {
+        "type": "none"
+      }
+    }
+  ]
+}
