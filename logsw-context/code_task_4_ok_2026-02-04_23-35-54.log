@@ -1,0 +1,1810 @@
+Task: task_4
+Status: SUCCESS
+Start Time: 2026-02-04T23:35:54.632464
+End Time: 2026-02-04T23:37:30.260461
+Total Duration: 95.63 seconds
+  - Explore Phase: 43.73 seconds
+  - Code Phase: 51.90 seconds
+Description: create an agent with terminal tools and code execution tools. Prompt it to retrieve system information and print it in a Python interpreter. Save the script to task-script/single_agent/4_terminal_sysinfo_agent.py
+================================================================================
+
+EXPLORE PHASE
+================================================================================
+Tool Calls: 20
+----------------------------------------
+
+[1] glob_search
+Args: {
+  "pattern": "**/*terminal*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 8 file(s) matching '**/*terminal*.py':
+camel/toolkits/terminal_toolkit/terminal_toolkit.py
+code-agent/terminal_toolkit_doc.py
+code-agent/terminal_toolkit_read_file.py
+code-agent/terminal_toolkit_read_file_map.py
+code-agent/terminal_toolkit_v0.py
+examples/toolkits/mcp/mcp_terminal_toolkit/terminal_toolkit_server.py
+examples/toolkits/terminal_toolkit.py
+test/toolkits/test_terminal_toolkit.py
+
+[2] glob_search
+Args: {
+  "pattern": "**/*code_exec*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 7 file(s) matching '**/*code_exec*.py':
+camel/toolkits/code_execution.py
+examples/embodiment/code_execution.py
+examples/runtimes/code_execution_with_docker_runtime.py
+examples/runtimes/code_execution_with_llm_guard_runtime.py
+examples/toolkits/code_execution_toolkit.py
+test/runtimes/test_code_execution_with_llm_guard_runtime.py
+test/toolkits/test_code_execution.py
+
+[3] glob_search
+Args: {
+  "pattern": "**/*agent*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*agent*.py':
+test/agents/test_chat_agent.py
+test/agents/test_critic_agent.py
+test/agents/test_deductive_reasoner_agent.py
+test/agents/test_embodied_agent.py
+test/agents/test_knowledge_agent.py
+test/agents/test_repo_agent.py
+test/agents/test_task_agent.py
+test/agents/tool_agents/test_hugging_face_tool_agent.py
+test/agents/tool_agents/test_tool_agent_base.py
+test/workforce/test_workforce_single_agent.py
+
+[4] glob_search
+Args: {
+  "pattern": "**/*tool*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*tool*.py':
+test/agents/tool_agents/test_hugging_face_tool_agent.py
+test/agents/tool_agents/test_tool_agent_base.py
+test/toolkits/test_audio_analysis_toolkit.py
+test/toolkits/test_data_commons_toolkit.py
+test/toolkits/test_klavis_toolkit.py
+test/toolkits/test_memory_toolkit.py
+test/toolkits/test_message_agent_toolkit.py
+test/toolkits/test_note_taking_toolkit.py
+test/toolkits/test_sympy_toolkit.py
+test/toolkits/test_thinking_toolkit.py
+
+[5] glob_search
+Args: {
+  "pattern": "**/*example*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*example*.py':
+examples/embeddings/gemini_embedding_example.py
+examples/embeddings/jina_embedding_example.py
+examples/embeddings/openai_compatible_embedding_example.py
+examples/embeddings/together_embedding_example.py
+examples/embeddings/vlm_embedding_example.py
+examples/interpreters/ipython_interpreter_example.py
+examples/interpreters/microsandbox_interpreter_example.py
+examples/knowledge_graph/knowledge_graph_agent_example.py
+examples/knowledge_graph/neo4j_example...
+
+[6] glob_search
+Args: {
+  "pattern": "**/*test*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*test*.py':
+test/bots/test_discord_app.py
+test/bots/test_slack_app.py
+test/bots/test_telegram_bot.py
+test/data_collectors/test_alpaca_collector.py
+test/data_collectors/test_sharegpt_collector.py
+test/integration_test/test_minimal_dependency.py
+test/interpreters/test_subprocess_interpreter.py
+test/terminators/test_response_terminator.py
+test/terminators/test_token_limit_terminator.py
+test/test_all_exports.py
+
+[7] grep_search
+Args: {
+  "pattern": "terminal",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'terminal' in *.py files (10 matches):
+debug/eigent.py
+runtimes/shared_runtime_multi_toolkit.py
+summarization/handle_token_limit.py
+workforce/eigent.py
+workforce/multi_turn_conversation.py
+toolkits/terminal_toolkit.py
+toolkits/pptx_toolkit.py
+toolkits/mcp/mcp_terminal_toolkit/terminal_toolkit_server.py
+toolkits/mcp/mcp_terminal_toolkit/client.py
+models/claude_model_example.py
+
+[8] grep_search
+Args: {
+  "pattern": "code execution",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'code execution' in *.py files (6 matches):
+usecases/codeforces_question_solver/app.py
+workforce/eigent.py
+interpreters/microsandbox_interpreter_example.py
+runtimes/shared_runtime_multi_toolkit.py
+toolkits/pptx_toolkit.py
+toolkits/dynamic_dependency.py
+
+[9] grep_search
+Args: {
+  "pattern": "system info",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: No matches found for pattern 'system info'
+
+[10] grep_search
+Args: {
+  "pattern": "agent",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'agent' in *.py files (10 matches):
+external_tools/use_external_tools.py
+debug/eigent.py
+debug/traceroot_example.py
+deductive_reasoner_agent/deduce_conditions_and_quality.py
+bots/slack_bot.py
+environments/tic_tac_toe.py
+vision/image_crafting.py
+services/agent_openapi_server.py
+environments/rlcards_example.py
+bots/discord_bot_use_msg_queue.py
+
+[11] grep_search
+Args: {
+  "pattern": "toolkit",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'toolkit' in *.py files (10 matches):
+external_tools/use_external_tools.py
+debug/eigent.py
+debug/traceroot_example.py
+runtimes/code_execution_with_docker_runtime.py
+runtimes/code_execution_with_llm_guard_runtime.py
+runtimes/remote_http_runtime.py
+models/cometapi_model_example.py
+runtimes/docker_runtime.py
+models/crynux_model_example.py
+usecases/multi_agent_research_assistant/app.py
+
+[12] grep_search
+Args: {
+  "pattern": "interpreter",
+  "path": "examples",
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'interpreter' in *.py files (8 matches):
+loaders/firecrawl_example.py
+runtimes/docker_runtime_with_tasks.py
+toolkits/code_execution_toolkit.py
+toolkits/dynamic_dependency.py
+interpreters/ipython_interpreter_example.py
+toolkits/e2b_custom_provider_example.py
+interpreters/internal_python_interpreter.py
+interpreters/microsandbox_interpreter_example.py
+
+[13] read_file
+Args: {
+  "file_path": "examples/toolkits/terminal_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[14] read_file
+Args: {
+  "file_path": "camel/toolkits/code_execution.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[15] read_file
+Args: {
+  "file_path": "examples/interpreters/ipython_interpreter_example.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[16] read_file
+Args: {
+  "file_path": "camel/toolkits/terminal_toolkit/terminal_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[17] read_file
+Args: {
+  "file_path": "examples/interpreters/microsandbox_interpreter_example.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[18] glob_search
+Args: {
+  "pattern": "**/__init__.py",
+  "path": "camel/toolkits",
+  "file_type": "file",
+  "max_results": 5
+}
+Result: Found 5 file(s) matching '**/__init__.py':
+camel/toolkits/open_api_specs/klarna/__init__.py
+camel/toolkits/open_api_specs/outschool/__init__.py
+camel/toolkits/open_api_specs/outschool/paths/__init__.py
+camel/toolkits/open_api_specs/speak/__init__.py
+camel/toolkits/open_api_specs/web_scraper/paths/__init__.py
+
+[19] glob_search
+Args: {
+  "pattern": "**/*toolkit*.py",
+  "path": "examples/toolkits",
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*toolkit*.py':
+examples/toolkits/aci_toolkit.py
+examples/toolkits/edgeone_pages_mcp_toolkit.py
+examples/toolkits/google_drive_mcp_toolkit.py
+examples/toolkits/human_toolkit.py
+examples/toolkits/meshy_toolkit.py
+examples/toolkits/openbb_toolkit.py
+examples/toolkits/searxng_toolkit.py
+examples/toolkits/sympy_toolkit.py
+examples/toolkits/terminal_toolkit.py
+examples/toolkits/toolkit_message_integration.py
+
+[20] read_file
+Args: {
+  "file_path": "examples/toolkits/code_execution_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+----------------------------------------
+Output:
+## Examples (MOST IMPORTANT)
+- examples/toolkits/terminal_toolkit.py
+  - Shows: Creating an agent with TerminalToolkit to execute shell commands
+  - Key usage: TerminalToolkit.get_tools(), ChatAgent with terminal tools, executing shell commands like mkdir, ls, cat, and interacting with sessions
+- examples/toolkits/code_execution_toolkit.py
+  - Shows: Creating an agent with CodeExecutionToolkit to execute Python code
+  - Key usage: CodeExecutionToolkit.get_tools(), ChatAgent with code execution tools, running Python code snippets and getting results
+- examples/interpreters/ipython_interpreter_example.py
+  - Shows: Using JupyterKernelInterpreter to run Python code snippets
+- examples/interpreters/microsandbox_interpreter_example.py
+  - Shows: Using MicrosandboxInterpreter for running Python, JavaScript, and shell commands in sandboxed environment
+
+## Implementation
+- camel/toolkits/terminal_toolkit/terminal_toolkit.py
+  - Class: TerminalToolkit
+  - Functions: shell_exec, shell_view, shell_write_to_process, shell_kill_process, shell_ask_user_for_help, shell_write_content_to_file
+  - Provides terminal command execution tools with local or Docker backend
+- camel/toolkits/code_execution.py
+  - Class: CodeExecutionToolkit
+  - Functions: execute_code, execute_command, get_tools
+  - Provides code execution tools with multiple interpreter backends (internal Python, Jupyter, Docker, subprocess, E2B, Microsandbox)
+
+## Configuration / Types
+- camel/types/enums.py (not explicitly read but known from context)
+  - ModelPlatformType, ModelType enums used for model selection in examples
+
+## Tests
+- test/toolkits/test_terminal_toolkit.py (likely contains tests for terminal toolkit)
+- test/toolkits/test_code_execution.py (likely contains tests for code execution toolkit)
+
+These files and examples provide the relevant components and usage patterns to create an agent with terminal tools and code execution tools, prompt it to retrieve system information, and print it in a Python interpreter. The example scripts in examples/toolkits/terminal_toolkit.py and examples/toolkits/code_execution_toolkit.py are especially relevant for combining terminal and code execution capabilities in an agent.
+================================================================================
+
+CODE PHASE
+================================================================================
+Tool Calls: 4
+----------------------------------------
+
+[1] read_file_tool
+Args: {
+  "file_path": "examples/toolkits/terminal_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+import os
+
+from camel.agents import ChatAgent
+from camel.configs import ChatGPTConfig
+from camel.models import ModelFactory
+from camel.toolkits import TerminalToolkit
+from camel.types import ModelPlatformType, ModelType
+
+# Get current script directory
+base_dir = os.path.dirname(os.path.abspath(__...
+
+[2] read_file_tool
+Args: {
+  "file_path": "examples/toolkits/code_execution_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+from colorama import Fore
+
+from camel.agents import ChatAgent
+from camel.models import ModelFactory
+from camel.toolkits.code_execution import CodeExecutionToolkit
+from camel.types import ModelPlatformType, ModelType
+from camel.utils import print_text_animated
+
+# tools
+toolkit = CodeExecutionToolk...
+
+[3] shell_write_content_to_file
+Args: {
+  "content": "import os\n\nfrom camel.agents import ChatAgent\nfrom camel.models import ModelFactory\nfrom camel.toolkits import TerminalToolkit, CodeExecutionToolkit\nfrom camel.types import ModelPlatformType, ModelType\n\n# Define working directory for terminal toolkit\nworking_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), \"workspace\")\n\n# Create terminal toolkit and get tools\nterminal_toolkit = TerminalToolkit(working_directory=working_dir)\nterminal_tools = terminal_toolkit.get_tools()\n\n# Create code execution toolkit and get tools\ncode_exec_toolkit = CodeExecutionToolkit()\ncode_exec_tools = code_exec_toolkit.get_tools()\n\n# Combine tools\ntools = terminal_tools + code_exec_tools\n\n# Create model\nmodel = ModelFactory.create(\n    model_platform=ModelPlatformType.DEFAULT,\n    model_type=ModelType.DEFAULT,\n)\n\n# System message for the agent\nsystem_message = (\n    \"You are a system information assistant. \"\n    \"You have access to terminal tools to retrieve system information, \"\n    \"and code execution tools to process and print the information in Python.\"\n)\n\n# Create agent\nagent = ChatAgent(\n    system_message=system_message,\n    model=model,\n    tools=tools,\n)\nagent.reset()\n\n# User prompt to retrieve system info and print it in Python\nuser_prompt = (\n    \"Use terminal tools to get detailed system information (e.g., uname -a, cat /etc/os-release). \"\n    \"Then use code execution tools to print the retrieved information in a Python interpreter. \"\n    \"Show the output clearly.\"\n)\n\n# Get response\nresponse = agent.step(user_prompt)\n\n# Print all agent messages\nfor msg in response.msgs:\n    print(msg.content)\n",
+  "file_path": "task-script/single_agent/4_terminal_sysinfo_agent.py"
+}
+Result: Content successfully written to '/Users/yangz0h/Documents/Programming/meta-agent/camel/task-script/single_agent/4_terminal_sysinfo_agent.py'.
+
+[4] shell_exec
+Args: {
+  "id": "run_sysinfo_agent",
+  "command": "python3 task-script/single_agent/4_terminal_sysinfo_agent.py",
+  "block": true,
+  "timeout": 60
+}
+Result: 2026-02-04 23:37:13,666 - camel.camel.interpreters.subprocess_interpreter - WARNING - Failed to parse Python code with AST: unterminated string literal (detected at line 3) (<unknown>, line 3)
+System Information Retrieved:
+==========================
+
+1. uname -a output:
+Darwin KL-29568.local 24.6.0 Darwin Kernel Version 24.6.0: Wed Nov  5 21:30:44 PST 2025; root:xnu-11417.140.69.705.2~1/RELEASE_ARM64_T6041 arm64
+
+2. /etc/os-release output:
+(no /etc/os-release file found)
+Using macOS version details instead.
+
+3. macOS version details (sw_vers):
+ProductName: macOS
+ProductVersion: 15.7.3
+BuildVersion: 24G419
+
+4. Hardware details (system_profiler SPHardwareDataType):
+Hardware Information:
+Model Name: MacBook Pro
+Model Identifier: Mac16,8
+Model Number: MX2J3AB/A
+Chip: Apple M4 Pro
+Total Number of Cores: 14 (10 performance and 4 efficiency)
+Memory: 24 GB
+System Firmware Version: 13822.61.10
+OS Loader Version: 11881.140.96
+Serial Number (system): FFGVV91JJ4
+Hardware UUID: DA43B254-0065-5C2F-9...
+
+----------------------------------------
+Output:
+I have created a CAMEL agent that uses both terminal tools and code execution tools. The agent is prompted to retrieve detailed system information using terminal commands and then print the information in a Python interpreter. The script is saved at task-script/single_agent/4_terminal_sysinfo_agent.py.
+
+The agent successfully retrieved system information on the macOS system, including uname output, macOS version details, and hardware details.
+
+If you want, I can provide the full script content here or assist with running or modifying it further.
+================================================================================
+
+EXPLORE AGENT CHAT HISTORY
+================================================================================
+
+[Message 1]
+Role: system
+Content: You are a code exploration specialist. Find relevant files for a task.
+
+## Tools
+
+1. **glob_search(pattern, path?, max_results?)** - Find files by name pattern
+2. **grep_search(pattern, path?, glob_filter?, ignore_case?, output_mode?)** - Search file contents
+3. **read_file(file_path)** - Read file contents (auto-limits to 2000 lines for large files)
+4. **list_directory(path?)** - List directory contents
+5. **find_definition(name, definition_type?)** - Find class/function definitions
+6. **find_imports(module_name, ignore_case?)** - Find files that import a module
+
+## Search Techniques (CRITICAL)
+
+### Technique 1: Search whole repo first, NEVER restrict path initially
+```python
+# WRONG - may miss files in other directories
+glob_search("**/*handler*.py", path="src/handlers")
+
+# CORRECT - searches entire repo
+glob_search("**/*handler*.py")
+```
+
+### Technique 2: Use find_imports to find REAL usage
+```python
+find_imports("requests")
+find_imports("UserService")
+```
+
+### Technique 3: Read __init__.py or index files to understand module exports
+```python
+read_file("src/__init__.py")
+read_file("lib/index.ts")
+```
+
+### Technique 4: Parallel search for ALL keywords
+For task "user authentication with JWT", call ALL in parallel:
+```python
+glob_search("**/*auth*.py")
+glob_search("**/*jwt*.py")
+glob_search("**/*user*.py")
+find_imports("jwt")
+```
+
+### Technique 5: Tests and examples contain best usage patterns
+```python
+glob_search("**/test_*.py")
+glob_search("**/*example*.py")
+glob_search("**/*_test.go")
+```
+
+### Technique 6: When file name search fails, read module index
+Class names often don't match file names. When glob_search by name fails:
+```python
+# Task asks for "UserManager" but glob_search("**/*usermanager*.py") finds nothing
+# Solution: Read __init__.py to see all exported classes
+read_file("src/users/__init__.py")
+
+# Or search for the class name directly
+grep_search("class.*UserManager", ignore_case=True)
+```
+
+### Technique 7: Find configuration and enum values
+```pyth
+... (truncated)
+
+
+[Message 2]
+Role: user
+Content: Find relevant files for this task:
+
+**Task**: create an agent with terminal tools and code execution tools. Prompt it to retrieve system information and print it in a Python interpreter. Save the script to task-script/single_agent/4_terminal_sysinfo_agent.py
+
+Search for implementation files, examples, tests, and documentation.
+Return the most relevant file paths with brief explanations.
+Focus on finding:
+1. Example scripts that show similar usage patterns
+2. Implementation files for the required components
+3. Configuration/type definitions
+
+
+[Message 3]
+Role: assistant
+
+[Message 4]
+Role: tool
+Content: Found 8 file(s) matching '**/*terminal*.py':
+camel/toolkits/terminal_toolkit/terminal_toolkit.py
+code-agent/terminal_toolkit_doc.py
+code-agent/terminal_toolkit_read_file.py
+code-agent/terminal_toolkit_read_file_map.py
+code-agent/terminal_toolkit_v0.py
+examples/toolkits/mcp/mcp_terminal_toolkit/terminal_toolkit_server.py
+examples/toolkits/terminal_toolkit.py
+test/toolkits/test_terminal_toolkit.py
+
+[Message 5]
+Role: assistant
+
+[Message 6]
+Role: tool
+Content: Found 7 file(s) matching '**/*code_exec*.py':
+camel/toolkits/code_execution.py
+examples/embodiment/code_execution.py
+examples/runtimes/code_execution_with_docker_runtime.py
+examples/runtimes/code_execution_with_llm_guard_runtime.py
+examples/toolkits/code_execution_toolkit.py
+test/runtimes/test_code_execution_with_llm_guard_runtime.py
+test/toolkits/test_code_execution.py
+
+[Message 7]
+Role: assistant
+
+[Message 8]
+Role: tool
+Content: Found 10 file(s) matching '**/*agent*.py':
+test/agents/test_chat_agent.py
+test/agents/test_critic_agent.py
+test/agents/test_deductive_reasoner_agent.py
+test/agents/test_embodied_agent.py
+test/agents/test_knowledge_agent.py
+test/agents/test_repo_agent.py
+test/agents/test_task_agent.py
+test/agents/tool_agents/test_hugging_face_tool_agent.py
+test/agents/tool_agents/test_tool_agent_base.py
+test/workforce/test_workforce_single_agent.py
+
+[Message 9]
+Role: assistant
+
+[Message 10]
+Role: tool
+Content: Found 10 file(s) matching '**/*tool*.py':
+test/agents/tool_agents/test_hugging_face_tool_agent.py
+test/agents/tool_agents/test_tool_agent_base.py
+test/toolkits/test_audio_analysis_toolkit.py
+test/toolkits/test_data_commons_toolkit.py
+test/toolkits/test_klavis_toolkit.py
+test/toolkits/test_memory_toolkit.py
+test/toolkits/test_message_agent_toolkit.py
+test/toolkits/test_note_taking_toolkit.py
+test/toolkits/test_sympy_toolkit.py
+test/toolkits/test_thinking_toolkit.py
+
+[Message 11]
+Role: assistant
+
+[Message 12]
+Role: tool
+Content: Found 10 file(s) matching '**/*example*.py':
+examples/embeddings/gemini_embedding_example.py
+examples/embeddings/jina_embedding_example.py
+examples/embeddings/openai_compatible_embedding_example.py
+examples/embeddings/together_embedding_example.py
+examples/embeddings/vlm_embedding_example.py
+examples/interpreters/ipython_interpreter_example.py
+examples/interpreters/microsandbox_interpreter_example.py
+examples/knowledge_graph/knowledge_graph_agent_example.py
+examples/knowledge_graph/neo4j_example.py
+examples/test/test_role_description_example.py
+
+[Message 13]
+Role: assistant
+
+[Message 14]
+Role: tool
+Content: Found 10 file(s) matching '**/*test*.py':
+test/bots/test_discord_app.py
+test/bots/test_slack_app.py
+test/bots/test_telegram_bot.py
+test/data_collectors/test_alpaca_collector.py
+test/data_collectors/test_sharegpt_collector.py
+test/integration_test/test_minimal_dependency.py
+test/interpreters/test_subprocess_interpreter.py
+test/terminators/test_response_terminator.py
+test/terminators/test_token_limit_terminator.py
+test/test_all_exports.py
+
+[Message 15]
+Role: assistant
+
+[Message 16]
+Role: tool
+Content: Search results for 'terminal' in *.py files (10 matches):
+debug/eigent.py
+runtimes/shared_runtime_multi_toolkit.py
+summarization/handle_token_limit.py
+workforce/eigent.py
+workforce/multi_turn_conversation.py
+toolkits/terminal_toolkit.py
+toolkits/pptx_toolkit.py
+toolkits/mcp/mcp_terminal_toolkit/terminal_toolkit_server.py
+toolkits/mcp/mcp_terminal_toolkit/client.py
+models/claude_model_example.py
+
+[Message 17]
+Role: assistant
+
+[Message 18]
+Role: tool
+Content: Search results for 'code execution' in *.py files (6 matches):
+usecases/codeforces_question_solver/app.py
+workforce/eigent.py
+interpreters/microsandbox_interpreter_example.py
+runtimes/shared_runtime_multi_toolkit.py
+toolkits/pptx_toolkit.py
+toolkits/dynamic_dependency.py
+
+[Message 19]
+Role: assistant
+
+[Message 20]
+Role: tool
+Content: No matches found for pattern 'system info'
+
+[Message 21]
+Role: assistant
+
+[Message 22]
+Role: tool
+Content: Search results for 'agent' in *.py files (10 matches):
+external_tools/use_external_tools.py
+debug/eigent.py
+debug/traceroot_example.py
+deductive_reasoner_agent/deduce_conditions_and_quality.py
+bots/slack_bot.py
+environments/tic_tac_toe.py
+vision/image_crafting.py
+services/agent_openapi_server.py
+environments/rlcards_example.py
+bots/discord_bot_use_msg_queue.py
+
+[Message 23]
+Role: assistant
+
+[Message 24]
+Role: tool
+Content: Search results for 'toolkit' in *.py files (10 matches):
+external_tools/use_external_tools.py
+debug/eigent.py
+debug/traceroot_example.py
+runtimes/code_execution_with_docker_runtime.py
+runtimes/code_execution_with_llm_guard_runtime.py
+runtimes/remote_http_runtime.py
+models/cometapi_model_example.py
+runtimes/docker_runtime.py
+models/crynux_model_example.py
+usecases/multi_agent_research_assistant/app.py
+
+[Message 25]
+Role: assistant
+
+[Message 26]
+Role: tool
+Content: Search results for 'interpreter' in *.py files (8 matches):
+loaders/firecrawl_example.py
+runtimes/docker_runtime_with_tasks.py
+toolkits/code_execution_toolkit.py
+toolkits/dynamic_dependency.py
+interpreters/ipython_interpreter_example.py
+toolkits/e2b_custom_provider_example.py
+interpreters/internal_python_interpreter.py
+interpreters/microsandbox_interpreter_example.py
+
+[Message 27]
+Role: assistant
+
+[Message 28]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+import os
+
+from camel.agents import ChatAgent
+from camel.configs import ChatGPTConfig
+from camel.models import ModelFactory
+from camel.toolkits import TerminalToolkit
+from camel.types import ModelPlatformType, ModelType
+
+# Get current script directory
+base_dir = os.path.dirname(os.path.abspath(__file__))
+# Define workspace directory for the toolkit
+workspace_dir = os.path.join(
+    os.path.dirname(os.path.dirname(base_dir)), "workspace"
+)
+
+# Define system message
+sys_msg = (
+    "You are a System Administrator helping with log management tasks. "
+    "You have access to terminal tools that can help you execute "
+    "shell commands and search files. "
+)
+
+# Set model config
+tools = TerminalToolkit(working_directory=workspace_dir).get_tools()
+
+model_config_dict = ChatGPTConfig(
+    temperature=0.0,
+).as_dict()
+
+model = ModelFactory.create(
+    model_platform=ModelPlatformType.DEFAULT,
+    model_type=ModelType.DEFAULT,
+    model_config_dict=model_config_dict,
+)
+
+# Set agent
+camel_agent = ChatAgent(
+    system_message=sys_msg,
+    model=model,
+    tools=tools,
+)
+camel_agent.reset()
+
+# Define a user message for creating logs directory
+usr_msg = (
+    f"Create a 'logs' directory in '{workspace_dir}' and list its contents"
+)
+
+# Get response information
+response = camel_agent.step(usr
+... (truncated)
+
+
+[Message 29]
+Role: assistant
+
+[Message 30]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from typing import List, Literal, Optional, Union
+
+from camel.interpreters import (
+    DockerInterpreter,
+    E2BInterpreter,
+    InternalPythonInterpreter,
+    JupyterKernelInterpreter,
+    MicrosandboxInterpreter,
+    SubprocessInterpreter,
+)
+from camel.logger import get_logger
+from camel.toolkits import FunctionTool
+from camel.toolkits.base import BaseToolkit
+from camel.utils import MCPServer
+
+logger = get_logger(__name__)
+
+
+@MCPServer()
+class CodeExecutionToolkit(BaseToolkit):
+    r"""A toolkit for code execution.
+
+    Args:
+        sandbox (str): The environment type used to execute code.
+            (default: `subprocess`)
+        verbose (bool): Whether to print the output of the code execution.
+            (default: :obj:`False`)
+        unsafe_mode (bool):  If `True`, the interpreter runs the code
+            by `eval()` without any security check. (default: :obj:`False`)
+        import_white_list (Optional[List[str]]): A list of allowed imports.
+            (default: :obj:`None`)
+        require_confirm (bool): Whether to require confirmation before
+            executing code. (default: :obj:`False`)
+        timeout (Optional[float]): General timeout for toolkit operations.
+            (default: :obj:`None`)
+        microsandbox_config (Optional[dict]): Configuration
+... (truncated)
+
+
+[Message 31]
+Role: assistant
+
+[Message 32]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from camel.interpreters import JupyterKernelInterpreter
+
+interpreter = JupyterKernelInterpreter(
+    require_confirm=False, print_stdout=True, print_stderr=True
+)
+
+
+code = """
+def add(a, b):
+    return a + b
+
+def multiply(a, b):
+    return a * b
+
+def subtract(a, b):
+    return a - b
+
+def main():
+    a = 10
+    b = 20
+    operation = subtract
+    result = operation(a, b)
+    print(result)
+
+if __name__ == "__main__":
+    main()
+"""
+result = interpreter.run(code, "python")
+print(result)
+
+'''
+===============================================================================
+-10
+===============================================================================
+'''
+
+[Message 33]
+Role: assistant
+
+[Message 34]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+import platform
+import select
+import shlex
+import subprocess
+import sys
+import threading
+import time
+import uuid
+from queue import Empty, Full, Queue
+from typing import Any, Dict, List, Optional
+
+from camel.logger import get_logger
+from camel.toolkits import manual_timeout
+from camel.toolkits.base import BaseToolkit
+from camel.toolkits.function_tool import FunctionTool
+from camel.toolkits.terminal_toolkit.utils import (
+    check_nodejs_availability,
+    clone_current_environment,
+    ensure_uv_available,
+    sanitize_command,
+    setup_initial_env_with_uv,
+    setup_initial_env_with_venv,
+)
+from camel.utils import MCPServer
+
+logger = get_logger(__name__)
+
+# Try to import docker, but don't make it a hard requirement
+try:
+    import docker
+    from docker.errors import APIError, NotFound
+except ImportError:
+    docker = None
+    NotFound = None
+    APIError = None
+
+
+def _to_plain(text: str) -> str:
+    r"""Convert ANSI text to plain text using rich if available."""
+    try:
+        from rich.text import Text as _RichText
+
+        return _RichText.from_ansi(text).plain
+    except Exception:
+        return text
+
+
+@MCPServer()
+class TerminalToolkit(BaseToolkit):
+    r"""A toolkit for LLM agents to execute and interact with terminal commands
+    in either a local or a sand
+... (truncated)
+
+
+[Message 35]
+Role: assistant
+
+[Message 36]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import textwrap
+
+from camel.interpreters import MicrosandboxInterpreter
+
+
+def test_python_example():
+    """Test Python code execution."""
+    print("=== Python Example ===")
+    interpreter = MicrosandboxInterpreter(
+        require_confirm=False,
+        server_url="http://127.0.0.1:5555",
+        namespace="default",
+        sandbox_name="python-test",
+    )
+
+    code = textwrap.dedent("""
+    def calculate(a, b):
+        return {
+            'sum': a + b,
+            'product': a * b,
+            'difference': a - b
+        }
+
+    result = calculate(10, 5)
+    for key, value in result.items():
+        print(f"{key}: {value}")
+    """)
+
+    result = interpreter.run(code, "python")
+    print(result)
+    print()
+
+
+def test_javascript_example():
+    """Test JavaScript code execution."""
+    print("=== JavaScript Example ===")
+    interpreter = MicrosandboxInterpreter(
+        require_confirm=False,
+        server_url="http://127.0.0.1:5555",
+        namespace="default",
+        sandbox_name="js-test",
+    )
+
+    code = textwrap.dedent("""
+    const users = [
+        {name: 'Alice', age: 30},
+        {name: 'Bob', age: 25},
+        {name: 'Charlie', age: 35}
+    ];
+
+    const avgAge = users.reduce((sum, user) => sum + user.age, 0) /
+                   users.length;
+    console.l
+... (truncated)
+
+
+[Message 37]
+Role: assistant
+
+[Message 38]
+Role: tool
+Content: Found 5 file(s) matching '**/__init__.py':
+camel/toolkits/open_api_specs/klarna/__init__.py
+camel/toolkits/open_api_specs/outschool/__init__.py
+camel/toolkits/open_api_specs/outschool/paths/__init__.py
+camel/toolkits/open_api_specs/speak/__init__.py
+camel/toolkits/open_api_specs/web_scraper/paths/__init__.py
+
+[Message 39]
+Role: assistant
+
+[Message 40]
+Role: tool
+Content: Found 10 file(s) matching '**/*toolkit*.py':
+examples/toolkits/aci_toolkit.py
+examples/toolkits/edgeone_pages_mcp_toolkit.py
+examples/toolkits/google_drive_mcp_toolkit.py
+examples/toolkits/human_toolkit.py
+examples/toolkits/meshy_toolkit.py
+examples/toolkits/openbb_toolkit.py
+examples/toolkits/searxng_toolkit.py
+examples/toolkits/sympy_toolkit.py
+examples/toolkits/terminal_toolkit.py
+examples/toolkits/toolkit_message_integration.py
+
+[Message 41]
+Role: assistant
+
+[Message 42]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+from colorama import Fore
+
+from camel.agents import ChatAgent
+from camel.models import ModelFactory
+from camel.toolkits.code_execution import CodeExecutionToolkit
+from camel.types import ModelPlatformType, ModelType
+from camel.utils import print_text_animated
+
+# tools
+toolkit = CodeExecutionToolkit(verbose=True)
+tools = toolkit.get_tools()
+
+model = ModelFactory.create(
+    model_platform=ModelPlatformType.DEFAULT,
+    model_type=ModelType.DEFAULT,
+)
+
+
+# set up agent
+assistant_sys_msg = (
+    "You are a personal math tutor and programmer. "
+    "When asked a math question, "
+    "write and run Python code to answer the question."
+)
+
+agent = ChatAgent(
+    assistant_sys_msg,
+    model,
+    tools=tools,
+)
+agent.reset()
+
+
+# set up agent
+
+prompt = (
+    "Weng earns $12 an hour for babysitting. "
+    "Yesterday, she just did 51 minutes of babysitting. How much did she earn?"
+)
+print(Fore.YELLOW + f"user prompt:\n{prompt}\n")
+
+response = agent.step(prompt)
+for msg in response.msgs:
+    print_text_animated(Fore.GREEN + f"Agent response:\n{msg.content}\n")
+
+# ruff: noqa: E501
+"""
+===============================================================================
+user prompt:
+Weng earns $12 an hour for babysitting. Yesterday, she just did 51 minutes of babysitting. How much did she earn?
+
+E
+... (truncated)
+
+
+[Message 43]
+Role: assistant
+Content: ## Examples (MOST IMPORTANT)
+- examples/toolkits/terminal_toolkit.py
+  - Shows: Creating an agent with TerminalToolkit to execute shell commands
+  - Key usage: TerminalToolkit.get_tools(), ChatAgent with terminal tools, executing shell commands like mkdir, ls, cat, and interacting with sessions
+- examples/toolkits/code_execution_toolkit.py
+  - Shows: Creating an agent with CodeExecutionToolkit to execute Python code
+  - Key usage: CodeExecutionToolkit.get_tools(), ChatAgent with code execution tools, running Python code snippets and getting results
+- examples/interpreters/ipython_interpreter_example.py
+  - Shows: Using JupyterKernelInterpreter to run Python code snippets
+- examples/interpreters/microsandbox_interpreter_example.py
+  - Shows: Using MicrosandboxInterpreter for running Python, JavaScript, and shell commands in sandboxed environment
+
+## Implementation
+- camel/toolkits/terminal_toolkit/terminal_toolkit.py
+  - Class: TerminalToolkit
+  - Functions: shell_exec, shell_view, shell_write_to_process, shell_kill_process, shell_ask_user_for_help, shell_write_content_to_file
+  - Provides terminal command execution tools with local or Docker backend
+- camel/toolkits/code_execution.py
+  - Class: CodeExecutionToolkit
+  - Functions: execute_code, execute_command, get_tools
+  - Provides code execution tools with multiple interpreter backends (internal Python, Jupyter, Docker, subprocess, E2B, Microsandbox)
+
+## Configuration / Types
+- camel/types/enums.py (not explicitly read but known from context)
+  - ModelPlatformType, ModelType enums used for model selection in examples
+
+## Tests
+- test/toolkits/test_terminal_toolkit.py (likely contains tests for terminal toolkit)
+- test/toolkits/test_code_execution.py (likely contains tests for code execution toolkit)
+
+These files and examples provide the relevant components and usage patterns to create an agent with terminal tools and code execution tools, prompt it to retrieve system information, and print it in a Python interpret
+... (truncated)
+
+
+================================================================================
+
+CODE AGENT CHAT HISTORY
+================================================================================
+
+[Message 1]
+Role: system
+Content: You are a Code Agent that writes and executes scripts.
+
+## Tools
+
+You have access to terminal tools for:
+- `shell_exec`: Execute shell commands
+- `shell_write_content_to_file`: Write content to a file
+- `read_file_tool`: Read file contents
+
+## Workflow (MUST FOLLOW IN ORDER)
+
+### Step 1: READ BEFORE WRITE (MANDATORY)
+**You MUST read files that are relevant to what you're going to write before writing any code.**
+- Read example files or implementation files that relate to your task
+- You don't need to read all files - only the ones relevant to your task
+- **DO NOT write code based only on the summary** - the summary may be incomplete
+
+### Step 2: Write the script
+- Copy import statements and API patterns EXACTLY from the files you read
+- Use `shell_write_content_to_file` to save the script
+
+### Step 3: Execute the script
+- Use `shell_exec` with the appropriate interpreter (python, node, etc.)
+
+### Step 4: Debug if needed
+- If errors occur, read more files to understand the correct API, then fix and re-run
+
+## CRITICAL: Strict Instruction Following
+
+**Use EXACTLY what the task specifies. Do NOT substitute "similar" or "better" alternatives.**
+
+### URL Handling
+- If task provides a URL (e.g., "https://api.example.com/endpoint"):
+  - Prioritize DIRECT HTTP access using appropriate library (requests, fetch, etc.)
+  - Create a simple function that calls the URL
+  - Do NOT assume it requires complex setup
+  - Example:
+    ```python
+    def query_api(query: str) -> str:
+        response = requests.post(url, json={"query": query})
+        return response.text
+    ```
+
+## Important Rules
+
+1. **Use the provided file paths** - The explore agent has found relevant examples and implementations
+2. **Follow existing patterns** - Look at examples to understand how to use the APIs
+3. **Handle errors gracefully** - If execution fails, analyze the error and fix it
+4. **Save to correct location** - Follow the task's specified output path
+5. **Use EXACT values** - Copy constants, method names exactly from explored files
+
+## Debugging Tips
+
+- If you see import errors, check the correct module path in __init__.py or package.json
+- If you see AttributeError, verify the exact attribute name in source files
+- Read more files if you need to understand the API better
+- **If a file does not exist, do NOT retry the same path** - search for the correct path instead
+
+
+## Project-Specific Context
+
+# CAMEL Framework Context
+
+This file contains CAMEL-specific context information for the explore and code agents.
+Load this file before running tasks on the CAMEL repository.
+
+## Repository Structure
+
+### Core Modules
+- `camel/agents/` - Agent implementations (ChatAgent is the base)
+- `camel/models/` - LLM provider integrations (50+)
+- `camel/memories/` - Memory systems (ChatHistoryMemory, LongtermAgentMemory, VectorDBMemory)
+- `camel/configs/` - Model configuration classes
+- `camel/toolkits/` - Tool integrations (50+)
+- `camel/types/` - Enums (ModelPlatformType, ModelType, RoleType)
+
+### Other Directories
+- `examples/` - Usage examples
+- `examples/models/` - Model usage examples
+- `examples/toolkits/` - Toolkit examples
+- `examples/memories/` - Memory usage examples
+- `test/` - Test files
+- `docs/` - Documentation
+
+## CAMEL-Specific Search Techniques
+
+### Technique: Find EXACT enum values for models/tools
+When task specifies a model like "Llama-3.1-8B-Instruct", search for the exact ModelType enum:
+```python
+# Search with partial match (enum names use underscores, not hyphens)
+grep_search("LLAMA_3_1.*8B", path="camel/types/enums.py")
+grep_search("LLAMA_3_1", path="camel/types/enums.py")
+```
+
+### ModelType Naming Convention
+- No "_INSTRUCT" suffix usually (e.g., LLAMA_3_1_8B not LLAMA_3_1_8B_INSTRUCT)
+- Use underscores not hyphens (e.g., LLAMA_3_1 not LLAMA-3.1)
+- ModelPlatformType and ModelType MUST match according to enums.py
+
+### Technique: Find SPECIFIC tool methods
+When task specifies a tool like "brave search", find the exact method:
+```python
+grep_search("search_brave", path="camel/toolkits")
+grep_search("def search_brave")
+```
+Don't use get_tools() if task asks for a specific tool - use the specific method directly.
+
+### Technique: Read __init__.py to understand module exports
+```python
+read_file("camel/toolkits/__init__.py")
+read_file("camel/models/__init__.py")
+read_file("camel/memories/__init__.py")
+```
+Class names often don't match file names (e.g., `LongtermAgentMemory` is in `agent_memories.py`, not `longterm_memory.py`).
+
+### Technique: Read documentation for API usage and tutorials
+CAMEL has extensive documentation in the `docs/` directory:
+```python
+# Find all documentation files
+glob_search("**/*.md", path="docs")
+
+# Search for specific topics
+grep_search("ChatAgent", glob_filter="*.md", path="docs")
+grep_search("memory", glob_filter="*.md", path="docs", ignore_case=True)
+
+# Key documentation files
+read_file("docs/key_modules/agents.md")      # Agent usage guide
+read_file("docs/key_modules/models.md")      # Model configuration
+r
+... (truncated)
+
+
+[Message 2]
+Role: user
+Content: **Task**: create an agent with terminal tools and code execution tools. Prompt it to retrieve system information and print it in a Python interpreter. Save the script to task-script/single_agent/4_terminal_sysinfo_agent.py
+
+**Relevant files found by exploration**:
+## Examples (MOST IMPORTANT)
+- examples/toolkits/terminal_toolkit.py
+  - Shows: Creating an agent with TerminalToolkit to execute shell commands
+  - Key usage: TerminalToolkit.get_tools(), ChatAgent with terminal tools, executing shell commands like mkdir, ls, cat, and interacting with sessions
+- examples/toolkits/code_execution_toolkit.py
+  - Shows: Creating an agent with CodeExecutionToolkit to execute Python code
+  - Key usage: CodeExecutionToolkit.get_tools(), ChatAgent with code execution tools, running Python code snippets and getting results
+- examples/interpreters/ipython_interpreter_example.py
+  - Shows: Using JupyterKernelInterpreter to run Python code snippets
+- examples/interpreters/microsandbox_interpreter_example.py
+  - Shows: Using MicrosandboxInterpreter for running Python, JavaScript, and shell commands in sandboxed environment
+
+## Implementation
+- camel/toolkits/terminal_toolkit/terminal_toolkit.py
+  - Class: TerminalToolkit
+  - Functions: shell_exec, shell_view, shell_write_to_process, shell_kill_process, shell_ask_user_for_help, shell_write_content_to_file
+  - Provides terminal command execution tools with local or Docker backend
+- camel/toolkits/code_execution.py
+  - Class: CodeExecutionToolkit
+  - Functions: execute_code, execute_command, get_tools
+  - Provides code execution tools with multiple interpreter backends (internal Python, Jupyter, Docker, subprocess, E2B, Microsandbox)
+
+## Configuration / Types
+- camel/types/enums.py (not explicitly read but known from context)
+  - ModelPlatformType, ModelType enums used for model selection in examples
+
+## Tests
+- test/toolkits/test_terminal_toolkit.py (likely contains tests for terminal toolkit)
+- test/toolkits/test_code_execution.py (likely contains tests for code execution toolkit)
+
+These files and examples provide the relevant components and usage patterns to create an agent with terminal tools and code execution tools, prompt it to retrieve system information, and print it in a Python interpreter. The example scripts in examples/toolkits/terminal_toolkit.py and examples/toolkits/code_execution_toolkit.py are especially relevant for combining terminal and code execution capabilities in an agent.
+
+**Available files** (use `read_file_tool` to read):
+- examples/toolkits/terminal_toolkit.py
+- examples/toolkits/code_execution_toolkit.py
+- examples/interpreters/ipython_interpreter_example.py
+- examples/interpreters/microsandbox_interpreter_example.py
+- camel/toolkits/terminal_toolkit/terminal_toolkit.py
+- camel/toolkits/code_execution.py
+- camel/types/enums.py
+- test/toolkits/test_terminal_toolkit.py
+- test/toolkits/test_code_execution.py
+
+**IMPORTANT**: Before writing code, you MUST read the files that are relevant to your task.
+You don't need to read all files - only the ones related to what you're going to write.
+The summary may be incomplete - verify API usage by reading actual files.
+
+**Instructions**:
+1. **FIRST**: Read the files that are relevant to what you're going to write
+2. Write the script using `shell_write_content_to_file`
+3. Execute with appropriate command
+4. If errors occur, read more files to understand the correct API, then fix and re-run
+
+**WARNINGS**:
+- DO NOT write code based only on the summary - read actual files first
+- Copy code patterns EXACTLY from the files you read
+
+Note: The environment and APIs are correctly configured. If you encounter errors,
+it's likely a script issue that needs fixing.
+
+
+[Message 3]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_7XYjWnBTA6GQklRbHOUoUIPV",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"examples/toolkits/terminal_toolkit.py\"}"
+    }
+  }
+]
+
+[Message 4]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+import os
+
+from camel.agents import ChatAgent
+from camel.configs import ChatGPTConfig
+from camel.models import ModelFactory
+from camel.toolkits import TerminalToolkit
+from camel.types import ModelPlatformType, ModelType
+
+# Get current script directory
+base_dir = os.path.dirname(os.path.abspath(__file__))
+# Define workspace directory for the toolkit
+workspace_dir = os.path.join(
+    os.path.dirname(os.path.dirname(base_dir)), "workspace"
+)
+
+# Define system message
+sys_msg = (
+    "You are a System Administrator helping with log management tasks. "
+    "You have access to terminal tools that can help you execute "
+    "shell commands and search files. "
+)
+
+# Set model config
+tools = TerminalToolkit(working_directory=workspace_dir).get_tools()
+
+model_config_dict = ChatGPTConfig(
+    temperature=0.0,
+).as_dict()
+
+model = ModelFactory.create(
+    model_platform=ModelPlatformType.DEFAULT,
+    model_type=ModelType.DEFAULT,
+    model_config_dict=model_config_dict,
+)
+
+# Set agent
+camel_agent = ChatAgent(
+    system_message=sys_msg,
+    model=model,
+    tools=tools,
+)
+camel_agent.reset()
+
+# Define a user message for creating logs directory
+usr_msg = (
+    f"Create a 'logs' directory in '{workspace_dir}' and list its contents"
+)
+
+# Get response information
+response = camel_agent.step(usr_msg)
+print(str(response.info['tool_calls'])[:1000])
+"""
+===============================================================================
+[ToolCallingRecord(tool_name='shell_exec', args={'id': 'session1', 'exec_dir':
+'/Users/enrei/Desktop/camel0302/camel/workspace', 'command': 'mkdir logs'},
+result='', tool_call_id='call_ekWtDhrwxOg20lz55pqLEKvm'), ToolCallingRecord
+(tool_name='shell_exec', args={'id': 'session2', 'exec_dir': '/Users/enrei/
+Desktop/camel0302/camel/workspace/logs', 'command': 'ls -la'}, result='total
+0\ndrwxr-xr-x  2 enrei  staff   64 Mar 30 04:29 .\ndrwxr-xr-x  4 enrei  staff
+128 Mar 30 04:29 ..\n', tool_call_id='call_FNdkLkvUahtEZUf7YZiJrjfo')]
+===============================================================================
+"""
+
+# Define a user message for creating log files
+usr_msg = (
+    f"Create 'app.log' in the logs directory at "
+    f"'{os.path.join(workspace_dir, 'logs')}' with content: INFO: Application "
+    f"started successfully at 2024-03-10 and show the file content"
+)
+
+# Get response information
+camel_agent.reset()
+response = camel_agent.step(usr_msg)
+print(str(response.info['tool_calls'])[:1000])
+"""
+===============================================================================
+[ToolCallingRecord(tool_name='shell_exec', args={'id': 'create_log_file',
+'exec_dir': '/Users/enrei/Desktop/camel0302/camel/workspace/logs', 'command':
+"echo 'INFO: Application started successfully at 2024-03-10' > app.log"},
+result='', tool_call_id='call_bctQQYnWgAuPp1ga7a7xM6bo'), ToolCallingRecord
+(tool_name='shell_exec', args={'id': 'show_log_file_content', 'exec_dir': '/
+Users/enrei/Desktop/camel0302/camel/workspace/logs', 'command': 'cat app.
+log'}, result='INFO: Application started successfully at 2024-03-10\n',
+tool_call_id='call_wPYJBG3eYrUsjFJYIYYynxuz')]
+===============================================================================
+"""
+
+# Define a user message for searching in logs
+usr_msg = (
+    f"Search for 'INFO' keyword in the log file at "
+    f"'{os.path.join(workspace_dir, 'logs', 'app.log')}'"
+)
+
+# Get response information
+camel_agent.reset()
+response = camel_agent.step(usr_msg)
+print(str(response.info['tool_calls'])[:1000])
+"""
+===============================================================================
+[ToolCallingRecord(tool_name='file_find_in_content', args={'file': '/Users/
+enrei/Desktop/camel0302/camel/workspace/logs/app.log', 'regex': 'INFO',
+'sudo': False}, result='INFO: Application started successfully at 2024-03-10',
+ tool_call_id='call_PpeRUsldHyg5jSPLZxiGoVfq')]
+===============================================================================
+"""
+
+# Define a user message for cleaning up logs
+usr_msg = (
+    f"Remove the 'logs' directory and all its contents in '{workspace_dir}'"
+)
+
+# Get response information
+camel_agent.reset()
+response = camel_agent.step(usr_msg)
+print(response.info['tool_calls'])
+"""
+===============================================================================
+[ToolCallingRecord(tool_na
+... (truncated)
+
+
+[Message 5]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_vQpBi8IlwVQwX1uTHIA4y9sP",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"examples/toolkits/code_execution_toolkit.py\"}"
+    }
+  }
+]
+
+[Message 6]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+from colorama import Fore
+
+from camel.agents import ChatAgent
+from camel.models import ModelFactory
+from camel.toolkits.code_execution import CodeExecutionToolkit
+from camel.types import ModelPlatformType, ModelType
+from camel.utils import print_text_animated
+
+# tools
+toolkit = CodeExecutionToolkit(verbose=True)
+tools = toolkit.get_tools()
+
+model = ModelFactory.create(
+    model_platform=ModelPlatformType.DEFAULT,
+    model_type=ModelType.DEFAULT,
+)
+
+
+# set up agent
+assistant_sys_msg = (
+    "You are a personal math tutor and programmer. "
+    "When asked a math question, "
+    "write and run Python code to answer the question."
+)
+
+agent = ChatAgent(
+    assistant_sys_msg,
+    model,
+    tools=tools,
+)
+agent.reset()
+
+
+# set up agent
+
+prompt = (
+    "Weng earns $12 an hour for babysitting. "
+    "Yesterday, she just did 51 minutes of babysitting. How much did she earn?"
+)
+print(Fore.YELLOW + f"user prompt:\n{prompt}\n")
+
+response = agent.step(prompt)
+for msg in response.msgs:
+    print_text_animated(Fore.GREEN + f"Agent response:\n{msg.content}\n")
+
+# ruff: noqa: E501
+"""
+===============================================================================
+user prompt:
+Weng earns $12 an hour for babysitting. Yesterday, she just did 51 minutes of babysitting. How much did she earn?
+
+Executed the code below:
+```py
+hourly_rate = 12
+minutes_worked = 51
+hourly_earnings = hourly_rate / 60 * minutes_worked
+hourly_earnings
+```
+> Executed Results:
+10.200000000000001
+Agent response:
+Weng earned $10.20 for babysitting for 51 minutes at a rate of $12 per hour.
+===============================================================================
+"""
+
+# Example 3: Using E2B Code Interpreter (Cloud-based)
+# Note: Requires E2B_API_KEY environment variable to be set
+agent_with_e2b = ChatAgent(
+    assistant_sys_msg,
+    model,
+    tools=CodeExecutionToolkit(verbose=True, sandbox="e2b").get_tools(),
+)
+
+# Configure E2B with environment variables:
+# export E2B_API_KEY="your_api_key_here"
+# export E2B_DOMAIN="your-custom-e2b-provider.com"  # Optional, for custom E2B-compatible providers
+
+print(Fore.YELLOW + f"user prompt:\n{prompt}\n")
+
+response_with_e2b = agent_with_e2b.step(prompt)
+for msg in response_with_e2b.msgs:
+    print_text_animated(Fore.GREEN + f"Agent response:\n{msg.content}\n")
+
+# ruff: noqa: E501
+"""
+===============================================================================
+user prompt:
+Weng earns $12 an hour for babysitting. Yesterday, she just did 51 minutes of babysitting. How much did she earn?
+
+Executed the code below:
+```py
+hourly_wage = 12
+minutes_worked = 51
+# Convert minutes to hours
+hours_worked = minutes_worked / 60
+# Calculate earnings
+earnings = hourly_wage * hours_worked
+earnings
+```
+> Executed Results:
+10.2
+Agent response:
+Weng earned $10.20 for 51 minutes of babysitting.
+===============================================================================
+"""
+
+[Message 7]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_HCxl8UuydGPQZqM2nLYxwCac",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"import os\\n\\nfrom camel.agents import ChatAgent\\nfrom camel.models import ModelFactory\\nfrom camel.toolkits import TerminalToolkit, CodeExecutionToolkit\\nfrom camel.types import ModelPlatformType, ModelType\\n\\n# Define working directory for terminal toolkit\\nworking_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), \\\"workspace\\\")\\n\\n# Create terminal toolkit and get tools\\nterminal_toolkit = TerminalToolkit(working_directory=working_dir)\\nterminal_tools = terminal_toolkit.get_tools()\\n\\n# Create code execution toolkit and get tools\\ncode_exec_toolkit = CodeExecutionToolkit()\\ncode_exec_tools = code_exec_toolkit.get_tools()\\n\\n# Combine tools\\ntools = terminal_tools + code_exec_tools\\n\\n# Create model\\nmodel = ModelFactory.create(\\n    model_platform=ModelPlatformType.DEFAULT,\\n    model_type=ModelType.DEFAULT,\\n)\\n\\n# System message for the agent\\nsystem_message = (\\n    \\\"You are a system information assistant. \\\"\\n    \\\"You have access to terminal tools to retrieve system information, \\\"\\n    \\\"and code execution tools to process and print the information in Python.\\\"\\n)\\n\\n# Create agent\\nagent = ChatAgent(\\n    system_message=system_message,\\n    model=model,\\n    tools=tools,\\n)\\nagent.reset()\\n\\n# User prompt to retrieve system info and print it in Python\\nuser_prompt = (\\n    \\\"Use terminal tools to get detailed system information (e.g., uname -a, cat /etc/os-release). \\\"\\n    \\\"Then use code execution tools to print the retrieved information in a Python interpreter. \\\"\\n    \\\"Show the output clearly.\\\"\\n)\\n\\n# Get response\\nresponse = agent.step(user_prompt)\\n\\n# Print all agent messages\\nfor msg in response.msgs:\\n    print(msg.content)\\n\", \"file_path\": \"task-script/single_agent/4_terminal_sysinfo_agent.py\"}"
+    }
+  }
+]
+
+[Message 8]
+Role: tool
+Content: Content successfully written to '/Users/yangz0h/Documents/Programming/meta-agent/camel/task-script/single_agent/4_terminal_sysinfo_agent.py'.
+
+[Message 9]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_AJwpqDUwSLIEAF2LEfZYKDYm",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_sysinfo_agent\", \"command\": \"python3 task-script/single_agent/4_terminal_sysinfo_agent.py\", \"block\": true, \"timeout\": 60}"
+    }
+  }
+]
+
+[Message 10]
+Role: tool
+Content: 2026-02-04 23:37:13,666 - camel.camel.interpreters.subprocess_interpreter - WARNING - Failed to parse Python code with AST: unterminated string literal (detected at line 3) (<unknown>, line 3)
+System Information Retrieved:
+==========================
+
+1. uname -a output:
+Darwin KL-29568.local 24.6.0 Darwin Kernel Version 24.6.0: Wed Nov  5 21:30:44 PST 2025; root:xnu-11417.140.69.705.2~1/RELEASE_ARM64_T6041 arm64
+
+2. /etc/os-release output:
+(no /etc/os-release file found)
+Using macOS version details instead.
+
+3. macOS version details (sw_vers):
+ProductName: macOS
+ProductVersion: 15.7.3
+BuildVersion: 24G419
+
+4. Hardware details (system_profiler SPHardwareDataType):
+Hardware Information:
+Model Name: MacBook Pro
+Model Identifier: Mac16,8
+Model Number: MX2J3AB/A
+Chip: Apple M4 Pro
+Total Number of Cores: 14 (10 performance and 4 efficiency)
+Memory: 24 GB
+System Firmware Version: 13822.61.10
+OS Loader Version: 11881.140.96
+Serial Number (system): FFGVV91JJ4
+Hardware UUID: DA43B254-0065-5C2F-9828-27D3382F2924
+Provisioning UDID: 00006040-000408840192801C
+Activation Lock Status: Disabled
+
+[Message 11]
+Role: assistant
+Content: I have created a CAMEL agent that uses both terminal tools and code execution tools. The agent is prompted to retrieve detailed system information using terminal commands and then print the information in a Python interpreter. The script is saved at task-script/single_agent/4_terminal_sysinfo_agent.py.
+
+The agent successfully retrieved system information on the macOS system, including uname output, macOS version details, and hardware details.
+
+If you want, I can provide the full script content here or assist with running or modifying it further.
+
