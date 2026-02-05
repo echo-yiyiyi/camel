@@ -241,3 +241,104 @@ no-context 版本在无上下文的情况下，10个任务中有6个正确实现
 4. Task 9: 使用 TerminalToolkit 替代 HumanToolkit
 
 无上下文情况下正确率明显低于有上下文版本（60% vs 90%），说明上下文对于正确理解任务要求很重要。
+
+---
+
+## 错误根因分析（基于日志）
+
+### Task 3 运行失败的原因
+
+**日志分析:**
+```
+TypeError: the JSON object must be str, bytes or bytearray, not list
+```
+
+**根本原因:**
+1. Agent 在尝试使用浏览器工具搜索时遇到环境限制，于是回退到硬编码信息
+2. 直接调用 `create_presentation_tool(slide_json, ...)` 时传入了已解析的 list 而非 JSON 字符串
+3. PPTXToolkit 的 `create_presentation` 方法期望接收 JSON 字符串
+
+**Agent 的错误决策:**
+- 没有让 ChatAgent 自主调用工具，而是手动提取工具并直接调用
+- 这种绕过 agent 工具调用机制的做法导致了类型不匹配错误
+
+---
+
+### Task 7 使用 Mock Agents 的原因
+
+**日志分析:**
+Agent 在搜索阶段找到了测试文件：
+```
+test/datagen/test_self_improving_cot_pipeline.py
+```
+
+该测试文件中使用了 `MagicMock` 来模拟 agents：
+```python
+from unittest.mock import MagicMock, patch
+self.mock_reason_agent = MagicMock(spec=ChatAgent)
+self.mock_evaluate_agent = MagicMock(spec=ChatAgent)
+```
+
+**根本原因:**
+1. 无上下文时，Agent 无法区分"测试代码"和"示例代码"
+2. Agent 看到测试中使用 mock agents，错误地认为这是正确的实现模式
+3. 创建了 `DummyGeneratorAgent` 和 `DummyVerifierAgent` 类，硬编码了解题步骤
+
+**这违反了任务要求:**
+- 任务要求 "generator and verifier agents inside to generate CoT data"
+- Mock agents 不会真正调用 LLM 生成推理链
+
+---
+
+### Task 9 使用 TerminalToolkit 替代 HumanToolkit 的原因
+
+**日志分析:**
+Agent 的搜索总结中写道：
+```
+## Toolkits (for human interaction tools)
+  - Shows: Using TerminalToolkit tools for shell command execution and human interaction
+
+To create an agent with longterm memory and human interaction tools, use:
+- TerminalToolkit from camel.toolkits for human interaction tools
+```
+
+**根本原因:**
+1. Agent 搜索 "human interaction" 时，找到了 `examples/toolkits/terminal_toolkit.py`
+2. 错误地将 "终端交互" 等同于 "人机交互"
+3. 实际上 CAMEL 框架中有专门的 `HumanToolkit` 用于人机交互
+4. 由于没有上下文提示正确的工具名称，Agent 做出了错误的推断
+
+**正确的实现应该是:**
+```python
+from camel.toolkits.human_toolkit import HumanToolkit
+human_toolkit = HumanToolkit()
+```
+
+---
+
+### Task 4 使用 JupyterKernelInterpreter 的原因
+
+**根本原因:**
+1. 任务要求 "code execution tools to print in Python interpreter"
+2. Agent 搜索时找到了 `JupyterKernelInterpreter` 相关的示例
+3. 认为 "Python interpreter" 指的是 Jupyter 内核
+4. 没有找到或忽略了 `CodeExecutionToolkit` 这个正确的选项
+
+**正确的实现应该是:**
+```python
+from camel.toolkits.code_execution import CodeExecutionToolkit
+code_toolkit = CodeExecutionToolkit(sandbox="internal_python")
+```
+
+---
+
+## 结论
+
+无上下文版本的错误主要源于：
+
+1. **误解框架组件**: 将 TerminalToolkit 误认为 "human interaction tools"
+2. **混淆测试与实现**: 从测试代码中学习了 mock 模式而非真实实现
+3. **绕过标准模式**: 直接调用工具而非通过 agent 工具调用机制
+4. **搜索结果歧义**: 找到多个相似概念时选择了错误的选项
+
+这些问题在有完整上下文时可以避免，因为上下文会提供正确的类名、方法名和使用模式。
