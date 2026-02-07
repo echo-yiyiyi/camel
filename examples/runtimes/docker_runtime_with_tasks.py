@@ -42,7 +42,6 @@ runtime = (
 tools = runtime.get_tools()
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

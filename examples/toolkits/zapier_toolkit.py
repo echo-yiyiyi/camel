@@ -27,7 +27,6 @@ clear explanations of what you're doing."""
 tools = ZapierToolkit().get_tools()
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

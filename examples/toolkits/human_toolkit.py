@@ -22,7 +22,6 @@ from camel.types import ModelPlatformType, ModelType
 human_toolkit = HumanToolkit()
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
     model_config_dict=ChatGPTConfig(
         temperature=0.0,

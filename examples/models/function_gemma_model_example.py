@@ -50,7 +50,6 @@ add_tool = FunctionTool(add)
 
 # create the FunctionGemma model
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.FUNCTION_GEMMA,
     model_type="functiongemma",
     url="http://localhost:11434",
     model_config_dict=FunctionGemmaConfig(num_predict=256).as_dict(),

@@ -105,7 +105,6 @@ if st.sidebar.button("Search Listings"):
             agent = ChatAgent(
                 system_message="You are an Airbnb search assistant.",
                 model=ModelFactory.create(
-                    model_platform=ModelPlatformType.OPENAI,
                     model_type=ModelType.GPT_4O,
                     model_config_dict={"temperature": 0.7},
                 ),

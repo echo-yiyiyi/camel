@@ -84,7 +84,6 @@ def test_environment_variables():
 
     # Set up LLM model
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type="deepseek/deepseek-v3-0324",
         model_config_dict=ChatGPTConfig(temperature=0.0).as_dict(),
     )

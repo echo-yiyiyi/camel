@@ -65,7 +65,6 @@ def main() -> None:
     # Initialize the model
     model = ModelFactory.create(
         model_type=ModelType.DEFAULT,
-        model_platform=ModelPlatformType.DEFAULT,
     )
 
     # Create chat agent

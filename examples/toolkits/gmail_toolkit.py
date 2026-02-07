@@ -21,7 +21,6 @@ from camel.types.enums import ModelType
 
 # Create a model instance
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

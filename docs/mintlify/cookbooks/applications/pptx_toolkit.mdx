@@ -90,7 +90,6 @@ Example:
         system_message="You strictly output valid JSON for PowerPoint slides.",
         message_window_size=5,
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
             model_type=ModelType.GPT_4_1,
             model_config_dict={"temperature": 0.0},
         )

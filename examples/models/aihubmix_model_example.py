@@ -36,7 +36,6 @@ def test_aihubmix_model() -> None:
         return
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.AIHUBMIX,
         model_type=ModelType.GPT_5,
         api_key=api_key,
         model_config_dict=ChatGPTConfig(temperature=0.2).as_dict(),
@@ -66,7 +65,6 @@ def test_aihubmix_with_custom_model() -> None:
         return
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.AIHUBMIX,
         model_type="gpt-4",  # Using a string directly
         api_key=api_key,
         model_config_dict=ChatGPTConfig(temperature=0.2).as_dict(),

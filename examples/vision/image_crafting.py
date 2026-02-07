@@ -32,7 +32,6 @@ def main():
     print("=" * 49)
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
     )
 

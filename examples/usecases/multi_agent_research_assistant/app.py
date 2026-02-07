@@ -31,7 +31,6 @@ set_log_level(level="DEBUG")
 
 # Model Setup
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O,
     model_config_dict={"temperature": 0.0}
 )

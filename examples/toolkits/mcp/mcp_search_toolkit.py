@@ -121,7 +121,6 @@ Example 2: Search for MCP servers restricted to a specific package registry
 
 # Example 3: Search for MCP servers using a chat agent
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.ANTHROPIC,
     model_type=ModelType.CLAUDE_3_7_SONNET,
 )
 

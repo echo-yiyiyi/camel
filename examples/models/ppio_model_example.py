@@ -24,7 +24,6 @@ export PPIO_API_KEY=""
 
 # deepseek r1
 model_R1 = ModelFactory.create(
-    model_platform=ModelPlatformType.PPIO,
     model_type=ModelType.PPIO_DEEPSEEK_R1,
     model_config_dict=PPIOConfig(temperature=0.2).as_dict(),
 )
@@ -65,7 +64,6 @@ driving open, creative research.
 
 # deepseek prover v2 671b
 model_prover = ModelFactory.create(
-    model_platform=ModelPlatformType.PPIO,
     model_type=ModelType.PPIO_DEEPSEEK_PROVER_V2_671B,
     model_config_dict=PPIOConfig(temperature=0.2).as_dict(),
 )

@@ -85,17 +85,17 @@ from camel.types import ModelPlatformType, ModelType
 # Create model instances
 def create_models():
     model_configs = [
-        (ModelPlatformType.OPENAI, ModelType.GPT_4O_MINI, ChatGPTConfig(temperature=0.0, max_tokens=2000), "OpenAI GPT-4O Mini"),
-        (ModelPlatformType.OPENAI, ModelType.GPT_4O, ChatGPTConfig(temperature=0.0, max_tokens=2000), "OpenAI GPT-4O"),
+        (ModelType.GPT_4O_MINI, ChatGPTConfig(temperature=0.0, max_tokens=2000), "OpenAI GPT-4O Mini"),
+        (ModelType.GPT_4O, ChatGPTConfig(temperature=0.0, max_tokens=2000), "OpenAI GPT-4O"),
         # NOTE: OpenAI O1 model requires additional additional credentials
-        (ModelPlatformType.OPENAI, ModelType.O1_PREVIEW, ChatGPTConfig(temperature=0.0), "OpenAI O1 Preview"),
-        (ModelPlatformType.SAMBA, "Meta-Llama-3.1-8B-Instruct", SambaCloudAPIConfig(temperature=0.0, max_tokens=2000), "SambaNova Llama 8B"),
-        (ModelPlatformType.SAMBA, "Meta-Llama-3.1-70B-Instruct", SambaCloudAPIConfig(temperature=0.0, max_tokens=2000), "SambaNova Llama 70B"),
-        (ModelPlatformType.SAMBA, "Meta-Llama-3.1-405B-Instruct", SambaCloudAPIConfig(temperature=0.0, max_tokens=2000), "SambaNova Llama 405B")
+        (ModelType.O1_PREVIEW, ChatGPTConfig(temperature=0.0), "OpenAI O1 Preview"),
+        ("Meta-Llama-3.1-8B-Instruct", SambaCloudAPIConfig(temperature=0.0, max_tokens=2000), "SambaNova Llama 8B"),
+        ("Meta-Llama-3.1-70B-Instruct", SambaCloudAPIConfig(temperature=0.0, max_tokens=2000), "SambaNova Llama 70B"),
+        ("Meta-Llama-3.1-405B-Instruct", SambaCloudAPIConfig(temperature=0.0, max_tokens=2000), "SambaNova Llama 405B")
     ]
 
-    models = [(ModelFactory.create(model_platform=platform, model_type=model_type, model_config_dict=config.as_dict(), url="https://api.sambanova.ai/v1" if platform == ModelPlatformType.SAMBA else None), name)
-              for platform, model_type, config, name in model_configs]
+    models = [(ModelFactory.create(model_type=model_type, model_config_dict=config.as_dict(), url="https://api.sambanova.ai/v1" if "Meta-Llama" in str(model_type) or "Llama" in str(model_type) else None), name)
+              for model_type, config, name in model_configs]
     return models
 
 # Define messages

@@ -18,7 +18,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.QWEN,
     model_type=ModelType.QWEN_3_CODER_PLUS,
     model_config_dict=QwenConfig(temperature=0.2).as_dict(),
 )
@@ -193,7 +192,6 @@ Remember to comply with your exchange's API usage policies and trading regulatio
 '''
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.QWEN,
     model_type=ModelType.QWEN_PLUS_LATEST,
     model_config_dict=QwenConfig(
         temperature=0.2,

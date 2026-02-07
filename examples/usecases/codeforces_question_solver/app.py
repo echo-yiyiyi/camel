@@ -34,7 +34,6 @@ class ProblemSolver:
     def __init__(self):
         # Initialize model
         self.model = ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
             model_type=ModelType.GPT_4O,
             model_config_dict={"temperature": 0.1, "max_tokens": 4000}
         )

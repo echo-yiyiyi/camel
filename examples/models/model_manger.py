@@ -19,7 +19,6 @@ from camel.types import ModelPlatformType, ModelType
 # Use two different models for ModelManager
 
 model1 = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
     model_type="grok-beta",
     api_key="xai-...",
     url="https://api.x.ai/v1",
@@ -27,7 +26,6 @@ model1 = ModelFactory.create(
 )
 
 model2 = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
     model_config_dict={"temperature": 0.4},
 )

@@ -134,7 +134,6 @@ model_config = ChatGPTConfig(
 
 # Create the backend model
 model = ModelFactory.create(
-    model_platform=model_platform,
     model_type=model_type,
     model_config_dict=model_config.as_dict())
 ```

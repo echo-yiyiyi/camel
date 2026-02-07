@@ -18,7 +18,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.YI,
     model_type=ModelType.YI_LIGHTNING,
     model_config_dict=YiConfig(temperature=0.2).as_dict(),
 )

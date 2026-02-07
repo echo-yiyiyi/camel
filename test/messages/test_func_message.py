@@ -116,7 +116,6 @@ def test_assistant_func_message_to_openai_tool_message(
 def test_roleplay_conversion_with_tools():
     tools = MathToolkit().get_tools()
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_4O_MINI,
     )
 

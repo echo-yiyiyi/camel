@@ -118,7 +118,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.QWEN,
     model_type=ModelType.QWEN_QWQ_32B,
 )
 
@@ -146,7 +145,6 @@ from camel.toolkits import HumanToolkit
 human_toolkit = HumanToolkit()
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.QWEN,
     model_type=ModelType.QWEN_MAX,
 )
 

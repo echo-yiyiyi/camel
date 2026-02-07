@@ -102,7 +102,6 @@ Integrate your favorite models into CAMEL-AI with straightforward Python calls. 
   from camel.agents import ChatAgent
 
   model = ModelFactory.create(
-      model_platform=ModelPlatformType.OPENAI,
       model_type=ModelType.GPT_4O_MINI,
       model_config_dict=ChatGPTConfig(temperature=0.2).as_dict(),
   )
@@ -133,7 +132,6 @@ Integrate your favorite models into CAMEL-AI with straightforward Python calls. 
   from camel.agents import ChatAgent
 
   model = ModelFactory.create(
-      model_platform=ModelPlatformType.GEMINI,
       model_type=ModelType.GEMINI_2_5_PRO,
       model_config_dict=GeminiConfig(temperature=0.2).as_dict(),
   )
@@ -160,7 +158,6 @@ Integrate your favorite models into CAMEL-AI with straightforward Python calls. 
   from camel.agents import ChatAgent
 
   model = ModelFactory.create(
-      model_platform=ModelPlatformType.MISTRAL,
       model_type=ModelType.MAGISTRAL_MEDIUM_1_2,
       model_config_dict=MistralConfig(temperature=0.0).as_dict(),
   )
@@ -187,7 +184,6 @@ Integrate your favorite models into CAMEL-AI with straightforward Python calls. 
   from camel.agents import ChatAgent
 
   model = ModelFactory.create(
-      model_platform=ModelPlatformType.ANTHROPIC,
       model_type=ModelType.CLAUDE_3_5_SONNET,
       model_config_dict=AnthropicConfig(temperature=0.2).as_dict(),
   )
@@ -218,7 +214,6 @@ Integrate your favorite models into CAMEL-AI with straightforward Python calls. 
   from camel.agents import ChatAgent
 
   model = ModelFactory.create(
-      model_platform=ModelPlatformType.COMETAPI,
       model_type=ModelType.COMETAPI_GPT_5_CHAT_LATEST,
       model_config_dict=CometAPIConfig(temperature=0.2).as_dict(),
   )
@@ -269,7 +264,6 @@ Integrate your favorite models into CAMEL-AI with straightforward Python calls. 
 
   for model_type in models_to_try:
       model = ModelFactory.create(
-          model_platform=ModelPlatformType.COMETAPI,
           model_type=model_type
       )
       # Use the model...
@@ -292,7 +286,6 @@ Integrate your favorite models into CAMEL-AI with straightforward Python calls. 
   from camel.agents import ChatAgent
 
   model = ModelFactory.create(
-      model_platform=ModelPlatformType.NEBIUS,
       model_type=ModelType.NEBIUS_GPT_OSS_120B,
       model_config_dict=NebiusConfig(temperature=0.2).as_dict(),
   )
@@ -325,7 +318,6 @@ Integrate your favorite models into CAMEL-AI with straightforward Python calls. 
   ```python
   # Use any model available on Nebius
   model = ModelFactory.create(
-      model_platform=ModelPlatformType.NEBIUS,
       model_type="your-custom-model-name"  # Any Nebius model
   )
   ```
@@ -344,7 +336,6 @@ Integrate your favorite models into CAMEL-AI with straightforward Python calls. 
   from camel.agents import ChatAgent
 
   model = ModelFactory.create(
-      model_platform=ModelPlatformType.QWEN,
       model_type=ModelType.QWEN_2_5_CODER_32B,
       model_config_dict=QwenConfig(temperature=0.2).as_dict(),
   )
@@ -372,7 +363,6 @@ Integrate your favorite models into CAMEL-AI with straightforward Python calls. 
 
   # Using predefined OpenRouter models
   model = ModelFactory.create(
-      model_platform=ModelPlatformType.OPENROUTER,
       model_type=ModelType.OPENROUTER_LLAMA_3_1_70B,
       model_config_dict=OpenRouterConfig(temperature=0.2).as_dict(),
   )
@@ -407,7 +397,6 @@ Integrate your favorite models into CAMEL-AI with straightforward Python calls. 
 
   # Use any model available on OpenRouter
   model = ModelFactory.create(
-      model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
       model_type="anthropic/claude-3.5-sonnet",  # Any OpenRouter model
       url="https://openrouter.ai/api/v1",
       api_key=os.getenv("OPENROUTER_API_KEY"),
@@ -438,7 +427,6 @@ Integrate your favorite models into CAMEL-AI with straightforward Python calls. 
   from camel.agents import ChatAgent
 
   model = ModelFactory.create(
-      model_platform=ModelPlatformType.GROQ,
       model_type=ModelType.GROQ_LLAMA_3_3_70B,
       model_config_dict=GroqConfig(temperature=0.2).as_dict(),
   )
@@ -470,7 +458,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
     model_type="your-model-name", #e.g. "gpt-4o"
     url="https://your-openai-compatible-endpoint/v1",
     api_key=os.getenv("OPENAI_COMPATIBLE_API_KEY"),
@@ -539,7 +526,6 @@ CAMEL-AI makes it easy to integrate local open-source models as part of your age
         from camel.types import ModelPlatformType
 
         ollama_model = ModelFactory.create(
-            model_platform=ModelPlatformType.OLLAMA,
             model_type="llama3",
             url="http://localhost:11434/v1",
             model_config_dict={"temperature": 0.4},
@@ -571,7 +557,6 @@ CAMEL-AI makes it easy to integrate local open-source models as part of your age
         from camel.types import ModelPlatformType
 
         vllm_model = ModelFactory.create(
-            model_platform=ModelPlatformType.VLLM,
             model_type="microsoft/Phi-3-mini-4k-instruct",
             url="http://localhost:8000/v1",
             model_config_dict={"temperature": 0.0},
@@ -596,7 +581,6 @@ CAMEL-AI makes it easy to integrate local open-source models as part of your age
         from camel.types import ModelPlatformType
 
         sglang_model = ModelFactory.create(
-            model_platform=ModelPlatformType.SGLANG,
             model_type="meta-llama/Llama-3.2-1B-Instruct",
             model_config_dict={"temperature": 0.0},
             api_key="sglang",

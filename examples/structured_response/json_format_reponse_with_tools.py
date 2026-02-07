@@ -31,7 +31,6 @@ tools_list = [
 assistant_sys_msg = "You are a helpful assistant."
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

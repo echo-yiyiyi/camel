@@ -59,7 +59,6 @@ def main():
 
     # Initialize the model and agent
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_4O,
         model_config_dict={"temperature": 0.7, "max_tokens": 4096},
     )

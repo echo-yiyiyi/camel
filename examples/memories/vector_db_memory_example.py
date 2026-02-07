@@ -49,7 +49,6 @@ vectordb_memory_agent2 = VectorDBMemory(
 )
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_3_5_TURBO,
 )
 

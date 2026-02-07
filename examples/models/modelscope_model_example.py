@@ -19,7 +19,6 @@ from camel.toolkits import MathToolkit
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.MODELSCOPE,
     model_type=ModelType.MODELSCOPE_QWEN_2_5_32B_INSTRUCT,
     model_config_dict=ModelScopeConfig(temperature=0.2).as_dict(),
 )
@@ -55,7 +54,6 @@ The University of Oxford is approximately 928 years old in the year 2024.
 '''  # noqa: E501
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.MODELSCOPE,
     model_type=ModelType.MODELSCOPE_QWEN_3_235B_A22B,
     model_config_dict=ModelScopeConfig(
         temperature=0.2,

@@ -18,7 +18,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.AMD,
     model_type=ModelType.AMD_GPT4,
     model_config_dict=AMDConfig(temperature=0.2).as_dict(),
 )

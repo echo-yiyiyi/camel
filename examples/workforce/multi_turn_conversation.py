@@ -47,7 +47,6 @@ research_agent = ChatAgent(
         "providing detailed context.",
     ),
     model=ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
     ),
 )
@@ -60,7 +59,6 @@ writer_agent = ChatAgent(
         "well-structured answers.",
     ),
     model=ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
     ),
 )

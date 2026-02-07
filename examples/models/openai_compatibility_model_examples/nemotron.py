@@ -18,7 +18,6 @@ from camel.types import ModelPlatformType
 
 # Take calling nemotron-70b-instruct model as an example
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
     model_type="nvidia/llama-3.1-nemotron-70b-instruct",
     api_key="nvapi-xx",
     url="https://integrate.api.nvidia.com/v1",

@@ -17,7 +17,7 @@ from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 
 from camel.logger import get_logger
 from camel.models import BaseModelBackend, ModelFactory
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 
 from .actions import ActionExecutor
 from .browser_session import HybridBrowserSession
@@ -97,7 +97,6 @@ what was accomplished
         self.action_history: List[Dict[str, Any]] = []
         if model_backend is None:
             model_backend = ModelFactory.create(
-                model_platform=ModelPlatformType.DEFAULT,
                 model_type=ModelType.DEFAULT,
                 model_config_dict={"temperature": 0, "top_p": 1},
             )

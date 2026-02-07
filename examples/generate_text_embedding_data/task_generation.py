@@ -30,7 +30,6 @@ def main() -> None:
     print(prompt)
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
     )
     agent = ChatAgent(

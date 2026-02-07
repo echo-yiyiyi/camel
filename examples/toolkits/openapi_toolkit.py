@@ -23,7 +23,6 @@ sys_msg = "You are a helpful assistant"
 tools = OpenAPIToolkit().get_tools()
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

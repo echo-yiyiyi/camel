@@ -25,7 +25,6 @@ sys_msg_prompt = PromptTemplateGenerator().get_prompt_from_key(
 )
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

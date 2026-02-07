@@ -94,7 +94,6 @@ from camel.configs import ChatGPTConfig
 from camel.models import ModelFactory
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
     model_config_dict=ChatGPTConfig(temperature=0.0).as_dict(), # [Optional] the config for model
 )

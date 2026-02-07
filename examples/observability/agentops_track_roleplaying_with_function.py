@@ -55,14 +55,12 @@ role_play_session = RolePlaying(
     user_role_name="Professor",
     assistant_agent_kwargs=dict(
         model=ModelFactory.create(
-            model_platform=model_platform,
             model_type=model_type,
         ),
         tools=tools_list,
     ),
     user_agent_kwargs=dict(
         model=ModelFactory.create(
-            model_platform=model_platform,
             model_type=model_type,
         ),
     ),

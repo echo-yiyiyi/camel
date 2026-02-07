@@ -33,7 +33,6 @@ from camel.types import (
 )
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.DEFAULT,
 )
 

@@ -123,7 +123,6 @@ def translate_content(
             model_config = ChatGPTConfig(stream=True)
 
         model = ModelFactory.create(
-            model_platform=ModelPlatformType.DEFAULT,
             model_type=ModelType.DEFAULT,
             model_config=model_config,
         )

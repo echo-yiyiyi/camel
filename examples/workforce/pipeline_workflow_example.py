@@ -49,7 +49,6 @@ init(autoreset=True)
 # )
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
     model_config_dict=ChatGPTConfig().as_dict(),
 )

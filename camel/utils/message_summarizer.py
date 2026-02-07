@@ -18,7 +18,7 @@ from pydantic import BaseModel, Field
 from camel.agents import ChatAgent
 from camel.messages import BaseMessage
 from camel.models import BaseModelBackend, ModelFactory
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 
 
 class MessageSummary(BaseModel):
@@ -75,7 +75,6 @@ class MessageSummarizer:
     ):
         if model_backend is None:
             self.model_backend = ModelFactory.create(
-                model_platform=ModelPlatformType.DEFAULT,
                 model_type=ModelType.GPT_4O_MINI,
             )
         else:

@@ -147,7 +147,6 @@ class _MetricsCallback(WorkforceCallback, WorkforceMetrics):
 def _build_stub_agent() -> ChatAgent:
     """Construct a stub-backed ChatAgent for offline tests."""
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.STUB,
     )
     return ChatAgent(model=model)
@@ -283,7 +282,6 @@ def test_workforce_emits_expected_event_sequence():
             "gathering information from the web.",
         ),
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
             model_type=ModelType.STUB,
         ),
     )
@@ -296,7 +294,6 @@ def test_workforce_emits_expected_event_sequence():
             "opportunities, and challenges.",
         ),
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
             model_type=ModelType.STUB,
         ),
     )
@@ -309,7 +306,6 @@ def test_workforce_emits_expected_event_sequence():
             "concise, and well-structured final report.",
         ),
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
             model_type=ModelType.STUB,
         ),
     )
@@ -319,13 +315,11 @@ def test_workforce_emits_expected_event_sequence():
     # Use STUB models for coordinator and task agents to avoid real API calls
     coordinator_agent = ChatAgent(
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
             model_type=ModelType.STUB,
         )
     )
     task_agent = ChatAgent(
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
             model_type=ModelType.STUB,
         )
     )

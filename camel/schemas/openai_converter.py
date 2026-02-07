@@ -19,7 +19,6 @@ from pydantic import BaseModel
 
 from camel.models import ModelFactory
 from camel.types import ModelType
-from camel.types.enums import ModelPlatformType
 from camel.utils import (
     api_keys_required,
     get_pydantic_model,
@@ -68,8 +67,7 @@ class OpenAISchemaConverter(BaseConverter):
         self.model_config_dict = model_config_dict or {}
         api_key = api_key or os.environ.get("OPENAI_API_KEY")
         self._client = ModelFactory.create(  # type: ignore[attr-defined]
-            ModelPlatformType.OPENAI,
-            model_type,
+            model_type=model_type,
             api_key=api_key,
         )._client
         super().__init__()

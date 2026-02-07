@@ -99,7 +99,6 @@ if user_input := st.chat_input("Ask a question about the repo…"):
         agent = ChatAgent(
             system_message=f"You are a GitHub repo assistant. Repository: {st.session_state['repo_url']}",  # noqa: E501
             model=ModelFactory.create(
-                model_platform=ModelPlatformType.OPENAI,
                 model_type=ModelType.GPT_4O,
                 model_config_dict={"temperature": 0},
             ),

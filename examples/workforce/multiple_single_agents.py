@@ -29,7 +29,6 @@ def main():
             "gathering information from the web.",
         ),
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.DEFAULT,
             model_type=ModelType.DEFAULT,
         ),
         tools=[SearchToolkit().search_wiki],
@@ -44,7 +43,6 @@ def main():
             "opportunities, and challenges.",
         ),
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.DEFAULT,
             model_type=ModelType.DEFAULT,
         ),
     )
@@ -58,7 +56,6 @@ def main():
             "concise, and well-structured final report.",
         ),
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.DEFAULT,
             model_type=ModelType.DEFAULT,
         ),
     )

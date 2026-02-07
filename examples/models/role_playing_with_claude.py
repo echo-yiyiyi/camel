@@ -23,7 +23,6 @@ def main(model_type=None) -> None:
     task_prompt = "Develop a trading bot for the stock market"
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.ANTHROPIC,
         model_type=model_type,
     )
 

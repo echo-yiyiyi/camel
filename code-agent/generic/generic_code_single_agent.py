@@ -618,7 +618,7 @@ Examples:
     exclude_dirs = {
         'node_modules', '.venv', '.git', '__pycache__', '.tox',
         '.mypy_cache', '.pytest_cache', 'dist', 'build',
-        '.initial_env', 'task-script*'
+        '.initial_env', 'task-script*', 'CAMEL_old.md'
     }
     if args.exclude:
         exclude_dirs.update(args.exclude)

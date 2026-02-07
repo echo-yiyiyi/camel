@@ -21,7 +21,6 @@ from camel.types import ModelPlatformType, ModelType
 tools = PubMedToolkit().get_tools()
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

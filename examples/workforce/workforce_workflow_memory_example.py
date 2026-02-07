@@ -51,7 +51,6 @@ def create_math_agent() -> ChatAgent:
     )
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
         model_config_dict=ChatGPTConfig().as_dict(),
     )
@@ -78,7 +77,6 @@ def create_writer_agent() -> ChatAgent:
         ),
     )
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
         model_config_dict=ChatGPTConfig().as_dict(),
     )

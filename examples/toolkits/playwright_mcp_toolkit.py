@@ -29,7 +29,6 @@ async def main():
     await playwright_mcp_toolkit.connect()
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
     )
 

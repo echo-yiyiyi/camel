@@ -124,7 +124,6 @@ def generate_user_query(selected_tool: Union[Callable, FunctionTool],
 
     # Create a model instance for generating queries
     query_model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_4O_MINI,
         model_config_dict={"temperature": 1}
     )
@@ -198,7 +197,6 @@ def generate_tool_call_data(user_messages: List[str],
                                  value=hermes_tool_call_sys_msg)
     # Initialize model for tool call data generation
     tool_model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_4O_MINI,
     )
 

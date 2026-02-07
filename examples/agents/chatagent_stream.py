@@ -19,7 +19,6 @@ from camel.types import ModelPlatformType, ModelType
 
 # Create a streaming-capable model backend
 streaming_model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
     model_config_dict={
         "stream": True,

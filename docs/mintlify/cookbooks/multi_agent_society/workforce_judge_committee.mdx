@@ -102,7 +102,6 @@ def make_judge(
     )
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_4O,
     )
 
@@ -151,7 +150,6 @@ search_tools = [
 ]
 
 researcher_model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O,
 )
 

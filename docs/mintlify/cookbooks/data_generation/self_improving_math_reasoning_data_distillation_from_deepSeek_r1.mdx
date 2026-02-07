@@ -210,7 +210,6 @@ Next, let's set up the reasoning model and evaluate model. Since the DeepSeek's 
 ```python
 # Set llama3.3 70b as evaluate model
 evaluate_model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
     model_type="accounts/fireworks/models/llama-v3p3-70b-instruct",
     api_key=os.environ["FIREWORKS_API_KEY"],
     url="https://api.fireworks.ai/inference/v1",
@@ -219,7 +218,6 @@ evaluate_model = ModelFactory.create(
 
 # Set DeepSeek R1 served by Fireworks as reason model 1
 reason_model_1 = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
     model_type="accounts/fireworks/models/deepseek-r1",
     api_key=os.environ["FIREWORKS_API_KEY"],
     url="https://api.fireworks.ai/inference/v1",
@@ -228,7 +226,6 @@ reason_model_1 = ModelFactory.create(
 
 # Set DeepSeek R1 served by deepseek cloud as reason model 2
 reason_model_2 = ModelFactory.create(
-    model_platform=ModelPlatformType.DEEPSEEK,
     model_type=ModelType.DEEPSEEK_REASONER,
 )
 ```

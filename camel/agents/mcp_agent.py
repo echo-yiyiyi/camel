@@ -37,7 +37,6 @@ from camel.toolkits.function_tool import FunctionTool
 from camel.types import (
     BaseMCPRegistryConfig,
     MCPRegistryType,
-    ModelPlatformType,
     ModelType,
     RoleType,
 )
@@ -143,7 +142,6 @@ class MCPAgent(ChatAgent):
     ):
         if model is None:
             model = ModelFactory.create(
-                model_platform=ModelPlatformType.DEFAULT,
                 model_type=ModelType.DEFAULT,
             )
 

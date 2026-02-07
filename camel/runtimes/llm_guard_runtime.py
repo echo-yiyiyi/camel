@@ -21,7 +21,7 @@ from camel.models import BaseModelBackend, ModelFactory
 from camel.runtimes import BaseRuntime
 from camel.runtimes.utils import FunctionRiskToolkit, IgnoreRiskToolkit
 from camel.toolkits import FunctionTool
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 
 logger = logging.getLogger(__name__)
 
@@ -86,7 +86,6 @@ class LLMGuardRuntime(BaseRuntime):
 
         if not self.model:
             self.model = ModelFactory.create(
-                model_platform=ModelPlatformType.DEFAULT,
                 model_type=ModelType.DEFAULT,
                 model_config_dict=ChatGPTConfig().as_dict(),
             )

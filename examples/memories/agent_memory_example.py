@@ -31,7 +31,6 @@ context_creator = ScoreBasedContextCreator(
 )
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
 )
 

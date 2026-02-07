@@ -145,7 +145,6 @@ def test_base_message():
 @pytest.mark.model_backend
 def test_roleplay_sharegpt_conversion():
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_4O_MINI,
     )
 

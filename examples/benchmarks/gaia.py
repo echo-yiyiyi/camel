@@ -83,7 +83,6 @@ task_prompt = """
         """.strip()
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
     model_config_dict=ChatGPTConfig().as_dict(),
 )

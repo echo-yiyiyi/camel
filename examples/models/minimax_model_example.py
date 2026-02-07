@@ -18,7 +18,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.MINIMAX,
     model_type=ModelType.MINIMAX_M2,
     model_config_dict=MinimaxConfig(temperature=0.2).as_dict(),
 )

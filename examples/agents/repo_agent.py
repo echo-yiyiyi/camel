@@ -127,7 +127,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
     model_type="gpt-3.5-turbo",  # Example model
     api_key="your_api_key",  # Ensure you have appropriate credentials
     model_config_dict={"temperature": 0.7}

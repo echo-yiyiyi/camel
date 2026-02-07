@@ -23,7 +23,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.MISTRAL,
     model_type=ModelType.MISTRAL_8B,
     model_config_dict=MistralConfig(temperature=0.0).as_dict(),
 )
@@ -48,7 +47,6 @@ of autonomous and communicative agents. How can I assist you today?
 '''
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.MISTRAL,
     model_type=ModelType.MISTRAL_PIXTRAL_12B,
     model_config_dict=MistralConfig(temperature=0.0).as_dict(),
 )
@@ -78,7 +76,6 @@ camel.
 
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.MISTRAL,
     model_type=ModelType.MISTRAL_MEDIUM_3_1,
     model_config_dict=MistralConfig(temperature=0.0).as_dict(),
 )
@@ -104,7 +101,6 @@ your work and how I can assist you. How can I help you today?
 """
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.MISTRAL,
     model_type=ModelType.MISTRAL_MEDIUM_3_1,
     model_config_dict=MistralConfig(temperature=0.0).as_dict(),
 )
@@ -130,7 +126,6 @@ your work and how I can assist you. How can I help you today?
 """
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.MISTRAL,
     model_type=ModelType.MISTRAL_SMALL_3_2,
     model_config_dict=MistralConfig(temperature=0.0).as_dict(),
 )
@@ -156,7 +151,6 @@ autonomous and communicative agents!
 
 # Example with Magistral Small 1.2
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.MISTRAL,
     model_type=ModelType.MAGISTRAL_SMALL_1_2,
     model_config_dict=MistralConfig(temperature=0.0).as_dict(),
 )
@@ -182,7 +176,6 @@ autonomous and communicative agents!
 
 # Example with Magistral Medium 1.2
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.MISTRAL,
     model_type=ModelType.MAGISTRAL_MEDIUM_1_2,
     model_config_dict=MistralConfig(temperature=0.0).as_dict(),
 )

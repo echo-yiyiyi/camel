@@ -28,7 +28,6 @@ class Summary(BaseModel):
 
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
 )
 

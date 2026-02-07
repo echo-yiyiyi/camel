@@ -31,7 +31,6 @@ if LINKED_ACCOUNT_OWNER is None:
 aci_toolkit = ACIToolkit(linked_account_owner_id=LINKED_ACCOUNT_OWNER)
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

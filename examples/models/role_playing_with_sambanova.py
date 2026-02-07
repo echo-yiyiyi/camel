@@ -33,7 +33,6 @@ from camel.toolkits import (  # noqa: E402
 
 
 def main(
-    model_platform=ModelPlatformType.SAMBA,
     model_type="Meta-Llama-3.1-70B-Instruct",
     chat_turn_limit=10,
 ) -> None:
@@ -58,7 +57,6 @@ def main(
         user_role_name="Professor",
         assistant_agent_kwargs=dict(
             model=ModelFactory.create(
-                model_platform=model_platform,
                 model_type=model_type,
                 url="https://api.sambanova.ai/v1",
                 model_config_dict=assistant_model_config.as_dict(),
@@ -67,7 +65,6 @@ def main(
         ),
         user_agent_kwargs=dict(
             model=ModelFactory.create(
-                model_platform=model_platform,
                 model_type=model_type,
                 url="https://api.sambanova.ai/v1",
                 model_config_dict=user_model_config.as_dict(),

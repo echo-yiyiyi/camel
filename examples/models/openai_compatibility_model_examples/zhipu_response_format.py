@@ -28,7 +28,6 @@ class ResponseFormat(BaseModel):
 # Take calling model from DashScope as an example
 # Refer: https://dashscope.console.aliyun.com/overview
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
     model_type="glm-4",
     api_key="fb75bxxxxx",
     url="https://open.bigmodel.cn/api/paas/v4/",

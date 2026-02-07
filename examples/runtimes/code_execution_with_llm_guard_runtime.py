@@ -34,7 +34,6 @@ for tool in tools:
     print(tool.get_function_name())
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

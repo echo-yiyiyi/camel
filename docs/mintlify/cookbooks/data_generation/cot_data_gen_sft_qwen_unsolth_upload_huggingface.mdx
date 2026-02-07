@@ -113,7 +113,6 @@ from camel.configs import ChatGPTConfig
 ```python
 # Define the model, here in this case we use gpt-4o-mini
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
     model_config_dict=ChatGPTConfig().as_dict(), # [Optional] the config for model
 )

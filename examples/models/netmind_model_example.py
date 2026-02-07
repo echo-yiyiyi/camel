@@ -17,7 +17,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.NETMIND,
     model_type=ModelType.NETMIND_DEEPSEEK_R1,
     model_config_dict=NetmindConfig(temperature=0.2).as_dict(),
 )

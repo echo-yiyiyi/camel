@@ -30,7 +30,6 @@ sys_msg = BaseMessage(
 
 # Initialize the model (using Anthropic's Claude as an example)
 model = ModelFactory.create(
-    model_platform="gemini",
     model_type="gemini-2.5-pro-preview-05-06",
     api_key=os.getenv("GEMINI_API_KEY"),
     model_config_dict={"temperature": 0.5, "max_tokens": 4096},

@@ -21,7 +21,6 @@ Tell about his career.
 """
 
 openai_model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

@@ -21,13 +21,11 @@ from camel.types import ModelPlatformType, ModelType
 
 async def main():
     gpt_4o_mini_model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_4O_MINI,
         model_config_dict=ChatGPTConfig().as_dict(),
     )
 
     qwen_2_5_72b_model = ModelFactory.create(
-        model_platform=ModelPlatformType.QWEN,
         model_type=ModelType.QWEN_2_5_72B,
         model_config_dict=QwenConfig(temperature=0.2).as_dict(),
     )

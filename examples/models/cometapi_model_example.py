@@ -35,7 +35,6 @@ CometAPI provides access to multiple frontier models including:
 print("=== Example 1: Basic CometAPI Usage with GPT-5 ===")
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.COMETAPI,
     model_type=ModelType.COMETAPI_GPT_5_CHAT_LATEST,
     model_config_dict=CometAPIConfig(temperature=0.2).as_dict(),
 )
@@ -59,7 +58,6 @@ print("\n" + "=" * 80 + "\n")
 print("=== Example 2: Claude Opus 4.1 with Custom Configuration ===")
 
 claude_model = ModelFactory.create(
-    model_platform=ModelPlatformType.COMETAPI,
     model_type=ModelType.COMETAPI_CLAUDE_OPUS_4_1_20250805,
     model_config_dict=CometAPIConfig(
         temperature=0.7, max_tokens=1000, top_p=0.9
@@ -82,7 +80,6 @@ print("\n" + "=" * 80 + "\n")
 print("=== Example 3: Gemini 2.5 Pro for Code Generation ===")
 
 gemini_model = ModelFactory.create(
-    model_platform=ModelPlatformType.COMETAPI,
     model_type=ModelType.COMETAPI_GEMINI_2_5_PRO,
     model_config_dict=CometAPIConfig(temperature=0.1).as_dict(),
 )
@@ -123,7 +120,6 @@ def calculate_fibonacci(n: int) -> int:
 fibonacci_tool = FunctionTool(calculate_fibonacci)
 
 grok_model = ModelFactory.create(
-    model_platform=ModelPlatformType.COMETAPI,
     model_type=ModelType.COMETAPI_GROK_4_0709,
     model_config_dict=CometAPIConfig(
         temperature=0.0, tools=[fibonacci_tool.get_openai_tool_schema()]
@@ -163,7 +159,6 @@ for model_type, model_name in models_to_compare:
     print(f"--- {model_name} Response ---")
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.COMETAPI,
         model_type=model_type,
         model_config_dict=CometAPIConfig(temperature=0.3).as_dict(),
     )
@@ -216,7 +211,6 @@ def create_simple_chatbot(
         A configured ChatAgent instance ready for conversation
     """
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.COMETAPI,
         model_type=model_type
     )
 

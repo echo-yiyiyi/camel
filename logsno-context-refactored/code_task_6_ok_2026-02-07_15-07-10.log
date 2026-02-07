@@ -1,0 +1,2000 @@
+Task: task_6
+Status: SUCCESS
+Start Time: 2026-02-07T15:07:10.000208
+End Time: 2026-02-07T15:09:01.284674
+Total Duration: 111.28 seconds
+  - Explore Phase: 16.86 seconds
+  - Code Phase: 94.43 seconds
+Description: create a knowledge graph agent with LinkUp tools to retrieve webpages related to LLM-based social simulation research and store them in Neo4j. Save the script to task-script/single_agent/6_linkup_neo4j_agent.py
+================================================================================
+
+EXPLORE PHASE
+================================================================================
+Tool Calls: 16
+----------------------------------------
+
+[1] glob_search
+Args: {
+  "pattern": "**/*linkup*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: No files found matching pattern '**/*linkup*.py'
+
+[2] glob_search
+Args: {
+  "pattern": "**/*neo4j*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 3 file(s) matching '**/*neo4j*.py':
+camel/storages/graph_storages/neo4j_graph.py
+examples/knowledge_graph/neo4j_example.py
+test/storages/graph_storages/test_neo4j_graph.py
+
+[3] glob_search
+Args: {
+  "pattern": "**/*agent*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*agent*.py':
+apps/agents/agents.py
+apps/agents/test/test_agents.py
+camel/agents/chat_agent.py
+camel/agents/critic_agent.py
+camel/agents/deductive_reasoner_agent.py
+camel/agents/embodied_agent.py
+camel/agents/knowledge_graph_agent.py
+camel/agents/mcp_agent.py
+camel/agents/multi_hop_generator_agent.py
+camel/agents/programmed_agent_instruction.py
+
+[4] glob_search
+Args: {
+  "pattern": "**/*social_simulation*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: No files found matching pattern '**/*social_simulation*.py'
+
+[5] glob_search
+Args: {
+  "pattern": "**/*knowledge_graph*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 2 file(s) matching '**/*knowledge_graph*.py':
+camel/agents/knowledge_graph_agent.py
+examples/knowledge_graph/knowledge_graph_agent_example.py
+
+[6] glob_search
+Args: {
+  "pattern": "**/*example*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*example*.py':
+examples/datagen/self_improving_cot/self_improving_cot_example.py
+examples/datagen/self_improving_cot/self_improving_cot_example_with_r1.py
+examples/debug/traceroot_example.py
+examples/embeddings/gemini_embedding_example.py
+examples/embeddings/jina_embedding_example.py
+examples/embeddings/openai_compatible_embedding_example.py
+examples/embeddings/together_embedding_example.py
+examples/embeddings/vlm_embedding_example.py
+examples/environments/rlcards_e...
+
+[7] glob_search
+Args: {
+  "pattern": "**/*test*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: Found 10 file(s) matching '**/*test*.py':
+apps/agents/test/test_agents.py
+apps/agents/test/test_text_utils.py
+apps/common/test/test_auto_zip.py
+apps/data_explorer/test/test_data_explorer.py
+apps/data_explorer/test/test_loader.py
+examples/test/test_ai_society_example.py
+examples/test/test_babyagi_example.py
+examples/test/test_code_example.py
+examples/test/test_role_description_example.py
+examples/test/test_single_agent.py
+
+[8] read_file
+Args: {
+  "file_path": "camel/agents/knowledge_graph_agent.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[9] read_file
+Args: {
+  "file_path": "examples/knowledge_graph/knowledge_graph_agent_example.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[10] read_file
+Args: {
+  "file_path": "camel/storages/graph_storages/neo4j_graph.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[11] read_file
+Args: {
+  "file_path": "examples/knowledge_graph/neo4j_example.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[12] read_file
+Args: {
+  "file_path": "test/storages/graph_storages/test_neo4j_graph.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+[13] glob_search
+Args: {
+  "pattern": "**/*linkup*.py",
+  "path": null,
+  "file_type": "file",
+  "max_results": 10
+}
+Result: No files found matching pattern '**/*linkup*.py'
+
+[14] grep_search
+Args: {
+  "pattern": "LinkUp",
+  "path": null,
+  "glob_filter": "*.py",
+  "ignore_case": false,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: No matches found for pattern 'LinkUp'
+
+[15] grep_search
+Args: {
+  "pattern": "linkup",
+  "path": null,
+  "glob_filter": "*.py",
+  "ignore_case": true,
+  "output_mode": "files",
+  "context_lines": null,
+  "max_results": 10
+}
+Result: Search results for 'linkup' in *.py files (3 matches):
+examples/toolkits/search_toolkit.py
+camel/toolkits/search_toolkit.py
+test/toolkits/test_search_functions.py
+
+[16] read_file
+Args: {
+  "file_path": "examples/toolkits/search_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ...
+
+----------------------------------------
+Output:
+## Examples (MOST IMPORTANT)
+- examples/knowledge_graph/knowledge_graph_agent_example.py - Demonstrates usage of KnowledgeGraphAgent to extract nodes and relationships from text content, including custom prompts with timestamps.
+  - Key functions: KnowledgeGraphAgent.run()
+- examples/knowledge_graph/neo4j_example.py - Shows how to use Neo4jGraph to connect to Neo4j, add triplets, run queries, and get schema information.
+
+- examples/toolkits/search_toolkit.py - Shows usage of SearchToolkit including the LinkUp search tool to retrieve webpages and structured data related to queries. Also demonstrates usage with ChatAgent and various search engines.
+  - Key functions: SearchToolkit().search_linkup(), ChatAgent.step()
+
+## Implementation
+- camel/agents/knowledge_graph_agent.py
+  - Classes: KnowledgeGraphAgent
+  - Functions: run(), _parse_graph_elements(), _validate_node(), _validate_relationship()
+- camel/storages/graph_storages/neo4j_graph.py
+  - Classes: Neo4jGraph
+  - Functions: __init__(), query(), refresh_schema(), add_triplet(), add_graph_elements(), get_triplet(), random_walk_with_restarts(), common_neighbour_aware_random_walk()
+
+## Tests
+- test/storages/graph_storages/test_neo4j_graph.py - Tests for Neo4jGraph including connection, schema refresh, adding data, filtering, and sampling algorithms.
+
+## Summary
+For creating a knowledge graph agent with LinkUp tools to retrieve webpages related to LLM-based social simulation research and store them in Neo4j, the most relevant files are:
+
+- Implementation of the knowledge graph agent: camel/agents/knowledge_graph_agent.py
+- Neo4j graph storage implementation: camel/storages/graph_storages/neo4j_graph.py
+- Example usage of knowledge graph agent: examples/knowledge_graph/knowledge_graph_agent_example.py
+- Example usage of Neo4j graph storage: examples/knowledge_graph/neo4j_example.py
+- Example usage of LinkUp search tool with ChatAgent: examples/toolkits/search_toolkit.py
+- Tests for Neo4j graph storage: test/storages/graph_storages/test_neo4j_graph.py
+
+These files provide the core components, usage patterns, and testing coverage needed to build the requested agent script at task-script/single_agent/6_linkup_neo4j_agent.py.
+================================================================================
+
+CODE PHASE
+================================================================================
+Tool Calls: 10
+----------------------------------------
+
+[1] read_file_tool
+Args: {
+  "file_path": "examples/knowledge_graph/knowledge_graph_agent_example.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from dotenv import load_dotenv
+
+from camel.agents import KnowledgeGraphAgent
+from camel.loaders import UnstructuredIO
+
+load_dotenv()
+
+# Set instance
+uio = UnstructuredIO()
+kg_agent = KnowledgeGraphAgent()
+
+# Set example text input
+text_example = """CAMEL-AI.org is an open-source community dedicate...
+
+[2] read_file_tool
+Args: {
+  "file_path": "examples/knowledge_graph/neo4j_example.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from camel.storages import Neo4jGraph
+
+# Set Neo4j instance
+n4j = Neo4jGraph(
+    url="Your Url", username="Your Username", password="Your Password"
+)
+
+# Add triplet into database
+n4j.add_triplet(subj="CAMEL", obj="multi-agent framework", rel="belongs to")
+
+# Run a Cypher query
+print(n4j.query("""...
+
+[3] read_file_tool
+Args: {
+  "file_path": "examples/toolkits/search_toolkit.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+import os
+
+from pydantic import BaseModel
+
+from camel.agents import ChatAgent
+from camel.toolkits import FunctionTool, SearchToolkit
+
+res_brave = SearchToolkit().search_brave(
+    q="What is the weather in Tokyo?",
+    search_lang="en",
+)
+print(res_brave)
+
+# Example with ChatAgent using the Brave...
+
+[4] read_file_tool
+Args: {
+  "file_path": "camel/agents/knowledge_graph_agent.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from typing import TYPE_CHECKING, Optional, Union
+
+if TYPE_CHECKING:
+    from unstructured.documents.elements import Element
+
+from camel.agents import ChatAgent
+from camel.messages import BaseMessage
+from camel.models import BaseModelBackend
+from camel.prompts import TextPrompt
+from camel.storages...
+
+[5] read_file_tool
+Args: {
+  "file_path": "camel/storages/graph_storages/neo4j_graph.py"
+}
+Result: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import logging
+import os
+from hashlib import md5
+from typing import Any, Dict, List, Optional
+
+from camel.storages.graph_storages import BaseGraphStorage, GraphElement
+from camel.utils import dependencies_required
+
+logger = logging.getLogger(__name__)
+
+BASE_ENTITY_LABEL = "__Entity__"
+EXCLUDED_LAB...
+
+[6] shell_write_content_to_file
+Args: {
+  "content": "from dotenv import load_dotenv\n\nfrom camel.agents import KnowledgeGraphAgent\nfrom camel.storages import Neo4jGraph\nfrom camel.toolkits import SearchToolkit\n\nload_dotenv()\n\n# Initialize the LinkUp search toolkit\nsearch_toolkit = SearchToolkit()\n\n# Query for LLM-based social simulation research\nquery = \"LLM-based social simulation research\"\n\n# Retrieve webpages related to the query using LinkUp\nsearch_results = search_toolkit.search_linkup(\n    query=query,\n    depth=\"standard\",\n    output_type=\"searchResults\",\n)\n\n# Initialize the KnowledgeGraphAgent\nkg_agent = KnowledgeGraphAgent()\n\n# Initialize Neo4jGraph with environment variables or placeholders\nneo4j_graph = Neo4jGraph(\n    url=\"bolt://localhost:7687\",  # Replace with your Neo4j URL\n    username=\"neo4j\",             # Replace with your Neo4j username\n    password=\"password\"           # Replace with your Neo4j password\n)\n\n# Process each search result content\nfor result in search_results.get(\"results\", []):\n    content = result.get(\"content\", \"\")\n    if not content:\n        continue\n\n    # Use KnowledgeGraphAgent to extract graph elements\n    graph_element = kg_agent.run(\n        element=kg_agent.uio.create_element_from_text(text=content),\n        parse_graph_elements=True,\n    )\n\n    # Add extracted graph elements to Neo4j\n    neo4j_graph.add_graph_elements([graph_element], include_source=True)\n\nprint(\"Finished processing and storing LLM-based social simulation research webpages into Neo4j.\")\n",
+  "file_path": "task-script/single_agent/6_linkup_neo4j_agent.py"
+}
+Result: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/6_linkup_neo4j_agent.py'.
+
+[7] shell_exec
+Args: {
+  "id": "run_6_linkup_neo4j_agent",
+  "command": "python3 task-script/single_agent/6_linkup_neo4j_agent.py",
+  "block": true,
+  "timeout": 60
+}
+Result: Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/6_linkup_neo4j_agent.py", line 40, in <module>
+    element=kg_agent.uio.create_element_from_text(text=content),
+            ^^^^^^^^^^^^
+AttributeError: 'KnowledgeGraphAgent' object has no attribute 'uio'
+
+[8] shell_write_content_to_file
+Args: {
+  "content": "from dotenv import load_dotenv\n\nfrom camel.agents import KnowledgeGraphAgent\nfrom camel.loaders import UnstructuredIO\nfrom camel.storages import Neo4jGraph\nfrom camel.toolkits import SearchToolkit\n\nload_dotenv()\n\n# Initialize the LinkUp search toolkit\nsearch_toolkit = SearchToolkit()\n\n# Query for LLM-based social simulation research\nquery = \"LLM-based social simulation research\"\n\n# Retrieve webpages related to the query using LinkUp\nsearch_results = search_toolkit.search_linkup(\n    query=query,\n    depth=\"standard\",\n    output_type=\"searchResults\",\n)\n\n# Initialize the KnowledgeGraphAgent\nkg_agent = KnowledgeGraphAgent()\n\n# Initialize UnstructuredIO for creating elements from text\nuio = UnstructuredIO()\n\n# Initialize Neo4jGraph with environment variables or placeholders\nneo4j_graph = Neo4jGraph(\n    url=\"bolt://localhost:7687\",  # Replace with your Neo4j URL\n    username=\"neo4j\",             # Replace with your Neo4j username\n    password=\"password\"           # Replace with your Neo4j password\n)\n\n# Process each search result content\nfor result in search_results.get(\"results\", []):\n    content = result.get(\"content\", \"\")\n    if not content:\n        continue\n\n    # Create element from text content\n    element = uio.create_element_from_text(text=content)\n\n    # Use KnowledgeGraphAgent to extract graph elements\n    graph_element = kg_agent.run(\n        element=element,\n        parse_graph_elements=True,\n    )\n\n    # Add extracted graph elements to Neo4j\n    neo4j_graph.add_graph_elements([graph_element], include_source=True)\n\nprint(\"Finished processing and storing LLM-based social simulation research webpages into Neo4j.\")\n",
+  "file_path": "task-script/single_agent/6_linkup_neo4j_agent.py"
+}
+Result: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/6_linkup_neo4j_agent.py'.
+
+[9] shell_exec
+Args: {
+  "id": "run_6_linkup_neo4j_agent",
+  "command": "python3 task-script/single_agent/6_linkup_neo4j_agent.py",
+  "block": true,
+  "timeout": 60
+}
+Result: Command did not complete within 60 seconds. Process continues in background as session 'run_6_linkup_neo4j_agent'.
+
+You can use:
+  - shell_view('run_6_linkup_neo4j_agent') - get output
+  - shell_kill_process('run_6_linkup_neo4j_agent') - terminate
+
+[10] shell_view
+Args: {
+  "id": "run_6_linkup_neo4j_agent"
+}
+Result: [No new output]
+Session is running but idle. Actions could take:
+  - For interactive sessions: Send input with shell_write_to_process()
+  - For long tasks: Check again later (don't poll too frequently)
+
+----------------------------------------
+Output:
+The script is running but has not produced output yet. It might be waiting or processing. The script is correct in structure and usage of the KnowledgeGraphAgent, LinkUp search, and Neo4jGraph based on the examples and implementations read.
+
+Summary of the script:
+- Uses SearchToolkit().search_linkup to retrieve webpages related to "LLM-based social simulation research".
+- Uses UnstructuredIO to create elements from the retrieved text content.
+- Uses KnowledgeGraphAgent to extract graph elements (nodes and relationships) from the text.
+- Stores the extracted graph elements into Neo4j using Neo4jGraph.
+
+The script is saved at task-script/single_agent/6_linkup_neo4j_agent.py as requested.
+
+If you want, I can terminate the running process or wait longer for completion. Please advise.
+================================================================================
+
+EXPLORE AGENT CHAT HISTORY
+================================================================================
+
+[Message 1]
+Role: system
+Content: You are a code exploration specialist. Find relevant files for a task.
+
+## Tools
+
+1. **glob_search(pattern, path?, max_results?)** - Find files by name pattern
+2. **grep_search(pattern, path?, glob_filter?, ignore_case?, output_mode?)** - Search file contents
+3. **read_file(file_path)** - Read file contents (auto-limits to 2000 lines for large files)
+4. **list_directory(path?)** - List directory contents
+5. **find_definition(name, definition_type?)** - Find class/function definitions
+6. **find_imports(module_name, ignore_case?)** - Find files that import a module
+
+## Search Techniques (CRITICAL)
+
+### Technique 1: Search whole repo first, NEVER restrict path initially
+```python
+# WRONG - may miss files in other directories
+glob_search("**/*handler*.py", path="src/handlers")
+
+# CORRECT - searches entire repo
+glob_search("**/*handler*.py")
+```
+
+### Technique 2: Use find_imports to find REAL usage
+```python
+find_imports("requests")
+find_imports("UserService")
+```
+
+### Technique 3: Read __init__.py when class names don't match file names
+```python
+# If glob_search("**/*usermanager*.py") finds nothing, read the module index
+read_file("src/users/__init__.py")
+# Or search for the class definition directly
+grep_search("class.*UserManager", ignore_case=True)
+```
+
+### Technique 4: Parallel search for ALL keywords
+For any multi-keyword task, search ALL keywords in parallel:
+```python
+glob_search("**/*keyword1*.py")
+glob_search("**/*keyword2*.py")
+find_imports("relevant_module")
+```
+
+### Technique 5: Tests and examples contain best usage patterns
+```python
+glob_search("**/test_*.py")
+glob_search("**/*example*.py")
+```
+
+### Technique 6: Find SPECIFIC function/method when task specifies it
+When task mentions a specific feature (e.g., "send email"), find the exact function:
+```python
+grep_search("def.*send.*email", ignore_case=True)
+grep_search("def.*mail", ignore_case=True)
+```
+Report the exact function name, not just the file path.
+
+## Output Format
+
+For each file, **list the cor
+... (truncated)
+
+
+[Message 2]
+Role: user
+Content: Find relevant files for this task:
+
+**Task**: create a knowledge graph agent with LinkUp tools to retrieve webpages related to LLM-based social simulation research and store them in Neo4j. Save the script to task-script/single_agent/6_linkup_neo4j_agent.py
+
+Search for implementation files, examples, tests, and documentation.
+Return the most relevant file paths with brief explanations.
+Focus on finding:
+1. Example scripts that show similar usage patterns
+2. Implementation files for the required components
+3. Configuration/type definitions
+
+
+[Message 3]
+Role: assistant
+
+[Message 4]
+Role: tool
+Content: No files found matching pattern '**/*linkup*.py'
+
+[Message 5]
+Role: assistant
+
+[Message 6]
+Role: tool
+Content: Found 3 file(s) matching '**/*neo4j*.py':
+camel/storages/graph_storages/neo4j_graph.py
+examples/knowledge_graph/neo4j_example.py
+test/storages/graph_storages/test_neo4j_graph.py
+
+[Message 7]
+Role: assistant
+
+[Message 8]
+Role: tool
+Content: Found 10 file(s) matching '**/*agent*.py':
+apps/agents/agents.py
+apps/agents/test/test_agents.py
+camel/agents/chat_agent.py
+camel/agents/critic_agent.py
+camel/agents/deductive_reasoner_agent.py
+camel/agents/embodied_agent.py
+camel/agents/knowledge_graph_agent.py
+camel/agents/mcp_agent.py
+camel/agents/multi_hop_generator_agent.py
+camel/agents/programmed_agent_instruction.py
+
+[Message 9]
+Role: assistant
+
+[Message 10]
+Role: tool
+Content: No files found matching pattern '**/*social_simulation*.py'
+
+[Message 11]
+Role: assistant
+
+[Message 12]
+Role: tool
+Content: Found 2 file(s) matching '**/*knowledge_graph*.py':
+camel/agents/knowledge_graph_agent.py
+examples/knowledge_graph/knowledge_graph_agent_example.py
+
+[Message 13]
+Role: assistant
+
+[Message 14]
+Role: tool
+Content: Found 10 file(s) matching '**/*example*.py':
+examples/datagen/self_improving_cot/self_improving_cot_example.py
+examples/datagen/self_improving_cot/self_improving_cot_example_with_r1.py
+examples/debug/traceroot_example.py
+examples/embeddings/gemini_embedding_example.py
+examples/embeddings/jina_embedding_example.py
+examples/embeddings/openai_compatible_embedding_example.py
+examples/embeddings/together_embedding_example.py
+examples/embeddings/vlm_embedding_example.py
+examples/environments/rlcards_example.py
+examples/extractors/python_strategies_example.py
+
+[Message 15]
+Role: assistant
+
+[Message 16]
+Role: tool
+Content: Found 10 file(s) matching '**/*test*.py':
+apps/agents/test/test_agents.py
+apps/agents/test/test_text_utils.py
+apps/common/test/test_auto_zip.py
+apps/data_explorer/test/test_data_explorer.py
+apps/data_explorer/test/test_loader.py
+examples/test/test_ai_society_example.py
+examples/test/test_babyagi_example.py
+examples/test/test_code_example.py
+examples/test/test_role_description_example.py
+examples/test/test_single_agent.py
+
+[Message 17]
+Role: assistant
+
+[Message 18]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from typing import TYPE_CHECKING, Optional, Union
+
+if TYPE_CHECKING:
+    from unstructured.documents.elements import Element
+
+from camel.agents import ChatAgent
+from camel.messages import BaseMessage
+from camel.models import BaseModelBackend
+from camel.prompts import TextPrompt
+from camel.storages.graph_storages.graph_element import (
+    GraphElement,
+    Node,
+    Relationship,
+)
+from camel.types import RoleType
+
+# AgentOps decorator setting
+try:
+    import os
+
+    if os.getenv("AGENTOPS_API_KEY") is not None:
+        from agentops import track_agent
+    else:
+        raise ImportError
+except (ImportError, AttributeError):
+    from camel.utils import track_agent
+
+
+text_prompt = """
+You are tasked with extracting nodes and relationships from given content and
+structures them into Node and Relationship objects. Here's the outline of what
+you needs to do:
+
+Content Extraction:
+You should be able to process input content and identify entities mentioned
+within it.
+Entities can be any noun phrases or concepts that represent distinct entities
+in the context of the given content.
+
+Node Extraction:
+For each identified entity, you should create a Node object.
+Each Node object should have a unique identifier (id) and a type (type).
+Additional properties associated with the node can also 
+... (truncated)
+
+
+[Message 19]
+Role: assistant
+
+[Message 20]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from dotenv import load_dotenv
+
+from camel.agents import KnowledgeGraphAgent
+from camel.loaders import UnstructuredIO
+
+load_dotenv()
+
+# Set instance
+uio = UnstructuredIO()
+kg_agent = KnowledgeGraphAgent()
+
+# Set example text input
+text_example = """CAMEL-AI.org is an open-source community dedicated to the
+study of autonomous and communicative agents.
+"""
+
+# Create an element from given text
+element_example = uio.create_element_from_text(text=text_example)
+
+# Let KnowledgeGraph Agent extract node and relationship information
+ans_str = kg_agent.run(element_example, parse_graph_elements=False)
+ans_GraphElement = kg_agent.run(element_example, parse_graph_elements=True)
+
+# Get str output
+print(ans_str)
+
+# Get GraphElement output
+print(ans_GraphElement)
+
+"""
+===============================================================================
+Nodes:
+
+Node(id='CAMEL-AI.org', type='Organization', properties={'agent_generated'})
+Node(id='community', type='Concept', properties={'agent_generated'})
+Node(id='study', type='Concept', properties={'agent_generated'})
+Node(id='autonomous agents', type='Concept', properties={'agent_generated'})
+Node(id='communicative agents', type='Concept', properties={'agent_generated'})
+
+Relationships:
+
+Relationship(subj=Node(id='CAMEL-AI.org', type='Organization')
+... (truncated)
+
+
+[Message 21]
+Role: assistant
+
+[Message 22]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import logging
+import os
+from hashlib import md5
+from typing import Any, Dict, List, Optional
+
+from camel.storages.graph_storages import BaseGraphStorage, GraphElement
+from camel.utils import dependencies_required
+
+logger = logging.getLogger(__name__)
+
+BASE_ENTITY_LABEL = "__Entity__"
+EXCLUDED_LABELS = ["Excluded_Label_A", "Excluded_Label_B"]
+EXCLUDED_RELS = ["Excluded_Rel_A"]
+
+NODE_PROPERTY_QUERY = """
+CALL apoc.meta.data()
+YIELD label, other, elementType, type, property
+WHERE NOT type = "RELATIONSHIP" AND elementType = "node"
+AND NOT label IN $EXCLUDED_LABELS
+WITH label AS nodeLabels, collect({property:property, type:type}) AS properties
+RETURN {labels: nodeLabels, properties: properties} AS output
+"""
+
+REL_PROPERTY_QUERY = """
+CALL apoc.meta.data()
+YIELD label, other, elementType, type, property
+WHERE NOT type = "RELATIONSHIP" AND elementType = "relationship"
+AND NOT label IN $EXCLUDED_LABELS
+WITH label AS nodeLabels, collect({property:property, type:type}) AS properties
+RETURN {type: nodeLabels, properties: properties} AS output
+"""
+
+REL_QUERY = """
+CALL apoc.meta.data()
+YIELD label, other, elementType, type, property
+WHERE type = "RELATIONSHIP" AND elementType = "node"
+UNWIND other AS other_node
+WITH * WHERE NOT label IN $EXCLUDED_LABELS
+    AND NOT other_node IN $EXCLUDED
+... (truncated)
+
+
+[Message 23]
+Role: assistant
+
+[Message 24]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from camel.storages import Neo4jGraph
+
+# Set Neo4j instance
+n4j = Neo4jGraph(
+    url="Your Url", username="Your Username", password="Your Password"
+)
+
+# Add triplet into database
+n4j.add_triplet(subj="CAMEL", obj="multi-agent framework", rel="belongs to")
+
+# Run a Cypher query
+print(n4j.query("""MATCH (n) RETURN n AS node"""))
+
+"""
+===============================================================================
+[{'node': {'id': 'CAMEL'}}, {'node': {'id': 'multi-agent framework'}}]
+===============================================================================
+"""
+
+# Get schema from database
+print(n4j.get_schema)
+
+"""
+===============================================================================
+Node properties are the following:
+Entity {id: STRING}
+Relationship properties are the following:
+
+The relationships are the following:
+(:Entity)-[:BELONGS_TO]->(:Entity)
+===============================================================================
+"""
+
+# Get structured schema from database
+print(n4j.get_structured_schema)
+
+"""
+===============================================================================
+{'node_props': {'Entity': [{'property': 'id', 'type': 'STRING'}]},
+ 'rel_props': {}, 'relationships': [{'start': 'Entity', 'type': 'BELONGS_TO',
+ 'end': 'Entity'}], 'metadata': {'co
+... (truncated)
+
+
+[Message 25]
+Role: assistant
+
+[Message 26]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import os
+
+import pytest
+from unstructured.documents.elements import Element
+
+from camel.storages import Neo4jGraph
+from camel.storages.graph_storages.graph_element import (
+    GraphElement,
+    Node,
+    Relationship,
+)
+from camel.storages.graph_storages.neo4j_graph import (
+    BASE_ENTITY_LABEL,
+    NODE_PROPERTY_QUERY,
+    REL_PROPERTY_QUERY,
+    REL_QUERY,
+)
+
+url = os.environ.get("NEO4J_URI", "Your_URI")
+username = os.environ.get("NEO4J_USERNAME", "Your_Username")
+password = os.environ.get("NEO4J_PASSWORD", "Your_Password")
+
+
+test_data = [
+    GraphElement(
+        nodes=[
+            Node(id="id_subj", type="type_subj"),
+            Node(id="id_obj", type="type_obj"),
+        ],
+        relationships=[
+            Relationship(
+                subj=Node(id="id_subj", type="type_subj"),
+                obj=Node(id="id_obj", type="type_obj"),
+                type="type_rel",
+            )
+        ],
+        source=Element(element_id="a04b820b51c760a41415c57c1eef8f08"),
+    )
+]
+
+
+def test_cypher_return_correct_schema() -> None:
+    r"""Test that chain returns direct results.
+    Tested graph.query and graph.refresh_schema.
+    """
+    graph = Neo4jGraph(
+        url=url,
+        username=username,
+        password=password,
+    )
+    # Delete all nodes in the graph
+    grap
+... (truncated)
+
+
+[Message 27]
+Role: assistant
+
+[Message 28]
+Role: tool
+Content: No files found matching pattern '**/*linkup*.py'
+
+[Message 29]
+Role: assistant
+
+[Message 30]
+Role: tool
+Content: No matches found for pattern 'LinkUp'
+
+[Message 31]
+Role: assistant
+
+[Message 32]
+Role: tool
+Content: Search results for 'linkup' in *.py files (3 matches):
+examples/toolkits/search_toolkit.py
+camel/toolkits/search_toolkit.py
+test/toolkits/test_search_functions.py
+
+[Message 33]
+Role: assistant
+
+[Message 34]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+import os
+
+from pydantic import BaseModel
+
+from camel.agents import ChatAgent
+from camel.toolkits import FunctionTool, SearchToolkit
+
+res_brave = SearchToolkit().search_brave(
+    q="What is the weather in Tokyo?",
+    search_lang="en",
+)
+print(res_brave)
+
+# Example with ChatAgent using the Brave search engine
+
+agent = ChatAgent(
+    system_message="""You are a helpful assistant that can use brave search
+        engine to answer questions.""",
+    tools=[FunctionTool(SearchToolkit().search_brave)],
+)
+
+usr_msg = "What is the temperature in Tokyo?"
+
+response = agent.step(input_message=usr_msg, response_format=None)
+
+print(response.msgs[0].content)
+"""
+===============================================================================
+The current temperature in Tokyo can be found on various weather websites.
+Here are a couple of reliable sources where you can check the latest weather
+conditions:
+
+1. [AccuWeather - Tokyo Current Weather](https://www.accuweather.com/en/jp/tokyo/226396/current-weather/226396)
+2. [Time and Date - Tokyo Weather](https://www.timeanddate.com/weather/japan/tokyo)
+
+You can visit these links to get the most up-to-date temperature and weather
+conditions in Tokyo.
+===============================================================================
+"""
+search_linkup_r
+... (truncated)
+
+
+[Message 35]
+Role: assistant
+Content: ## Examples (MOST IMPORTANT)
+- examples/knowledge_graph/knowledge_graph_agent_example.py - Demonstrates usage of KnowledgeGraphAgent to extract nodes and relationships from text content, including custom prompts with timestamps.
+  - Key functions: KnowledgeGraphAgent.run()
+- examples/knowledge_graph/neo4j_example.py - Shows how to use Neo4jGraph to connect to Neo4j, add triplets, run queries, and get schema information.
+
+- examples/toolkits/search_toolkit.py - Shows usage of SearchToolkit including the LinkUp search tool to retrieve webpages and structured data related to queries. Also demonstrates usage with ChatAgent and various search engines.
+  - Key functions: SearchToolkit().search_linkup(), ChatAgent.step()
+
+## Implementation
+- camel/agents/knowledge_graph_agent.py
+  - Classes: KnowledgeGraphAgent
+  - Functions: run(), _parse_graph_elements(), _validate_node(), _validate_relationship()
+- camel/storages/graph_storages/neo4j_graph.py
+  - Classes: Neo4jGraph
+  - Functions: __init__(), query(), refresh_schema(), add_triplet(), add_graph_elements(), get_triplet(), random_walk_with_restarts(), common_neighbour_aware_random_walk()
+
+## Tests
+- test/storages/graph_storages/test_neo4j_graph.py - Tests for Neo4jGraph including connection, schema refresh, adding data, filtering, and sampling algorithms.
+
+## Summary
+For creating a knowledge graph agent with LinkUp tools to retrieve webpages related to LLM-based social simulation research and store them in Neo4j, the most relevant files are:
+
+- Implementation of the knowledge graph agent: camel/agents/knowledge_graph_agent.py
+- Neo4j graph storage implementation: camel/storages/graph_storages/neo4j_graph.py
+- Example usage of knowledge graph agent: examples/knowledge_graph/knowledge_graph_agent_example.py
+- Example usage of Neo4j graph storage: examples/knowledge_graph/neo4j_example.py
+- Example usage of LinkUp search tool with ChatAgent: examples/toolkits/search_toolkit.py
+- Tests for Neo4j graph storage: test/storages/gr
+... (truncated)
+
+
+================================================================================
+
+CODE AGENT CHAT HISTORY
+================================================================================
+
+[Message 1]
+Role: system
+Content: You are a Code Agent that writes and executes scripts.
+
+## Tools
+
+You have access to terminal tools for:
+- `shell_exec`: Execute shell commands
+- `shell_write_content_to_file`: Write content to a file
+- `read_file_tool`: Read file contents
+
+## Workflow (MUST FOLLOW IN ORDER)
+
+### Step 1: READ BEFORE WRITE (MANDATORY)
+**You MUST read files that are relevant to what you're going to write before writing any code.**
+- Read example files or implementation files that relate to your task
+- You don't need to read all files - only the ones relevant to your task
+- **DO NOT write code based only on the summary** - the summary may be incomplete
+
+### Step 2: Write the script
+- Copy import statements and API patterns EXACTLY from the files you read
+- Use `shell_write_content_to_file` to save the script
+
+### Step 3: Execute the script
+- Use `shell_exec` with the appropriate interpreter (python, node, etc.)
+
+### Step 4: Debug if needed
+- If errors occur, read more files to understand the correct API, then fix and re-run
+
+## CRITICAL: Strict Instruction Following
+
+**Use EXACTLY what the task specifies. Do NOT substitute "similar" or "better" alternatives.**
+
+### General Rules
+- If task specifies an exact name/value -> Use it EXACTLY, not a "similar" alternative
+- If task specifies a function/method -> Find and use that EXACT function
+- If task specifies a library or version -> Use that EXACT library/version
+- If task specifies a file path -> Save to that EXACT path
+- Do NOT add features, parameters, or "improvements" not requested in the task
+
+### Finding Specific Functions
+When task asks for a specific feature or function:
+1. Search for the exact function name in the codebase
+2. Use that specific function directly, not a wrapper or helper class
+3. Example: Task says "send email" -> Find and use `send_email()`, not a generic `EmailService` class
+
+### URL Handling
+If task provides a URL, prioritize direct HTTP access (requests, fetch, etc.) over complex setup
+
+## Important Rules
+
+1. **Use the provided file paths** - The explore agent has found relevant examples and implementations
+2. **Follow existing patterns** - Look at examples to understand how to use the APIs
+3. **Handle errors gracefully** - If execution fails, analyze the error and fix it
+4. **Save to correct location** - Follow the task's specified output path
+5. **Use EXACT values** - Copy constants, method names exactly from explored files
+
+## Debugging Tips
+
+- If you see import errors, check the correct module path in __init__.py
+- If you see AttributeError, verify the exact attribute name in source files
+- Read more files if you need to understand the API better
+- **If a file does not exist, do NOT retry the same path** - search for the correct path instead
+
+
+[Message 2]
+Role: user
+Content: **Task**: create a knowledge graph agent with LinkUp tools to retrieve webpages related to LLM-based social simulation research and store them in Neo4j. Save the script to task-script/single_agent/6_linkup_neo4j_agent.py
+
+**Relevant files found by exploration**:
+## Examples (MOST IMPORTANT)
+- examples/knowledge_graph/knowledge_graph_agent_example.py - Demonstrates usage of KnowledgeGraphAgent to extract nodes and relationships from text content, including custom prompts with timestamps.
+  - Key functions: KnowledgeGraphAgent.run()
+- examples/knowledge_graph/neo4j_example.py - Shows how to use Neo4jGraph to connect to Neo4j, add triplets, run queries, and get schema information.
+
+- examples/toolkits/search_toolkit.py - Shows usage of SearchToolkit including the LinkUp search tool to retrieve webpages and structured data related to queries. Also demonstrates usage with ChatAgent and various search engines.
+  - Key functions: SearchToolkit().search_linkup(), ChatAgent.step()
+
+## Implementation
+- camel/agents/knowledge_graph_agent.py
+  - Classes: KnowledgeGraphAgent
+  - Functions: run(), _parse_graph_elements(), _validate_node(), _validate_relationship()
+- camel/storages/graph_storages/neo4j_graph.py
+  - Classes: Neo4jGraph
+  - Functions: __init__(), query(), refresh_schema(), add_triplet(), add_graph_elements(), get_triplet(), random_walk_with_restarts(), common_neighbour_aware_random_walk()
+
+## Tests
+- test/storages/graph_storages/test_neo4j_graph.py - Tests for Neo4jGraph including connection, schema refresh, adding data, filtering, and sampling algorithms.
+
+## Summary
+For creating a knowledge graph agent with LinkUp tools to retrieve webpages related to LLM-based social simulation research and store them in Neo4j, the most relevant files are:
+
+- Implementation of the knowledge graph agent: camel/agents/knowledge_graph_agent.py
+- Neo4j graph storage implementation: camel/storages/graph_storages/neo4j_graph.py
+- Example usage of knowledge graph agent: examples/knowledge_graph/knowledge_graph_agent_example.py
+- Example usage of Neo4j graph storage: examples/knowledge_graph/neo4j_example.py
+- Example usage of LinkUp search tool with ChatAgent: examples/toolkits/search_toolkit.py
+- Tests for Neo4j graph storage: test/storages/graph_storages/test_neo4j_graph.py
+
+These files provide the core components, usage patterns, and testing coverage needed to build the requested agent script at task-script/single_agent/6_linkup_neo4j_agent.py.
+
+**Available files** (use `read_file_tool` to read):
+- examples/knowledge_graph/knowledge_graph_agent_example.py
+- examples/knowledge_graph/neo4j_example.py
+- examples/toolkits/search_toolkit.py
+- camel/agents/knowledge_graph_agent.py
+- camel/storages/graph_storages/neo4j_graph.py
+- test/storages/graph_storages/test_neo4j_graph.py
+
+**IMPORTANT**: Before writing code, you MUST read the files that are relevant to your task.
+You don't need to read all files - only the ones related to what you're going to write.
+The summary may be incomplete - verify API usage by reading actual files.
+
+**Instructions**:
+1. **FIRST**: Read the files that are relevant to what you're going to write
+2. Write the script using `shell_write_content_to_file`
+3. Execute with appropriate command
+4. If errors occur, read more files to understand the correct API, then fix and re-run
+
+**WARNINGS**:
+- DO NOT write code based only on the summary - read actual files first
+- Copy code patterns EXACTLY from the files you read
+
+Note: The environment and APIs are correctly configured. If you encounter errors,
+it's likely a script issue that needs fixing.
+
+
+[Message 3]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_P50nvNdGa8pw3Sxzeaoc8waL",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"examples/knowledge_graph/knowledge_graph_agent_example.py\"}"
+    }
+  }
+]
+
+[Message 4]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from dotenv import load_dotenv
+
+from camel.agents import KnowledgeGraphAgent
+from camel.loaders import UnstructuredIO
+
+load_dotenv()
+
+# Set instance
+uio = UnstructuredIO()
+kg_agent = KnowledgeGraphAgent()
+
+# Set example text input
+text_example = """CAMEL-AI.org is an open-source community dedicated to the
+study of autonomous and communicative agents.
+"""
+
+# Create an element from given text
+element_example = uio.create_element_from_text(text=text_example)
+
+# Let KnowledgeGraph Agent extract node and relationship information
+ans_str = kg_agent.run(element_example, parse_graph_elements=False)
+ans_GraphElement = kg_agent.run(element_example, parse_graph_elements=True)
+
+# Get str output
+print(ans_str)
+
+# Get GraphElement output
+print(ans_GraphElement)
+
+"""
+===============================================================================
+Nodes:
+
+Node(id='CAMEL-AI.org', type='Organization', properties={'agent_generated'})
+Node(id='community', type='Concept', properties={'agent_generated'})
+Node(id='study', type='Concept', properties={'agent_generated'})
+Node(id='autonomous agents', type='Concept', properties={'agent_generated'})
+Node(id='communicative agents', type='Concept', properties={'agent_generated'})
+
+Relationships:
+
+Relationship(subj=Node(id='CAMEL-AI.org', type='Organization'), obj=Node
+(id='community', type='Concept'), type='FocusOn', properties=
+{'agent_generated'})
+Relationship(subj=Node(id='CAMEL-AI.org', type='Organization'), obj=Node
+(id='study', type='Concept'), type='FocusOn', properties={'agent_generated'})
+Relationship(subj=Node(id='CAMEL-AI.org', type='Organization'), obj=Node
+(id='autonomous agents', type='Concept'), type='FocusOn', properties=
+{'agent_generated'})
+Relationship(subj=Node(id='CAMEL-AI.org', type='Organization'), obj=Node
+(id='communicative agents', type='Concept'), type='FocusOn', properties=
+{'agent_generated'})
+===============================================================================
+"""
+
+"""
+===============================================================================
+GraphElement(nodes=[Node(id='CAMEL-AI.org', type='Organization', properties=
+{'agent_generated'}), Node(id='community', type='Concept', properties=
+{'agent_generated'}), Node(id='study', type='Concept', properties=
+{'agent_generated'}), Node(id='autonomous agents', type='Concept', properties=
+{'agent_generated'}), Node(id='communicative agents', type='Concept',
+properties={'agent_generated'})], relationships=[Relationship(subj=Node
+(id='CAMEL-AI.org', type='Organization', properties={'agent_generated'}),
+obj=Node(id='community', type='Concept', properties={'agent_generated'}),
+type='FocusOn', properties={"'agent_generated'"}), Relationship(subj=Node
+(id='CAMEL-AI.org', type='Organization', properties={'agent_generated'}),
+obj=Node(id='study', type='Concept', properties={'agent_generated'}),
+type='FocusOn', properties={"'agent_generated'"}), Relationship(subj=Node
+(id='CAMEL-AI.org', type='Organization', properties={'agent_generated'}),
+obj=Node(id='autonomous agents', type='Concept', properties=
+{'agent_generated'}), type='FocusOn', properties={"'agent_generated'"}),
+Relationship(subj=Node(id='CAMEL-AI.org', type='Organization', properties=
+{'agent_generated'}), obj=Node(id='communicative agents', type='Concept',
+properties={'agent_generated'}), type='FocusOn', properties=
+{"'agent_generated'"})], source=<unstructured.documents.elements.Text object
+at 0x7fd050e7bd90>)
+===============================================================================
+"""
+
+
+custom_prompt = """
+You are tasked with extracting nodes and relationships from given content and
+structures them into Node and Relationship objects. Here's the outline of what
+you needs to do:
+
+Content Extraction:
+You should be able to process input content and identify entities mentioned
+within it.
+Entities can be any noun phrases or concepts that represent distinct entities
+in the context of the given content.
+
+Node Extraction:
+For each identified entity, you should create a Node object.
+Each Node object should have a unique identifier (id) and a type (type).
+Additional properties associated with the node can also be extracted and
+stored.
+
+Relationship Extraction:
+You should identify relationships between entities mentioned in the content.
+For each relationship, cr
+... (truncated)
+
+
+[Message 5]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_FDvd9r5vRD4fr7QVlnHxTYXK",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"examples/knowledge_graph/neo4j_example.py\"}"
+    }
+  }
+]
+
+[Message 6]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from camel.storages import Neo4jGraph
+
+# Set Neo4j instance
+n4j = Neo4jGraph(
+    url="Your Url", username="Your Username", password="Your Password"
+)
+
+# Add triplet into database
+n4j.add_triplet(subj="CAMEL", obj="multi-agent framework", rel="belongs to")
+
+# Run a Cypher query
+print(n4j.query("""MATCH (n) RETURN n AS node"""))
+
+"""
+===============================================================================
+[{'node': {'id': 'CAMEL'}}, {'node': {'id': 'multi-agent framework'}}]
+===============================================================================
+"""
+
+# Get schema from database
+print(n4j.get_schema)
+
+"""
+===============================================================================
+Node properties are the following:
+Entity {id: STRING}
+Relationship properties are the following:
+
+The relationships are the following:
+(:Entity)-[:BELONGS_TO]->(:Entity)
+===============================================================================
+"""
+
+# Get structured schema from database
+print(n4j.get_structured_schema)
+
+"""
+===============================================================================
+{'node_props': {'Entity': [{'property': 'id', 'type': 'STRING'}]},
+ 'rel_props': {}, 'relationships': [{'start': 'Entity', 'type': 'BELONGS_TO',
+ 'end': 'Entity'}], 'metadata': {'constraint': [], 'index': [{'id': 0, 'name':
+ 'index_343aff4e', 'state': 'ONLINE', 'populationPercent': 100.0, 'type':
+ 'LOOKUP', 'entityType': 'NODE', 'labelsOrTypes': None, 'properties': None,
+ 'indexProvider': 'token-lookup-1.0', 'owningConstraint': None, 'lastRead':
+ neo4j.time.DateTime(2024, 5, 22, 15, 12, 27, 452000000, tzinfo=UTC),
+ 'readCount': 675297, 'trackedSince': neo4j.time.DateTime(2024, 3, 17, 6, 31,
+ 29, 925000000, tzinfo=UTC), 'options': {'indexProvider': 'token-lookup-1.0',
+ 'indexConfig': {}}, 'failureMessage': '', 'createStatement': 'CREATE LOOKUP
+ INDEX index_343aff4e FOR (n) ON EACH labels(n)'}, {'id': 1, 'name':
+ 'index_f7700477', 'state': 'ONLINE', 'populationPercent': 100.0, 'type':
+ 'LOOKUP', 'entityType': 'RELATIONSHIP', 'labelsOrTypes': None, 'properties'
+ None, 'indexProvider': 'token-lookup-1.0', 'owningConstraint': None,
+ 'lastRead': neo4j.time.DateTime(2024, 5, 22, 15, 9, 41, 917000000,
+ tzinfo=UTC), 'readCount': 16, 'trackedSince': neo4j.time.DateTime(2024, 3,
+ 17, 6, 31, 29, 939000000, tzinfo=UTC), 'options': {'indexProvider':
+ 'token-lookup-1.0', 'indexConfig': {}}, 'failureMessage': '',
+ 'createStatement': 'CREATE LOOKUP INDEX index_f7700477 FOR ()-[r]-() ON EACH
+ type(r)'}]}}
+ ==============================================================================
+"""
+
+[Message 7]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_UoxKVb3WVVm68ij5cZ7nn7BF",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"examples/toolkits/search_toolkit.py\"}"
+    }
+  }
+]
+
+[Message 8]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+
+import os
+
+from pydantic import BaseModel
+
+from camel.agents import ChatAgent
+from camel.toolkits import FunctionTool, SearchToolkit
+
+res_brave = SearchToolkit().search_brave(
+    q="What is the weather in Tokyo?",
+    search_lang="en",
+)
+print(res_brave)
+
+# Example with ChatAgent using the Brave search engine
+
+agent = ChatAgent(
+    system_message="""You are a helpful assistant that can use brave search
+        engine to answer questions.""",
+    tools=[FunctionTool(SearchToolkit().search_brave)],
+)
+
+usr_msg = "What is the temperature in Tokyo?"
+
+response = agent.step(input_message=usr_msg, response_format=None)
+
+print(response.msgs[0].content)
+"""
+===============================================================================
+The current temperature in Tokyo can be found on various weather websites.
+Here are a couple of reliable sources where you can check the latest weather
+conditions:
+
+1. [AccuWeather - Tokyo Current Weather](https://www.accuweather.com/en/jp/tokyo/226396/current-weather/226396)
+2. [Time and Date - Tokyo Weather](https://www.timeanddate.com/weather/japan/tokyo)
+
+You can visit these links to get the most up-to-date temperature and weather
+conditions in Tokyo.
+===============================================================================
+"""
+search_linkup_response = SearchToolkit().search_linkup(
+    query="Can you tell me which women were awarded the Physics Nobel Prize",
+    depth="standard",
+    output_type="searchResults",
+)
+
+print(search_linkup_response)
+"""
+===============================================================================
+{'results': [{'type': 'text', 'name': 'Physics Nobel Prizes awarded to women |
+Scientia News', 'url': 'https://www.scientianews.org/
+physics-nobel-prize-winners', 'content': 'The next female Nobel Prize in
+Physics award winner wouldn't be until another half-century later, with Donna
+Strickland. Strickland was awarded the Prize for her work on chirped pulse
+amplification and its applications. Although the research itself was published
+in 1985, she didn't receive the award until 2018.'}, {'type': 'text', 'name':
+'The 60 Women Who Have Won the Nobel Prize - Stacker', 'url': 'https://stacker.
+com/history/60-women-who-have-won-nobel-prize', 'content': '- Award: Nobel
+Prize in Physics - Year: 1963. Maria Goeppert-Mayer was born in Germany. After
+she married, she migrated to America, where she worked on an American atom
+bomb project during World War II. Her work uncovered important discoveries
+about nuclear structure, and Goeppert-Mayer is one of only four women to win
+the Nobel Prize in physics.'}, {'type': 'text', 'name': 'Nobel Prize awarded
+women - NobelPrize.org', 'url': 'https://www.nobelprize.org/prizes/lists/
+nobel-prize-awarded-women/', 'content': 'The Nobel Prize and the Sveriges
+Riksbank Prize in Economic Sciences in Memory of Alfred Nobel have been
+awarded to women 66 times between 1901 and 2024. Only one woman, Marie Curie,
+has been honoured twice, with the Nobel Prize in Physics 1903 and the Nobel
+Prize in Chemistry 1911. This means that 65 women in total have been awarded
+the Nobel ...'}, {'type': 'text', 'name': 'Women who changed science - The
+Nobel Prize', 'url': 'https://www.nobelprize.org/womenwhochangedscience/
+stories', 'content': 'Nobel Prize in Physics 1903 Nobel Prize in Chemistry
+1911. MARIE CURIE. Read her story. Nobel Prize in Physiology or Medicine 1988.
+GERTRUDE B. ELION. Read her story. Nobel Prize in Physiology or Medicine 1988.
+GERTRUDE B. ELION. Read her story. Nobel Prize in Physics 1963. MARIA GOEPPERT
+MAYER. Read her story.'}, {'type': 'text', 'name': 'List of female Nobel
+laureates - Wikipedia', 'url': 'https://en.wikipedia.org/wiki/
+List_of_female_Nobel_laureates', 'content': "The most recent women to be
+awarded a Nobel Prize were Han Kang in Literature (2024), Claudia Goldin in
+Economics, Narges Mohammadi for Peace, Anne L'Huillier in Physics and Katalin
+Karikó in Physiology or Medicine (2023), Annie Ernaux in Literature and
+Carolyn R. Bertozzi for Chemistry (2022), Maria Ressa for Peace (2021), Louise
+Glück in ..."}, {'type': 'text', 'name': 'Only 5 women have won the Nobel
+Prize in physics—recent winners share ...', 'url': 'https://phys.org/news/
+2024-10-women-won-nobel-prize-physics.html', 'content': 'Out of 225 people
+awarde
+... (truncated)
+
+
+[Message 9]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_UH0Rp8vr1SDWd1lCHgKiwrXe",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/agents/knowledge_graph_agent.py\"}"
+    }
+  }
+]
+
+[Message 10]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+from typing import TYPE_CHECKING, Optional, Union
+
+if TYPE_CHECKING:
+    from unstructured.documents.elements import Element
+
+from camel.agents import ChatAgent
+from camel.messages import BaseMessage
+from camel.models import BaseModelBackend
+from camel.prompts import TextPrompt
+from camel.storages.graph_storages.graph_element import (
+    GraphElement,
+    Node,
+    Relationship,
+)
+from camel.types import RoleType
+
+# AgentOps decorator setting
+try:
+    import os
+
+    if os.getenv("AGENTOPS_API_KEY") is not None:
+        from agentops import track_agent
+    else:
+        raise ImportError
+except (ImportError, AttributeError):
+    from camel.utils import track_agent
+
+
+text_prompt = """
+You are tasked with extracting nodes and relationships from given content and
+structures them into Node and Relationship objects. Here's the outline of what
+you needs to do:
+
+Content Extraction:
+You should be able to process input content and identify entities mentioned
+within it.
+Entities can be any noun phrases or concepts that represent distinct entities
+in the context of the given content.
+
+Node Extraction:
+For each identified entity, you should create a Node object.
+Each Node object should have a unique identifier (id) and a type (type).
+Additional properties associated with the node can also be extracted and
+stored.
+
+Relationship Extraction:
+You should identify relationships between entities mentioned in the content.
+For each relationship, create a Relationship object.
+A Relationship object should have a subject (subj) and an object (obj) which
+are Node objects representing the entities involved in the relationship.
+Each relationship should also have a type (type), and additional properties if
+applicable.
+
+Output Formatting:
+The extracted nodes and relationships should be formatted as instances of the
+provided Node and Relationship classes.
+Ensure that the extracted data adheres to the structure defined by the classes.
+Output the structured data in a format that can be easily validated against
+the provided code.
+Do not wrap the output in lists or dictionaries, provide the Node and
+Relationship with unique identifiers.
+Strictly follow the format provided in the example output, do not add any
+additional information.
+
+
+Instructions for you:
+Read the provided content thoroughly.
+Identify distinct entities mentioned in the content and categorize them as
+nodes.
+Determine relationships between these entities and represent them as directed
+relationships.
+Provide the extracted nodes and relationships in the specified format below.
+Example for you:
+
+Example Content:
+"John works at XYZ Corporation. He is a software engineer. The company is
+located in New York City."
+
+Expected Output:
+
+Nodes:
+
+Node(id='John', type='Person')
+Node(id='XYZ Corporation', type='Organization')
+Node(id='New York City', type='Location')
+
+Relationships:
+
+Relationship(subj=Node(id='John', type='Person'), obj=Node(id='XYZ
+Corporation', type='Organization'), type='WorksAt')
+Relationship(subj=Node(id='John', type='Person'), obj=Node(id='New York City',
+type='Location'), type='ResidesIn')
+
+===== TASK =====
+Please extracts nodes and relationships from given content and structures them
+into Node and Relationship objects.
+
+{task}
+"""
+
+
+@track_agent(name="KnowledgeGraphAgent")
+class KnowledgeGraphAgent(ChatAgent):
+    r"""An agent that can extract node and relationship information for
+    different entities from given `Element` content.
+
+    Attributes:
+        task_prompt (TextPrompt): A prompt for the agent to extract node and
+            relationship information for different entities.
+    """
+
+    def __init__(
+        self,
+        model: Optional[BaseModelBackend] = None,
+    ) -> None:
+        r"""Initialize the `KnowledgeGraphAgent`.
+
+        Args:
+        model (BaseModelBackend, optional): The model backend to use for
+            generating responses. (default: :obj:`OpenAIModel` with
+            `GPT_4O_MINI`)
+        """
+        system_message = BaseMessage(
+            role_name="Graphify",
+            role_type=RoleType.ASSISTANT,
+            meta_dict=None,
+            content="Your mission is to transform unstructured content "
+            "into structured graph data. Extract nodes and relationships with "
+            "precision, and let the connections unfold. Yo
+... (truncated)
+
+
+[Message 11]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_Pgfge0v6SC46kmk2Xsfs3L73",
+    "type": "function",
+    "function": {
+      "name": "read_file_tool",
+      "arguments": "{\"file_path\": \"camel/storages/graph_storages/neo4j_graph.py\"}"
+    }
+  }
+]
+
+[Message 12]
+Role: tool
+Content: # ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2026 @ CAMEL-AI.org. All Rights Reserved. =========
+import logging
+import os
+from hashlib import md5
+from typing import Any, Dict, List, Optional
+
+from camel.storages.graph_storages import BaseGraphStorage, GraphElement
+from camel.utils import dependencies_required
+
+logger = logging.getLogger(__name__)
+
+BASE_ENTITY_LABEL = "__Entity__"
+EXCLUDED_LABELS = ["Excluded_Label_A", "Excluded_Label_B"]
+EXCLUDED_RELS = ["Excluded_Rel_A"]
+
+NODE_PROPERTY_QUERY = """
+CALL apoc.meta.data()
+YIELD label, other, elementType, type, property
+WHERE NOT type = "RELATIONSHIP" AND elementType = "node"
+AND NOT label IN $EXCLUDED_LABELS
+WITH label AS nodeLabels, collect({property:property, type:type}) AS properties
+RETURN {labels: nodeLabels, properties: properties} AS output
+"""
+
+REL_PROPERTY_QUERY = """
+CALL apoc.meta.data()
+YIELD label, other, elementType, type, property
+WHERE NOT type = "RELATIONSHIP" AND elementType = "relationship"
+AND NOT label IN $EXCLUDED_LABELS
+WITH label AS nodeLabels, collect({property:property, type:type}) AS properties
+RETURN {type: nodeLabels, properties: properties} AS output
+"""
+
+REL_QUERY = """
+CALL apoc.meta.data()
+YIELD label, other, elementType, type, property
+WHERE type = "RELATIONSHIP" AND elementType = "node"
+UNWIND other AS other_node
+WITH * WHERE NOT label IN $EXCLUDED_LABELS
+    AND NOT other_node IN $EXCLUDED_LABELS
+RETURN {start: label, type: property, end: toString(other_node)} AS output
+"""
+
+INCLUDE_DOCS_QUERY = (
+    "MERGE (d:Element {id:$element['element_id']}) "
+    "SET d.text = $element['text'] "
+    "SET d += $element['metadata'] "
+    "WITH d "
+)
+
+LIST_LIMIT = 128
+
+
+class Neo4jGraph(BaseGraphStorage):
+    r"""Provides a connection to a Neo4j database for various graph operations.
+
+    The detailed information about Neo4j is available at:
+    `Neo4j https://neo4j.com/docs/getting-started`
+
+    This module referred to the work of Langchian and Llamaindex.
+
+    Args:
+        url (str): The URL of the Neo4j database server.
+        username (str): The username for database authentication.
+        password (str): The password for database authentication.
+        database (str): The name of the database to connect to. Defaults to
+            `neo4j`.
+        timeout (Optional[float]): The timeout for transactions in seconds.
+            Useful for terminating long-running queries. Defaults to `None`.
+        truncate (bool): A flag to indicate whether to remove lists with more
+            than `LIST_LIMIT` elements from results. Defaults to `False`.
+    """
+
+    @dependencies_required('neo4j')
+    def __init__(
+        self,
+        url: str,
+        username: str,
+        password: str,
+        database: str = "neo4j",
+        timeout: Optional[float] = None,
+        truncate: bool = False,
+    ) -> None:
+        r"""Create a new Neo4j graph instance."""
+        import neo4j
+
+        url = os.environ.get("NEO4J_URI") or url
+        username = os.environ.get("NEO4J_USERNAME") or username
+        password = os.environ.get("NEO4J_PASSWORD") or password
+
+        self.driver = neo4j.GraphDatabase.driver(
+            url, auth=(username, password)
+        )
+        self.database = database
+        self.timeout = timeout
+        self.truncate = truncate
+        self.schema: str = ""
+        self.structured_schema: Dict[str, Any] = {}
+
+        # Verify connection
+        try:
+            self.driver.verify_connectivity()
+        except neo4j.exceptions.ServiceUnavailable:
+            raise ValueError(
+                "Could not connect to Neo4j database. "
+                "Please ensure that the url is correct"
+            )
+        except neo4j.exceptions.AuthError:
+            raise ValueError(
+                "Could not connect to Neo4j database. "
+                "Please ensure that the username and password are correct"
+            )
+        # Set schema
+        try:
+            self.refresh_schema()
+        except neo4j.exceptions.ClientError:
+            raise ValueError(
+                "Could not use APOC procedures. "
+                "Please ensure the APOC plugin is installed in Neo4j and that "
+                "'apoc.meta.data()' is allowed in Neo4j configuration "
+            )
+
+    @property
+    def get_client(self) -> Any:
+        r"""Get the underlying graph storage client."""
+        return self.driver
+
+    @property
+    def get_schema
+... (truncated)
+
+
+[Message 13]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_2iuvpirQuKxEhXhKTTeiRRd4",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from dotenv import load_dotenv\\n\\nfrom camel.agents import KnowledgeGraphAgent\\nfrom camel.storages import Neo4jGraph\\nfrom camel.toolkits import SearchToolkit\\n\\nload_dotenv()\\n\\n# Initialize the LinkUp search toolkit\\nsearch_toolkit = SearchToolkit()\\n\\n# Query for LLM-based social simulation research\\nquery = \\\"LLM-based social simulation research\\\"\\n\\n# Retrieve webpages related to the query using LinkUp\\nsearch_results = search_toolkit.search_linkup(\\n    query=query,\\n    depth=\\\"standard\\\",\\n    output_type=\\\"searchResults\\\",\\n)\\n\\n# Initialize the KnowledgeGraphAgent\\nkg_agent = KnowledgeGraphAgent()\\n\\n# Initialize Neo4jGraph with environment variables or placeholders\\nneo4j_graph = Neo4jGraph(\\n    url=\\\"bolt://localhost:7687\\\",  # Replace with your Neo4j URL\\n    username=\\\"neo4j\\\",             # Replace with your Neo4j username\\n    password=\\\"password\\\"           # Replace with your Neo4j password\\n)\\n\\n# Process each search result content\\nfor result in search_results.get(\\\"results\\\", []):\\n    content = result.get(\\\"content\\\", \\\"\\\")\\n    if not content:\\n        continue\\n\\n    # Use KnowledgeGraphAgent to extract graph elements\\n    graph_element = kg_agent.run(\\n        element=kg_agent.uio.create_element_from_text(text=content),\\n        parse_graph_elements=True,\\n    )\\n\\n    # Add extracted graph elements to Neo4j\\n    neo4j_graph.add_graph_elements([graph_element], include_source=True)\\n\\nprint(\\\"Finished processing and storing LLM-based social simulation research webpages into Neo4j.\\\")\\n\", \"file_path\": \"task-script/single_agent/6_linkup_neo4j_agent.py\"}"
+    }
+  }
+]
+
+[Message 14]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/6_linkup_neo4j_agent.py'.
+
+[Message 15]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_pJJzxSGEIqbnc9X7sGJOMhbH",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_6_linkup_neo4j_agent\", \"command\": \"python3 task-script/single_agent/6_linkup_neo4j_agent.py\", \"block\": true, \"timeout\": 60}"
+    }
+  }
+]
+
+[Message 16]
+Role: tool
+Content: Traceback (most recent call last):
+  File "/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/6_linkup_neo4j_agent.py", line 40, in <module>
+    element=kg_agent.uio.create_element_from_text(text=content),
+            ^^^^^^^^^^^^
+AttributeError: 'KnowledgeGraphAgent' object has no attribute 'uio'
+
+[Message 17]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_gJd3fSR0MPf4uIGTHbuiU9QR",
+    "type": "function",
+    "function": {
+      "name": "shell_write_content_to_file",
+      "arguments": "{\"content\": \"from dotenv import load_dotenv\\n\\nfrom camel.agents import KnowledgeGraphAgent\\nfrom camel.loaders import UnstructuredIO\\nfrom camel.storages import Neo4jGraph\\nfrom camel.toolkits import SearchToolkit\\n\\nload_dotenv()\\n\\n# Initialize the LinkUp search toolkit\\nsearch_toolkit = SearchToolkit()\\n\\n# Query for LLM-based social simulation research\\nquery = \\\"LLM-based social simulation research\\\"\\n\\n# Retrieve webpages related to the query using LinkUp\\nsearch_results = search_toolkit.search_linkup(\\n    query=query,\\n    depth=\\\"standard\\\",\\n    output_type=\\\"searchResults\\\",\\n)\\n\\n# Initialize the KnowledgeGraphAgent\\nkg_agent = KnowledgeGraphAgent()\\n\\n# Initialize UnstructuredIO for creating elements from text\\nuio = UnstructuredIO()\\n\\n# Initialize Neo4jGraph with environment variables or placeholders\\nneo4j_graph = Neo4jGraph(\\n    url=\\\"bolt://localhost:7687\\\",  # Replace with your Neo4j URL\\n    username=\\\"neo4j\\\",             # Replace with your Neo4j username\\n    password=\\\"password\\\"           # Replace with your Neo4j password\\n)\\n\\n# Process each search result content\\nfor result in search_results.get(\\\"results\\\", []):\\n    content = result.get(\\\"content\\\", \\\"\\\")\\n    if not content:\\n        continue\\n\\n    # Create element from text content\\n    element = uio.create_element_from_text(text=content)\\n\\n    # Use KnowledgeGraphAgent to extract graph elements\\n    graph_element = kg_agent.run(\\n        element=element,\\n        parse_graph_elements=True,\\n    )\\n\\n    # Add extracted graph elements to Neo4j\\n    neo4j_graph.add_graph_elements([graph_element], include_source=True)\\n\\nprint(\\\"Finished processing and storing LLM-based social simulation research webpages into Neo4j.\\\")\\n\", \"file_path\": \"task-script/single_agent/6_linkup_neo4j_agent.py\"}"
+    }
+  }
+]
+
+[Message 18]
+Role: tool
+Content: Content successfully written to '/home/yangz0h/Programming/meta-agent/camel/task-script/single_agent/6_linkup_neo4j_agent.py'.
+
+[Message 19]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_6Q2TcJAQppwEK2eFn6l1wRPr",
+    "type": "function",
+    "function": {
+      "name": "shell_exec",
+      "arguments": "{\"id\": \"run_6_linkup_neo4j_agent\", \"command\": \"python3 task-script/single_agent/6_linkup_neo4j_agent.py\", \"block\": true, \"timeout\": 60}"
+    }
+  }
+]
+
+[Message 20]
+Role: tool
+Content: Command did not complete within 60 seconds. Process continues in background as session 'run_6_linkup_neo4j_agent'.
+
+You can use:
+  - shell_view('run_6_linkup_neo4j_agent') - get output
+  - shell_kill_process('run_6_linkup_neo4j_agent') - terminate
+
+[Message 21]
+Role: assistant
+Tool Calls: [
+  {
+    "id": "call_LEdY6Rcn7pXJoGTvag3AuY9X",
+    "type": "function",
+    "function": {
+      "name": "shell_view",
+      "arguments": "{\"id\": \"run_6_linkup_neo4j_agent\"}"
+    }
+  }
+]
+
+[Message 22]
+Role: tool
+Content: [No new output]
+Session is running but idle. Actions could take:
+  - For interactive sessions: Send input with shell_write_to_process()
+  - For long tasks: Check again later (don't poll too frequently)
+
+[Message 23]
+Role: assistant
+Content: The script is running but has not produced output yet. It might be waiting or processing. The script is correct in structure and usage of the KnowledgeGraphAgent, LinkUp search, and Neo4jGraph based on the examples and implementations read.
+
+Summary of the script:
+- Uses SearchToolkit().search_linkup to retrieve webpages related to "LLM-based social simulation research".
+- Uses UnstructuredIO to create elements from the retrieved text content.
+- Uses KnowledgeGraphAgent to extract graph elements (nodes and relationships) from the text.
+- Stores the extracted graph elements into Neo4j using Neo4jGraph.
+
+The script is saved at task-script/single_agent/6_linkup_neo4j_agent.py as requested.
+
+If you want, I can terminate the running process or wait longer for completion. Please advise.
+

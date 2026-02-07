@@ -18,7 +18,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.LMSTUDIO,
     model_type=ModelType.LMSTUDIO_GEMMA_3_1B,
     model_config_dict=LMStudioConfig(temperature=0.2).as_dict(),
 )

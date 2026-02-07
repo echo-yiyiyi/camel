@@ -26,7 +26,6 @@ async def main():
     await edgeone_pages_mcp_toolkit.connect()
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
     )
 

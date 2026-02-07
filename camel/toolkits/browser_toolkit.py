@@ -43,7 +43,7 @@ from camel.models import BaseModelBackend, ModelFactory
 from camel.toolkits.base import BaseToolkit
 from camel.toolkits.function_tool import FunctionTool
 from camel.toolkits.video_analysis_toolkit import VideoAnalysisToolkit
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 from camel.utils import (
     dependencies_required,
     retry_on_error,
@@ -903,7 +903,6 @@ class BrowserToolkit(BaseToolkit):
 
         if web_agent_model_backend is None:
             web_agent_model_instance = ModelFactory.create(
-                model_platform=ModelPlatformType.DEFAULT,
                 model_type=ModelType.DEFAULT,
                 model_config_dict={"temperature": 0, "top_p": 1},
             )
@@ -912,7 +911,6 @@ class BrowserToolkit(BaseToolkit):
 
         if planning_agent_model_backend is None:
             planning_model = ModelFactory.create(
-                model_platform=ModelPlatformType.DEFAULT,
                 model_type=ModelType.DEFAULT,
             )
         else:

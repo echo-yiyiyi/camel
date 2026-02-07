@@ -17,7 +17,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.TOGETHER,
     model_type=ModelType.TOGETHER_LLAMA_4_MAVERICK,
     model_config_dict=TogetherAIConfig(temperature=0.2).as_dict(),
 )
@@ -45,7 +44,6 @@ exploring?
 '''
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.TOGETHER,
     model_type=ModelType.TOGETHER_LLAMA_3_3_70B,
     model_config_dict=TogetherAIConfig(temperature=0.2).as_dict(),
 )

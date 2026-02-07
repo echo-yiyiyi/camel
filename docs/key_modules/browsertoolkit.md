@@ -43,11 +43,9 @@ from camel.types import ModelPlatformType, ModelType
 
 # Define custom models for the agents (use latest OpenAI models)
 web_agent_model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_5_MINI,
 )
 planning_agent_model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.O4_MINI,
 )
 

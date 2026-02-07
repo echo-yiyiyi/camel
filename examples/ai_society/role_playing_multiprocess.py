@@ -40,7 +40,6 @@ def generate_data(
     original_task_prompt = task_prompt.replace(f"{task_idx+1}. ", "")
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
         model_config_dict=ChatGPTConfig(temperature=1.4).as_dict(),
     )

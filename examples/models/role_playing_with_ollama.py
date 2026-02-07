@@ -24,7 +24,6 @@ from camel.utils import print_text_animated
 
 
 def main(
-    model_platform=ModelPlatformType.OLLAMA,
     model_type="llama3.2",
     chat_turn_limit=10,
 ) -> None:
@@ -35,14 +34,12 @@ def main(
         user_role_name="Stock Trader",
         assistant_agent_kwargs=dict(
             model=ModelFactory.create(
-                model_platform=model_platform,
                 model_type=model_type,
                 model_config_dict={"temperature": 0.4, "max_tokens": 4096},
             ),
         ),
         user_agent_kwargs=dict(
             model=ModelFactory.create(
-                model_platform=model_platform,
                 model_type=model_type,
                 model_config_dict={"temperature": 0.4, "max_tokens": 4096},
             ),

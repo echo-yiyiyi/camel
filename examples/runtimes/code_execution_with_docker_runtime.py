@@ -35,7 +35,6 @@ runtime = DockerRuntime("xukunliu/camel").add(
 tools = runtime.get_tools()
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.GPT_4O,
 )
 

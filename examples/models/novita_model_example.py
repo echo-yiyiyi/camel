@@ -18,7 +18,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.NOVITA,
     model_type=ModelType.NOVITA_DEEPSEEK_R1_TURBO,
     model_config_dict=NovitaConfig(temperature=0.2).as_dict(),
 )

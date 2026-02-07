@@ -45,7 +45,6 @@ def make_judge(
     )
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
     )
 
@@ -78,7 +77,6 @@ def main():
     ]
 
     researcher_model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
     )
 

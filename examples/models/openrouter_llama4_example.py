@@ -18,7 +18,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENROUTER,
     model_type=ModelType.OPENROUTER_LLAMA_4_MAVERICK_FREE,
     model_config_dict=OpenRouterConfig(temperature=0.2).as_dict(),
 )

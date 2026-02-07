@@ -73,7 +73,6 @@ from camel.configs import MistralConfig
 
 # Set up model
 mistral_large_2 = ModelFactory.create(
-    model_platform=ModelPlatformType.MISTRAL,
     model_type=ModelType.MISTRAL_LARGE,
     model_config_dict=MistralConfig(temperature=0.2).as_dict(),
 )
@@ -320,7 +319,6 @@ role_play_session = RolePlaying(
     user_role_name="CAMEL User",
     assistant_agent_kwargs=dict(
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.MISTRAL,
             model_type=ModelType.MISTRAL_LARGE,
             model_config_dict=assistant_model_config.as_dict(),
         ),

@@ -248,7 +248,6 @@ from camel.models import ModelFactory
 
 def role_playing_with_rag(
     task_prompt,
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O,
     chat_turn_limit=5,
 ) -> None:
@@ -265,14 +264,12 @@ def role_playing_with_rag(
         user_role_name="Professor",
         assistant_agent_kwargs=dict(
             model=ModelFactory.create(
-                model_platform=model_platform,
                 model_type=model_type,
             ),
             tools=tools_list,
         ),
         user_agent_kwargs=dict(
             model=ModelFactory.create(
-                model_platform=model_platform,
                 model_type=model_type,
             ),
         ),

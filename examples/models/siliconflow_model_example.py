@@ -17,7 +17,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.SILICONFLOW,
     model_type="deepseek-ai/DeepSeek-R1",
     model_config_dict=SiliconFlowConfig(
         temperature=0.2, stream=True

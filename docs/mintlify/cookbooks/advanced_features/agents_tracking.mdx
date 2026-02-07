@@ -97,7 +97,6 @@ tools = [*SearchToolkit().get_tools()]
 
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
 )
 
@@ -192,14 +191,12 @@ role_play_session = RolePlaying(
     user_role_name="Professor",
     assistant_agent_kwargs=dict(
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
             model_type=ModelType.GPT_4O_MINI,
         ),
         tools=tools,
     ),
     user_agent_kwargs=dict(
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
             model_type=ModelType.GPT_4O_MINI,
         ),
     ),

@@ -98,7 +98,6 @@ async def mcp_toolkit_example():
     async with MCPToolkit(config_path=str(config_path)) as mcp_toolkit:
         sys_msg = "You are a helpful assistant"
         model = ModelFactory.create(
-            model_platform=ModelPlatformType.DEFAULT,
             model_type=ModelType.DEFAULT,
         )
         camel_agent = ChatAgent(
@@ -145,7 +144,6 @@ def mcp_toolkit_example_sync():
     with MCPToolkit(config_path=str(config_path)) as mcp_toolkit:
         sys_msg = "You are a helpful assistant"
         model = ModelFactory.create(
-            model_platform=ModelPlatformType.DEFAULT,
             model_type=ModelType.DEFAULT,
         )
         camel_agent = ChatAgent(

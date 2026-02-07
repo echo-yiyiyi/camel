@@ -82,7 +82,6 @@ if st.sidebar.button("Run Query"):
         agent = ChatAgent(
             system_message="You are a GitHub repo explorer.",
             model=ModelFactory.create(
-                model_platform=ModelPlatformType.OPENAI,
                 model_type=ModelType.GPT_4O,
                 model_config_dict={"temperature": 0},
             ),

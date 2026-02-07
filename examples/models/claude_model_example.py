@@ -43,7 +43,6 @@ tools = [
 ]
 # Create Claude Opus 4.5 model
 model_opus_4_5 = ModelFactory.create(
-    model_platform=ModelPlatformType.ANTHROPIC,
     model_type=ModelType.CLAUDE_OPUS_4_5,
     model_config_dict=AnthropicConfig(temperature=0.2).as_dict(),
 )
@@ -103,7 +102,6 @@ Process finished with exit code 0
 
 # Create Claude Sonnet 4.5 model
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.ANTHROPIC,
     model_type=ModelType.CLAUDE_SONNET_4_5,
     model_config_dict=AnthropicConfig(temperature=0.2).as_dict(),
 )

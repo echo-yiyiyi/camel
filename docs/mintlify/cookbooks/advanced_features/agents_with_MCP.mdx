@@ -140,7 +140,6 @@ def my_weird_add(a: int, b: int) -> int:
     return a + b + 7
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O,
     api_key = openai_api_keys
 )
@@ -323,7 +322,6 @@ chat_agent_description = "A general-purpose assistant that can answer questions 
 
 reasoning_agent = ChatAgent(
     model=ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type="gpt-4o-mini",
     )
 )
@@ -333,7 +331,6 @@ reasoning_agent_description = "A specialized assistant focused on logical reason
 from camel.toolkits import SearchToolkit
 search_agent = ChatAgent(
     model=ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type="gpt-4o",
     ),
     tools=[FunctionTool(SearchToolkit().search_brave)],

@@ -44,7 +44,6 @@ print("=" * 60)
 
 # Create ERNIE 5.0 Thinking model configuration
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.QIANFAN,
     model_type=ModelType.ERNIE_5_0_THINKING,
     model_config_dict=QianfanConfig(temperature=0.2).as_dict(),
 )
@@ -79,7 +78,6 @@ print("=" * 60)
 
 # Create ERNIE 4.5 VL model configuration
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.QIANFAN,
     model_type=ModelType.ERNIE_4_5_TURBO_VL,
     model_config_dict=QianfanConfig(temperature=0.2).as_dict(),
 )

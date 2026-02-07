@@ -36,7 +36,6 @@ logging.getLogger('camel.toolkits.hybrid_browser_toolkit').setLevel(
 USER_DATA_DIR = "User_Data"
 
 model_backend = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O,
     model_config_dict={"temperature": 0.0, "top_p": 1},
 )

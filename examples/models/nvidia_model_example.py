@@ -18,7 +18,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.NVIDIA,
     model_type=ModelType.NVIDIA_LLAMA3_1_405B_INSTRUCT,
     model_config_dict=NvidiaConfig(temperature=0.2).as_dict(),
 )
@@ -145,7 +144,6 @@ further assistance.
 '''
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.NVIDIA,
     model_type=ModelType.NVIDIA_LLAMA3_3_70B_INSTRUCT,
     model_config_dict=NvidiaConfig(temperature=0.2).as_dict(),
 )

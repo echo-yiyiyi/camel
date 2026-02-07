@@ -19,7 +19,6 @@ from camel.types import ModelPlatformType, ModelType
 
 # Convert the example input into audio and store it locally
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 # Create the BohriumToolkit with our reasoning model

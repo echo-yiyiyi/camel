@@ -40,7 +40,6 @@ def create_simple_workforce():
             ),
         ),
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.DEFAULT,
             model_type=ModelType.DEFAULT,
         ),
         tools=[*thinking_toolkit.get_tools()],
@@ -53,7 +52,6 @@ def create_simple_workforce():
             content="You are a file write agent.",
         ),
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.DEFAULT,
             model_type=ModelType.DEFAULT,
         ),
         tools=[*file_write_toolkit.get_tools()],

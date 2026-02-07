@@ -75,7 +75,6 @@ load_dotenv()
 
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
     model_config_dict=ChatGPTConfig().as_dict(),
 )

@@ -18,7 +18,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.INTERNLM,
     model_type=ModelType.INTERNLM3_LATEST,
     model_config_dict=InternLMConfig(temperature=0.2).as_dict(),
 )

@@ -59,13 +59,11 @@ def main(
 
     # Create models for assistant and user
     assistant_model = ModelFactory.create(
-        model_platform=ModelPlatformType.VOLCANO,
         model_type="deepseek-r1-250120",
         model_config_dict=model_config_dict,
     )
 
     user_model = ModelFactory.create(
-        model_platform=ModelPlatformType.VOLCANO,
         model_type="deepseek-r1-250120",
         model_config_dict=model_config_dict,
     )

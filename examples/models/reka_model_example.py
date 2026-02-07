@@ -17,7 +17,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.REKA,
     model_type=ModelType.REKA_FLASH,
     model_config_dict=RekaConfig(temperature=0.0).as_dict(),
 )

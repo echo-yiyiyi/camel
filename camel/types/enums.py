@@ -55,6 +55,25 @@ class ModelType(UnifiedModelType, Enum):
     GPT_5_MINI = "gpt-5-mini"
     GPT_5_NANO = "gpt-5-nano"
 
+    # Azure OpenAI models (use same API names as OpenAI but different platform)
+    AZURE_GPT_3_5_TURBO = "azure-gpt-3.5-turbo"
+    AZURE_GPT_4 = "azure-gpt-4"
+    AZURE_GPT_4_TURBO = "azure-gpt-4-turbo"
+    AZURE_GPT_4O = "azure-gpt-4o"
+    AZURE_GPT_4O_MINI = "azure-gpt-4o-mini"
+    AZURE_GPT_4_5_PREVIEW = "azure-gpt-4.5-preview"
+    AZURE_O1 = "azure-o1"
+    AZURE_O1_PREVIEW = "azure-o1-preview"
+    AZURE_O1_MINI = "azure-o1-mini"
+    AZURE_O3_MINI = "azure-o3-mini"
+    AZURE_O3_PRO = "azure-o3-pro"
+    AZURE_GPT_4_1 = "azure-gpt-4.1"
+    AZURE_GPT_4_1_MINI = "azure-gpt-4.1-mini"
+    AZURE_GPT_4_1_NANO = "azure-gpt-4.1-nano"
+    AZURE_GPT_5 = "azure-gpt-5"
+    AZURE_O4_MINI = "azure-o4-mini"
+    AZURE_O3 = "azure-o3"
+
     AWS_CLAUDE_3_7_SONNET = "anthropic.claude-3-7-sonnet-20250219-v1:0"
     AWS_CLAUDE_3_5_SONNET = "anthropic.claude-3-5-sonnet-20241022-v2:0"
     AWS_CLAUDE_3_HAIKU = "anthropic.claude-3-haiku-20240307-v1:0"
@@ -646,27 +665,25 @@ class ModelType(UnifiedModelType, Enum):
 
     @property
     def is_azure_openai(self) -> bool:
-        r"""Returns whether this type of models is an OpenAI-released model
-        from Azure.
-        """
+        r"""Returns whether this type of models is an Azure OpenAI model."""
         return self in {
-            ModelType.GPT_3_5_TURBO,
-            ModelType.GPT_4,
-            ModelType.GPT_4_TURBO,
-            ModelType.GPT_4O,
-            ModelType.GPT_4O_MINI,
-            ModelType.O1,
-            ModelType.O1_PREVIEW,
-            ModelType.O1_MINI,
-            ModelType.O3_MINI,
-            ModelType.O3_PRO,
-            ModelType.GPT_4_5_PREVIEW,
-            ModelType.GPT_4_1,
-            ModelType.GPT_4_1_MINI,
-            ModelType.GPT_4_1_NANO,
-            ModelType.GPT_5,
-            ModelType.O4_MINI,
-            ModelType.O3,
+            ModelType.AZURE_GPT_3_5_TURBO,
+            ModelType.AZURE_GPT_4,
+            ModelType.AZURE_GPT_4_TURBO,
+            ModelType.AZURE_GPT_4O,
+            ModelType.AZURE_GPT_4O_MINI,
+            ModelType.AZURE_O1,
+            ModelType.AZURE_O1_PREVIEW,
+            ModelType.AZURE_O1_MINI,
+            ModelType.AZURE_O3_MINI,
+            ModelType.AZURE_O3_PRO,
+            ModelType.AZURE_GPT_4_5_PREVIEW,
+            ModelType.AZURE_GPT_4_1,
+            ModelType.AZURE_GPT_4_1_MINI,
+            ModelType.AZURE_GPT_4_1_NANO,
+            ModelType.AZURE_GPT_5,
+            ModelType.AZURE_O4_MINI,
+            ModelType.AZURE_O3,
         }
 
     @property
@@ -1196,6 +1213,100 @@ class ModelType(UnifiedModelType, Enum):
             ModelType.ATLASCLOUD_GPT_OSS_120B,
             ModelType.ATLASCLOUD_GLM_4_7,
         }
+
+    @property
+    def is_minimax(self) -> bool:
+        r"""Returns whether this type of models is served by Minimax."""
+        return self in {
+            ModelType.MINIMAX_M2,
+            ModelType.MINIMAX_M2_STABLE,
+        }
+
+    @property
+    def platform(self) -> "ModelPlatformType":
+        r"""Returns the platform type for this model.
+
+        Returns:
+            ModelPlatformType: The platform this model belongs to.
+
+        Raises:
+            ValueError: If the platform cannot be determined for this model.
+        """
+        if self.is_openai:
+            return ModelPlatformType.OPENAI
+        if self.is_azure_openai:
+            return ModelPlatformType.AZURE
+        if self.is_anthropic:
+            return ModelPlatformType.ANTHROPIC
+        if self.is_aws_bedrock:
+            return ModelPlatformType.AWS_BEDROCK
+        if self.is_gemini:
+            return ModelPlatformType.GEMINI
+        if self.is_zhipuai:
+            return ModelPlatformType.ZHIPU
+        if self.is_mistral:
+            return ModelPlatformType.MISTRAL
+        if self.is_reka:
+            return ModelPlatformType.REKA
+        if self.is_cohere:
+            return ModelPlatformType.COHERE
+        if self.is_yi:
+            return ModelPlatformType.YI
+        if self.is_qwen:
+            return ModelPlatformType.QWEN
+        if self.is_deepseek:
+            return ModelPlatformType.DEEPSEEK
+        if self.is_groq:
+            return ModelPlatformType.GROQ
+        if self.is_cerebras:
+            return ModelPlatformType.CEREBRAS
+        if self.is_nebius:
+            return ModelPlatformType.NEBIUS
+        if self.is_cometapi:
+            return ModelPlatformType.COMETAPI
+        if self.is_openrouter:
+            return ModelPlatformType.OPENROUTER
+        if self.is_lmstudio:
+            return ModelPlatformType.LMSTUDIO
+        if self.is_together:
+            return ModelPlatformType.TOGETHER
+        if self.is_sambanova:
+            return ModelPlatformType.SAMBA
+        if self.is_nvidia:
+            return ModelPlatformType.NVIDIA
+        if self.is_netmind:
+            return ModelPlatformType.NETMIND
+        if self.is_ppio:
+            return ModelPlatformType.PPIO
+        if self.is_internlm:
+            return ModelPlatformType.INTERNLM
+        if self.is_moonshot:
+            return ModelPlatformType.MOONSHOT
+        if self.is_sglang:
+            return ModelPlatformType.SGLANG
+        if self.is_siliconflow:
+            return ModelPlatformType.SILICONFLOW
+        if self.is_modelscope:
+            return ModelPlatformType.MODELSCOPE
+        if self.is_watsonx:
+            return ModelPlatformType.WATSONX
+        if self.is_qianfan:
+            return ModelPlatformType.QIANFAN
+        if self.is_novita:
+            return ModelPlatformType.NOVITA
+        if self.is_crynux:
+            return ModelPlatformType.CRYNUX
+        if self.is_aiml:
+            return ModelPlatformType.AIML
+        if self.is_atlascloud:
+            return ModelPlatformType.ATLASCLOUD
+        if self.is_amd:
+            return ModelPlatformType.AMD
+        if self.is_minimax:
+            return ModelPlatformType.MINIMAX
+        if self == ModelType.STUB:
+            return ModelPlatformType.STUB
+        raise ValueError(f"Unknown platform for model: {self}")
 
     @property
     def token_limit(self) -> int:

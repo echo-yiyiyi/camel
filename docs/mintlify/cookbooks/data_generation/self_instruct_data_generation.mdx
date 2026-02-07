@@ -79,7 +79,6 @@ from camel.agents import ChatAgent
 from camel.messages import BaseMessage
 
 qwen_model = ModelFactory.create(
-    model_platform=ModelPlatformType.QWEN,
     model_type=ModelType.QWEN_TURBO,
     model_config_dict=QwenConfig(temperature=0.2).as_dict(),
 )

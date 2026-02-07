@@ -25,7 +25,6 @@ Rfx0SUNqUBovo5MZpArUbzIT3dJpm2JyEd7-6SgikW4=
 """
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.CRYNUX,
     model_type=ModelType.CRYNUX_QWEN_2_5_7B_INSTRUCT,
     model_config_dict={"temperature": 0.0},
 )

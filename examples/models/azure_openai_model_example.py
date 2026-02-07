@@ -25,7 +25,6 @@ export AZURE_OPENAI_API_KEY=""
 """
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.AZURE,
     model_type="gpt-4.1",
     api_key=os.getenv("AZURE_OPENAI_API_KEY"),
     url=os.getenv("AZURE_OPENAI_BASE_URL"),

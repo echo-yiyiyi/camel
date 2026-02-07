@@ -29,7 +29,6 @@ user_msg = """Say hi to CAMEL AI, one open-source community dedicated to the
 
 # Use Samba Cloud model
 samba_cloud_api_model = ModelFactory.create(
-    model_platform=ModelPlatformType.SAMBA,
     model_type="Meta-Llama-3.1-405B-Instruct",
     model_config_dict=SambaCloudAPIConfig(max_tokens=800).as_dict(),
     api_key="Your SambaNova Cloud API Key",
@@ -60,7 +59,6 @@ about your work!
 
 # Use Samba Verse model
 sambaverse_api_model = ModelFactory.create(
-    model_platform=ModelPlatformType.SAMBA,
     model_type="Mistral/Mistral-7B-Instruct-v0.2",
     model_config_dict=SambaVerseAPIConfig(max_tokens=800).as_dict(),
     api_key="Your SambaVerse API Key",

@@ -18,7 +18,6 @@ from camel.types import ModelPlatformType
 
 # Take calling grok-beta model as an example
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
     model_type="grok-beta",
     api_key="xai-...",
     url="https://api.x.ai/v1",

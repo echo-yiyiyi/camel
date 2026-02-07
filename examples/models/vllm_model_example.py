@@ -17,7 +17,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType
 
 vllm_model = ModelFactory.create(
-    model_platform=ModelPlatformType.VLLM,
     model_type="microsoft/Phi-3-mini-4k-instruct",
     model_config_dict={"temperature": 0.0},
 )

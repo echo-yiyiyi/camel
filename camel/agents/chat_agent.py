@@ -698,7 +698,6 @@ class ChatAgent(BaseAgent):
         if model is None:
             # Default single model if none provided
             return ModelFactory.create(
-                model_platform=ModelPlatformType.DEFAULT,
                 model_type=ModelType.DEFAULT,
             )
         elif isinstance(model, BaseModelBackend):
@@ -707,24 +706,9 @@ class ChatAgent(BaseAgent):
         elif isinstance(model, list):
             return self._resolve_model_list(model)
         elif isinstance(model, (ModelType, str)):
-            # Single string or ModelType -> use default platform
-            model_platform = ModelPlatformType.DEFAULT
-            model_type = model
-            logger.warning(
-                f"Model type '{model_type}' provided without a platform. "
-                f"Using platform '{model_platform}'. Note: platform "
-                "is not automatically inferred based on model type."
-            )
+            # Single string or ModelType -> platform is inferred
             return ModelFactory.create(
-                model_platform=model_platform,
-                model_type=model_type,
-            )
-        elif isinstance(model, tuple) and len(model) == 2:
-            # Single tuple (platform, type)
-            model_platform, model_type = model  # type: ignore[assignment]
-            return ModelFactory.create(
-                model_platform=model_platform,
-                model_type=model_type,
+                model_type=model,
             )
         else:
             raise TypeError(
@@ -752,41 +736,18 @@ class ChatAgent(BaseAgent):
                 "Empty list provided for model, using default model."
             )
             return ModelFactory.create(
-                model_platform=ModelPlatformType.DEFAULT,
                 model_type=ModelType.DEFAULT,
             )
         elif isinstance(model_list[0], BaseModelBackend):
             # List of pre-instantiated models
             return model_list  # type: ignore[return-value]
         elif isinstance(model_list[0], (str, ModelType)):
-            # List of strings or ModelTypes -> use default platform
-            model_platform = ModelPlatformType.DEFAULT
-            logger.warning(
-                f"List of model types {model_list} provided without "
-                f"platforms. Using platform '{model_platform}' for all. "
-                "Note: platform is not automatically inferred based on "
-                "model type."
-            )
+            # List of strings or ModelTypes -> platform is inferred
             resolved_models_list = []
             for model_type_item in model_list:
                 resolved_models_list.append(
                     ModelFactory.create(
-                        model_platform=model_platform,
                         model_type=model_type_item,  # type: ignore[arg-type]
-                    )
-                )
-            return resolved_models_list
-        elif isinstance(model_list[0], tuple) and len(model_list[0]) == 2:
-            # List of tuples (platform, type)
-            resolved_models_list = []
-            for model_spec in model_list:
-                platform, type_ = (  # type: ignore[index]
-                    model_spec[0],
-                    model_spec[1],
-                )
-                resolved_models_list.append(
-                    ModelFactory.create(
-                        model_platform=platform, model_type=type_
                     )
                 )
             return resolved_models_list

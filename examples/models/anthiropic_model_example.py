@@ -24,7 +24,6 @@ export ANTHROPIC_API_KEY=""
 """
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.ANTHROPIC,
     model_type=ModelType.CLAUDE_3_5_SONNET,
     model_config_dict=AnthropicConfig(temperature=0.2).as_dict(),
 )
@@ -48,7 +47,6 @@ Hi CAMEL AI! It's great to meet an open-source community focused on advancing re
 '''  # noqa: E501
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.ANTHROPIC,
     model_type=ModelType.CLAUDE_3_7_SONNET,
 )
 
@@ -141,7 +139,6 @@ def my_add(a: int, b: int) -> int:
 
 
 anthropic_model = ModelFactory.create(
-    model_platform=ModelPlatformType.ANTHROPIC,
     model_type=ModelType.CLAUDE_3_5_SONNET,
     model_config_dict=AnthropicConfig(temperature=0.2).as_dict(),
 )
@@ -177,7 +174,6 @@ result=4, tool_call_id='toolu_01L1KV8GZtMEyHUGTudpMg5g')]
 """
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.ANTHROPIC,
     model_type=ModelType.CLAUDE_SONNET_4,
     model_config_dict={
         "extra_body": {"thinking": {"type": "enabled", "budget_tokens": 2000}}
@@ -232,7 +228,6 @@ gcd(a,b) = 1, there are infinitely many primes in that progression.
 
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.ANTHROPIC,
     model_type=ModelType.CLAUDE_OPUS_4_1,
     model_config_dict={
         "extra_body": {"thinking": {"type": "enabled", "budget_tokens": 2000}}

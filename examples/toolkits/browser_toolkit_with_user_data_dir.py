@@ -40,7 +40,6 @@ USER_DATA_DIR = "my_browser_profile"  # Directory to store persistent
 # browser data
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
     model_config_dict=ChatGPTConfig(
         temperature=0.0,
@@ -48,7 +47,6 @@ model = ModelFactory.create(
 )
 
 web_agent_model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
     model_config_dict=ChatGPTConfig(
         temperature=0.0,
@@ -56,7 +54,6 @@ web_agent_model = ModelFactory.create(
 )
 
 planning_agent_model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
     model_config_dict=ChatGPTConfig(
         temperature=0.0,

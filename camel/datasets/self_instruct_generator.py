@@ -22,7 +22,7 @@ from pydantic import BaseModel, Field, ValidationError
 from camel.agents import ChatAgent
 from camel.logger import get_logger
 from camel.models import ModelFactory
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 from camel.verifiers import BaseVerifier
 
 from .base_generator import BaseGenerator
@@ -174,7 +174,6 @@ class SelfInstructGenerator(BaseGenerator):
             ChatAgent: An agent with the default instruction prompt.
         """
         model = ModelFactory.create(
-            model_platform=ModelPlatformType.DEFAULT,
             model_type=ModelType.DEFAULT,
             model_config_dict={"temperature": 0.7},
         )
@@ -194,7 +193,6 @@ class SelfInstructGenerator(BaseGenerator):
             ChatAgent: An agent with the rationale prompt
         """
         model = ModelFactory.create(
-            model_platform=ModelPlatformType.DEFAULT,
             model_type=ModelType.DEFAULT,
             model_config_dict={"temperature": 0.0},
         )

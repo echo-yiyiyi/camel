@@ -26,7 +26,6 @@ def run_memory_toolkit_example():
 
     # Create a Model
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
     )
 

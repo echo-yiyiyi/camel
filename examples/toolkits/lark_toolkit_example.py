@@ -23,7 +23,6 @@ toolkit = LarkToolkit()
 
 # Create the model
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

@@ -26,7 +26,6 @@ This example uses the DeepSeek-R1 model.
 
 # Create a model using ModelFactory
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.VOLCANO,
     model_type="deepseek-r1-250120",  # DeepSeek-R1 model
     model_config_dict={
         "temperature": 0.2,

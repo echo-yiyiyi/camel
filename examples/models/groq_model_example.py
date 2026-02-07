@@ -18,7 +18,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.GROQ,
     model_type=ModelType.GROQ_LLAMA_3_3_70B,
     model_config_dict=GroqConfig(temperature=0.2).as_dict(),
 )

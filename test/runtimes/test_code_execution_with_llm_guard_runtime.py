@@ -33,7 +33,6 @@ def test_code_execution_with_llm_guard_runtime():
     assert tools[1].get_function_name() == "execute_code"
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
     )
 

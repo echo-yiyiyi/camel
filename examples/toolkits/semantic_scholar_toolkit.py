@@ -18,7 +18,6 @@ from camel.types import ModelPlatformType, ModelType
 
 # Define the model, here in this case we use gpt-4o
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

@@ -31,7 +31,6 @@ export DEEPSEEK_API_KEY=""
 
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEEPSEEK,
     model_type=ModelType.DEEPSEEK_CHAT,
     model_config_dict=DeepSeekConfig(temperature=0).as_dict(),
 )

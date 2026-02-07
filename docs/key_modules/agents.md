@@ -99,23 +99,21 @@ agent_3 = ChatAgent("You are a helpful assistant.", model=("openai", "gpt-4o-min
 # Method 4: Using a tuple of enums
 agent_4 = ChatAgent(
     "You are a helpful assistant.",
-    model=(ModelPlatformType.ANTHROPIC, ModelType.CLAUDE_3_5_SONNET),
+    model=(ModelType.CLAUDE_3_5_SONNET),
 )
 
 # Method 5: Using default model platform and default model type when none is specified
 agent_5 = ChatAgent("You are a helpful assistant.")
 
-# Method 6: Using a pre-created model with ModelFactory (original approach)
+# Method 6: Using a pre-created model with ModelFactory
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,  # Using enum
-    model_type=ModelType.GPT_4O_MINI,         # Using enum
+    model_type=ModelType.GPT_4O_MINI,  # Platform is auto-inferred
 )
 agent_6 = ChatAgent("You are a helpful assistant.", model=model)
 
-# Method 7: Using ModelFactory with string parameters
+# Method 7: Using ModelFactory with string model type
 model = ModelFactory.create(
-    model_platform="openai",     # Using string
-    model_type="gpt-4o-mini",    # Using string
+    model_type="gpt-4o-mini",  # Platform is auto-inferred
 )
 agent_7 = ChatAgent("You are a helpful assistant.", model=model)
 ```

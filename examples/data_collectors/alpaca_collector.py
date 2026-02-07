@@ -18,7 +18,6 @@ from camel.models.model_factory import ModelFactory
 from camel.types.enums import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

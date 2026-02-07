@@ -18,7 +18,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.ATLASCLOUD,
     model_type=ModelType.ATLASCLOUD_GPT_OSS_120B,
     model_config_dict=AtlasCloudConfig(temperature=0.2).as_dict(),
 )

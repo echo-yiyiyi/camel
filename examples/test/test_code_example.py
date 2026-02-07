@@ -22,7 +22,6 @@ def test_code_role_playing_example():
     with patch('time.sleep', return_value=None):
         examples.code.role_playing.main(
             ModelFactory.create(
-                model_platform=ModelPlatformType.OPENAI,
                 model_type=ModelType.STUB,
             ),
             chat_turn_limit=2,

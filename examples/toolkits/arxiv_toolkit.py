@@ -24,7 +24,6 @@ sys_msg = "You are a helpful assistant"
 tools = ArxivToolkit().get_tools()
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

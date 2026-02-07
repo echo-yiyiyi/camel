@@ -121,7 +121,6 @@ class ModelFactory:
 
     @staticmethod
     def create(
-        model_platform: Union[ModelPlatformType, str],
         model_type: Union[ModelType, str, UnifiedModelType],
         model_config_dict: Optional[Dict] = None,
         token_counter: Optional[BaseTokenCounter] = None,
@@ -131,17 +130,21 @@ class ModelFactory:
         max_retries: int = 3,
         client: Optional[Any] = None,
         async_client: Optional[Any] = None,
+        model_platform: Optional[Union[ModelPlatformType, str]] = None,
         **kwargs,
     ) -> BaseModelBackend:
         r"""Creates an instance of `BaseModelBackend` of the specified type.
 
+        For standard model types (ModelType enum values), the platform is
+        automatically inferred from the model_type. For custom model names
+        (UnifiedModelType), you must specify the model_platform parameter.
+
         Args:
-            model_platform (Union[ModelPlatformType, str]): Platform from
-                which the model originates. Can be a string or
-                ModelPlatformType enum.
             model_type (Union[ModelType, str, UnifiedModelType]): Model for
                 which a backend is created. Can be a string, ModelType enum, or
-                UnifiedModelType.
+                UnifiedModelType. For ModelType enum values, the platform is
+                automatically inferred. For custom model names, you must
+                also specify model_platform.
             model_config_dict (Optional[Dict]): A dictionary that will be fed
                 into the backend constructor. (default: :obj:`None`)
             token_counter (Optional[BaseTokenCounter], optional): Token
@@ -165,6 +168,11 @@ class ModelFactory:
                 client instance. Supported by models that use OpenAI-compatible
                 APIs. The client should implement the appropriate async client
                 interface for the platform. (default: :obj:`None`)
+            model_platform (Optional[Union[ModelPlatformType, str]], optional):
+                Platform for custom model types. Required when model_type is
+                not a standard ModelType enum value. Ignored when model_type
+                is a ModelType enum (platform is auto-inferred).
+                (default: :obj:`None`)
             **kwargs: Additional model-specific parameters that will be passed
                 to the model constructor. For example, Azure OpenAI models may
                 require `api_version`, `azure_deployment_name`,
@@ -174,7 +182,8 @@ class ModelFactory:
             BaseModelBackend: The initialized backend.
 
         Raises:
-            ValueError: If there is no backend for the model.
+            ValueError: If there is no backend for the model or if platform
+                cannot be inferred for custom model types.
         """
 
         # Auto-configure Langfuse only if explicitly enabled
@@ -182,20 +191,36 @@ class ModelFactory:
         if env_enabled_str and env_enabled_str.lower() == "true":
             configure_langfuse()
 
-        # Convert string to ModelPlatformType enum if needed
-        if isinstance(model_platform, str):
-            try:
-                model_platform = ModelPlatformType(model_platform)
-            except ValueError:
-                raise ValueError(f"Unknown model platform: {model_platform}")
-
         # Convert string to ModelType enum or UnifiedModelType if needed
         if isinstance(model_type, str):
             try:
                 model_type = ModelType(model_type)
             except ValueError:
-                # If not in ModelType, create a UnifiedModelType
-                model_type = UnifiedModelType(model_type)
+                # Try matching by enum name (e.g., "GPT_4O")
+                if model_type.upper() in ModelType.__members__:
+                    model_type = ModelType[model_type.upper()]
+                else:
+                    # If not in ModelType, create a UnifiedModelType
+                    model_type = UnifiedModelType(model_type)
+
+        # Convert model_platform string to enum if needed
+        if isinstance(model_platform, str):
+            model_platform = ModelFactory.__parse_model_platform(
+                model_platform
+            )
+
+        # Infer model platform from model type, or use provided platform
+        if isinstance(model_type, ModelType):
+            # For ModelType enum, always use the inferred platform
+            model_platform = model_type.platform
+        elif model_platform is not None:
+            # For custom model types, use the provided platform
+            pass
+        else:
+            raise ValueError(
+                f"Cannot infer platform for custom model type: {model_type}. "
+                f"Please specify model_platform parameter."
+            )
 
         model_class: Optional[Type[BaseModelBackend]] = None
         model_type = UnifiedModelType(model_type)
@@ -311,10 +336,6 @@ class ModelFactory:
         """
 
         config = cls.__load_yaml(filepath)
-        config["model_platform"] = cls.__parse_model_platform(
-            config["model_platform"]
-        )
-
         model = ModelFactory.create(**config)
 
         return model
@@ -334,10 +355,6 @@ class ModelFactory:
         """
 
         config = cls.__load_json(filepath)
-        config["model_platform"] = cls.__parse_model_platform(
-            config["model_platform"]
-        )
-
         model = ModelFactory.create(**config)
 
         return model

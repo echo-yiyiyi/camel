@@ -24,7 +24,6 @@ sys_msg = "You are a helpful assistant for graph analysis"
 tools = NetworkXToolkit(graph_type='digraph').get_tools()
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

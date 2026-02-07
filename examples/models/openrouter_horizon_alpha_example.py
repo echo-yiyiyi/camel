@@ -19,7 +19,6 @@ from camel.types import ModelPlatformType, ModelType
 
 # Create Horizon Alpha model
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENROUTER,
     model_type=ModelType.OPENROUTER_HORIZON_ALPHA,
     model_config_dict=OpenRouterConfig(temperature=0.7).as_dict(),
 )

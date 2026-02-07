@@ -54,7 +54,6 @@ def test_watsonx_model_create(model_type):
     pytest.skip("Skipping test that requires valid WatsonX API credentials")
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.WATSONX,
         model_type=model_type,
         model_config_dict=WatsonXConfig(temperature=0.7).as_dict(),
     )

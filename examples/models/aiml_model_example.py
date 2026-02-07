@@ -16,7 +16,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.AIML,
     model_type="mistralai/Mixtral-8x7B-Instruct-v0.1",
 )
 

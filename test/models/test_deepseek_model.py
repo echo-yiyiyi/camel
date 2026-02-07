@@ -49,7 +49,6 @@ def test_deepseek_model(model_type):
 )
 def test_deepseek_model_create(model_type: ModelType):
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEEPSEEK,
         model_type=model_type,
         model_config_dict=DeepSeekConfig(temperature=1.3).as_dict(),
     )

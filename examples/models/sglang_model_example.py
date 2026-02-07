@@ -35,7 +35,6 @@ chat template, switching to the Instruct model resolves the issue.
 """
 load_dotenv()
 sglang_model = ModelFactory.create(
-    model_platform=ModelPlatformType.SGLANG,
     model_type="meta-llama/Llama-3.2-1B-Instruct",
     model_config_dict={"temperature": 0.0},
     api_key="sglang",
@@ -97,7 +96,6 @@ mistral: Mistral (e.g. mistralai/Mistral-7B-Instruct-v0.3,
 qwen25: Qwen 2.5 (e.g. Qwen/Qwen2.5-1.5B-Instruct, Qwen/Qwen2.5-7B-Instruct).
 """
 sglang_model_with_tool = ModelFactory.create(
-    model_platform=ModelPlatformType.SGLANG,
     model_type="meta-llama/Llama-3.2-1B-Instruct",
     model_config_dict={"temperature": 0.0, "tools": weather_tool},
     api_key="llama3",

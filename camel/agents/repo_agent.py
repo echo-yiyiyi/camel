@@ -28,7 +28,6 @@ from camel.models import BaseModelBackend, ModelFactory
 from camel.responses import ChatAgentResponse
 from camel.retrievers import VectorRetriever
 from camel.types import (
-    ModelPlatformType,
     ModelType,
     OpenAIBackendRole,
     RoleType,
@@ -137,7 +136,6 @@ class RepoAgent(ChatAgent):
     ):
         if model is None:
             model = ModelFactory.create(
-                model_platform=ModelPlatformType.DEFAULT,
                 model_type=ModelType.DEFAULT,
             )
 

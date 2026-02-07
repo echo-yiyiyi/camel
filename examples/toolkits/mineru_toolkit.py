@@ -66,7 +66,6 @@ def main():
 
         # Initialize the model with specific configuration
         model = ModelFactory.create(
-            model_platform=ModelPlatformType.DEFAULT,
             model_type=ModelType.DEFAULT,
         )
 

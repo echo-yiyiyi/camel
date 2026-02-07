@@ -29,7 +29,6 @@ from camel.types import (
 )
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.QWEN,
     model_type=ModelType.QWEN_VL_MAX,
     model_config_dict={"temperature": 0.0},
 )

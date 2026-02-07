@@ -134,7 +134,6 @@ aci_config = ACIRegistryConfig(
     linked_account_owner_id=os.getenv("ACI_LINKED_ACCOUNT_OWNER_ID"),
 )
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O,
 )
 

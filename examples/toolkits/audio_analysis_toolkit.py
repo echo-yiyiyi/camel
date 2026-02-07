@@ -37,13 +37,11 @@ storage_path = "examples/openai_audio_models/example_audio.mp3"
 audio_models.text_to_speech(input=input, storage_path=storage_path)
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_5_MINI,
 )
 
 
 audio_reason_model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_5_MINI,
 )
 

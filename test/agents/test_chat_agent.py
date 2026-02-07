@@ -82,7 +82,6 @@ parametrize = pytest.mark.parametrize(
     'model',
     [
         ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
             model_type=ModelType.DEFAULT,
         ),
         pytest.param(None, marks=pytest.mark.model_backend),
@@ -255,7 +254,6 @@ def test_chat_agent_step_with_external_tools(step_call_count=3):
     ).as_dict()
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_5_MINI,
         model_config_dict=model_config_dict,
     )
@@ -387,7 +385,6 @@ async def test_chat_agent_astep_with_external_tools(step_call_count=3):
     ).as_dict()
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_5_MINI,
         model_config_dict=model_config_dict,
     )
@@ -603,7 +600,6 @@ def test_chat_agent_step_exceed_token_number(step_call_count=3):
 def test_chat_agent_multiple_return_messages(n, step_call_count=3):
     model_config = ChatGPTConfig(temperature=1.4, n=n)
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_5_MINI,
         model_config_dict=model_config.as_dict(),
     )
@@ -676,7 +672,6 @@ def test_chat_agent_multiple_return_messages(n, step_call_count=3):
 def test_chat_agent_multiple_return_message_error(n, step_call_count=3):
     model_config = ChatGPTConfig(temperature=1.4, n=n)
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_5_MINI,
         model_config_dict=model_config.as_dict(),
     )
@@ -737,7 +732,6 @@ def test_chat_agent_stream_output(step_call_count=3):
 
     stream_model_config = ChatGPTConfig(temperature=0, n=2, stream=True)
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_5_MINI,
         model_config_dict=stream_model_config.as_dict(),
     )
@@ -896,7 +890,6 @@ def test_tool_calling_sync(step_call_count=3):
         content="You are a help assistant.",
     )
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_5_MINI,
     )
     agent = ChatAgent(
@@ -1067,7 +1060,6 @@ async def test_tool_calling_math_async(step_call_count=3):
         [FunctionTool(MathToolkit().math_multiply)]
     )
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_5_MINI,
         model_config_dict=model_config.as_dict(),
     )
@@ -1199,7 +1191,6 @@ async def test_tool_calling_async(step_call_count=3):
         return second
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_5_MINI,
     )
     model_backend_rsp_tool_async = deepcopy(model_backend_rsp_base)
@@ -1308,7 +1299,6 @@ def test_chat_agent_vision(step_call_count=3):
     )
     model_config = ChatGPTConfig(temperature=0, max_tokens=200, stop="")
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_5_MINI,
         model_config_dict=model_config.as_dict(),
     )
@@ -1474,7 +1464,6 @@ async def test_chat_agent_async_stream_with_async_generator():
     )
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_5_MINI,
         model_config_dict={"stream": True},
     )
@@ -1597,7 +1586,6 @@ async def test_chat_agent_async_stream_with_async_generator_tool_calls():
     )
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_5_MINI,
         model_config_dict={"stream": True},
     )
@@ -1781,7 +1769,6 @@ def test_chat_agent_stream_with_structured_output():
         explanation: str = Field(description="Brief explanation")
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_4_1,
         model_config_dict={"stream": True},
     )
@@ -1816,7 +1803,6 @@ async def test_chat_agent_async_stream_with_structured_output():
         explanation: str = Field(description="Brief explanation")
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_4_1,
         model_config_dict={"stream": True},
     )

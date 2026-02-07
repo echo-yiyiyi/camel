@@ -89,7 +89,6 @@ from camel.configs import QwenConfig
 ```python
 # Define Qwen model
 qwen_model = ModelFactory.create(
-    model_platform=ModelPlatformType.QWEN,
     model_type=ModelType.QWEN_CODER_TURBO,
     model_config_dict=QwenConfig().as_dict(),
 )

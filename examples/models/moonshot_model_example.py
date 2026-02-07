@@ -18,7 +18,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.MOONSHOT,
     model_type=ModelType.MOONSHOT_KIMI_K2,
     model_config_dict=MoonshotConfig(temperature=0.2).as_dict(),
 )

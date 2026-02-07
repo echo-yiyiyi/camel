@@ -19,7 +19,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 test_model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.STUB,
 )
 
@@ -34,7 +33,6 @@ def test_ai_society_role_playing_example():
 def test_role_playing_with_function_example():
     with patch('time.sleep', return_value=None):
         examples.toolkits.role_playing_with_functions.main(
-            model_platform=ModelPlatformType.DEFAULT,
             model_type=ModelType.STUB,
             chat_turn_limit=2,
         )

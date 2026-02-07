@@ -201,7 +201,6 @@ Next, let's set up the reasoning model and evaluate model. Since the DeepSeek's 
 ```python
 # Set DeepSeek R1 served by Fireworks as reason model 1
 reason_model_1 = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
     model_type="accounts/fireworks/models/deepseek-r1",
     api_key=os.environ["FIREWORKS_API_KEY"],
     url="https://api.fireworks.ai/inference/v1",
@@ -210,7 +209,6 @@ reason_model_1 = ModelFactory.create(
 
 # Set DeepSeek R1 served by deepseek cloud as reason model 2
 reason_model_2 = ModelFactory.create(
-    model_platform=ModelPlatformType.DEEPSEEK,
     model_type=ModelType.DEEPSEEK_REASONER,
 )
 ```

@@ -30,7 +30,7 @@ from pydantic import BaseModel, create_model
 from pydantic.fields import FieldInfo
 
 from camel.models import BaseModelBackend, ModelFactory
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 from camel.utils import get_pydantic_object_schema, to_pascal
 
 logger = logging.getLogger(__name__)
@@ -440,7 +440,6 @@ class FunctionTool:
         self.synthesize_output_model = synthesize_output_model
         if synthesize_output and synthesize_output_model is None:
             self.synthesize_output_model = ModelFactory.create(
-                model_platform=ModelPlatformType.DEFAULT,
                 model_type=ModelType.DEFAULT,
             )
             logger.warning(
@@ -464,7 +463,6 @@ class FunctionTool:
                               overridden by the schema assistant model.""")
             if self.synthesize_schema_model is None:
                 self.synthesize_schema_model = ModelFactory.create(
-                    model_platform=ModelPlatformType.DEFAULT,
                     model_type=ModelType.DEFAULT,
                 )
                 logger.warning(

@@ -608,7 +608,6 @@ async def main():
 
     # Create a single model backend for all agents
     model_backend = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_4_1,
         model_config_dict={
             "stream": False,
@@ -616,7 +615,6 @@ async def main():
     )
 
     model_backend_reason = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_4_1,
         model_config_dict={
             "stream": False,

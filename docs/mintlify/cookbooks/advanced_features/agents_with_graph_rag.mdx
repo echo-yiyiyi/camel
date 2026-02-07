@@ -90,7 +90,6 @@ Set up Mistral Large 2 model using the CAMEL ModelFactory:
 ```python
 # Set up model
 mistral_large_2 = ModelFactory.create(
-    model_platform=ModelPlatformType.MISTRAL,
     model_type=ModelType.MISTRAL_LARGE,
     model_config_dict=MistralConfig(temperature=0.2).as_dict(),
 )
@@ -100,7 +99,6 @@ mistral_large_2 = ModelFactory.create(
 ```python
 # You can also set up model locally by using ollama
 mistral_large_2_local = ModelFactory.create(
-    model_platform=ModelPlatformType.OLLAMA,
     model_type="mistral-large",
     model_config_dict=OllamaConfig(temperature=0.2).as_dict(),
 )

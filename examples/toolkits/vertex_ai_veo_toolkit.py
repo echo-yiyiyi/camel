@@ -165,7 +165,7 @@ def agent_integration_example():
 
     # Initialize model and toolkit
     model = ModelFactory.create(
-        model_platform="openai", model_type="gpt-4o-mini"
+        model_type="gpt-4o-mini"
     )
 
     toolkit = VertexAIVeoToolkit(project_id="your-project-id")

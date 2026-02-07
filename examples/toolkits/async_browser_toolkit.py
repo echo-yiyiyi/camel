@@ -27,19 +27,16 @@ from camel.types import ModelPlatformType, ModelType
 load_dotenv("../.env")
 
 web_agent_model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O,
     model_config_dict={"temperature": 0},
 )
 
 planning_agent_model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O,
     model_config_dict={"temperature": 0},
 )
 
 web_model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O,
     model_config_dict={"temperature": 0},
 )
@@ -64,7 +61,6 @@ actions, and provide relevant information to solve the given task.
 task_agent = ChatAgent(
     "You are a helpful task planner.",
     model=ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_4O,
         model_config_dict={"temperature": 0},
     ),
@@ -73,7 +69,6 @@ task_agent = ChatAgent(
 coordinator_agent = ChatAgent(
     "You are a helpful coordinator.",
     model=ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_4O,
         model_config_dict={"temperature": 0},
     ),

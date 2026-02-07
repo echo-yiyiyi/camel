@@ -36,7 +36,6 @@ tools = [
 ]
 # Example of using the gemini-3-pro-preview model
 model_3_pro_pre = ModelFactory.create(
-    model_platform=ModelPlatformType.GEMINI,
     model_type=ModelType.GEMINI_3_PRO,
     model_config_dict=GeminiConfig(temperature=0.2).as_dict(),
 )
@@ -71,7 +70,6 @@ You can open this file in any modern web browser to play. It features:
 
 # Example of using the gemini-3-flash model
 model_3_flash = ModelFactory.create(
-    model_platform=ModelPlatformType.GEMINI,
     model_type=ModelType.GEMINI_3_FLASH,
     model_config_dict=GeminiConfig(temperature=0.2).as_dict(),
 )

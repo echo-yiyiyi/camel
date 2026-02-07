@@ -59,16 +59,15 @@ def test_openai_model(model_type):
 @pytest.mark.parametrize(
     "model_type",
     [
-        ModelType.GPT_3_5_TURBO,
-        ModelType.GPT_4,
-        ModelType.GPT_4_TURBO,
-        ModelType.GPT_4O,
-        ModelType.GPT_4O_MINI,
+        ModelType.AZURE_GPT_3_5_TURBO,
+        ModelType.AZURE_GPT_4,
+        ModelType.AZURE_GPT_4_TURBO,
+        ModelType.AZURE_GPT_4O,
+        ModelType.AZURE_GPT_4O_MINI,
     ],
 )
 def test_openai_model_create(model_type: ModelType):
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.AZURE,
         model_type=model_type,
         model_config_dict=ChatGPTConfig(temperature=0.8, n=3).as_dict(),
         api_version="2024-02-15-preview",

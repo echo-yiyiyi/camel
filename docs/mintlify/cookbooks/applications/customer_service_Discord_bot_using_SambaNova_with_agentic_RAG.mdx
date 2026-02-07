@@ -122,14 +122,12 @@ from camel.messages import BaseMessage
 
 #### Set up Agent using Qwen2.5-Coder-32B-Instruct #####
 qwen_model = ModelFactory.create(
-    model_platform=ModelPlatformType.SAMBA,
     model_type="Qwen2.5-Coder-32B-Instruct",
     model_config_dict=SambaCloudAPIConfig(max_tokens=4000).as_dict(),
 )
 
 # ##### Set up Agent using Qwen2.5-72B-Instruct #####
 # qwen_model = ModelFactory.create(
-#     model_platform=ModelPlatformType.SAMBA,
 #     model_type="Qwen2.5-72B-Instruct",
 #     model_config_dict=SambaCloudAPIConfig(max_tokens=4000).as_dict(),
 # )

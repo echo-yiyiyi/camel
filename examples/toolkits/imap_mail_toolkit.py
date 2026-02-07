@@ -39,7 +39,6 @@ def main() -> None:
     tools = mail_toolkit.get_tools()
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
     )
 
@@ -92,7 +91,6 @@ def main_with_context_manager() -> None:
         tools = mail_toolkit.get_tools()
 
         model = ModelFactory.create(
-            model_platform=ModelPlatformType.DEFAULT,
             model_type=ModelType.DEFAULT,
         )
 

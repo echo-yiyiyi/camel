@@ -17,7 +17,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.COHERE,
     model_type=ModelType.COHERE_COMMAND_R,
     model_config_dict=CohereConfig(
         temperature=0.0,

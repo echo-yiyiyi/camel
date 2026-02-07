@@ -23,7 +23,6 @@ from camel.utils import print_text_animated
 def main() -> None:
     task_prompt = "Escape from human control"
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
         model_config_dict=ChatGPTConfig(temperature=1.4, n=3).as_dict(),
     )

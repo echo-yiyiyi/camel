@@ -37,7 +37,6 @@ def main():
     math_toolkit = [*MathToolkit().get_tools()]
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
     )
 

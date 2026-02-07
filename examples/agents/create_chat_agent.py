@@ -41,17 +41,15 @@ agent_4 = ChatAgent(
 # Method 5: Default model when none is specified.
 agent_5 = ChatAgent("You are a helpful assistant.")
 
-# Method 6: Initialize with a pre-created model (original approach)
+# Method 6: Initialize with a pre-created model (using ModelFactory)
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,  # Using enum
-    model_type=ModelType.GPT_4O_MINI,  # Using enum
+    model_type=ModelType.GPT_4O_MINI,  # Platform is auto-inferred
 )
 agent_6 = ChatAgent("You are a helpful assistant.", model=model)
 
-# Method 7: Initialize with a pre-created model using strings
+# Method 7: Initialize with a pre-created model using string model type
 model = ModelFactory.create(
-    model_platform="openai",  # Using string
-    model_type="gpt-4o-mini",  # Using string
+    model_type="gpt-4o-mini",  # Platform is auto-inferred from model type
 )
 agent_7 = ChatAgent("You are a helpful assistant.", model=model)
 

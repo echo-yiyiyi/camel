@@ -68,7 +68,6 @@ PROMPT: here is the updated prompt!
     def init_agents(self):
         r"""Initialize artist and critic agents with their system messages."""
         model = ModelFactory.create(
-            model_platform=ModelPlatformType.DEFAULT,
             model_type=ModelType.DEFAULT,
         )
 

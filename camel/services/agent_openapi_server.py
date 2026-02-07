@@ -35,8 +35,6 @@ class InitRequest(BaseModel):
         model_type (Optional[str]): The model type to use. Should match a key
             supported by the model manager, e.g., "gpt-4o-mini".
             (default: :obj:`"gpt-4o-mini"`)
-        model_platform (Optional[str]): The model platform to use.
-            (default: :obj:`"openai"`)
         tools_names (Optional[List[str]]): A list of tool names to load from
             the tool registry. These tools will be available to the agent.
             (default: :obj:`None`)
@@ -60,7 +58,6 @@ class InitRequest(BaseModel):
     """
 
     model_type: Optional[str] = "gpt-4o-mini"
-    model_platform: Optional[str] = "openai"
 
     tools_names: Optional[List[str]] = None
     external_tools: Optional[List[Dict[str, Any]]] = None
@@ -209,10 +206,8 @@ class ChatAgentOpenAPIServer:
                 }
 
             model_type = request.model_type
-            model_platform = request.model_platform
 
             model = ModelFactory.create(
-                model_platform=model_platform,  # type: ignore[arg-type]
                 model_type=model_type,  # type: ignore[arg-type]
             )
 

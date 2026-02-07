@@ -42,7 +42,6 @@ async def example_with_registry_config(
 
     # Create a model
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_4O,
     )
 

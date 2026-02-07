@@ -31,7 +31,6 @@ excel_toolkit = ExcelToolkit()
 
 # Create a model using OpenAI
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
     model_config_dict=ChatGPTConfig(
         temperature=0.0,

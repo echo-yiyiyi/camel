@@ -22,7 +22,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OLLAMA,
     model_type="llava-phi3",
     model_config_dict={"temperature": 0.4},
 )

@@ -25,7 +25,6 @@ browser_toolkit_save_auth_cookie(
 )
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
     model_config_dict=ChatGPTConfig(
         temperature=0.0,
@@ -33,7 +32,6 @@ model = ModelFactory.create(
 )
 
 web_agent_model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
     model_config_dict=ChatGPTConfig(
         temperature=0.0,
@@ -41,7 +39,6 @@ web_agent_model = ModelFactory.create(
 )
 
 planning_agent_model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
     model_config_dict=ChatGPTConfig(
         temperature=0.0,

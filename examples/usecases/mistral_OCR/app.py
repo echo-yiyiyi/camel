@@ -130,7 +130,6 @@ if 'ocr_result' in st.session_state:
 
     # Setup LLM agent
     mistral_model = ModelFactory.create(
-        model_platform=ModelPlatformType.MISTRAL,
         model_type=ModelType.MISTRAL_LARGE,
         model_config_dict=MistralConfig(temperature=0.0).as_dict(),
     )

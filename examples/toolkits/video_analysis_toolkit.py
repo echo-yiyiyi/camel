@@ -20,7 +20,6 @@ from camel.toolkits import VideoAnalysisToolkit
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
     model_config_dict=ChatGPTConfig(
         temperature=0.0,
@@ -28,7 +27,6 @@ model = ModelFactory.create(
 )
 
 video_model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
     model_config_dict=ChatGPTConfig(
         temperature=0.0,

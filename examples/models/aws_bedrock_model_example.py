@@ -18,7 +18,6 @@ from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.AWS_BEDROCK,
     model_type=ModelType.AWS_LLAMA_3_3_70B_INSTRUCT,
     model_config_dict=BedrockConfig(temperature=0.2).as_dict(),
 )

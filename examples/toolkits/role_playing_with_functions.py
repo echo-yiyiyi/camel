@@ -28,7 +28,6 @@ from camel.utils import print_text_animated
 
 
 def main(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
     chat_turn_limit=10,
 ) -> None:
@@ -50,14 +49,12 @@ def main(
         user_role_name="Professor",
         assistant_agent_kwargs=dict(
             model=ModelFactory.create(
-                model_platform=model_platform,
                 model_type=model_type,
             ),
             tools=tools_list,
         ),
         user_agent_kwargs=dict(
             model=ModelFactory.create(
-                model_platform=model_platform,
                 model_type=model_type,
             ),
         ),

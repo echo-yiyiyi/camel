@@ -24,7 +24,7 @@ from camel.messages import BaseMessage
 from camel.models import BaseModelBackend, ModelFactory
 from camel.toolkits import FunctionTool
 from camel.toolkits.base import BaseToolkit
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 from camel.utils import MCPServer
 
 logger = get_logger(__name__)
@@ -58,7 +58,6 @@ class ImageAnalysisToolkit(BaseToolkit):
             self.model = model
         else:
             self.model = ModelFactory.create(
-                model_platform=ModelPlatformType.DEFAULT,
                 model_type=ModelType.DEFAULT,
             )
 

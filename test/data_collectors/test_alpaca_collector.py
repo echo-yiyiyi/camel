@@ -21,7 +21,6 @@ from camel.types.enums import ModelPlatformType, ModelType
 
 def test_alpaca_converter():
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
     )
 
@@ -54,7 +53,6 @@ def test_alpaca_converter():
 
 def test_alpaca_llm_converter():
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
     )
 

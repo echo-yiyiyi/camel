@@ -20,7 +20,6 @@ from camel.types import ModelPlatformType, ModelType
 tools = [*MathToolkit().get_tools()]
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.WATSONX,
     model_type=ModelType.WATSONX_LLAMA_3_3_70B_INSTRUCT,
     model_config_dict=WatsonXConfig(temperature=0.2).as_dict(),
 )

@@ -283,7 +283,6 @@ async def test_multiple_timeout_points():
 def mock_model():
     r"""Create a real model backend for testing"""
     return ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.STUB,
     )
 

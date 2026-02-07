@@ -20,7 +20,6 @@ from camel.types import ModelPlatformType, ModelType
 system_message = "You're a helpful assistant"
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
     model_config_dict={"temperature": 0.0},
 )

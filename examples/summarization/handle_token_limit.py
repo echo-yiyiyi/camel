@@ -38,7 +38,6 @@ tools = TerminalToolkit(working_directory=workspace_dir).get_tools()
 
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_3_5_TURBO,
 )
 

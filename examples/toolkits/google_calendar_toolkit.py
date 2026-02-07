@@ -24,7 +24,6 @@ from camel.toolkits import GoogleCalendarToolkit
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
     model_config_dict=BaseConfig().as_dict(),
 )

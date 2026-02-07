@@ -115,7 +115,6 @@ class PrintCallback(WorkforceCallback):
 
 def build_teacher_agent() -> ChatAgent:
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_4O_MINI,
     )
     return ChatAgent(system_message="You are a teacher", model=model)
@@ -123,7 +122,6 @@ def build_teacher_agent() -> ChatAgent:
 
 def build_student_agent() -> ChatAgent:
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_4O_MINI,
     )
     return ChatAgent(system_message="You are a student", model=model)

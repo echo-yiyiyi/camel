@@ -91,7 +91,6 @@ def stub_openai_api_key(monkeypatch):
 def mock_model():
     r"""Create a real model backend for testing"""
     return ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.STUB,
     )
 

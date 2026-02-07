@@ -24,7 +24,6 @@ export GET_REASONING_CONTENT="true"
 """
 
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEEPSEEK,
     model_type=ModelType.DEEPSEEK_REASONER,
     model_config_dict=DeepSeekConfig(temperature=0.2).as_dict(),
 )

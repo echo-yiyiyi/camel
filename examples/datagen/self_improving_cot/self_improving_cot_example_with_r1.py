@@ -28,17 +28,14 @@ export GET_REASONING_CONTENT="true"
 """
 
 evaluate_model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 
 reason_model_1 = ModelFactory.create(
-    model_platform=ModelPlatformType.DEEPSEEK,
     model_type=ModelType.DEEPSEEK_REASONER,
 )
 
 reason_model_2 = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
     model_type="accounts/fireworks/models/deepseek-r1",
     api_key=os.getenv("FIREWORKS_API_KEY"),
     url="https://api.fireworks.ai/inference/v1",
@@ -46,14 +43,12 @@ reason_model_2 = ModelFactory.create(
 )
 
 reason_model_3 = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
     model_type="deepseek-ai/DeepSeek-R1",
     api_key=os.getenv("HYPERBOLIC_API_KEY"),
     url="https://api.hyperbolic.xyz/v1",
 )
 
 reason_model_4 = ModelFactory.create(
-    model_platform=ModelPlatformType.TOGETHER,
     model_type="deepseek-ai/DeepSeek-R1",
     api_key=os.getenv("TOGETHER_API_KEY"),
 )

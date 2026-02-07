@@ -102,7 +102,6 @@ from camel.configs import ChatGPTConfig
 
 # Set up model
 openai_gpt4o_mini = ModelFactory.create(
-    model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
     model_config_dict=ChatGPTConfig(temperature=0.2).as_dict(),
 )
@@ -199,7 +198,6 @@ role_play_session = RolePlaying(
     user_role_name="CAMEL User",
     assistant_agent_kwargs=dict(
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
             model_type=ModelType.GPT_4O_MINI,
             model_config_dict=assistant_model_config.as_dict(),
         ),

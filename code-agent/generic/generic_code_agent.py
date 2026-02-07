@@ -21,6 +21,7 @@ This is a framework-agnostic version that can be used with any codebase.
 Load project-specific context from a markdown file before running tasks.
 """
 
+import asyncio
 import os
 import json
 import time
@@ -73,105 +74,66 @@ find_imports("requests")
 find_imports("UserService")
 ```
 
-### Technique 3: Read __init__.py or index files to understand module exports
+### Technique 3: Read __init__.py when class names don't match file names
 ```python
-read_file("src/__init__.py")
-read_file("lib/index.ts")
+# If glob_search("**/*usermanager*.py") finds nothing, read the module index
+read_file("src/users/__init__.py")
+# Or search for the class definition directly
+grep_search("class.*UserManager", ignore_case=True)
 ```
 
 ### Technique 4: Parallel search for ALL keywords
-For task "user authentication with JWT", call ALL in parallel:
+For any multi-keyword task, search ALL keywords in parallel:
 ```python
-glob_search("**/*auth*.py")
-glob_search("**/*jwt*.py")
-glob_search("**/*user*.py")
-find_imports("jwt")
+glob_search("**/*keyword1*.py")
+glob_search("**/*keyword2*.py")
+find_imports("relevant_module")
 ```
 
 ### Technique 5: Tests and examples contain best usage patterns
 ```python
 glob_search("**/test_*.py")
 glob_search("**/*example*.py")
-glob_search("**/*_test.go")
 ```
 
-### Technique 6: When file name search fails, read module index
-Class names often don't match file names. When glob_search by name fails:
+### Technique 6: Find SPECIFIC function/method when task specifies it
+When task mentions a specific feature (e.g., "send email"), find the exact function:
 ```python
-# Task asks for "UserManager" but glob_search("**/*usermanager*.py") finds nothing
-# Solution: Read __init__.py to see all exported classes
-read_file("src/users/__init__.py")
-
-# Or search for the class name directly
-grep_search("class.*UserManager", ignore_case=True)
+grep_search("def.*send.*email", ignore_case=True)
+grep_search("def.*mail", ignore_case=True)
 ```
-
-### Technique 7: Find configuration and enum values
-```python
-grep_search("API_KEY", glob_filter="*.py")
-grep_search("enum.*Type", glob_filter="*.py")
-```
-
-### Technique 8: Read documentation for API usage and concepts
-Documentation files often contain the most accurate and up-to-date usage examples:
-```python
-# Find documentation files
-glob_search("**/*.md", path="docs")
-glob_search("**/README.md")
-
-# Search for specific topics in docs
-grep_search("authentication", glob_filter="*.md", path="docs")
-grep_search("getting started", glob_filter="*.md", ignore_case=True)
-
-# Read API documentation
-read_file("docs/api.md")
-read_file("docs/getting_started.md")
-```
-Documentation is especially useful for:
-- Understanding high-level concepts and architecture
-- Finding correct API usage patterns
-- Learning about configuration options
-- Discovering features you might not find in code alone
+Report the exact function name, not just the file path.
 
 ## Output Format
 
 For each file, **list the core classes/functions inside**:
 
 ```
-## Documentation (check first for API usage)
-- docs/getting_started.md
-  - Overview of the project and basic usage
-- docs/api/authentication.md
-  - Detailed auth API documentation with examples
+## Documentation
+- path/to/doc.md - Brief description of content
 
 ## Examples (MOST IMPORTANT)
-- examples/auth_example.py
-  - Shows: Authentication flow with JWT
-  - Key usage: create_token(), verify_token()
+- path/to/example - What it demonstrates
+  - Key functions: func1(), func2()
 
 ## Implementation
-- src/auth/jwt_handler.py
-  - Classes: JWTHandler, TokenValidator
-  - Functions: create_token, verify_token, refresh_token
-
-- src/users/user_service.py
-  - Classes: UserService
-  - Methods: get_user, create_user, authenticate
+- path/to/module
+  - Classes: ClassName1, ClassName2
+  - Functions: func1, func2, func3
 
 ## Configuration
-- src/config/settings.py
-  - Constants: API_KEY, SECRET_KEY, TOKEN_EXPIRY
+- path/to/config - What settings it contains
 
 ## Tests
-- tests/test_auth.py - test cases showing parameter usage
+- path/to/tests - Test cases showing usage
 ```
 
 ## Rules
 - READ-ONLY mode
 - Search WHOLE repo first (no path restriction)
 - Use parallel searches
-- **Read __init__.py or index files to discover all available classes**
-- **Check docs/ for API documentation and tutorials**
+- **Read __init__.py to discover all available classes**
+- **Check docs/ for documentation and tutorials**
 - **List core classes/functions for each file you find**
 - No emojis
 """
@@ -208,17 +170,21 @@ You have access to terminal tools for:
 
 **Use EXACTLY what the task specifies. Do NOT substitute "similar" or "better" alternatives.**
 
+### General Rules
+- If task specifies an exact name/value -> Use it EXACTLY, not a "similar" alternative
+- If task specifies a function/method -> Find and use that EXACT function
+- If task specifies a library or version -> Use that EXACT library/version
+- If task specifies a file path -> Save to that EXACT path
+- Do NOT add features, parameters, or "improvements" not requested in the task
+
+### Finding Specific Functions
+When task asks for a specific feature or function:
+1. Search for the exact function name in the codebase
+2. Use that specific function directly, not a wrapper or helper class
+3. Example: Task says "send email" -> Find and use `send_email()`, not a generic `EmailService` class
+
 ### URL Handling
-- If task provides a URL (e.g., "https://api.example.com/endpoint"):
-  - Prioritize DIRECT HTTP access using appropriate library (requests, fetch, etc.)
-  - Create a simple function that calls the URL
-  - Do NOT assume it requires complex setup
-  - Example:
-    ```python
-    def query_api(query: str) -> str:
-        response = requests.post(url, json={"query": query})
-        return response.text
-    ```
+If task provides a URL, prioritize direct HTTP access (requests, fetch, etc.) over complex setup
 
 ## Important Rules
 
@@ -230,7 +196,7 @@ You have access to terminal tools for:
 
 ## Debugging Tips
 
-- If you see import errors, check the correct module path in __init__.py or package.json
+- If you see import errors, check the correct module path in __init__.py
 - If you see AttributeError, verify the exact attribute name in source files
 - Read more files if you need to understand the API better
 - **If a file does not exist, do NOT retry the same path** - search for the correct path instead
@@ -355,7 +321,7 @@ class GenericCodeAgent:
             tools=[FunctionTool(read_file_tool)] + terminal_tools + crawl4ai_toolkit.get_tools(),
         )
 
-    def run_explore_phase(self, task_description: str) -> tuple:
+    async def run_explore_phase(self, task_description: str) -> tuple:
         """Run the exploration phase to find relevant files."""
         self.explore_agent.reset()
 
@@ -373,7 +339,7 @@ Focus on finding:
 
         error_msg = None
         try:
-            response = self.explore_agent.step(explore_prompt)
+            response = await self.explore_agent.astep(explore_prompt)
             output = response.msgs[0].content if response and response.msgs else ""
             tool_calls = response.info.get("tool_calls", []) if hasattr(response, "info") else []
         except KeyboardInterrupt:
@@ -389,7 +355,7 @@ Focus on finding:
 
         return output, tool_calls, self.explore_agent.chat_history, error_msg
 
-    def run_code_phase(self, task_description: str, explore_output: str) -> tuple:
+    async def run_code_phase(self, task_description: str, explore_output: str) -> tuple:
         """Run the code generation phase to write and execute the script."""
         self.code_agent.reset()
 
@@ -440,7 +406,7 @@ it's likely a script issue that needs fixing.
 """
         error_msg = None
         try:
-            response = self.code_agent.step(code_prompt)
+            response = await self.code_agent.astep(code_prompt)
             output = response.msgs[0].content if response and response.msgs else ""
             tool_calls = response.info.get("tool_calls", []) if hasattr(response, "info") else []
         except KeyboardInterrupt:
@@ -562,7 +528,7 @@ it's likely a script issue that needs fixing.
 
         return str(log_filepath)
 
-    def run_task(self, task_name: str, task_description: str) -> dict:
+    async def run_task(self, task_name: str, task_description: str) -> dict:
         """Run complete task: explore + code generation."""
         print(f"\n{'='*60}")
         print(f"Task: {task_name}")
@@ -575,7 +541,7 @@ it's likely a script issue that needs fixing.
         # Phase 1: Explore
         print("\n[Phase 1: Exploring...]")
         explore_start = time.time()
-        explore_output, explore_tool_calls, explore_history, explore_error = self.run_explore_phase(task_description)
+        explore_output, explore_tool_calls, explore_history, explore_error = await self.run_explore_phase(task_description)
         explore_duration = time.time() - explore_start
         if explore_error:
             print(f"Explore phase error: {explore_error}")
@@ -590,7 +556,7 @@ it's likely a script issue that needs fixing.
             code_tool_calls = []
             code_history = []
         else:
-            code_output, code_tool_calls, code_history, code_error = self.run_code_phase(task_description, explore_output)
+            code_output, code_tool_calls, code_history, code_error = await self.run_code_phase(task_description, explore_output)
         code_duration = time.time() - code_start
         if code_error:
             print(f"Code phase error: {code_error}")
@@ -749,6 +715,12 @@ Examples:
         help="Maximum number of tasks to run from tasks file. Default: 10"
     )
     parser.add_argument(
+        "--parallel", "-P",
+        type=int,
+        default=1,
+        help="Number of parallel agent instances. Default: 1 (sequential)"
+    )
+    parser.add_argument(
         "--exp-id",
         type=str,
         default="",
@@ -782,7 +754,7 @@ Examples:
     exclude_dirs = {
         'node_modules', '.venv', '.git', '__pycache__', '.tox',
         '.mypy_cache', '.pytest_cache', 'dist', 'build',
-        '.initial_env', 'task-script*'
+        '.initial_env', 'task-script*', 'CAMEL_old.md'
     }
     if args.exclude:
         exclude_dirs.update(args.exclude)
@@ -820,41 +792,77 @@ Examples:
         exp_id=args.exp_id,
     )
 
+    # Helper function to create agent instance
+    def create_agent():
+        return GenericCodeAgent(
+            working_directory=project_dir,
+            context_file=context_file,
+            logs_dir=args.logs_dir,
+            exclude_dirs=exclude_dirs,
+            model_platform=model_platform,
+            model_type=model_type,
+            exp_id=args.exp_id,
+        )
+
     # Run tasks
-    if args.task:
-        # Single task mode
-        result = agent.run_task("single_task", args.task)
-        print(f"\n--- Result ---")
-        print(f"Status: {'ERROR' if result['has_error'] else 'SUCCESS'}")
-        print(f"Duration: {result['total_duration']:.2f}s")
-        print(f"Log: {result['log_path']}")
+    async def main():
+        if args.task:
+            # Single task mode
+            result = await agent.run_task("single_task", args.task)
+            print(f"\n--- Result ---")
+            print(f"Status: {'ERROR' if result['has_error'] else 'SUCCESS'}")
+            print(f"Duration: {result['total_duration']:.2f}s")
+            print(f"Log: {result['log_path']}")
 
-    elif args.tasks:
-        # Multiple tasks from JSON file
-        if not os.path.isfile(args.tasks):
-            print(f"Error: Tasks file does not exist: {args.tasks}")
-            sys.exit(1)
+        elif args.tasks:
+            # Multiple tasks from JSON file
+            if not os.path.isfile(args.tasks):
+                print(f"Error: Tasks file does not exist: {args.tasks}")
+                sys.exit(1)
 
-        with open(args.tasks, "r") as f:
-            task_list = json.load(f)
+            with open(args.tasks, "r") as f:
+                task_list = json.load(f)
 
-        results = []
-        cnt = 0
-        for task_name, task_description in task_list.items():
-            cnt += 1
-            result = agent.run_task(task_name, task_description)
-            results.append(result)
+            # Get tasks to run
+            tasks_to_run = list(task_list.items())[:args.max_tasks]
+            total_tasks = len(tasks_to_run)
 
-            print(f"\n--- Result Preview ---")
-            output_preview = result['code_output'][:500] if result['code_output'] else "N/A"
-            print(f"Code output: {output_preview}...")
+            if args.parallel > 1:
+                # Parallel execution with multiple agent instances
+                print(f"\n[Parallel mode: {args.parallel} agents]")
 
-            if cnt >= args.max_tasks:
-                break
+                async def run_single_task(task_info):
+                    task_name, task_desc = task_info
+                    task_agent = create_agent()
+                    return await task_agent.run_task(task_name, task_desc)
 
-        # Summary
-        print(f"\n{'='*60}")
-        print(f"Summary: {cnt} tasks completed")
-        print(f"Success: {sum(1 for r in results if not r['has_error'])}")
-        print(f"Errors:  {sum(1 for r in results if r['has_error'])}")
-        print(f"Logs:    {agent.logs_dir}")
+                # Process in batches
+                results = []
+                for i in range(0, total_tasks, args.parallel):
+                    batch = tasks_to_run[i:i + args.parallel]
+                    print(f"\n[Batch {i//args.parallel + 1}: "
+                          f"tasks {i+1}-{min(i+len(batch), total_tasks)}]")
+                    batch_results = await asyncio.gather(
+                        *[run_single_task(t) for t in batch]
+                    )
+                    results.extend(batch_results)
+            else:
+                # Sequential execution
+                results = []
+                for task_name, task_description in tasks_to_run:
+                    result = await agent.run_task(task_name, task_description)
+                    results.append(result)
+
+                    print(f"\n--- Result Preview ---")
+                    output_preview = (result['code_output'][:500]
+                                      if result['code_output'] else "N/A")
+                    print(f"Code output: {output_preview}...")
+
+            # Summary
+            print(f"\n{'='*60}")
+            print(f"Summary: {total_tasks} tasks completed")
+            print(f"Success: {sum(1 for r in results if not r['has_error'])}")
+            print(f"Errors:  {sum(1 for r in results if r['has_error'])}")
+            print(f"Logs:    {agent.logs_dir}")
+
+    asyncio.run(main())

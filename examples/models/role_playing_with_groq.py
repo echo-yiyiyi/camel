@@ -24,7 +24,6 @@ def main(model_type=None) -> None:
 
     agent_kwargs = {
         role: ModelFactory.create(
-            model_platform=ModelPlatformType.GROQ,
             model_type=model_type,
         )
         for role in ["assistant", "user", "task-specify"]

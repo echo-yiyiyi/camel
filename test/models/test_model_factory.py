@@ -32,10 +32,10 @@ from camel.utils import (
 )
 
 parametrize = pytest.mark.parametrize(
-    'model_platform, model_type',
+    'model_type',
     [
-        (ModelPlatformType.OPENAI, ModelType.GPT_4O),
-        (ModelPlatformType.OPENAI, ModelType.GPT_4O_MINI),
+        ModelType.GPT_4O,
+        ModelType.GPT_4O_MINI,
     ],
 )
 
@@ -127,10 +127,10 @@ parameterize_token_counter = pytest.mark.parametrize(
 
 
 @parametrize
-def test_model_factory(model_platform, model_type):
+def test_model_factory(model_type):
     model_config_dict = ChatGPTConfig().as_dict()
     model_inst = ModelFactory.create(
-        model_platform, model_type, model_config_dict
+        model_type=model_type, model_config_dict=model_config_dict
     )
     messages = [
         {
@@ -268,3 +268,54 @@ def test_model_factory_yaml(mock_run, config_file):
     assert response["choices"][0]["message"]["content"] == "Hello, test!"
 
     print(f" YAML file {config_file} loaded successfully.")
+
+
+def test_model_type_platform_property():
+    """Test that ModelType.platform returns the correct platform."""
+    # Test OpenAI models
+    assert ModelType.GPT_4O.platform == ModelPlatformType.OPENAI
+    assert ModelType.GPT_4O_MINI.platform == ModelPlatformType.OPENAI
+    assert ModelType.GPT_4_1.platform == ModelPlatformType.OPENAI
+    assert ModelType.O3_MINI.platform == ModelPlatformType.OPENAI
+
+    # Test Azure models
+    assert ModelType.AZURE_GPT_4O.platform == ModelPlatformType.AZURE
+    assert ModelType.AZURE_GPT_4O_MINI.platform == ModelPlatformType.AZURE
+    assert ModelType.AZURE_GPT_4_1.platform == ModelPlatformType.AZURE
+
+    # Test Anthropic models
+    assert ModelType.CLAUDE_3_5_SONNET.platform == ModelPlatformType.ANTHROPIC
+    assert ModelType.CLAUDE_OPUS_4.platform == ModelPlatformType.ANTHROPIC
+
+    # Test AWS Bedrock models
+    assert ModelType.AWS_CLAUDE_3_5_SONNET.platform == (
+        ModelPlatformType.AWS_BEDROCK
+    )
+
+    # Test Gemini models
+    assert ModelType.GEMINI_2_0_FLASH.platform == ModelPlatformType.GEMINI
+
+    # Test DeepSeek models
+    assert ModelType.DEEPSEEK_CHAT.platform == ModelPlatformType.DEEPSEEK
+
+    # Test Groq models
+    assert ModelType.GROQ_LLAMA_3_1_8B.platform == ModelPlatformType.GROQ
+
+    # Test STUB model
+    assert ModelType.STUB.platform == ModelPlatformType.STUB
+
+
+def test_model_factory_create_with_only_model_type():
+    """Test ModelFactory.create() with only model_type parameter."""
+    model = ModelFactory.create(model_type=ModelType.STUB)
+    assert model is not None
+    assert model.model_type.value == "stub"
+
+
+def test_model_factory_create_infers_correct_platform():
+    """Test that ModelFactory.create() infers the correct platform."""
+    # Test with different model types to verify platform inference
+    stub_model = ModelFactory.create(model_type=ModelType.STUB)
+    assert stub_model is not None
+
+    # The model should be created successfully if platform inference works

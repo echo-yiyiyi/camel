@@ -35,7 +35,6 @@ def setup_pyautogui_agent(model_type=ModelType.GPT_4O_MINI, temperature=0.1):
     model_config = ChatGPTConfig(temperature=temperature)
     model = ModelFactory.create(
         model_type=model_type,
-        model_platform=ModelPlatformType.OPENAI,
         model_config_dict=model_config.as_dict(),
     )
 

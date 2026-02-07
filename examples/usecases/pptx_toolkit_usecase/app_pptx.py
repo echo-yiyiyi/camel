@@ -115,7 +115,6 @@ def generate_pptx_json_with_agent(topic: str, slide_count: int, api_key: str):
         system_message="You are an AI Assistant that strictly follows instructions to produce only valid JSON for slides.",
         message_window_size=5,
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
             model_type=ModelType.GPT_4_1,
             model_config_dict={"temperature": 0.0},
         )

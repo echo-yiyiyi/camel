@@ -23,7 +23,6 @@ async def main():
     config_path = Path(__file__).parent / "mcp_servers_config.json"
 
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
     )
 
