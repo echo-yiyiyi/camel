@@ -1,7 +1,7 @@
 import asyncio
 from camel.agents import MCPAgent
 from camel.models import ModelFactory
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 
 async def main():
     # DeepWiki MCP server config with correct type
@@ -17,7 +17,6 @@ async def main():
 
     # Create model with default platform and type
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
     )
 

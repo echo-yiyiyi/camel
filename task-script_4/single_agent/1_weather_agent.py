@@ -2,11 +2,10 @@ from camel.agents import ChatAgent
 from camel.models import ModelFactory
 from camel.configs import QwenConfig
 from camel.toolkits.weather_toolkit import WeatherToolkit
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 
 # Create the Qwen 2.5 14B Instruct model
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.QWEN,
     model_type=ModelType.QWEN_2_5_14B,
     model_config_dict=QwenConfig(temperature=0.2).as_dict(),
 )

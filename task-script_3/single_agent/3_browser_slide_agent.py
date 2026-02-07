@@ -1,13 +1,12 @@
 from camel.agents import ChatAgent
 from camel.models import ModelFactory
 from camel.toolkits import BrowserToolkit, PPTXToolkit
-from camel.types import ModelType, ModelPlatformType
+from camel.types import ModelType
 
 
 def main():
     # Create the model
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.TOGETHER,
         model_type=ModelType.TOGETHER_LLAMA_3_1_8B
     )
 

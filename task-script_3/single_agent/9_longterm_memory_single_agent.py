@@ -2,14 +2,13 @@ from camel.agents import ChatAgent
 from camel.memories.agent_memories import LongtermAgentMemory
 from camel.toolkits.human_toolkit import HumanToolkit
 from camel.models.model_factory import ModelFactory
-from camel.types import ModelType, ModelPlatformType
+from camel.types import ModelType
 from camel.memories.context_creators.score_based import ScoreBasedContextCreator
 
 
 def main():
     # Create the model
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.OLLAMA,
         model_type=ModelType.GROQ_LLAMA_3_1_8B
     )
 

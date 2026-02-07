@@ -1,13 +1,12 @@
 from camel.agents import ChatAgent
 from camel.models import ModelFactory
 from camel.toolkits.memory_toolkit import MemoryToolkit
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 
 
 def main():
     # Create a model instance
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT
     )
 

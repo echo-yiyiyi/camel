@@ -119,7 +119,7 @@ For each file, list the core classes/functions inside:
 ## Examples (MOST IMPORTANT)
 - examples/models/llama_model_example.py
   - Shows: ModelFactory.create() with LLAMA model
-  - Key usage: model_type=ModelType.LLAMA_3_1_8B
+  - Key usage: model_platform=ModelPlatformType.TOGETHER, model_type=ModelType.LLAMA_3_1_8B
 
 ## Implementation
 - camel/memories/agent_memories.py

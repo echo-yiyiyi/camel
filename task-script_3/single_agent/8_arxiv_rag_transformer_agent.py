@@ -8,7 +8,7 @@ from camel.memories.records import MemoryRecord
 from camel.models import ModelFactory
 from camel.embeddings import OpenAIEmbedding
 from camel.storages.vectordb_storages import QdrantStorage
-from camel.types.enums import ModelPlatformType, ModelType
+from camel.types.enums import ModelType
 from camel.utils import OpenAITokenCounter
 
 
@@ -24,7 +24,6 @@ def wait_for_tool_call(agent, max_wait=10):
 def main():
     # Create the model
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT
     )
 

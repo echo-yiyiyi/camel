@@ -11,7 +11,7 @@ from camel.societies.workforce.workforce import Workforce
 from camel.toolkits.mcp_toolkit import MCPToolkit
 from camel.toolkits.pptx_toolkit import PPTXToolkit
 from camel.models import ModelFactory
-from camel.types import ModelType, ModelPlatformType
+from camel.types import ModelType
 
 
 def main():
@@ -29,7 +29,6 @@ def main():
     mcp_worker = ChatAgent(
         name="MCPWorker",
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.MCP,
             model_type=ModelType.LLAMA_3_1_8B
         ),
         toolkit=mcp_toolkit
@@ -42,7 +41,6 @@ def main():
     ppt_worker = ChatAgent(
         name="PPTWorker",
         model=ModelFactory.create(
-            model_platform=ModelPlatformType.LOCAL,
             model_type=ModelType.LLAMA_3_1_8B
         ),
         toolkit=ppt_toolkit

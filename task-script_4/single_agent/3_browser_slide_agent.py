@@ -1,21 +1,18 @@
 from camel.agents import ChatAgent
 from camel.models import ModelFactory
 from camel.toolkits import BrowserToolkit, PPTXToolkit
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 
 # Create models for the agent and browser/planning agents
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 
 web_agent_model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 
 planning_agent_model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

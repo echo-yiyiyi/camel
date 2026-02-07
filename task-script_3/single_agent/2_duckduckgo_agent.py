@@ -1,7 +1,7 @@
 from camel.agents import ChatAgent
 from camel.models import ModelFactory
 from camel.configs.gemini_config import GeminiConfig
-from camel.types.enums import ModelPlatformType, ModelType
+from camel.types.enums import ModelType
 from camel.toolkits.search_toolkit import SearchToolkit
 
 
@@ -11,7 +11,6 @@ def main():
 
     # Create Gemini model without passing tools in constructor
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.GEMINI,
         model_type=ModelType.GEMINI_3_PRO,
         model_config_dict=gemini_config.__dict__,
     )

@@ -4,7 +4,7 @@ from camel.memories.context_creators.score_based import ScoreBasedContextCreator
 from camel.utils import OpenAITokenCounter
 from camel.toolkits.human_toolkit import HumanToolkit
 from camel.models.model_factory import ModelFactory
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 
 # Create the context creator for memory
 context_creator = ScoreBasedContextCreator(
@@ -17,7 +17,6 @@ human_toolkit = HumanToolkit()
 
 # Create the model instance
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

@@ -150,6 +150,11 @@ You have access to terminal tools for:
 
 ## Workflow (MUST FOLLOW IN ORDER)
 
+### Step 0: FOLLOW PROJECT CONTEXT RULES
+**If Project-Specific Context is provided below, follow its rules EXACTLY.**
+- These rules override any patterns you see in example files
+- Pay special attention to "CRITICAL" or "ALWAYS/NEVER" instructions
+
 ### Step 1: READ BEFORE WRITE (MANDATORY)
 **You MUST read files that are relevant to what you're going to write before writing any code.**
 - Read example files or implementation files that relate to your task
@@ -158,6 +163,7 @@ You have access to terminal tools for:
 
 ### Step 2: Write the script
 - Copy import statements and API patterns EXACTLY from the files you read
+- But if Project Context has different rules, follow Project Context
 - Use `shell_write_content_to_file` to save the script
 
 ### Step 3: Execute the script

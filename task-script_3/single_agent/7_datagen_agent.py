@@ -2,7 +2,7 @@ import sympy
 from camel.agents import ChatAgent
 from camel.datagen.cot_datagen import CoTDataGenerator
 from camel.models import ModelFactory
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 
 # Define the question
 question = "Solve the quadratic equation 2x^2 - 5x - 3 = 0"
@@ -18,13 +18,11 @@ system_message_generator = "You are a helpful assistant that solves math problem
 system_message_verifier = "You are a strict verifier that checks if the answer is correct."
 
 model_generator = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
     model_config_dict={"temperature": 0}
 )
 
 model_verifier = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
     model_config_dict={"temperature": 0}
 )

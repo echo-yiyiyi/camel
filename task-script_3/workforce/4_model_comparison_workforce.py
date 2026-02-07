@@ -1,7 +1,7 @@
 import asyncio
 from camel.agents import ChatAgent
 from camel.models import ModelFactory
-from camel.types.enums import ModelPlatformType, ModelType
+from camel.types.enums import ModelType
 from camel.societies.workforce.workforce import Workforce
 from camel.societies.workforce.single_agent_worker import SingleAgentWorker
 from camel.tasks.task import Task
@@ -9,17 +9,14 @@ from camel.tasks.task import Task
 def main():
     # Create models
     openai_model = ModelFactory.create(
-        model_platform=ModelPlatformType.OPENAI,
         model_type=ModelType.GPT_4O_MINI
     )
 
     gemini_model = ModelFactory.create(
-        model_platform=ModelPlatformType.GEMINI,
         model_type=ModelType.GEMINI_3_PRO
     )
 
     qwen_model = ModelFactory.create(
-        model_platform=ModelPlatformType.QWEN,
         model_type=ModelType.QWEN_3_CODER_PLUS
     )
 

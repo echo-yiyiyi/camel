@@ -3,7 +3,7 @@ from camel.toolkits.terminal_toolkit.terminal_toolkit import TerminalToolkit
 from camel.toolkits.code_execution import CodeExecutionToolkit
 from camel.configs import ChatGPTConfig
 from camel.models import ModelFactory
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 
 
 def main():
@@ -14,7 +14,6 @@ def main():
     # Create model config and model
     model_config_dict = ChatGPTConfig(temperature=0.0).as_dict()
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
         model_config_dict=model_config_dict,
     )

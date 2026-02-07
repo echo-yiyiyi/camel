@@ -3,7 +3,7 @@ import os
 from camel.agents import ChatAgent
 from camel.models import ModelFactory
 from camel.toolkits import TerminalToolkit, CodeExecutionToolkit
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 
 # Define system message
 system_message = (
@@ -27,7 +27,6 @@ tools = terminal_tools + code_exec_tools
 
 # Create model
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

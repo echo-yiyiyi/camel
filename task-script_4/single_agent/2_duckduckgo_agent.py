@@ -3,7 +3,7 @@ from camel.agents import ChatAgent
 from camel.configs import GeminiConfig
 from camel.models import ModelFactory
 from camel.toolkits import SearchToolkit
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 
 
 def main():
@@ -12,7 +12,6 @@ def main():
 
     # Create Gemini model
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.GEMINI,
         model_type=ModelType.GEMINI_3_PRO,
         model_config_dict=GeminiConfig(temperature=0.2).as_dict(),
     )

@@ -4,7 +4,7 @@ from camel.societies.workforce.role_playing_worker import RolePlayingWorker
 from camel.toolkits.search_toolkit import SearchToolkit
 from camel.toolkits.browser_toolkit import BrowserToolkit
 from camel.models import ModelFactory
-from camel.types.enums import ModelType, ModelPlatformType
+from camel.types.enums import ModelType
 
 
 def main():
@@ -29,7 +29,6 @@ def main():
     search_assistant_agent_kwargs = {
         "system_message": "You are a helpful search assistant.",
         "model": ModelFactory.create(
-            model_platform=ModelPlatformType.DEFAULT,
             model_type=ModelType.DEFAULT,
         ),
         "tools": [brave_search_tool],
@@ -54,7 +53,6 @@ def main():
     browser_assistant_agent_kwargs = {
         "system_message": "You are a helpful browser assistant.",
         "model": ModelFactory.create(
-            model_platform=ModelPlatformType.DEFAULT,
             model_type=ModelType.DEFAULT,
         ),
         "tools": [browser_tool],

@@ -4,7 +4,7 @@ from camel.toolkits import ArxivToolkit
 from camel.memories.blocks.vectordb_block import VectorDBBlock
 from camel.memories.agent_memories import VectorDBMemory
 from camel.memories.context_creators.score_based import ScoreBasedContextCreator
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 from camel.memories.records import MemoryRecord
 import time
 
@@ -14,7 +14,6 @@ tools = arxiv_toolkit.get_tools()
 
 # Create model
 model = ModelFactory.create(
-    model_platform=ModelPlatformType.DEFAULT,
     model_type=ModelType.DEFAULT,
 )
 

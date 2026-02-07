@@ -4,7 +4,7 @@ Script to create an MCPAgent with MCP tools using the DeepWiki server to retriev
 import asyncio
 from camel.agents import MCPAgent
 from camel.models import ModelFactory
-from camel.types import ModelPlatformType, ModelType
+from camel.types import ModelType
 
 async def main():
     # Local config dictionary for MCPToolkit with DeepWiki server
@@ -21,7 +21,6 @@ async def main():
 
     # Create model
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.DEFAULT,
         model_type=ModelType.DEFAULT,
     )
 

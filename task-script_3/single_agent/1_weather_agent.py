@@ -2,13 +2,12 @@ from camel.agents import ChatAgent
 from camel.models import ModelFactory
 from camel.configs import QwenConfig
 from camel.toolkits.weather_toolkit import WeatherToolkit
-from camel.types.enums import ModelPlatformType, ModelType
+from camel.types import ModelType
 
 
 def main():
     # Create Qwen model with Qwen2.5-14B-Instruct
     model = ModelFactory.create(
-        model_platform=ModelPlatformType.QWEN,
         model_type=ModelType.QWEN_2_5_14B,
         model_config_dict=QwenConfig().as_dict()
     )
