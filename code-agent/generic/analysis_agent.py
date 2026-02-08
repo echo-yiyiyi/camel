@@ -13,13 +13,14 @@
 # ========= Copyright 2023-2025 @ CAMEL-AI.org. All Rights Reserved. =========
 
 """
-Diagnostic Agent: LLM-as-Judge for Code Agent Analysis
+Analysis Agent: LLM-as-Judge for Code Agent Evaluation
 
-This agent analyzes task logs and ground truth to identify problems in:
-1. Code Agent behavior (wrong patterns, missed files, incorrect API usage)
-2. CAMEL codebase issues (missing examples, confusing APIs, documentation gaps)
+This agent evaluates generated code against ground truth to determine:
+1. Whether the generated code matches task requirements
+2. Whether the execution was successful
+3. Root cause analysis for failures
 
-It uses the code search toolkit to verify issues against the actual codebase.
+It uses CoT (Chain of Thought) to analyze each mismatch and determine acceptability.
 """
 
 import os
@@ -36,7 +37,7 @@ from camel.types import ModelType
 from generic_code_search_toolkit import GenericCodeSearchToolkit
 
 
-DIAGNOSTIC_SYSTEM_PROMPT = """You evaluate generated code against ground truth.
+ANALYSIS_SYSTEM_PROMPT = """You evaluate generated code against ground truth.
 
 ## What to Compare
 
@@ -133,8 +134,8 @@ Example:
 """
 
 
-class DiagnosticAgent:
-    """Agent that diagnoses code generation issues using LLM-as-Judge approach."""
+class AnalysisAgent:
+    """Agent that evaluates code generation results using LLM-as-Judge approach."""
 
     def __init__(
         self,
@@ -166,12 +167,12 @@ class DiagnosticAgent:
 
         # Create agent with search tools
         self.agent = ChatAgent(
-            system_message=DIAGNOSTIC_SYSTEM_PROMPT,
+            system_message=ANALYSIS_SYSTEM_PROMPT,
             model=self.model,
             tools=self.search_toolkit.get_tools(),
         )
 
-    def diagnose(
+    def analyze(
         self,
         log_path: str,
         script_path: Optional[str] = None,
@@ -233,34 +234,34 @@ Compare generated vs ground truth. Only check items the task requires.
 Output your evaluation in the format specified.
 """
 
-        # Run diagnosis
+        # Run analysis
         self.agent.reset()
         response = self.agent.step(prompt)
 
-        diagnosis = response.msgs[0].content if response and response.msgs else ""
+        analysis = response.msgs[0].content if response and response.msgs else ""
         tool_calls = response.info.get("tool_calls", []) if hasattr(response, "info") else []
 
         # Clean up markdown code block wrapper if present
-        diagnosis = diagnosis.strip()
-        if diagnosis.startswith("```markdown"):
-            diagnosis = diagnosis[len("```markdown"):].strip()
-        if diagnosis.startswith("```"):
-            diagnosis = diagnosis[3:].strip()
-        if diagnosis.endswith("```"):
-            diagnosis = diagnosis[:-3].strip()
+        analysis = analysis.strip()
+        if analysis.startswith("```markdown"):
+            analysis = analysis[len("```markdown"):].strip()
+        if analysis.startswith("```"):
+            analysis = analysis[3:].strip()
+        if analysis.endswith("```"):
+            analysis = analysis[:-3].strip()
 
-        # Save diagnosis report
+        # Save analysis report
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         log_name = Path(log_path).stem
         report_path = self.output_dir / f"eval_{log_name}_{timestamp}.md"
 
         with open(report_path, 'w', encoding='utf-8') as f:
-            f.write(diagnosis)
+            f.write(analysis)
 
         print(f"\nDiagnosis saved to: {report_path}")
 
         return {
-            "diagnosis": diagnosis,
+            "analysis": analysis,
             "tool_calls": tool_calls,
             "report_path": str(report_path),
         }
@@ -327,7 +328,7 @@ Output your evaluation in the format specified.
                 print(f"  [SKIP] No log found for {gt_file.name}")
                 continue
 
-            result = self.diagnose(
+            result = self.analyze(
                 log_path=log_path,
                 script_path=script_path,
                 ground_truth_path=str(gt_file),
@@ -336,14 +337,14 @@ Output your evaluation in the format specified.
 
             # Check if PASS or FAIL from the Verdict section
             # Look for "**Result**: ✅ PASS" or "**Result**: ❌ FAIL"
-            diagnosis = result["diagnosis"]
-            if "**Result**: ✅ PASS" in diagnosis:
+            analysis = result["analysis"]
+            if "**Result**: ✅ PASS" in analysis:
                 is_pass = True
-            elif "**Result**: ❌ FAIL" in diagnosis:
+            elif "**Result**: ❌ FAIL" in analysis:
                 is_pass = False
             else:
                 # Fallback: check if more PASS than FAIL in verdict section
-                verdict_section = diagnosis.split("## Verdict")[-1] if "## Verdict" in diagnosis else diagnosis
+                verdict_section = analysis.split("## Verdict")[-1] if "## Verdict" in analysis else analysis
                 is_pass = "PASS" in verdict_section and "FAIL" not in verdict_section
 
             if is_pass:
@@ -399,19 +400,19 @@ Output your evaluation in the format specified.
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Diagnostic Agent - LLM-as-Judge for Code Generation Evaluation",
+        description="Analysis Agent - LLM-as-Judge for Code Generation Evaluation",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
     # Single file evaluation
-    python diagnostic_agent.py \\
+    python analysis_agent.py \\
         --log logs/code_task_1.log \\
         --script task-script/1_weather.py \\
         --ground-truth ground_truth/1_weather.py \\
         --task "Create weather agent with Qwen"
 
     # Batch evaluation
-    python diagnostic_agent.py \\
+    python analysis_agent.py \\
         --log-dir logs/ \\
         --script-dir task-script/single_agent/ \\
         --ground-truth-dir ground_truth/single_agent/ \\
@@ -520,7 +521,7 @@ Examples:
     model_type = model_mapping.get(args.model.lower(), ModelType.GPT_4O)
 
     # Create diagnostic agent
-    agent = DiagnosticAgent(
+    agent = AnalysisAgent(
         working_directory=project_dir,
         model_type=model_type,
         output_dir=args.output,
@@ -528,7 +529,7 @@ Examples:
 
     # Run evaluation
     if is_single_mode:
-        result = agent.diagnose(
+        result = agent.analyze(
             log_path=args.log,
             script_path=args.script,
             ground_truth_path=args.ground_truth,
@@ -537,8 +538,8 @@ Examples:
         print("\n" + "="*60)
         print("EVALUATION RESULT")
         print("="*60)
-        print(result["diagnosis"][:3000])
-        if len(result["diagnosis"]) > 3000:
+        print(result["analysis"][:3000])
+        if len(result["analysis"]) > 3000:
             print("\n... (truncated, see full report)")
         print(f"\nFull report: {result['report_path']}")
     else:

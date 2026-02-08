@@ -1,6 +1,6 @@
 # CAMEL Framework Context
 
-This file contains CAMEL-specific context information for the explore and code agents.
+This file contains CAMEL-specific context information for the explore and code agents.  
 Load this file before running tasks on the CAMEL repository.
 
 ## Repository Structure
@@ -21,62 +21,6 @@ Load this file before running tasks on the CAMEL repository.
 - `test/` - Test files
 - `docs/` - Documentation
 
-## CAMEL-Specific Search Techniques
-
-### Technique: Find SPECIFIC tool methods
-When task specifies a tool like "brave search", find the exact method:
-```python
-grep_search("search_brave", path="camel/toolkits")
-grep_search("def search_brave")
-```
-Don't use get_tools() if task asks for a specific tool - use the specific method directly.
-
-### Technique: Read __init__.py to understand module exports
-```python
-read_file("camel/toolkits/__init__.py")
-read_file("camel/models/__init__.py")
-read_file("camel/memories/__init__.py")
-```
-Class names often don't match file names (e.g., `LongtermAgentMemory` is in `agent_memories.py`, not `longterm_memory.py`).
-
-### Technique: Read documentation for API usage and tutorials
-CAMEL has extensive documentation in the `docs/` directory:
-```python
-# Find all documentation files
-glob_search("**/*.md", path="docs")
-
-# Search for specific topics
-grep_search("ChatAgent", glob_filter="*.md", path="docs")
-grep_search("memory", glob_filter="*.md", path="docs", ignore_case=True)
-
-# Key documentation files
-read_file("docs/key_modules/agents.md")      # Agent usage guide
-read_file("docs/key_modules/models.md")      # Model configuration
-read_file("docs/key_modules/memories.md")    # Memory systems
-read_file("docs/key_modules/tools.md")       # Toolkit usage
-read_file("docs/cookbooks/create_your_first_agent.md")  # Getting started
-```
-
-### Search Examples for CAMEL
-```python
-# Find model examples
-glob_search("**/*llama*.py")
-find_imports("LlamaModel")
-
-# Find toolkit examples
-glob_search("**/*weather*.py")
-find_imports("WeatherToolkit")
-
-# Find memory implementations
-grep_search("class.*Memory", path="camel/memories")
-```
-
-## Code Writing Rules for CAMEL
-
-### Tool Selection
-- Task says "brave search" -> Use `search_toolkit.search_brave` EXACTLY
-- Do NOT use `get_tools()` which returns ALL tools
-- Do NOT substitute with other search engines
 
 ### Import Patterns
 ```python
@@ -105,34 +49,69 @@ response = agent.step("Hello")
 | LongtermAgentMemory | camel/memories/agent_memories.py |
 | VectorDBMemory | camel/memories/vector_db_memory.py |
 
-## Output Format for Explore Agent
+## Code Writing Rules
 
-For each file, list the core classes/functions inside:
+### Tool Selection
+- When a task explicitly requires a specific tool (e.g., "tools to search duckduckgo"), use the exact tool attribute or method provided by the toolkit (e.g., `SearchToolkit().search_duckduckgo`) rather than generic methods that return multiple tools (e.g., `get_tools()`).
+- Avoid using generic tool retrieval methods like `get_tools()` when the task specifies a particular tool to ensure precise compliance with task requirements.
 
+### Model Creation
+- Use `ModelFactory.create()` with the appropriate `ModelType` enum to instantiate models.
+- When needed, pass model-specific configuration dictionaries (e.g., `model_config_dict=GeminiConfig(temperature=0.2).as_dict()`).
+
+### Agent Creation
+- Instantiate `ChatAgent` with required parameters such as `model`, optional `tools` list, and `system_message` to set context.
+- Pass tools as a list of tool instances, not as a generic toolkit object.
+
+## Common Mistakes to Avoid
+
+- Do NOT use `SearchToolkit().get_tools()` when the task requires a specific search tool; this returns all tools and violates task specificity.
+- Do NOT ignore explicit tool requirements mentioned in the task description; always prioritize exact tool usage.
+- Avoid mixing multiple tools when only one specific tool is requested.
+
+## Code Examples
+
+### Correct Usage of a Specific Tool
+
+```python
+from camel.agents import ChatAgent
+from camel.models import ModelFactory
+from camel.toolkits import SearchToolkit
+from camel.types import ModelType
+from camel.configs import GeminiConfig
+
+# Instantiate Gemini model with configuration
+model = ModelFactory.create(
+    model_type=ModelType.GEMINI_2_5_PRO,
+    model_config_dict=GeminiConfig(temperature=0.0).as_dict()
+)
+
+# Get the specific DuckDuckGo search tool
+search_tool = SearchToolkit().search_duckduckgo
+
+# Create agent with the specific tool only
+agent = ChatAgent(model=model, tools=[search_tool])
+
+# Ask a question
+response = agent.step("Search CAMEL-AI framework on DuckDuckGo and provide summary.")
+print(response.msgs[0].content)
 ```
-## Documentation (check for API usage and tutorials)
-- docs/key_modules/agents.md
-  - Explains ChatAgent usage and configuration
-- docs/cookbooks/create_your_first_agent.md
-  - Step-by-step tutorial for creating agents
 
-## Examples (MOST IMPORTANT)
-- examples/models/llama_model_example.py
-  - Shows: ModelFactory.create() with LLAMA model
-  - Key usage: model_platform=ModelPlatformType.TOGETHER, model_type=ModelType.LLAMA_3_1_8B
+### Incorrect Usage to Avoid
 
-## Implementation
-- camel/memories/agent_memories.py
-  - Classes: AgentMemory, ChatHistoryMemory, VectorDBMemory, **LongtermAgentMemory**
-  - Note: LongtermAgentMemory is for persistent memory across sessions
+```python
+# Avoid this when a specific tool is required
+search_toolkit = SearchToolkit()
+tools = search_toolkit.get_tools()  # returns all tools, not just DuckDuckGo
 
-- camel/models/togetherai_model.py
-  - Classes: TogetherAIModel
-  - Config: TogetherAIConfig
-
-## Enums (for exact values)
-- camel/types/enums.py:317 - LLAMA_3_1_8B = "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"
-
-## Tests
-- test/models/test_qwen_model.py - test cases showing parameter usage
+agent = ChatAgent(model=model, tools=tools)  # Violates task requirement
 ```
+
+## Search Techniques for Tool Identification
+
+- When a task mentions a specific tool by name, perform targeted searches (e.g., grep) for function or attribute definitions matching that tool name within the `camel/toolkits/` directory.
+- Prioritize reading example scripts that demonstrate the exact tool usage rather than generic toolkit usage to understand correct usage patterns.
+
+---
+
+This will help ensure generated code precisely matches task requirements, especially regarding tool usage.

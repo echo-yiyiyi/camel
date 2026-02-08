@@ -1,0 +1,50 @@
+# CAMEL Framework Context
+
+This file contains CAMEL-specific context information for the explore and code agents.
+Load this file before running tasks on the CAMEL repository.
+
+## Repository Structure
+
+### Core Modules
+- `camel/agents/` - Agent implementations (ChatAgent is the base)
+- `camel/models/` - LLM provider integrations (50+)
+- `camel/memories/` - Memory systems (ChatHistoryMemory, LongtermAgentMemory, VectorDBMemory)
+- `camel/configs/` - Model configuration classes
+- `camel/toolkits/` - Tool integrations (50+)
+- `camel/types/` - Enums (ModelType, RoleType)
+
+### Other Directories
+- `examples/` - Usage examples
+- `examples/models/` - Model usage examples
+- `examples/toolkits/` - Toolkit examples
+- `examples/memories/` - Memory usage examples
+- `test/` - Test files
+- `docs/` - Documentation
+
+
+### Import Patterns
+```python
+# Standard imports
+from camel.agents import ChatAgent
+from camel.models import ModelFactory
+from camel.types import ModelType
+
+# Create model (platform is auto-inferred from ModelType)
+model = ModelFactory.create(
+    model_type=ModelType.GPT_4O_MINI,
+)
+
+# Create agent
+agent = ChatAgent(system_message="You are helpful.", model=model)
+response = agent.step("Hello")
+```
+
+### Common Classes and Their Locations
+| Class | File |
+|-------|------|
+| ChatAgent | camel/agents/chat_agent.py |
+| ModelFactory | camel/models/model_factory.py |
+| FunctionTool | camel/toolkits/function_tool.py |
+| ChatHistoryMemory | camel/memories/chat_history_memory.py |
+| LongtermAgentMemory | camel/memories/agent_memories.py |
+| VectorDBMemory | camel/memories/vector_db_memory.py |

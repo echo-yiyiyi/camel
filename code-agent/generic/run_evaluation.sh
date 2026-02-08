@@ -57,7 +57,7 @@ run_evaluation() {
     mkdir -p "$output_dir"
 
     cd "$SCRIPT_DIR"
-    python diagnostic_agent.py \
+    python analysis_agent.py \
         --log-dir "$log_dir" \
         --script-dir "$script_dir" \
         --ground-truth-dir "$GROUND_TRUTH_DIR" \
