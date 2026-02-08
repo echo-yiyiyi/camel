@@ -8,9 +8,11 @@ set -e
 # Configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CAMEL_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
-GROUND_TRUTH_DIR="${CAMEL_ROOT}/task-script_3/single_agent"
+
+# Paths (ground_truth is in parent directory of CAMEL_ROOT)
+GROUND_TRUTH_DIR="$(dirname "$CAMEL_ROOT")/ground_truth/single_agent"
 TASK_LIST="${CAMEL_ROOT}/code-agent/task_list.json"
-MODEL="gpt-4o-mini"  # Use gpt-4o for better accuracy, gpt-4o-mini for speed
+MODEL="gpt-4-1"  # Use gpt-4-1 for evaluation
 
 # Output directory
 OUTPUT_BASE="${CAMEL_ROOT}/evaluation_reports"
@@ -68,8 +70,8 @@ run_evaluation() {
     echo "Report saved to: $output_dir"
 }
 
-# Evaluation 1: With context
-run_evaluation "with_context" \
+# Run evaluation
+run_evaluation "w_context_refactored" \
     "${CAMEL_ROOT}/logsw-context-refactored" \
     "${CAMEL_ROOT}/task-script-w-context-refactored/single_agent"
 

@@ -36,101 +36,100 @@ from camel.types import ModelType
 from generic_code_search_toolkit import GenericCodeSearchToolkit
 
 
-DIAGNOSTIC_SYSTEM_PROMPT = """You are a Diagnostic Agent (LLM-as-Judge) that evaluates code generation results.
+DIAGNOSTIC_SYSTEM_PROMPT = """You evaluate generated code against ground truth.
 
-## Your Role
-You evaluate whether a generated script is correct by comparing it against:
-1. The ground truth (expected correct implementation)
-2. The task requirements
-3. Whether the script successfully executed
+## What to Compare
 
-## Tools Available
-You have code search tools to verify issues against the actual codebase:
-- `glob_search(pattern)` - Find files by name pattern
-- `grep_search(pattern)` - Search file contents
-- `read_file(file_path)` - Read file contents
-- `find_definition(name)` - Find class/function definitions
-- `find_imports(module_name)` - Find files that import a module
+Identify key functional elements from ground truth CODE (not task description):
+- Model type (e.g., QWEN_2_5_14B, GEMINI_2_5_PRO)
+- Toolkit classes (e.g., WeatherToolkit, SearchToolkit, HumanToolkit)
+- Agent type (e.g., ChatAgent, MCPAgent)
+- Key API calls and methods
+- Memory/retrieval classes if used
 
-## Evaluation Criteria
+**IMPORTANT**: Compare Generated code against Ground Truth CODE, not against task description.
+If Ground Truth code uses `ModelType.QWEN_2_5_14B` and Generated also uses `ModelType.QWEN_2_5_14B`, they MATCH.
 
-### PASS Conditions (script is CORRECT):
-1. **Exact Match**: Generated script matches ground truth
-2. **Functional Match**: Script differs but:
-   - Successfully executed (check log for errors)
-   - Differences are non-essential (extra comments, different variable names)
-   - Extra parameters are NOT required by the task
-3. **Better Implementation**: Script is actually better than ground truth
+## CRITICAL: Acceptable Logic
 
-### FAIL Conditions (script is INCORRECT):
-1. **Wrong API**: Used non-existent or wrong API (e.g., `QwenModel` instead of `ModelFactory.create`)
-2. **Wrong Values**: Used wrong enum values, model names, etc.
-3. **Missing Required Features**: Task required something that's missing
-4. **Execution Failed**: Script failed to run (check log)
-5. **Wrong Tool/Method**: Task specified a specific tool but used different one
+**Step 1**: Check if task description specifies this item exactly
+**Step 2**: Apply rules based on task specification
 
-## Analysis Steps
+| Task specifies exactly? | Match? | Execution | Acceptable? |
+|-------------------------|--------|-----------|-------------|
+| Yes (e.g., "Qwen2.5-14B") | ✅ | Any | ✅ |
+| Yes (e.g., "Qwen2.5-14B") | ❌ | Any | ❌ |
+| Partially (e.g., "Gemini model") | Same family | Any | ✅ |
+| Partially (e.g., "Gemini model") | Different family | Any | ❌ |
+| No | Any | SUCCESS | ✅ |
+| No | Any | FAILED | ❌ |
 
-### Step 1: Parse Task Requirements
-- What does the task require?
-- What model/tool/API is specified?
-- What is the expected output file path?
+**Examples**:
 
-### Step 2: Compare Generated vs Ground Truth
-For each difference, determine:
-- Is it a critical difference (wrong API, wrong model)?
-- Is it acceptable (extra imports, different formatting)?
-- Is the extra parameter required by the task?
+Task: "create agent with Qwen2.5-14B model"
+- Model: task specifies exact version → QWEN_2_5_14B must match exactly
 
-### Step 3: Check Execution Status
-From the log:
-- Did the script execute successfully?
-- Were there any errors?
-- Did it produce expected output?
+Task: "create agent using Gemini model"
+- Model: task says "Gemini" (no version) → GEMINI_2_5_PRO or GEMINI_3_PRO both OK (same family)
 
-### Step 4: Final Verdict
+Task: "create agent with DuckDuckGo search"
+- Tool: task specifies "DuckDuckGo" → must use search_duckduckgo(), not get_tools()
+
+Task: "create agent with browser tools"
+- Model type: task doesn't specify → any model OK if execution succeeds
+
+Task: "create agent with human interaction tools"
+- Toolkit: task specifies "human interaction" → must use HumanToolkit
+- MemoryToolkit is NOT the same as HumanToolkit (different functionality)
+- Different toolkit classes are NOT interchangeable even if names sound similar
+
+## Verdict Logic
+
+- PASS = ALL Acceptable? = ✅ AND Execution = SUCCESS
+- FAIL = ANY Acceptable? = ❌ OR Execution = FAILED
 
 ## Output Format
 
+# Evaluation: [task_name]
+
+## Code Comparison
+
+| Item | Ground Truth | Generated | Match? | Acceptable? |
+|------|--------------|-----------|--------|-------------|
+| ... | ... | ... | ✅/❌ | ✅/❌ |
+
+## Acceptable Analysis (CoT for each mismatch)
+
+For EACH item where Match? = ❌, explain:
+1. What does the task description say about this item?
+2. Is this item required by the task? (quote the relevant part)
+3. Does the generated code satisfy the task requirement?
+4. Conclusion: Acceptable ✅ or ❌
+
+Example:
+- **Gold answer via sympy**: Task says "gold answer if computed via sympy"
+  - Task requires: sympy computation
+  - Generated: hardcoded answer (not using sympy)
+  - Conclusion: ❌ NOT Acceptable (task explicitly requires sympy)
+
+- **Model type**: Task says "create agent with weather tool"
+  - Task requires: weather tool (no model specified)
+  - Generated: uses GPT_4O_MINI
+  - Conclusion: ✅ Acceptable (model not specified by task)
+
+## Execution Result
+
+**Status**: ✅ SUCCESS / ❌ FAILED
+
+**Evidence**:
 ```
-## Task: [Task Name]
-
-### Task Requirements
-- Model: [required model if specified]
-- Tool: [required tool if specified]
-- Output: [expected output path]
-
-### Comparison Results
-
-| Aspect | Ground Truth | Generated | Match | Acceptable |
-|--------|--------------|-----------|-------|------------|
-| Model Creation | ModelFactory.create() | QwenModel() | ❌ | ❌ |
-| Model Type | QWEN_2_5_14B | QWEN_2_5B_INSTRUCT | ❌ | ❌ |
-| Tool Usage | WeatherToolkit | WeatherToolkit | ✅ | ✅ |
-
-### Differences Detail
-1. **[Difference 1]**
-   - Ground Truth: `...`
-   - Generated: `...`
-   - Required by Task: Yes/No
-   - Acceptable: Yes/No
-   - Reason: [why acceptable or not]
-
-### Execution Status
-- **Status**: SUCCESS / FAILED
-- **Error** (if any): [error message]
-
-### Final Verdict
-- **Result**: ✅ PASS / ❌ FAIL
-- **Reason**: [brief explanation]
-- **Issues Found**: [list of issues if FAIL]
+[final output or error]
 ```
 
-## Important Rules
-- A script that runs successfully with non-essential differences is PASS
-- A script with wrong API/model even if it runs is FAIL (unless task didn't specify)
-- Extra parameters not required by task are acceptable if script runs
-- Use code search to verify if APIs/classes exist in the codebase
+## Verdict
+
+**Result**: ✅ PASS / ❌ FAIL
+**Reason**: [one sentence]
 """
 
 
@@ -191,9 +190,6 @@ class DiagnosticAgent:
         # Read log file
         log_content = Path(log_path).read_text(encoding='utf-8')
 
-        # Check if execution was successful
-        exec_success = "Status: SUCCESS" in log_content[:500]
-
         # Read generated script if provided
         generated_script = ""
         if script_path and Path(script_path).exists():
@@ -204,51 +200,37 @@ class DiagnosticAgent:
         if ground_truth_path and Path(ground_truth_path).exists():
             ground_truth = Path(ground_truth_path).read_text(encoding='utf-8')
 
-        # Build prompt
-        prompt = f"""## Task Description
+        # Extract key log info
+        log_header = log_content[:500]  # Status is at the beginning
+        log_tail = log_content[-10000:]  # Final output/error at the end (more context for evidence)
 
-{task_description or "Not provided"}
+        # Build prompt - keep it simple
+        prompt = f"""Evaluate this code generation task.
 
-## Generated Script
+**Task**: {task_description or "Not provided"}
 
+**Generated Code**:
 ```python
 {generated_script}
 ```
 
-## Ground Truth (Expected Implementation)
-
+**Ground Truth**:
 ```python
 {ground_truth}
 ```
 
-## Execution Log Summary
-
-- **Execution Status**: {"SUCCESS" if exec_success else "FAILED"}
-
-### Log Content (first 10000 chars):
+**Log Header** (execution status):
 ```
-{log_content[:10000]}
+{log_header}
 ```
 
-## Instructions
+**Log Tail** (final output or error):
+```
+{log_tail}
+```
 
-Compare the generated script against the ground truth and evaluate:
-
-1. **Identify all differences** between generated and ground truth
-2. **For each difference**, determine:
-   - Is it required by the task? (check task description)
-   - Does it affect functionality?
-   - Is it acceptable?
-3. **Check execution status** - did the script run successfully?
-4. **Use code search tools** to verify if APIs/classes used actually exist
-5. **Give final verdict**: PASS or FAIL
-
-Remember:
-- If script runs successfully and differences are non-essential → PASS
-- If script uses wrong/non-existent API → FAIL (even if it somehow runs)
-- Extra parameters not in task requirements are acceptable if script runs
-
-Start your evaluation now.
+Compare generated vs ground truth. Only check items the task requires.
+Output your evaluation in the format specified.
 """
 
         # Run diagnosis
@@ -258,20 +240,21 @@ Start your evaluation now.
         diagnosis = response.msgs[0].content if response and response.msgs else ""
         tool_calls = response.info.get("tool_calls", []) if hasattr(response, "info") else []
 
+        # Clean up markdown code block wrapper if present
+        diagnosis = diagnosis.strip()
+        if diagnosis.startswith("```markdown"):
+            diagnosis = diagnosis[len("```markdown"):].strip()
+        if diagnosis.startswith("```"):
+            diagnosis = diagnosis[3:].strip()
+        if diagnosis.endswith("```"):
+            diagnosis = diagnosis[:-3].strip()
+
         # Save diagnosis report
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         log_name = Path(log_path).stem
         report_path = self.output_dir / f"eval_{log_name}_{timestamp}.md"
 
         with open(report_path, 'w', encoding='utf-8') as f:
-            f.write(f"# Evaluation Report\n\n")
-            f.write(f"- **Log File**: {log_path}\n")
-            f.write(f"- **Generated Script**: {script_path or 'Not provided'}\n")
-            f.write(f"- **Ground Truth**: {ground_truth_path or 'Not provided'}\n")
-            f.write(f"- **Execution Status**: {'SUCCESS' if exec_success else 'FAILED'}\n")
-            f.write(f"- **Report Generated**: {timestamp}\n")
-            f.write(f"- **Tool Calls**: {len(tool_calls)}\n\n")
-            f.write("---\n\n")
             f.write(diagnosis)
 
         print(f"\nDiagnosis saved to: {report_path}")
@@ -351,8 +334,17 @@ Start your evaluation now.
                 task_description=task_desc,
             )
 
-            # Check if PASS or FAIL from diagnosis
-            is_pass = "PASS" in result["diagnosis"] and "FAIL" not in result["diagnosis"].split("PASS")[0]
+            # Check if PASS or FAIL from the Verdict section
+            # Look for "**Result**: ✅ PASS" or "**Result**: ❌ FAIL"
+            diagnosis = result["diagnosis"]
+            if "**Result**: ✅ PASS" in diagnosis:
+                is_pass = True
+            elif "**Result**: ❌ FAIL" in diagnosis:
+                is_pass = False
+            else:
+                # Fallback: check if more PASS than FAIL in verdict section
+                verdict_section = diagnosis.split("## Verdict")[-1] if "## Verdict" in diagnosis else diagnosis
+                is_pass = "PASS" in verdict_section and "FAIL" not in verdict_section
 
             if is_pass:
                 pass_count += 1
@@ -487,8 +479,8 @@ Examples:
     parser.add_argument(
         "--model", "-m",
         type=str,
-        default="gpt-4o",
-        help="Model to use for evaluation (default: gpt-4o)"
+        default="gpt-4-1",
+        help="Model to use for evaluation (default: gpt-4-1)"
     )
     parser.add_argument(
         "--max-tasks",
