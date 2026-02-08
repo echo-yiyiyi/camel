@@ -71,9 +71,9 @@ run_evaluation() {
 }
 
 # Run evaluation
-run_evaluation "w_context_refactored" \
-    "${CAMEL_ROOT}/logsw-context-refactored" \
-    "${CAMEL_ROOT}/task-script-w-context-refactored/single_agent"
+run_evaluation "w-context-evolve" \
+    "${CAMEL_ROOT}/logsw-context-evolve" \
+    "${CAMEL_ROOT}/task-script-evolve/single_agent"
 
 # Summary
 echo ""

@@ -6,21 +6,20 @@ Load this file before running tasks on the CAMEL repository.
 ## Repository Structure
 
 ### Core Modules
-- `camel/agents/` - Agent implementations (ChatAgent is the base)
-- `camel/models/` - LLM provider integrations (50+)
-- `camel/memories/` - Memory systems (ChatHistoryMemory, LongtermAgentMemory, VectorDBMemory)
-- `camel/configs/` - Model configuration classes
-- `camel/toolkits/` - Tool integrations (50+)
-- `camel/types/` - Enums (ModelType, RoleType)
+- `camel/agents/` - Agent implementations (ChatAgent is the base)  
+- `camel/models/` - LLM provider integrations (50+)  
+- `camel/memories/` - Memory systems (ChatHistoryMemory, LongtermAgentMemory, VectorDBMemory)  
+- `camel/configs/` - Model configuration classes  
+- `camel/toolkits/` - Tool integrations (50+)  
+- `camel/types/` - Enums (ModelType, RoleType)  
 
 ### Other Directories
-- `examples/` - Usage examples
-- `examples/models/` - Model usage examples
-- `examples/toolkits/` - Toolkit examples
-- `examples/memories/` - Memory usage examples
-- `test/` - Test files
-- `docs/` - Documentation
-
+- `examples/` - Usage examples  
+- `examples/models/` - Model usage examples  
+- `examples/toolkits/` - Toolkit examples  
+- `examples/memories/` - Memory usage examples  
+- `test/` - Test files  
+- `docs/` - Documentation  
 
 ### Import Patterns
 ```python
@@ -39,79 +38,71 @@ agent = ChatAgent(system_message="You are helpful.", model=model)
 response = agent.step("Hello")
 ```
 
-### Common Classes and Their Locations
-| Class | File |
-|-------|------|
-| ChatAgent | camel/agents/chat_agent.py |
-| ModelFactory | camel/models/model_factory.py |
-| FunctionTool | camel/toolkits/function_tool.py |
-| ChatHistoryMemory | camel/memories/chat_history_memory.py |
-| LongtermAgentMemory | camel/memories/agent_memories.py |
-| VectorDBMemory | camel/memories/vector_db_memory.py |
-
-## Code Writing Rules
-
-### Tool Selection
-- When a task explicitly requires a specific tool (e.g., "tools to search duckduckgo"), use the exact tool attribute or method provided by the toolkit (e.g., `SearchToolkit().search_duckduckgo`) rather than generic methods that return multiple tools (e.g., `get_tools()`).
-- Avoid using generic tool retrieval methods like `get_tools()` when the task specifies a particular tool to ensure precise compliance with task requirements.
-
-### Model Creation
-- Use `ModelFactory.create()` with the appropriate `ModelType` enum to instantiate models.
-- When needed, pass model-specific configuration dictionaries (e.g., `model_config_dict=GeminiConfig(temperature=0.2).as_dict()`).
-
-### Agent Creation
-- Instantiate `ChatAgent` with required parameters such as `model`, optional `tools` list, and `system_message` to set context.
-- Pass tools as a list of tool instances, not as a generic toolkit object.
-
-## Common Mistakes to Avoid
-
-- Do NOT use `SearchToolkit().get_tools()` when the task requires a specific search tool; this returns all tools and violates task specificity.
-- Do NOT ignore explicit tool requirements mentioned in the task description; always prioritize exact tool usage.
-- Avoid mixing multiple tools when only one specific tool is requested.
-
-## Code Examples
-
-### Correct Usage of a Specific Tool
-
-```python
-from camel.agents import ChatAgent
-from camel.models import ModelFactory
-from camel.toolkits import SearchToolkit
-from camel.types import ModelType
-from camel.configs import GeminiConfig
-
-# Instantiate Gemini model with configuration
-model = ModelFactory.create(
-    model_type=ModelType.GEMINI_2_5_PRO,
-    model_config_dict=GeminiConfig(temperature=0.0).as_dict()
-)
-
-# Get the specific DuckDuckGo search tool
-search_tool = SearchToolkit().search_duckduckgo
-
-# Create agent with the specific tool only
-agent = ChatAgent(model=model, tools=[search_tool])
-
-# Ask a question
-response = agent.step("Search CAMEL-AI framework on DuckDuckGo and provide summary.")
-print(response.msgs[0].content)
-```
-
-### Incorrect Usage to Avoid
-
-```python
-# Avoid this when a specific tool is required
-search_toolkit = SearchToolkit()
-tools = search_toolkit.get_tools()  # returns all tools, not just DuckDuckGo
-
-agent = ChatAgent(model=model, tools=tools)  # Violates task requirement
-```
-
-## Search Techniques for Tool Identification
-
-- When a task mentions a specific tool by name, perform targeted searches (e.g., grep) for function or attribute definitions matching that tool name within the `camel/toolkits/` directory.
-- Prioritize reading example scripts that demonstrate the exact tool usage rather than generic toolkit usage to understand correct usage patterns.
+## Diagnosis Reports
 
 ---
 
-This will help ensure generated code precisely matches task requirements, especially regarding tool usage.
+### Technique: Find SPECIFIC tool methods  
+When a task specifies a particular tool like "brave search", locate the exact method or attribute by searching for its name in the toolkit directory, e.g.,  
+`grep_search("search_brave", path="camel/toolkits")`  
+This helps ensure the code agent uses the precise tool required rather than a generic collection of tools. For example, for a task requiring "bing search", search for `search_bing` in `camel/toolkits/search_toolkit.py` to find the exact tool method.
+
+---
+
+### Technique: Find MCPToolkit usage patterns  
+To correctly use MCP tools, search for `MCPToolkit.create()` and `get_tools()` usage in `camel/toolkits/mcp_toolkit.py` or example scripts, and prefer `ChatAgent` instantiation with these tools rather than direct `MCPAgent` usage. This ensures valid config and proper connection handling. For example, for a task involving DeepWiki MCP server, search for `MCPToolkit.create` and `ChatAgent` usage in `examples/` or `camel/toolkits/mcp_toolkit.py`.
+
+---
+
+### Technique: Find dynamic computation of gold answers  
+When a task requires computing a "gold answer" or "ground truth" using a specific library or method (e.g., sympy), search for examples that import and use that library to dynamically compute answers rather than hardcoding them. For instance, search for `import sympy` or `sp.solve` in datagen scripts or example directories to find canonical patterns of symbolic computation.
+
+---
+
+### Technique: Find explicit document download and vector retrieval patterns  
+When a task requires working with documents (e.g., papers, datasets), explicitly locate usage of the toolkit's download methods (e.g., `download_papers`) rather than relying on search results or metadata. Then, build vector retrieval indexes from the actual downloaded document content (e.g., PDF text) using embedding and vector retriever classes.  
+Search for examples combining the download method with vector retrieval classes like `VectorRetriever` and embedding models to ensure correct workflow.  
+Example search commands:  
+```
+grep -r --include="*.py" "download_papers" .
+grep -r --include="*.py" "VectorRetriever" .
+grep -r --include="*.py" "ArxivToolkit" . | grep "download_papers"
+```
+
+---
+
+### Technique: Find HUMAN interaction tools usage  
+When a task requires "human interaction tools," explicitly search for and use the `HumanToolkit` rather than `MemoryToolkit`.  
+Ensure example queries demonstrate triggering human interaction tools (e.g., prompting user input) instead of only memory management commands.  
+Search for `HumanToolkit` usage examples and example queries that invoke human interaction tools to guide correct implementation.
+
+Example search commands:  
+```
+grep -r --include="*.py" "HumanToolkit" examples/
+grep -r --include="*.py" "human_toolkit" camel/toolkits/
+```
+
+---
+
+# Summary of Added Techniques
+
+### Technique: Find SPECIFIC tool methods  
+When a task specifies a tool like "brave search", find the exact method:  
+`grep_search("search_brave", path="camel/toolkits")`  
+
+### Technique: Find MCPToolkit usage patterns  
+To correctly use MCP tools, search for `MCPToolkit.create()` and `get_tools()` usage in `camel/toolkits/mcp_toolkit.py` or example scripts, and prefer `ChatAgent` instantiation with these tools rather than direct `MCPAgent` usage.
+
+### Technique: Find dynamic computation of gold answers  
+When a task requires computing a "gold answer" or "ground truth" using a specific library or method (e.g., sympy), search for examples that import and use that library to dynamically compute answers rather than hardcoding them. For example, search for `import sympy` or `sp.solve` in datagen or example scripts.
+
+### Technique: Find explicit document download and vector retrieval patterns  
+When a task involves document-based retrieval, locate usage of the toolkit's download methods (e.g., `download_papers`) and vector retrieval classes (e.g., `VectorRetriever`, `OpenAIEmbedding`) to build vector stores from actual document content rather than search metadata.  
+Search for combined usage examples to ensure correct workflow.
+
+### Technique: Find HUMAN interaction tools usage  
+When a task requires "human interaction tools," explicitly search for and use the `HumanToolkit` rather than `MemoryToolkit`.  
+Ensure example queries demonstrate triggering human interaction tools (e.g., prompting user input) instead of only memory management commands.  
+Search for `HumanToolkit` usage examples and example queries that invoke human interaction tools to guide correct implementation.
+
+## Diagnosis Reports

@@ -59,22 +59,19 @@ if [ ! -d "$ANALYSIS_DIR" ]; then
     exit 1
 fi
 
-# Run diagnosis
+# Run diagnosis (batch mode - reads failed tasks from evaluation_summary.md)
 cd "$SCRIPT_DIR"
-# Single task mode: diagnose task_2
-TASK_NUM=2
-TASK_DESC=$(python -c "import json; print(json.load(open('$TASK_LIST'))['task_${TASK_NUM}'])")
-
 python diagnose_agent.py \
-    --task-name "task_${TASK_NUM}" \
-    --task-desc "$TASK_DESC" \
-    --log "$(ls ${LOG_DIR}/*task_${TASK_NUM}_*.log | head -1)" \
-    --script "$(ls ${SCRIPT_OUTPUT_DIR}/${TASK_NUM}_*.py | head -1)" \
-    --ground-truth "$(ls ${GROUND_TRUTH_DIR}/${TASK_NUM}_*.py | head -1)" \
-    --analysis-report "$(ls ${ANALYSIS_DIR}/eval_*task_${TASK_NUM}_*.md | head -1)" \
+    --log-dir "$LOG_DIR" \
+    --script-dir "$SCRIPT_OUTPUT_DIR" \
+    --ground-truth-dir "$GROUND_TRUTH_DIR" \
+    --analysis-dir "$ANALYSIS_DIR" \
+    --task-list "$TASK_LIST" \
     --camel-md "$CAMEL_MD" \
     --output "$OUTPUT_DIR" \
-    --model "$MODEL"
+    --model "$MODEL" \
+    --max-tasks 10 \
+    --update-batch-size 1
 
 echo ""
 echo "=============================================="

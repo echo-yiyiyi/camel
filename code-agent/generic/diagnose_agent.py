@@ -140,59 +140,40 @@ Look at what's different:
 - Focus on patterns that generalize to similar tasks
 """
 
-CAMEL_MD_UPDATE_PROMPT = """You are tasked with updating CAMEL.md to improve code generation.
+CAMEL_MD_UPDATE_PROMPT = """Update CAMEL.md based on diagnosis reports.
 
-## Current CAMEL.md Content
-
+## Current CAMEL.md
 {camel_md_content}
 
-## Diagnosis Reports (for reference only, DO NOT copy these)
-
+## Diagnosis Reports
 {diagnosis_reports}
-
-## Your Task
-
-Extract GENERAL RULES from the diagnosis reports and add them to CAMEL.md.
-
-**IMPORTANT**:
-- DO NOT copy diagnosis reports into CAMEL.md
-- DO NOT add task-specific content (like "task_2" or specific task descriptions)
-- ONLY add general, reusable rules that help with similar future tasks
-
-## What to Add
-
-1. **Code Writing Rules**: General patterns like "When task says X, use Y method"
-2. **Common Mistakes**: Warnings like "Do NOT use get_tools() when task specifies a specific tool"
-3. **Code Examples**: Short, reusable code snippets showing correct usage
-
-## Example of Good Rules
-
-```markdown
-## Code Writing Rules
-
-### Tool Selection
-- Task says "search duckduckgo" → Use `SearchToolkit().search_duckduckgo()` directly
-- Do NOT use `get_tools()` which returns ALL tools when task asks for specific tool
-```
 
 ## Rules
 
-- Keep ALL existing content
-- Add new rules in appropriate existing sections, or create new section if needed
-- Be concise and general (not task-specific)
-- Include code examples where helpful
+1. Add SHORT techniques (not task answers)
+2. Use DIFFERENT example than the failed task
+3. No duplicates - skip if similar rule exists
+4. Max 1 new technique per diagnosis
 
-## Length Limits
+## Format
 
-- **Maximum 3 new rules per update**
-- **Each rule should be 1-2 sentences + optional code example**
-- **If similar rule already exists, UPDATE it instead of adding new one**
-- **Total CAMEL.md should stay under 300 lines**
-- If approaching limit, consolidate or remove less important rules
+✅ GOOD - technique with brief few-shot (different example):
+```
+### Technique: Find SPECIFIC tool methods
+When task specifies a tool like "brave search", find the exact method:
+grep_search("search_brave", path="camel/toolkits")
+```
+
+❌ BAD - full code example or task answer:
+```python
+from camel.toolkits import SearchToolkit
+search_tool = SearchToolkit().search_duckduckgo
+agent = ChatAgent(tools=[search_tool])
+```
 
 ## Output
 
-Output the complete updated CAMEL.md content.
+Output the complete updated CAMEL.md.
 """
 
 
