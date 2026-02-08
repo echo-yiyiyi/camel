@@ -27,7 +27,7 @@ import os
 import argparse
 from pathlib import Path
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
 from camel.agents import ChatAgent
 from camel.configs import ChatGPTConfig
@@ -37,7 +37,8 @@ from camel.types import ModelType
 from generic_code_search_toolkit import GenericCodeSearchToolkit
 
 
-ANALYSIS_SYSTEM_PROMPT = """You evaluate generated code against ground truth.
+# Step 1: Comparison and Acceptable Analysis
+COMPARISON_SYSTEM_PROMPT = """You evaluate generated code against ground truth.
 
 ## What to Compare
 
@@ -133,6 +134,58 @@ Example:
 **Reason**: [one sentence]
 """
 
+# Step 2: Root Cause Analysis for each NOT Acceptable item
+ROOT_CAUSE_SYSTEM_PROMPT = """You analyze the root cause of a code generation failure by examining the execution log.
+
+You MUST quote specific log sections as evidence for your analysis.
+
+## Output Format
+
+### Root Cause: {item_name}
+
+**1. Explore Phase Evidence**:
+```
+[EXACT quote from EXPLORE PHASE section of log]
+[Show what explore searched for and what it found/missed]
+```
+
+**2. Code Phase Evidence**:
+```
+[EXACT quote from CODE PHASE section of log]
+[Show what files code agent read (look for "read_file" calls) and what it wrote]
+```
+
+**3. Decision Point**:
+```
+[EXACT quote showing where the wrong decision was made]
+[This is the key moment - what did agent decide and why was it wrong?]
+```
+
+**4. Root Cause** (can be one or BOTH):
+
+- [ ] **Code Agent Issue**: Log shows explore found correct info, but code agent ignored it or copied wrong pattern
+- [ ] **CAMEL Codebase Issue**: Log shows explore searched but couldn't find relevant examples, or no documentation exists
+
+Mark [x] for each that applies. Many issues have BOTH causes (e.g., codebase lacks clear examples AND agent made poor decision).
+
+**5. Explanation**:
+[Connect the log evidence to the cause(s) - why did this specific issue happen?]
+
+**6. Systematic Improvement** (IMPORTANT: Do NOT give task-specific fix, give GENERAL improvement):
+
+For **Code Agent Issue** (if applicable):
+- What GENERAL rule should be added to code agent's system prompt?
+- What pattern should code agent learn to recognize in similar future tasks?
+- Example: "When task mentions 'X type of tool', agent should search for 'XToolkit' specifically, not use generic get_tools()"
+
+For **CAMEL Codebase Issue** (if applicable):
+- What GENERAL search technique should be documented in CAMEL.md?
+- What pattern should be added for similar use cases?
+- Example: "Add technique: When task requires specific tool method, search for exact method name in toolkit file"
+
+DO NOT say "use HumanToolkit for this task" - instead say "when task mentions 'human interaction', search for toolkit with 'Human' in name"
+"""
+
 
 class AnalysisAgent:
     """Agent that evaluates code generation results using LLM-as-Judge approach."""
@@ -165,12 +218,47 @@ class AnalysisAgent:
             max_results=50,
         )
 
-        # Create agent with search tools
-        self.agent = ChatAgent(
-            system_message=ANALYSIS_SYSTEM_PROMPT,
+        # Step 1 agent: Comparison and Acceptable analysis
+        self.comparison_agent = ChatAgent(
+            system_message=COMPARISON_SYSTEM_PROMPT,
             model=self.model,
             tools=self.search_toolkit.get_tools(),
         )
+
+        # Step 2 agent: Root cause analysis (needs to read full log)
+        self.root_cause_agent = ChatAgent(
+            system_message=ROOT_CAUSE_SYSTEM_PROMPT,
+            model=self.model,
+            tools=self.search_toolkit.get_tools(),
+        )
+
+    def _extract_not_acceptable_items(self, comparison_result: str) -> List[str]:
+        """Extract NOT Acceptable items from comparison result.
+
+        Looks for table rows with ❌ in the Acceptable column.
+
+        Args:
+            comparison_result: The comparison analysis result
+
+        Returns:
+            List of item names that are NOT Acceptable
+        """
+        not_acceptable = []
+
+        for line in comparison_result.split('\n'):
+            # Look for table rows: | Item | Ground Truth | Generated | Match? | Acceptable? |
+            if '|' in line and '❌' in line:
+                parts = [p.strip() for p in line.split('|')]
+                # parts[0] is empty, parts[1] is Item, ..., parts[5] is Acceptable
+                if len(parts) >= 6:
+                    item_name = parts[1]
+                    acceptable = parts[5] if len(parts) > 5 else parts[-1]
+                    # Check if this item is NOT acceptable (❌ in acceptable column)
+                    if item_name and item_name not in ['Item', '---', '']:
+                        if '❌' in acceptable:
+                            not_acceptable.append(item_name)
+
+        return not_acceptable
 
     def analyze(
         self,
@@ -179,7 +267,10 @@ class AnalysisAgent:
         ground_truth_path: Optional[str] = None,
         task_description: Optional[str] = None,
     ) -> dict:
-        """Evaluate a generated script against ground truth.
+        """Evaluate a generated script against ground truth (two-step process).
+
+        Step 1: Comparison and Acceptable analysis
+        Step 2: Root cause analysis for each NOT Acceptable item
 
         Args:
             log_path: Path to the execution log file
@@ -201,12 +292,16 @@ class AnalysisAgent:
         if ground_truth_path and Path(ground_truth_path).exists():
             ground_truth = Path(ground_truth_path).read_text(encoding='utf-8')
 
-        # Extract key log info
-        log_header = log_content[:500]  # Status is at the beginning
-        log_tail = log_content[-10000:]  # Final output/error at the end (more context for evidence)
+        # Extract key log info for step 1
+        log_header = log_content[:500]
+        log_tail = log_content[-10000:]
 
-        # Build prompt - keep it simple
-        prompt = f"""Evaluate this code generation task.
+        # =====================================================================
+        # STEP 1: Comparison and Acceptable Analysis
+        # =====================================================================
+        print("[Step 1] Running comparison and acceptable analysis...")
+
+        step1_prompt = f"""Evaluate this code generation task.
 
 **Task**: {task_description or "Not provided"}
 
@@ -234,21 +329,79 @@ Compare generated vs ground truth. Only check items the task requires.
 Output your evaluation in the format specified.
 """
 
-        # Run analysis
-        self.agent.reset()
-        response = self.agent.step(prompt)
+        self.comparison_agent.reset()
+        response = self.comparison_agent.step(step1_prompt)
 
-        analysis = response.msgs[0].content if response and response.msgs else ""
-        tool_calls = response.info.get("tool_calls", []) if hasattr(response, "info") else []
+        comparison_result = response.msgs[0].content if response and response.msgs else ""
 
         # Clean up markdown code block wrapper if present
-        analysis = analysis.strip()
-        if analysis.startswith("```markdown"):
-            analysis = analysis[len("```markdown"):].strip()
-        if analysis.startswith("```"):
-            analysis = analysis[3:].strip()
-        if analysis.endswith("```"):
-            analysis = analysis[:-3].strip()
+        comparison_result = comparison_result.strip()
+        if comparison_result.startswith("```markdown"):
+            comparison_result = comparison_result[len("```markdown"):].strip()
+        if comparison_result.startswith("```"):
+            comparison_result = comparison_result[3:].strip()
+        if comparison_result.endswith("```"):
+            comparison_result = comparison_result[:-3].strip()
+
+        # =====================================================================
+        # STEP 2: Root Cause Analysis for each NOT Acceptable item
+        # =====================================================================
+        not_acceptable_items = self._extract_not_acceptable_items(comparison_result)
+
+        root_cause_results = []
+        if not_acceptable_items:
+            print(f"[Step 2] Analyzing root causes for {len(not_acceptable_items)} NOT Acceptable items...")
+
+            for i, item_name in enumerate(not_acceptable_items, 1):
+                print(f"  [{i}/{len(not_acceptable_items)}] Analyzing: {item_name}")
+
+                step2_prompt = f"""Analyze why this item failed in code generation.
+
+**Failed Item**: {item_name}
+
+**Task**: {task_description or "Not provided"}
+
+**Generated Code**:
+```python
+{generated_script}
+```
+
+**Ground Truth**:
+```python
+{ground_truth}
+```
+
+**Full Execution Log**:
+```
+{log_content}
+```
+
+Find evidence in the log showing:
+1. What did EXPLORE PHASE find for this item?
+2. What did CODE PHASE do with that information?
+3. Where exactly did the wrong decision happen?
+
+Determine if this is a Code Agent Issue or CAMEL Codebase Issue.
+"""
+
+                self.root_cause_agent.reset()
+                rc_response = self.root_cause_agent.step(step2_prompt)
+
+                if rc_response and rc_response.msgs:
+                    rc_result = rc_response.msgs[0].content
+                    root_cause_results.append(rc_result)
+        else:
+            print("[Step 2] No NOT Acceptable items found, skipping root cause analysis.")
+
+        # =====================================================================
+        # Combine Results
+        # =====================================================================
+        final_analysis = comparison_result
+
+        if root_cause_results:
+            final_analysis += "\n\n## Root Cause Analysis\n\n"
+            final_analysis += "_For each NOT Acceptable item, the log was analyzed to determine the root cause._\n\n"
+            final_analysis += "\n\n---\n\n".join(root_cause_results)
 
         # Save analysis report
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -256,13 +409,15 @@ Output your evaluation in the format specified.
         report_path = self.output_dir / f"eval_{log_name}_{timestamp}.md"
 
         with open(report_path, 'w', encoding='utf-8') as f:
-            f.write(analysis)
+            f.write(final_analysis)
 
-        print(f"\nDiagnosis saved to: {report_path}")
+        print(f"\nAnalysis saved to: {report_path}")
 
         return {
-            "analysis": analysis,
-            "tool_calls": tool_calls,
+            "analysis": final_analysis,
+            "comparison": comparison_result,
+            "not_acceptable_items": not_acceptable_items,
+            "root_cause_count": len(root_cause_results),
             "report_path": str(report_path),
         }
 
@@ -273,6 +428,7 @@ Output your evaluation in the format specified.
         ground_truth_dir: str,
         task_list_path: Optional[str] = None,
         max_tasks: int = 10,
+        task_index: Optional[int] = None,
     ) -> list:
         """Evaluate multiple generated scripts against ground truth.
 
@@ -282,6 +438,7 @@ Output your evaluation in the format specified.
             ground_truth_dir: Directory containing ground truth scripts
             task_list_path: Path to task_list.json with task descriptions
             max_tasks: Maximum number of tasks to evaluate
+            task_index: If specified, evaluate only this specific task index
         """
         import json as json_module
 
@@ -293,7 +450,13 @@ Output your evaluation in the format specified.
 
         # Find all ground truth files (these define which tasks to evaluate)
         gt_dir = Path(ground_truth_dir)
-        gt_files = sorted(gt_dir.glob("*.py"))[:max_tasks]
+        gt_files = sorted(gt_dir.glob("*.py"))
+
+        # Filter for specific task index if specified
+        if task_index is not None:
+            gt_files = [f for f in gt_files if f.stem.split('_')[0] == str(task_index)]
+        else:
+            gt_files = gt_files[:max_tasks]
 
         results = []
         pass_count = 0
@@ -489,6 +652,12 @@ Examples:
         default=10,
         help="Maximum number of tasks to evaluate in batch mode"
     )
+    parser.add_argument(
+        "--task-index",
+        type=int,
+        default=None,
+        help="Evaluate only this specific task index (e.g., 2 for task_2)"
+    )
 
     args = parser.parse_args()
 
@@ -549,6 +718,7 @@ Examples:
             ground_truth_dir=args.ground_truth_dir,
             task_list_path=args.task_list,
             max_tasks=args.max_tasks,
+            task_index=args.task_index,
         )
 
 

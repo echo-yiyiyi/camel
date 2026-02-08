@@ -140,6 +140,100 @@ Look at what's different:
 - Focus on patterns that generalize to similar tasks
 """
 
+ROOT_CAUSE_ANALYSIS_PROMPT = """You are analyzing the root cause of a code generation failure.
+
+## Failed Item
+{failed_item}
+
+## Original Task
+{task_description}
+
+## Execution Log
+{log_content}
+
+## Generated Code
+{generated_code}
+
+## Ground Truth Code
+{ground_truth}
+
+## Your Task
+
+Analyze the log to determine WHY this specific item failed. You MUST quote specific log sections as evidence.
+
+### Step 1: Find EXPLORE PHASE Evidence
+Search the log for "EXPLORE PHASE" section and quote:
+- What files/classes did explore find?
+- Did it find the correct component for this failed item?
+- If not, what did it search for and what did it miss?
+
+### Step 2: Find CODE PHASE Evidence
+Search the log for "CODE PHASE" section and quote:
+- Which files did code agent read (look for "read_file" calls)?
+- What code patterns did it copy?
+- Where did it make the wrong decision?
+
+### Step 3: Find the Decision Point
+Identify the EXACT moment things went wrong:
+- Did explore return wrong info? Quote the explore output.
+- Did code agent ignore correct info? Quote what it ignored.
+- Did code agent read wrong file? Quote which file it read.
+
+### Step 4: Check CAMEL Codebase
+Use search tools to verify:
+- Does a correct example exist? Search for it.
+- Is the API documented? Search for documentation.
+- Quote what you find (or note that nothing exists).
+
+### Step 5: Determine Root Cause
+
+**Code Agent Issue** - if log shows:
+- Explore found correct info but code agent ignored it
+- Code agent read correct file but copied wrong pattern
+- Code agent made wrong decision despite having correct info
+
+**CAMEL Codebase Issue** - if log shows:
+- Explore searched but couldn't find relevant examples
+- No documentation exists for this use case
+- API is confusing with no clear usage pattern
+
+## Output Format (MUST include all sections with log quotes)
+
+```markdown
+### Root Cause: {failed_item}
+
+**1. Explore Phase Evidence**:
+```
+[EXACT quote from EXPLORE PHASE section of log]
+[Show what explore found or failed to find]
+```
+
+**2. Code Phase Evidence**:
+```
+[EXACT quote from CODE PHASE section of log]
+[Show what files code agent read and what it wrote]
+```
+
+**3. Decision Point**:
+```
+[EXACT quote showing where the wrong decision was made]
+```
+
+**4. CAMEL Codebase Check**:
+- Searched for: [what you searched]
+- Found: [quote from CAMEL source/examples, or "No relevant examples found"]
+
+**5. Root Cause**: Code Agent Issue / CAMEL Codebase Issue
+
+**6. Explanation**:
+[Detailed explanation connecting the evidence to the cause]
+
+**7. How to Fix**:
+- If Code Agent Issue: [What the agent should have done at the decision point]
+- If CAMEL Codebase Issue: [What documentation/examples should be added]
+```
+"""
+
 CAMEL_MD_UPDATE_PROMPT = """Update CAMEL.md based on diagnosis reports.
 
 ## Current CAMEL.md
@@ -239,6 +333,13 @@ class DiagnoseAgent:
             model=self.model,
         )
 
+        # Create root cause analysis agent (has search tools to read CAMEL source)
+        self.root_cause_agent = ChatAgent(
+            system_message="You analyze root causes of code generation failures.",
+            model=self.model,
+            tools=self.search_toolkit.get_tools(),
+        )
+
     def _load_camel_md(self) -> str:
         """Load current CAMEL.md content."""
         if self.camel_md_path.exists():
@@ -282,6 +383,86 @@ class DiagnoseAgent:
             return log_content[code_start:]
 
         return log_content[code_start:explore_history_start]
+
+    def _extract_failed_items_from_analysis(self, analysis_report: str) -> List[str]:
+        """Extract NOT Acceptable items from analysis report.
+
+        Looks for table rows with ❌ NOT Acceptable or ❌ in the acceptable column.
+
+        Args:
+            analysis_report: The analysis report content
+
+        Returns:
+            List of failed item descriptions
+        """
+        failed_items = []
+
+        # Find table rows with ❌
+        for line in analysis_report.split('\n'):
+            if '❌' in line and '|' in line:
+                # Parse table row: | item | ground truth | generated | match | acceptable |
+                parts = [p.strip() for p in line.split('|')]
+                if len(parts) >= 3:
+                    item_name = parts[1] if len(parts) > 1 else ""
+                    if item_name and item_name not in ['Aspect', '---', '']:
+                        # Include the full row for context
+                        failed_items.append(line.strip())
+
+        return failed_items
+
+    def _analyze_root_causes(
+        self,
+        failed_items: List[str],
+        task_description: str,
+        log_content: str,
+        generated_script: str,
+        ground_truth: str,
+    ) -> str:
+        """Analyze root cause for each failed item.
+
+        Args:
+            failed_items: List of failed item descriptions from analysis
+            task_description: The original task description
+            log_content: Full execution log
+            generated_script: The generated code
+            ground_truth: The ground truth code
+
+        Returns:
+            Root cause analysis markdown string
+        """
+        if not failed_items:
+            return ""
+
+        print(f"\n[Analyzing root causes for {len(failed_items)} failed items...]")
+
+        analyses = []
+        for i, item in enumerate(failed_items, 1):
+            print(f"  [{i}/{len(failed_items)}] Analyzing: {item[:60]}...")
+
+            prompt = ROOT_CAUSE_ANALYSIS_PROMPT.format(
+                failed_item=item,
+                task_description=task_description,
+                log_content=log_content[:15000],  # Truncate for context
+                generated_code=generated_script,
+                ground_truth=ground_truth,
+            )
+
+            self.root_cause_agent.reset()
+            response = self.root_cause_agent.step(prompt)
+
+            if response and response.msgs:
+                analysis = response.msgs[0].content
+                analyses.append(analysis)
+
+        if not analyses:
+            return ""
+
+        # Combine all analyses
+        result = "\n\n## Deep Root Cause Analysis\n\n"
+        result += "_This section analyzes each NOT Acceptable item by reading the execution log and CAMEL source code._\n\n"
+        result += "\n\n---\n\n".join(analyses)
+
+        return result
 
     def _determine_failure_phase(self, log_content: str, analysis_report: str) -> str:
         """Determine which phase caused the failure."""
@@ -551,20 +732,40 @@ Focus on finding:
 
         diagnosis = response.msgs[0].content if response and response.msgs else ""
 
+        # Extract failed items from analysis report for root cause analysis
+        failed_items = self._extract_failed_items_from_analysis(analysis_report)
+
+        # Run deep root cause analysis for each failed item
+        root_cause_analysis = ""
+        if failed_items:
+            root_cause_analysis = self._analyze_root_causes(
+                failed_items=failed_items,
+                task_description=task_description,
+                log_content=log_content,
+                generated_script=generated_script,
+                ground_truth=ground_truth,
+            )
+
+        # Combine diagnosis with root cause analysis
+        full_diagnosis = diagnosis
+        if root_cause_analysis:
+            full_diagnosis += "\n\n" + root_cause_analysis
+
         # Save diagnosis report
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         report_path = self.output_dir / f"diagnose_{task_name}_{timestamp}.md"
         with open(report_path, 'w', encoding='utf-8') as f:
-            f.write(diagnosis)
+            f.write(full_diagnosis)
 
         print(f"Diagnosis saved to: {report_path}")
 
         return {
             "task_name": task_name,
             "failure_phase": failure_phase,
-            "diagnosis": diagnosis,
+            "diagnosis": full_diagnosis,
             "report_path": str(report_path),
             "explore_output": explore_output[:2000],  # For potential re-use
+            "failed_items_count": len(failed_items),
         }
 
     def update_camel_md(self, diagnoses: List[Dict]) -> str:
