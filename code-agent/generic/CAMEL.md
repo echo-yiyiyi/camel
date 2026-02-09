@@ -38,71 +38,48 @@ agent = ChatAgent(system_message="You are helpful.", model=model)
 response = agent.step("Hello")
 ```
 
-## Diagnosis Reports
 
----
+## New Technique: Prefer Specific Toolkit Functions Over Generic get_tools()
 
-### Technique: Find SPECIFIC tool methods  
-When a task specifies a particular tool like "brave search", locate the exact method or attribute by searching for its name in the toolkit directory, e.g.,  
-`grep_search("search_brave", path="camel/toolkits")`  
-This helps ensure the code agent uses the precise tool required rather than a generic collection of tools. For example, for a task requiring "bing search", search for `search_bing` in `camel/toolkits/search_toolkit.py` to find the exact tool method.
+When a task requires a specific tool or search function (e.g., "search duckduckgo"), the agent should:
 
----
+- Identify and use the exact specific function from the relevant toolkit (e.g., `SearchToolkit().search_duckduckgo`).
+- Avoid using the generic `get_tools()` method that returns all tools from the toolkit.
+- Always prefer the most specific tool relevant to the task to improve precision and efficiency.
 
-### Technique: Find MCPToolkit usage patterns  
-To correctly use MCP tools, search for `MCPToolkit.create()` and `get_tools()` usage in `camel/toolkits/mcp_toolkit.py` or example scripts, and prefer `ChatAgent` instantiation with these tools rather than direct `MCPAgent` usage. This ensures valid config and proper connection handling. For example, for a task involving DeepWiki MCP server, search for `MCPToolkit.create` and `ChatAgent` usage in `examples/` or `camel/toolkits/mcp_toolkit.py`.
+### Rationale
+Using the specific function directly ensures that the agent uses the intended tool with the correct interface and behavior. It avoids unnecessary overhead and ambiguity caused by including all tools via `get_tools()`.
 
----
+### Pattern
+- When the task or ground truth mentions a specific search or tool (e.g., DuckDuckGo), search for and use the exact function (e.g., `search_duckduckgo`) from the toolkit.
+- Do NOT use the generic `get_tools()` that returns all tools.
 
-### Technique: Find dynamic computation of gold answers  
-When a task requires computing a "gold answer" or "ground truth" using a specific library or method (e.g., sympy), search for examples that import and use that library to dynamically compute answers rather than hardcoding them. For instance, search for `import sympy` or `sp.solve` in datagen scripts or example directories to find canonical patterns of symbolic computation.
+### Example
+```python
+from camel.toolkits.search_toolkit import SearchToolkit
 
----
-
-### Technique: Find explicit document download and vector retrieval patterns  
-When a task requires working with documents (e.g., papers, datasets), explicitly locate usage of the toolkit's download methods (e.g., `download_papers`) rather than relying on search results or metadata. Then, build vector retrieval indexes from the actual downloaded document content (e.g., PDF text) using embedding and vector retriever classes.  
-Search for examples combining the download method with vector retrieval classes like `VectorRetriever` and embedding models to ensure correct workflow.  
-Example search commands:  
-```
-grep -r --include="*.py" "download_papers" .
-grep -r --include="*.py" "VectorRetriever" .
-grep -r --include="*.py" "ArxivToolkit" . | grep "download_papers"
+search_toolkit = SearchToolkit()
+result = search_toolkit.search_duckduckgo(query="example query")
 ```
 
----
-
-### Technique: Find HUMAN interaction tools usage  
-When a task requires "human interaction tools," explicitly search for and use the `HumanToolkit` rather than `MemoryToolkit`.  
-Ensure example queries demonstrate triggering human interaction tools (e.g., prompting user input) instead of only memory management commands.  
-Search for `HumanToolkit` usage examples and example queries that invoke human interaction tools to guide correct implementation.
-
-Example search commands:  
-```
-grep -r --include="*.py" "HumanToolkit" examples/
-grep -r --include="*.py" "human_toolkit" camel/toolkits/
-```
+This pattern should be followed in code agents and task implementations to ensure systematic improvement and adherence to task requirements.
 
 ---
 
-# Summary of Added Techniques
+## New Technique: Systematic Improvement for Human Interaction Tools
 
-### Technique: Find SPECIFIC tool methods  
-When a task specifies a tool like "brave search", find the exact method:  
-`grep_search("search_brave", path="camel/toolkits")`  
+- GENERAL rule for code agent's system prompt:
+  - "When a task requests 'human interaction tools', search for toolkits with 'human' in their name (e.g., `HumanToolkit`), not just memory or generic toolkits."
+- Pattern to learn:
+  - "If the task mentions a specific type of tool (e.g., 'human interaction'), always search for that keyword in toolkit files and examples, not just the word 'toolkit' or the most common toolkit."
 
-### Technique: Find MCPToolkit usage patterns  
-To correctly use MCP tools, search for `MCPToolkit.create()` and `get_tools()` usage in `camel/toolkits/mcp_toolkit.py` or example scripts, and prefer `ChatAgent` instantiation with these tools rather than direct `MCPAgent` usage.
+## New Technique: General Search Technique for CAMEL Codebase
 
-### Technique: Find dynamic computation of gold answers  
-When a task requires computing a "gold answer" or "ground truth" using a specific library or method (e.g., sympy), search for examples that import and use that library to dynamically compute answers rather than hardcoding them. For example, search for `import sympy` or `sp.solve` in datagen or example scripts.
+- GENERAL search technique to document in CAMEL.md:
+  - "When a task requires a specific type of toolkit (e.g., 'human interaction'), always perform a glob/grep search for that keyword (e.g., 'human') in the toolkits directory and in example scripts."
+- Pattern to add for similar use cases:
+  - "Add example scripts and documentation for each major toolkit (e.g., `HumanToolkit`) in the examples/toolkits/ directory, and ensure they are discoverable by keyword."
 
-### Technique: Find explicit document download and vector retrieval patterns  
-When a task involves document-based retrieval, locate usage of the toolkit's download methods (e.g., `download_papers`) and vector retrieval classes (e.g., `VectorRetriever`, `OpenAIEmbedding`) to build vector stores from actual document content rather than search metadata.  
-Search for combined usage examples to ensure correct workflow.
+This technique helps ensure that code agents and developers systematically find and use the correct toolkits and examples for specialized tool types.
 
-### Technique: Find HUMAN interaction tools usage  
-When a task requires "human interaction tools," explicitly search for and use the `HumanToolkit` rather than `MemoryToolkit`.  
-Ensure example queries demonstrate triggering human interaction tools (e.g., prompting user input) instead of only memory management commands.  
-Search for `HumanToolkit` usage examples and example queries that invoke human interaction tools to guide correct implementation.
-
-## Diagnosis Reports
+---

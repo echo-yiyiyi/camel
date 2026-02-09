@@ -158,7 +158,7 @@ You have access to terminal tools for:
 ### Step 1: READ BEFORE WRITE (MANDATORY)
 **You MUST read files that are relevant to what you're going to write before writing any code.**
 - Read example files or implementation files that relate to your task
-- You don't need to read all files - only the ones relevant to your task
+- You don't need to read all files - only the ones relevant to what you're going to write
 - **DO NOT write code based only on the summary** - the summary may be incomplete
 
 ### Step 2: Write the script
@@ -198,7 +198,7 @@ If task provides a URL, prioritize direct HTTP access (requests, fetch, etc.) ov
 2. **Follow existing patterns** - Look at examples to understand how to use the APIs
 3. **Handle errors gracefully** - If execution fails, analyze the error and fix it
 4. **Save to correct location** - Follow the task's specified output path
-5. **Use EXACT values** - Copy constants, method names exactly from explored files
+5. **Use EXACT values** - Copy constants, method names exactly from the files you read
 
 ## Debugging Tips
 
@@ -206,9 +206,38 @@ If task provides a URL, prioritize direct HTTP access (requests, fetch, etc.) ov
 - If you see AttributeError, verify the exact attribute name in source files
 - Read more files if you need to understand the API better
 - **If a file does not exist, do NOT retry the same path** - search for the correct path instead
+
+## Systematic Improvement for Specific Tools
+- When a task requires a specific tool (e.g., 'search duckduckgo'), the agent should select and use the specific function (e.g., `SearchToolkit().search_duckduckgo`) rather than using `get_tools()` to include all tools.
+- Always prefer the most specific tool relevant to the task.
+- When the task or ground truth mentions a specific search/tool (e.g., DuckDuckGo), search for and use the exact function (e.g., `search_duckduckgo`) from the toolkit, not the generic `get_tools()`.
+
+## Systematic Improvement for Human Interaction Tools
+- When a task requests "human interaction tools", search for toolkits with "human" in their name (e.g., `HumanToolkit`), not just memory or generic toolkits.
+- If the task mentions a specific type of tool (e.g., "human interaction"), always search for that keyword in toolkit files and examples, not just the word "toolkit" or the most common toolkit.
+
+## Systematic Improvement for MCP Server Configurations
+- When configuring a server or toolkit, always check the implementation or error messages for the exact list of valid type values.
+- Do not invent or guess type names like "custom"; use only those explicitly allowed by the codebase or error output.
+- If a config or enum field (like "type") is required, and the task says "custom", search for the list of valid values in the implementation or error messages, and use the closest matching value (e.g., "streamable_http" for HTTP-based custom servers).
+- If an error message lists valid options for a config field, update the code to use one of those options immediately, and do not retry invalid values.
+- Example: If error says "Invalid type: X. Valid options: {...}", always use one of the valid options, not the task's wording.
+
+## Systematic Improvement for Computed Values
+
+- When a task requires a value to be "computed via X" (e.g., sympy, numpy, etc.), always search for and read example scripts that use that library for similar computations, and copy the computation pattern exactly. Do NOT hardcode values that are supposed to be computed.
+
+- Pattern to recognize:
+  - When the task says "gold answer if computed via sympy", the agent should search for and read examples that use sympy to compute answers, and use that code directly in the script.
 """
 
-
+## Systematic Improvement for File Download and Vector Retrieval
+- When a task requires downloading and processing a file (e.g., PDF from arXiv), always use the toolkit's download method (e.g., `download_papers`) to save the file, and then process the file directly (e.g., with a vector retriever or embedding pipeline). Do NOT rely on summary or text fields from search results unless the example code does so.
+- When implementing vector retrieval over a document, do NOT simply add a single string to vector memory. Instead, use the provided retriever or memory's `process()` method to chunk and embed the document (PDF or text file) as shown in the examples. Always process the actual file, not just a field from a search result.
+- When a toolkit provides both 'search' and 'download' methods (e.g., ArxivToolkit), and the task requires working with the full paper or PDF, always use the 'download' method to obtain the actual file, not just the search result summary or extracted text.
+- If the example shows a two-step process (download file, then process file), do not shortcut by extracting text from search results. Always follow the full file-based workflow as in the example.
+- When working with RAG over documents, always process the actual document file, not just metadata or summary fields.
+"""
 # =============================================================================
 # Generic Code Agent Class
 # =============================================================================
@@ -646,15 +675,15 @@ Examples:
     python generic_code_agent.py --no-context --task "Create an agent"
 
     # Run on a custom project with custom context
-    python generic_code_agent.py \\
-        --project /path/to/myproject \\
-        --context /path/to/context.md \\
+    python generic_code_agent.py \
+        --project /path/to/myproject \
+        --context /path/to/context.md \
         --task "Implement user authentication"
 
     # Run on a custom project without context
-    python generic_code_agent.py \\
-        --project /path/to/myproject \\
-        --no-context \\
+    python generic_code_agent.py \
+        --project /path/to/myproject \
+        --no-context \
         --task "Find the main entry point"
 
     # Run multiple tasks from JSON file
@@ -760,7 +789,7 @@ Examples:
     exclude_dirs = {
         'node_modules', '.venv', '.git', '__pycache__', '.tox',
         '.mypy_cache', '.pytest_cache', 'dist', 'build',
-        '.initial_env', 'task-script*', 'CAMEL_old.md'
+        '.initial_env', 'task-script*', 'CAMEL_remove_model_platform.md', 'CAMEL_old_all.md'
     }
     if args.exclude:
         exclude_dirs.update(args.exclude)
